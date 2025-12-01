@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Subscriptions from './pages/Subscriptions'
 import MainLayout from './layouts/MainLayout'
+import  { Toaster } from 'react-hot-toast';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           </Route>
         </Routes>
       </Router>
+         <Toaster />
     </CookiesProvider>
   )
 }

@@ -6,12 +6,14 @@ import { GoEye, GoEyeClosed } from "react-icons/go";
 import { env } from '../utils/env';
 import { useCreateUser } from '../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function Register() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const { mutate, isPending, error, data } = useCreateUser();
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null)
+  const { mutate, isPending} = useCreateUser();
   const {
     register,
     handleSubmit,
@@ -27,20 +29,32 @@ export default function Register() {
     },
   })
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailError(null)
+    return e.target.value
+  } 
+
   const password = watch('password')
 
   const onSubmit = (data: { name: string; email: string; password: string; confirmPassword: string }) => {
-    mutate({name: data.name, email: data.email, password: data.password})
+    mutate({name: data.name, email: data.email, password: data.password}, {
+      onError: (error) => {
+        console.log("registration error: ", error)
+        if(error.message.includes("An account with this email already exists")){
+        setEmailError(error.message)
+        }else{
+          toast.error(error.message || 'Something went wrong')
+        }
+      }, 
+      onSuccess: ()=> {
+        navigate("/login")
+      } 
+    })
   }
 
-  if(error){
-    console.error('Register error: ', error)
-  }
 
-  if(data){
-    console.log('Register Data: ', data)
-    navigate('/login')
-  }
+
+
 
   const handleGoogleSignup = () => {
     window.location.href = env.GOOGLE_CALLBACK_URL;
@@ -151,7 +165,9 @@ export default function Register() {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: 'Please enter a valid email',
                 },
+                onChange: handleEmailChange
               })}
+              
               className={getInputClass('email')}
             />
             {errors.email && (
@@ -163,6 +179,13 @@ export default function Register() {
                 {errors.email.message}
               </motion.p>
             )}
+             {emailError &&  <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='text-red-500 text-xs mt-1'
+              >
+            {emailError}
+              </motion.p>}
           </motion.div>
 
           {/* Password Input */}
