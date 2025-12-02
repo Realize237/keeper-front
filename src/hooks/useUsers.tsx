@@ -25,10 +25,11 @@ export const useCreateUser=()=> {
 }
 
 export const useLoginUser=()=> {
+    const queryClient = useQueryClient();
   return useMutation<{message: string}, Error, UserLoginInput>({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-        console.log('Login Success Data: ', data)
+    onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ["userInfo"]});
     },
   });
 }

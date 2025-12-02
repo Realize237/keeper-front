@@ -11,15 +11,16 @@ import { useNavigate } from "react-router-dom";
 import { env } from "../utils/env";
 import toast from "react-hot-toast";
 
+
 export default function Login() {
   const navigate = useNavigate();
   const isChromeExtension = useIsChromeExtension();
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate, isPending  } = useLoginUser();
+  const { mutate, isPending   } = useLoginUser();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const error = searchParams.get("error");
-
+   
 
 
 const toastShownRef = useRef(false);
@@ -71,6 +72,7 @@ useEffect(() => {
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
+
           navigate("/subscriptions", {
             replace: true,
           });
@@ -88,6 +90,8 @@ useEffect(() => {
       }
     );
   };
+
+
 
 
   const handleGoogleLogin = () => {
