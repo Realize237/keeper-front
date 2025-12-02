@@ -18,4 +18,6 @@ export const env = {
   API_DOC_VERSION: getEnv('API_DOC_VERSION', '1.0'),
   FRONT_END_URL: getEnv('FRONT_END_URL', 'http://localhost:5173'),
   GOOGLE_CALLBACK_URL: getEnv('GOOGLE_CALLBACK_URL'),
+  PER_PAGE: getEnv("PER_PAGE"),
+  VISIBLE_PAGES: getEnv("VISIBLE_PAGES")
 };

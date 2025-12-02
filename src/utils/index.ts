@@ -1,6 +1,7 @@
 import { IMAGES } from "../assets";
 import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
+import type { Notification } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
 
 export const getMonthMatrixMondayFirst=(date: Date ): string[][] => {
@@ -192,3 +193,31 @@ export const updateCurrentDateToSelectedDate = (currentDate: Date, clickedDay: n
 export const processError=(err: any)=>{
   throw new Error(err?.response?.data?.message || err.message || "Request failed");
 }
+
+export const formatTime = (date: Date) => {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m`;
+  if (diffHours < 24) return `${diffHours}h`;
+  if (diffDays < 7) return `${diffDays}d`;
+  return date.toLocaleDateString();
+};
+
+export const getTypeColor = (type: Notification["type"]) => {
+  switch (type) {
+    case "success":
+      return "bg-gradient-to-br from-green-800/15 to-green-900/10 border-green-700/40";
+    case "warning":
+      return "bg-gradient-to-br from-yellow-800/10 to-yellow-900/8 border-yellow-700/40";
+    case "error":
+      return "bg-gradient-to-br from-red-800/12 to-red-900/8 border-red-700/40";
+    case "info":
+    default:
+      return "bg-gradient-to-br from-blue-800/10 to-blue-900/8 border-blue-700/40";
+  }
+};

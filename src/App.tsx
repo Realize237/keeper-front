@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Subscriptions from './pages/Subscriptions'
 import MainLayout from './layouts/MainLayout'
+import NotificationsPage from './pages/Notifications'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
             <Route path="/" element={<Register />}  />
             <Route path="/login" element={<Login />} />
             <Route path="/subscriptions" element={<Subscriptions />} />
+            <Route path='/notifications' element={<NotificationsPage />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
