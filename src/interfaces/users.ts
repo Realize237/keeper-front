@@ -7,14 +7,6 @@ export interface User {
   created_at: Date;
 }
 
-const user: User = {
-    id: 1,
-    name: '',
-    email:'',
-    password: '',
-    photo: null,
-    created_at: new Date()
-} 
 
 export type UserInput = Omit<User, 'id'| 'photo' | 'created_at'>;
 

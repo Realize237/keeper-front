@@ -1,24 +1,51 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import useIsChromeExtension from "../hooks/useIsChromeExtension";
 import { getBrowserDimensions } from "../utils/environment";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { IMAGES } from "../assets";
 import { useLoginUser } from "../hooks/useUsers";
 import { useNavigate } from "react-router-dom";
 import { env } from "../utils/env";
+import toast from "react-hot-toast";
+import { useCookies } from "react-cookie";
+
 
 export default function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const isChromeExtension = useIsChromeExtension();
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate, isPending, error, data } = useLoginUser();
+  const { mutate, isPending   } = useLoginUser();
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const error = searchParams.get("error");
+  const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]) 
+
+
+
+
+const toastShownRef = useRef(false);
+
+useEffect(() => {
+  if (error && !toastShownRef.current) {
+    toastShownRef.current = true; // mark as shown
+    toast.error(error);
+
+    // Clear the URL param
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete("error");
+    window.history.replaceState({}, "", `${location.pathname}?${newParams}`);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [error]);
 
   const {
     register,
     handleSubmit,
+    watch,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -29,24 +56,67 @@ export default function Login() {
     },
   });
 
+    useEffect(()=> {
+    if(cookies.rememberMe){
+      reset({
+        email: cookies.rememberMe.email,
+        password: cookies.rememberMe.password,
+        rememberMe: cookies.rememberMe.rememberMe
+      })
+    }
+  }, [cookies, reset])
+
+  useEffect(() => {
+  const subscription = watch((_, { name }) => {
+    if (loginError && (name === "email" || name === "password")) {
+      setLoginError(null); // clear login error on user edit
+    }
+  });
+  return () => subscription.unsubscribe();
+}, [watch, loginError]);
+
+
+
   const onSubmit = (data: {
     email: string;
     password: string;
     rememberMe: boolean;
   }) => {
-    mutate({email: data.email, password: data.password})
+
+    if(data.rememberMe){
+      setCookies(
+        "rememberMe",
+        {email:data.email, password: data.password, rememberMe: data.rememberMe},
+        {path: "/login", maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION)}
+      )
+    }else{
+      removeCookie("rememberMe")
+    }
+    
+    mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: () => {
+            navigate("/subscriptions", {
+            replace: true,
+          });
+        },
+        onError: (error) => {
+            if (
+            error.message.includes("User not found") ||
+            error.message.includes("Invalid credentials")
+          ) {
+            setLoginError("Invalid email or password");
+          }else{
+              toast.error(error.message || "Something went wrong");
+          }
+        },
+      }
+    );
   };
 
-  if(error){
-    console.error('error: ', error)
-  }
 
-  if(data){
-    console.log('Login Data: ', data)
-    navigate('/subscriptions', {
-      replace: true
-    })
-  }
+
 
   const handleGoogleLogin = () => {
     window.location.href = env.GOOGLE_CALLBACK_URL;
@@ -193,6 +263,15 @@ export default function Login() {
                 {errors.password.message}
               </motion.p>
             )}
+            {loginError && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-red-500 text-xs mt-1"
+              >
+                {loginError}
+              </motion.p>
+            )}
           </motion.div>
 
           {/* Remember Me & Forgot Password */}
@@ -224,14 +303,18 @@ export default function Login() {
 
           {/* Login Button */}
           <motion.button
-            type='submit'
-            className={`w-full ${isPending ? 'bg-[#8fb103] cursor-not-allowed' : 'bg-[#CDFF00] cursor-pointer'} text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
+            type="submit"
+            className={`w-full ${
+              isPending
+                ? "bg-[#8fb103] cursor-not-allowed"
+                : "bg-[#CDFF00] cursor-pointer"
+            } text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
             variants={buttonVariants}
-            whileHover='hover'
-            whileTap='tap'
+            whileHover="hover"
+            whileTap="tap"
             disabled={isPending}
           >
-            {isPending ? 'Logging in ...' : 'Login now'}
+            {isPending ? "Logging in ..." : "Login now"}
           </motion.button>
         </motion.form>
 
@@ -256,7 +339,10 @@ export default function Login() {
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
             >
-              <img src={IMAGES.Login1} className="w-full h-full object-cover rounded-lg" />
+              <img
+                src={IMAGES.Login1}
+                className="w-full h-full object-cover rounded-lg"
+              />
             </motion.div>
 
             {/* Avatar 2 - Bottom Left */}
@@ -270,7 +356,10 @@ export default function Login() {
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
             >
-              <img src={IMAGES.Login2} className="w-full h-full object-cover rounded-lg" />
+              <img
+                src={IMAGES.Login2}
+                className="w-full h-full object-cover rounded-lg"
+              />
             </motion.div>
 
             {/* Avatar 3 - Center Bottom */}
@@ -284,7 +373,10 @@ export default function Login() {
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
             >
-              <img src={IMAGES.Login3} className="w-full h-full object-cover rounded-lg" />
+              <img
+                src={IMAGES.Login3}
+                className="w-full h-full object-cover rounded-lg"
+              />
             </motion.div>
 
             {/* Avatar 4 - Bottom Right */}
@@ -298,7 +390,10 @@ export default function Login() {
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
             >
-              <img src={IMAGES.Login4} className="w-full h-full object-cover rounded-lg" />
+              <img
+                src={IMAGES.Login4}
+                className="w-full h-full object-cover rounded-lg"
+              />
             </motion.div>
 
             {/* Avatar 5 - Right */}
@@ -312,7 +407,10 @@ export default function Login() {
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
             >
-              <img src={IMAGES.Login5} className="w-full h-full object-cover rounded-lg" />
+              <img
+                src={IMAGES.Login5}
+                className="w-full h-full object-cover rounded-lg"
+              />
             </motion.div>
           </motion.div>
 
@@ -328,7 +426,7 @@ export default function Login() {
               whileHover="hover"
               whileTap="tap"
               type="button"
-              onClick={()=> handleGoogleLogin()}
+              onClick={() => handleGoogleLogin()}
             >
               <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                 <path
