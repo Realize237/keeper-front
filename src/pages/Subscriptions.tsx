@@ -22,6 +22,8 @@ import { getMonthlySubscriptions } from "../api/subscription";
 import BottomSheet from "../components/ui/BottomSheet";
 import type { Value } from "../interfaces/calendar";
 import SubscriptionTypeAndDot from "../components/ui/SubscriptionTypeAndDot";
+import { MdOutlineNotifications } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -123,6 +125,8 @@ const Subscriptions = () => {
       );
   }, [currentDate]);
 
+  const navigate = useNavigate();
+
   return (
     <>
       {!isEmpty(selectedSubsciptionsByDay) && (
@@ -155,6 +159,15 @@ const Subscriptions = () => {
             <span className="text-white text-3xl mr-4">Calendar</span>
             <span className="text-gray-400 text-3xl">List</span>
           </div>
+          <div className="flex items-center space-x-3">
+            <motion.div
+            className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
+            whileHover={{ scale: 1.1 }}
+            onClick={() => navigate("/notifications")}
+            whileTap={{ scale: 0.95 }}
+          >
+            <MdOutlineNotifications className="text-xl text-white" />
+          </motion.div>
           <motion.div
             className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
             whileHover={{ scale: 1.1 }}
@@ -162,6 +175,7 @@ const Subscriptions = () => {
           >
             <TbScreenshot className="text-xl text-white" />
           </motion.div>
+          </div>
         </motion.div>
 
         {/* Body */}

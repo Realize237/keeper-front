@@ -1,3 +1,10 @@
+import { CookiesProvider } from 'react-cookie'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import Subscriptions from './pages/Subscriptions'
+import MainLayout from './layouts/MainLayout'
+import NotificationsPage from './pages/Notifications'
 import { CookiesProvider } from "react-cookie";
 import {
   BrowserRouter as Router,
@@ -22,6 +29,7 @@ export default function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path='/notifications' element={<NotificationsPage />} />
               <Route
                 path="/subscriptions"
                 element={
