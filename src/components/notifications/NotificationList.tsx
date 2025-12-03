@@ -35,6 +35,7 @@ const NotificationList: React.FC<Props> = ({
 
   return (
     <div className="space-y-3">
+      
       {notifications.map((n) => (
         <NotificationItem
           key={n.id}

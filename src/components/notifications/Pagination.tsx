@@ -37,7 +37,7 @@ const Pagination: React.FC<Props> = ({
   for (let p = start; p <= end; p++) pages.push(p);
 
   return (
-    <div className="flex items-center justify-between gap-4 w-full py-4">
+    <div className="flex items-center justify-around gap-4 flex-wrap w-full py-4">
       {/* Summary */}
       <div className="text-sm text-neutral-400">
         Showing {(current - 1) * perPage + 1} -{" "}

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import {motion} from "framer-motion";
 import { seedNotifications } from '../constants';
 import { env } from '../utils/env';
+import NotificationFilterToggle from '../components/notifications/NotificationFilterToggle';
 
 const NotificationsPage: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>(() =>
@@ -37,13 +38,23 @@ const NotificationsPage: React.FC = () => {
     );
   }, [notifications, searchQuery]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
-  const currentPage = Math.min(page, totalPages);
+const [filter, setFilter] = useState<boolean>(false);
 
-  const currentItems = useMemo(() => {
-    const start = (currentPage - 1) * perPage;
-    return filtered.slice(start, start + perPage);
-  }, [filtered, currentPage, perPage]);
+  // 1. Filter read/unread BEFORE pagination
+const filteredByRead = useMemo(() => {
+  return filtered.filter(n => n.isRead === filter);
+}, [filtered, filter]);
+
+// 2. Correct pagination
+const totalPages = Math.max(1, Math.ceil(filteredByRead.length / perPage));
+const currentPage = Math.min(page, totalPages);
+
+const currentItems = useMemo(() => {
+  const start = (currentPage - 1) * perPage;
+  return filteredByRead.slice(start, start + perPage);
+}, [filteredByRead, currentPage, perPage]);
+
+const totalFiltered = filteredByRead.length;
 
   const unreadCount = useMemo(
     () => notifications.filter((n) => !n.isRead).length,
@@ -146,10 +157,10 @@ const NotificationsPage: React.FC = () => {
           onSearch={setSearchQuery}
         />
 
-        <div className="mt-4 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
+        <div className="mt-4">
           {/* Left pane - list */}
           <div className="w-full">
-            <div className="mb-3 flex items-center justify-between gap-3">
+            <div className="mb-3 hidden md:flex items-center justify-between gap-3">
               <NotificationActions
                 selectMode={selectMode}
                 setSelectMode={setSelectMode}
@@ -160,8 +171,11 @@ const NotificationsPage: React.FC = () => {
                 onDeleteSelected={deleteSelected}
                 onMarkSelectedAsRead={() => markSelectedAsRead(true)}
                 onMarkSelectedAsUnread={() => markSelectedAsRead(false)}
-                totalFiltered={filtered.length}
+                onChangeFilter={setFilter}
               />
+            </div>
+            <div className='flex w-full md:w-4/12 mb-5 md:hidden'>
+                <NotificationFilterToggle style='p-3' onChange={setFilter} />
             </div>
 
             <NotificationList
@@ -175,39 +189,16 @@ const NotificationsPage: React.FC = () => {
               onDelete={deleteNotification}
             />
 
-            {notifications.length > perPage && <div className="mt-4">
+            {totalFiltered > perPage && <div className="mt-4">
               <Pagination
                 current={currentPage}
                 total={totalPages}
                 onChange={(p) => setPage(p)}
                 perPage={perPage}
-                totalItems={filtered.length}
+                totalItems={totalFiltered}
               />
             </div>}
           </div>
-
-          {/* Right pane - summary / quick actions */}
-          <aside className="w-full">
-            <div className="sticky top-24 space-y-4">
-              <div className="bg-neutral-900/40 border border-neutral-800 rounded-xl p-4">
-                <h4 className="text-sm text-neutral-300 font-medium mb-2">Quick stats</h4>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-400">Unread</span>
-                    <span className="font-semibold">{unreadCount}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-400">Total</span>
-                    <span className="font-semibold">{notifications.length}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-neutral-400">Current page</span>
-                    <span className="font-semibold">{currentPage} / {totalPages}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
     </motion.div>

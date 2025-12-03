@@ -4,12 +4,15 @@ import {
   FiCheckCircle,
   FiCircle,
   FiTrash2,
-  FiChevronRight,
   FiCheck,
+  FiMoreHorizontal,
+  FiAlertTriangle,
+  FiInfo,
+  FiShoppingBag,
 } from "react-icons/fi";
 import type { Notification } from "../../interfaces/notifications";
 import { MdUndo } from "react-icons/md";
-import { formatTime, getTypeColor } from "../../utils";
+import { formatTime } from "../../utils";
 
 type Props = {
   notification: Notification;
@@ -37,6 +40,7 @@ const NotificationItem: React.FC<Props> = ({
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.changedTouches[0].clientX;
   };
+  const [showImagePreview, setShowImagePreview] = React.useState(false);
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current == null) return;
@@ -49,25 +53,37 @@ const NotificationItem: React.FC<Props> = ({
     touchStartX.current = null;
   };
 
+  const iconMap = {
+    success: <FiCheck className="w-7 h-7 text-white" />,
+    error: <FiAlertTriangle className="w-7 h-7" />,
+    warning: <FiAlertTriangle className="w-7 h-7" />,
+    info: <FiInfo className="w-7 h-7" />,
+    promo: <FiShoppingBag className="w-7 h-7" />,
+  };
+
   return (
-    <div className="relative">
+    <div className="relative w-full">
       {/* Hidden actions */}
-      {isSwiped && (
+      {(isSwiped || showImagePreview) && (
         <div className="absolute inset-0 flex items-center justify-end pr-4 gap-2 pointer-events-none">
           <button
-              onClick={onToggleRead}
-              title={notification.isRead ? "Mark as unread":"Mark as read"}
-              className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
-            >
-              {notification.isRead ? <MdUndo className="w-4 h-4" /> : <FiCheck className="w-4 h-4" />}
-            </button>
-            <button
-              onClick={onDelete}
-              title="Delete"
-              className="cursor-pointer p-2 rounded-lg text-red-600/60 border border-red-600/60 hover:opacity-70 pointer-events-auto"
-            >
-              <FiTrash2 className="w-4 h-4" />
-            </button>
+            onClick={onToggleRead}
+            title={notification.isRead ? "Mark as unread" : "Mark as read"}
+            className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
+          >
+            {notification.isRead ? (
+              <MdUndo className="w-4 h-4" />
+            ) : (
+              <FiCheck className="w-4 h-4" />
+            )}
+          </button>
+          <button
+            onClick={onDelete}
+            title="Delete"
+            className="cursor-pointer p-2 rounded-lg text-red-600/60 border border-red-600/60 hover:opacity-70 pointer-events-auto"
+          >
+            <FiTrash2 className="w-4 h-4" />
+          </button>
         </div>
       )}
       {/* Card */}
@@ -76,10 +92,8 @@ const NotificationItem: React.FC<Props> = ({
         onTouchEnd={handleTouchEnd}
         className={`relative transition-transform duration-200 transform ${
           isSwiped ? "-translate-x-24" : "translate-x-0"
-        } rounded-xl border p-4 ${
-          notification.isRead
-            ? "bg-neutral-900/40 border-neutral-800"
-            : getTypeColor(notification.type) + " border"
+        } rounded-3xl p-4 ${
+          notification.isRead ? "border border-neutral-800" : "bg-neutral-800"
         } overflow-hidden`}
       >
         <div className="flex items-start gap-4">
@@ -95,11 +109,12 @@ const NotificationItem: React.FC<Props> = ({
 
           {/* icon */}
           <div className="shrink-0 mt-1">
-            <div className="w-10 h-10 rounded-lg bg-neutral-800/30 flex items-center justify-center text-white">
-              {/* placeholder icon */}
-              <span className="text-sm font-semibold">
-                {notification.title?.slice(0, 1)}
-              </span>
+            <div
+              className={`w-14 h-14 rounded-full ${
+                notification.isRead ? "bg-neutral-800" : "bg-[#171717]"
+              } flex items-center justify-center text-white`}
+            >
+              {iconMap[notification.type]}
             </div>
           </div>
 
@@ -124,24 +139,37 @@ const NotificationItem: React.FC<Props> = ({
             >
               {notification.message}
             </p>
-
-            {notification.category && (
-              <div className="mt-3">
-                <span className="inline-block text-xs bg-neutral-800/40 px-3 py-1 rounded-full text-neutral-300">
-                  {notification.category}
-                </span>
+            {showImagePreview && notification.image && (
+              <div
+                className="
+                w-full md:w-4/12 overflow-hidden rounded-xl 
+                aspect-video my-5 
+              "
+              >
+                <img
+                  src={notification.image}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
               </div>
-            )}
+            )
+            }
           </div>
 
           {/* actions chevron */}
           <div className="shrink-0 ml-2">
             {!selectMode && (
               <button
-                onClick={() => setSwipedId(isSwiped ? null : notification.id)}
+                onClick={() => {
+                  if (notification.image) {
+                    setShowImagePreview((prev) => !prev); // toggle image preview
+                  } else {
+                    setSwipedId(isSwiped ? null : notification.id); // default behavior
+                  }
+                }}
                 className="p-2 rounded-lg hover:bg-neutral-800/50"
               >
-                <FiChevronRight
+                <FiMoreHorizontal
                   className={`w-5 h-5 text-neutral-400 cursor-pointer transition-transform ${
                     isSwiped ? "rotate-180" : ""
                   }`}
@@ -151,13 +179,17 @@ const NotificationItem: React.FC<Props> = ({
           </div>
         </div>
         {!isSwiped && (
-          <div className="flex items-center justify-end pr-4 gap-2 pointer-events-none">
+          <div className="hidden md:flex items-center justify-end pr-4 gap-2 pointer-events-none">
             <button
               onClick={onToggleRead}
-              title={notification.isRead ? "Mark as unread":"Mark as read"}
+              title={notification.isRead ? "Mark as unread" : "Mark as read"}
               className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
             >
-              {notification.isRead ? <MdUndo className="w-4 h-4" /> : <FiCheck className="w-4 h-4" />}
+              {notification.isRead ? (
+                <MdUndo className="w-4 h-4" />
+              ) : (
+                <FiCheck className="w-4 h-4" />
+              )}
             </button>
             <button
               onClick={onDelete}

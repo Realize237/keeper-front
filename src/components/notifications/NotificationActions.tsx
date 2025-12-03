@@ -1,5 +1,6 @@
 // components/notifications/NotificationActions.tsx
 import React from 'react';
+import NotificationFilterToggle from './NotificationFilterToggle';
 
 type Props = {
   selectMode: boolean;
@@ -11,7 +12,7 @@ type Props = {
   onDeleteSelected: () => void;
   onMarkSelectedAsRead: () => void;
   onMarkSelectedAsUnread: () => void;
-  totalFiltered: number;
+  onChangeFilter: (filter: boolean) => void;
 };
 
 const NotificationActions: React.FC<Props> = ({
@@ -24,28 +25,28 @@ const NotificationActions: React.FC<Props> = ({
   onDeleteSelected,
   onMarkSelectedAsRead,
   onMarkSelectedAsUnread,
-  totalFiltered,
+  onChangeFilter
 }) => {
   return (
-    <div className="flex flex-wrap gap-2 items-center">
+    <div className="flex w-full flex-wrap gap-2 items-center">
       {selectMode ? (
         <>
-          <button onClick={() => setSelectMode(false)} className="px-3 py-2 rounded-lg bg-neutral-800/50 text-sm border border-neutral-700">
+          <button onClick={() => setSelectMode(false)} className="px-3 py-2 rounded-full bg-neutral-800/50 text-sm border border-neutral-700">
             Cancel
           </button>
-          <button onClick={toggleSelectAll} className="px-3 py-2 rounded-lg bg-neutral-800/50 text-sm border border-neutral-700">
+          <button onClick={toggleSelectAll} className="px-3 py-2 rounded-full bg-neutral-800/50 text-sm border border-neutral-700">
             Toggle Select Page
           </button>
 
           {selectedCount > 0 && (
             <>
-              <button onClick={onMarkSelectedAsRead} className="px-3 py-2 rounded-lg bg-green-600/20 text-sm border border-green-600">
+              <button onClick={onMarkSelectedAsRead} className="px-3 py-2 rounded-full bg-green-600/20 text-sm border border-green-600">
                 Mark Read
               </button>
-              <button onClick={onMarkSelectedAsUnread} className="px-3 py-2 rounded-lg bg-blue-600/20 text-sm border border-blue-600">
+              <button onClick={onMarkSelectedAsUnread} className="px-3 py-2 rounded-full bg-blue-600/20 text-sm border border-blue-600">
                 Mark Unread
               </button>
-              <button onClick={onDeleteSelected} className="px-3 py-2 rounded-lg bg-red-600/20 text-sm border border-red-600">
+              <button onClick={onDeleteSelected} className="px-3 py-2 rounded-full bg-red-600/20 text-sm border border-red-600">
                 Delete ({selectedCount})
               </button>
             </>
@@ -53,18 +54,20 @@ const NotificationActions: React.FC<Props> = ({
         </>
       ) : (
         <>
-          <button onClick={() => setSelectMode(true)} className="px-3 py-2 rounded-lg bg-neutral-800/50 text-sm border border-neutral-700">
+          <button onClick={() => setSelectMode(true)} className="px-3 py-2 rounded-full bg-neutral-800/50 text-sm border border-neutral-700">
             Select
           </button>
-          <button onClick={onMarkAllRead} className="px-3 py-2 rounded-lg bg-green-600/20 text-sm border border-green-600">
+          <button onClick={onMarkAllRead} className="px-3 py-2 rounded-full bg-green-600/20 text-sm border border-green-600">
             Mark All Read
           </button>
-          <button onClick={onDeleteAll} className="px-3 py-2 rounded-lg bg-red-600/20 text-sm border border-red-600">
+          <button onClick={onDeleteAll} className="px-3 py-2 rounded-full bg-red-600/20 text-sm border border-red-600">
             Delete All
           </button>
-          <div className="ml-2 text-sm text-neutral-400">Showing {totalFiltered} results</div>
         </>
       )}
+      <div className='hidden md:flex w-full md:w-2/12'>
+          <NotificationFilterToggle onChange={onChangeFilter} />
+      </div>
     </div>
   );
 };

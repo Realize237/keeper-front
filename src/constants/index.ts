@@ -25,6 +25,7 @@ export const seedNotifications = (): Notification[] => [
     isRead: false,
     timestamp: new Date(Date.now() - 5 * 60_000),
     category: 'Orders',
+    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
   },
   {
     id: '2',

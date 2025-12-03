@@ -3,6 +3,7 @@ import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
 import type { Notification } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
+import moment from "moment";
 
 export const getMonthMatrixMondayFirst=(date: Date ): string[][] => {
   const year = date.getFullYear();
@@ -194,18 +195,8 @@ export const processError=(err: any)=>{
   throw new Error(err?.response?.data?.message || err.message || "Request failed");
 }
 
-export const formatTime = (date: Date) => {
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return "Just now";
-  if (diffMins < 60) return `${diffMins}m`;
-  if (diffHours < 24) return `${diffHours}h`;
-  if (diffDays < 7) return `${diffDays}d`;
-  return date.toLocaleDateString();
+export const formatTime = (date: string | Date | number) => {
+  return moment(date).fromNow();
 };
 
 export const getTypeColor = (type: Notification["type"]) => {

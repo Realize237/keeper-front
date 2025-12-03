@@ -12,4 +12,5 @@ export interface Notification {
   icon?: React.ReactNode;
   avatar?: string;
   category?: string;
+  image?: string;
 };
