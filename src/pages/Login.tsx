@@ -10,15 +10,19 @@ import { useLoginUser } from "../hooks/useUsers";
 import { useNavigate } from "react-router-dom";
 import { env } from "../utils/env";
 import toast from "react-hot-toast";
+import { useCookies } from "react-cookie";
+
 
 export default function Login() {
   const navigate = useNavigate();
   const isChromeExtension = useIsChromeExtension();
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate, isPending  } = useLoginUser();
+  const { mutate, isPending   } = useLoginUser();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const error = searchParams.get("error");
+  const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]) 
+
 
 
 
@@ -41,6 +45,7 @@ useEffect(() => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -50,6 +55,16 @@ useEffect(() => {
       rememberMe: false,
     },
   });
+
+    useEffect(()=> {
+    if(cookies.rememberMe){
+      reset({
+        email: cookies.rememberMe.email,
+        password: cookies.rememberMe.password,
+        rememberMe: cookies.rememberMe.rememberMe
+      })
+    }
+  }, [cookies, reset])
 
   useEffect(() => {
   const subscription = watch((_, { name }) => {
@@ -67,11 +82,22 @@ useEffect(() => {
     password: string;
     rememberMe: boolean;
   }) => {
+
+    if(data.rememberMe){
+      setCookies(
+        "rememberMe",
+        {email:data.email, password: data.password, rememberMe: data.rememberMe},
+        {path: "/login", maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION)}
+      )
+    }else{
+      removeCookie("rememberMe")
+    }
+    
     mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-          navigate("/subscriptions", {
+            navigate("/subscriptions", {
             replace: true,
           });
         },
@@ -82,12 +108,14 @@ useEffect(() => {
           ) {
             setLoginError("Invalid email or password");
           }else{
-               toast.error(error.message || "Something went wrong");
+              toast.error(error.message || "Something went wrong");
           }
         },
       }
     );
   };
+
+
 
 
   const handleGoogleLogin = () => {
