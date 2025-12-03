@@ -5,17 +5,6 @@ import Login from './pages/Login'
 import Subscriptions from './pages/Subscriptions'
 import MainLayout from './layouts/MainLayout'
 import NotificationsPage from './pages/Notifications'
-import { CookiesProvider } from "react-cookie";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Subscriptions from "./pages/Subscriptions";
-import MainLayout from "./layouts/MainLayout";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
