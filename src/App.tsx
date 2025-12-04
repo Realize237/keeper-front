@@ -11,7 +11,11 @@ import Subscriptions from "./pages/Subscriptions";
 import MainLayout from "./layouts/MainLayout";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
+import Cards from "./pages/Cards";
+import SharedPlan from "./pages/SharedPlan";
+import Profile from "./pages/Profile";
+import MobileLayout from "./layouts/MobileLayout";
 
 export default function App() {
   return (
@@ -22,14 +26,40 @@ export default function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route
-                path="/subscriptions"
-                element={
-                  <ProtectedRoute>
-                    <Subscriptions />
-                  </ProtectedRoute>
-                }
-              />
+              <Route element={<MobileLayout />}>
+                <Route
+                  path="/subscriptions"
+                  element={
+                    <ProtectedRoute>
+                      <Subscriptions />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/cards"
+                  element={
+                    <ProtectedRoute>
+                      <Cards />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/shared-plan"
+                  element={
+                    <ProtectedRoute>
+                      <SharedPlan />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>

@@ -68,3 +68,17 @@ export const getAllUsers = async () => {
     return processError(err);
   }
 };
+
+export const logoutUser = async () => {
+  try {
+    const response = await axios.post<{ message: string }>(
+      `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
+      null,
+      { withCredentials: true }
+    );
+
+    return response.data;
+  } catch (err: any) {
+    return processError(err);
+  }
+};

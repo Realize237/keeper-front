@@ -192,3 +192,10 @@ export const updateCurrentDateToSelectedDate = (currentDate: Date, clickedDay: n
 export const processError=(err: any)=>{
   throw new Error(err?.response?.data?.message || err.message || "Request failed");
 }
+
+export const getAvatarInitials= (name: string): string =>  {
+  const words = name.trim().split(/\s+/);
+  const first = words[0]?.[0] ?? "";
+  const second = words[1]?.[0] ?? "";
+  return (first + second).toUpperCase();
+}
