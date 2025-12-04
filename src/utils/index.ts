@@ -3,7 +3,7 @@ import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
 import type { Subscription } from "../interfaces/subscription";
 
-export const getMonthMatrixMondayFirst=(date: Date ): string[][] => {
+export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
   const month = date.getMonth(); // 0-11
 
@@ -18,7 +18,7 @@ export const getMonthMatrixMondayFirst=(date: Date ): string[][] => {
   let currentWeek: string[] = [];
 
   for (let i = 0; i < firstWeekday; i++) {
-    currentWeek.push('');
+    currentWeek.push("");
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
@@ -32,39 +32,47 @@ export const getMonthMatrixMondayFirst=(date: Date ): string[][] => {
 
   if (currentWeek.length > 0) {
     while (currentWeek.length < 7) {
-      currentWeek.push('');
+      currentWeek.push("");
     }
     weeks.push(currentWeek);
   }
 
   return weeks;
-}
+};
 
-export const isSubscriptionActiveThisMonth = (startDate: Date, endDate: Date, currentDate: Date) => {
-    const startYear = startDate.getFullYear();
-    const startMonth = startDate.getMonth();
+export const isSubscriptionActiveThisMonth = (
+  startDate: Date,
+  endDate: Date,
+  currentDate: Date
+) => {
+  const startYear = startDate.getFullYear();
+  const startMonth = startDate.getMonth();
 
-    const endYear = endDate.getFullYear();
-    const endMonth = endDate.getMonth();
+  const endYear = endDate.getFullYear();
+  const endMonth = endDate.getMonth();
 
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
 
-    const isAfterStart = currentYear > startYear || (currentYear === startYear && currentMonth >= startMonth);
-    const isBeforeEnd = currentYear < endYear || (currentYear === endYear && currentMonth <= endMonth);
+  const isAfterStart =
+    currentYear > startYear ||
+    (currentYear === startYear && currentMonth >= startMonth);
+  const isBeforeEnd =
+    currentYear < endYear ||
+    (currentYear === endYear && currentMonth <= endMonth);
 
-    return isAfterStart && isBeforeEnd;
+  return isAfterStart && isBeforeEnd;
 };
 
 const addMonthsSafe = (d: Date, months: number): Date => {
   const copy = new Date(d);
   const targetMonth = copy.getMonth() + months;
   copy.setMonth(targetMonth);
-  while (copy.getMonth() !== ((targetMonth % 12 + 12) % 12)) {
+  while (copy.getMonth() !== ((targetMonth % 12) + 12) % 12) {
     copy.setDate(copy.getDate() - 1);
   }
   return copy;
-}
+};
 
 const addYearsSafe = (d: Date, years: number): Date => {
   const copy = new Date(d);
@@ -74,7 +82,7 @@ const addYearsSafe = (d: Date, years: number): Date => {
     copy.setMonth(d.getMonth() + 1, 0);
   }
   return copy;
-}
+};
 
 export const getNextBillingDate = (
   startDate: Date,
@@ -82,10 +90,11 @@ export const getNextBillingDate = (
   type: "MONTHLY" | "YEARLY",
   fromDate: Date = new Date()
 ): BillingResult => {
-  console.log('Type passed: ', type)
+  console.log("Type passed: ", type);
   // Normalize dates to midnight
-  const normalize = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  
+  const normalize = (d: Date) =>
+    new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
   const start = normalize(startDate);
   const end = endDate ? normalize(endDate) : new Date(2099, 11, 31); // Default to year 2099
   const today = normalize(fromDate);
@@ -107,23 +116,24 @@ export const getNextBillingDate = (
   // Find the next billing date starting from startDate
   let nextBilling = new Date(start);
   let i = 0;
-  
+
   while (nextBilling <= end) {
     // If this billing date is today or in the future
     if (nextBilling >= today) {
       const isDueToday = nextBilling.getTime() === today.getTime();
       const daysLeft = isDueToday ? 0 : computeDaysLeft(nextBilling);
-      
+
       return {
         date: nextBilling,
         status: isDueToday ? "DUE TODAY" : "ACTIVE",
         daysRemaining: daysLeft,
       };
     }
-    
+
     // Move to next billing cycle
     i++;
-    nextBilling = type === "MONTHLY" ? addMonthsSafe(start, i) : addYearsSafe(start, i);
+    nextBilling =
+      type === "MONTHLY" ? addMonthsSafe(start, i) : addYearsSafe(start, i);
   }
 
   // No future billing date found within subscription period
@@ -144,16 +154,16 @@ export const normalizedDate = (value: Value): Date => {
   return new Date(); // fallback to today
 };
 
-export const getSubscriptionCardImage=(subscription: Subscription)=>{
-  switch(subscription.card){
-    case 'MASTER':
-      return IMAGES.MasterCard
-    case 'PAYPAL':
-      return IMAGES.Paypal
+export const getSubscriptionCardImage = (subscription: Subscription) => {
+  switch (subscription.card) {
+    case "MASTER":
+      return IMAGES.MasterCard;
+    case "PAYPAL":
+      return IMAGES.Paypal;
     default:
-      return IMAGES.Visa
+      return IMAGES.Visa;
   }
-}
+};
 
 export const formatToReadableDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -165,14 +175,17 @@ export const formatToReadableDate = (dateString: string): string => {
   });
 };
 
-export const updateCurrentDateToSelectedDate = (currentDate: Date, clickedDay: number): Date => {
+export const updateCurrentDateToSelectedDate = (
+  currentDate: Date,
+  clickedDay: number
+): Date => {
   // Validate inputs
   if (!(currentDate instanceof Date) || isNaN(currentDate.getTime())) {
-    throw new Error('Invalid currentDate: must be a valid Date object');
+    throw new Error("Invalid currentDate: must be a valid Date object");
   }
 
   if (!Number.isInteger(clickedDay) || clickedDay < 1 || clickedDay > 31) {
-    throw new Error('Invalid clickedDay: must be an integer between 1 and 31');
+    throw new Error("Invalid clickedDay: must be an integer between 1 and 31");
   }
 
   const year = currentDate.getFullYear();
@@ -185,10 +198,37 @@ export const updateCurrentDateToSelectedDate = (currentDate: Date, clickedDay: n
   }
 
   return newDate;
-}
-
+};
 
 // to format api error message
-export const processError=(err: any)=>{
-  throw new Error(err?.response?.data?.message || err.message || "Request failed");
-}
+export const processError = (err: any) => {
+  throw new Error(
+    err?.response?.data?.message || err.message || "Request failed"
+  );
+};
+
+export const getAvatarInitials = (name?: string | null): string => {
+  if (!name?.trim()) {
+    return "?";
+  }
+
+  const words = name
+    .trim()
+    .replace(/[^a-zA-ZÀ-ÿ\s]/g, "") // Keep letters and accented characters
+    .split(/\s+/)
+    .filter((word) => word.length > 0);
+
+  if (words.length === 0) {
+    return "?";
+  }
+
+  const first = words[0][0];
+
+  if (words.length === 1) {
+    const secondChar = words[0][1];
+    return (first + (secondChar || "")).toUpperCase();
+  }
+
+  const second = words[1][0];
+  return (first + second).toUpperCase();
+};

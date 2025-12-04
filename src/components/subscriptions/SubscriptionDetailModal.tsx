@@ -1,35 +1,47 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
-import useIsChromeExtension from "../../hooks/useIsChromeExtension";
-import { formatToReadableDate, getNextBillingDate, getSubscriptionCardImage } from "../../utils";
-import { getBrowserDimensions } from "../../utils/environment";
+import {
+  formatToReadableDate,
+  getNextBillingDate,
+  getSubscriptionCardImage,
+} from "../../utils";
 import { MdOutlineClear } from "react-icons/md";
 import SubscriptionTypeAndDot from "../ui/SubscriptionTypeAndDot";
-import { SubscriptionModalTypes, type Subscription, type SubscriptionModalType } from "../../interfaces/subscription";
+import {
+  SubscriptionModalTypes,
+  type Subscription,
+  type SubscriptionModalType,
+} from "../../interfaces/subscription";
 import type { BillingResult } from "../../interfaces/billings";
 
-interface SubscriptionDetailModalProps{
-  selectedSubscriptionDetails: Subscription,
-  closeSubscriptionModals: (type: SubscriptionModalType) => void,
+interface SubscriptionDetailModalProps {
+  selectedSubscriptionDetails: Subscription;
+  closeSubscriptionModals: (type: SubscriptionModalType) => void;
 }
 
-export default function SubscriptionDetailModal({selectedSubscriptionDetails, closeSubscriptionModals}: SubscriptionDetailModalProps) {
+export default function SubscriptionDetailModal({
+  selectedSubscriptionDetails,
+  closeSubscriptionModals,
+}: SubscriptionDetailModalProps) {
   const [isOpen, setIsOpen] = useState(true);
-  const isChromeExtension = useIsChromeExtension();
-   const nextBillingResult: BillingResult = getNextBillingDate(selectedSubscriptionDetails.details.startDate,
-                 selectedSubscriptionDetails.details.endDate,
-                  selectedSubscriptionDetails.type)
+  const nextBillingResult: BillingResult = getNextBillingDate(
+    selectedSubscriptionDetails.details.startDate,
+    selectedSubscriptionDetails.details.endDate,
+    selectedSubscriptionDetails.type
+  );
 
-  const getFormattedNextBillingDate = ()=>{
-      switch(nextBillingResult.status){
-        case 'ACTIVE':
-          return formatToReadableDate(new Date(nextBillingResult.date as Date).toDateString())
-        case 'DUE TODAY':
-        default:
-          return nextBillingResult.status
-      }
-  }
+  const getFormattedNextBillingDate = () => {
+    switch (nextBillingResult.status) {
+      case "ACTIVE":
+        return formatToReadableDate(
+          new Date(nextBillingResult.date as Date).toDateString()
+        );
+      case "DUE TODAY":
+      default:
+        return nextBillingResult.status;
+    }
+  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -41,21 +53,21 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
       opacity: 1,
       transition: {
         duration: 0.3,
-      }
+      },
     },
     exit: {
       opacity: 0,
       transition: {
         duration: 0.3,
-      }
-    }
+      },
+    },
   };
 
   const modalVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 50,
-      scale: 0.95
+      scale: 0.95,
     },
     visible: {
       opacity: 1,
@@ -65,8 +77,8 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
         duration: 0.4,
         type: "spring" as const,
         stiffness: 100,
-        damping: 15
-      }
+        damping: 15,
+      },
     },
     exit: {
       opacity: 0,
@@ -74,14 +86,14 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
       scale: 0.95,
       transition: {
         duration: 0.3,
-      }
-    }
+      },
+    },
   };
 
   const itemVariants: Variants = {
     hidden: {
       opacity: 0,
-      y: 30
+      y: 30,
     },
     visible: (custom: number) => ({
       opacity: 1,
@@ -91,23 +103,23 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
         duration: 0.5,
         type: "spring" as const,
         stiffness: 100,
-        damping: 12
-      }
+        damping: 12,
+      },
     }),
     exit: {
       opacity: 0,
       y: -30,
       transition: {
-        duration: 0.2
-      }
-    }
+        duration: 0.2,
+      },
+    },
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className={`${getBrowserDimensions(isChromeExtension)} z-20 flex flex-col justify-center items-center absolute bg-[#000000e0]`}
+          className={` z-20 flex flex-col justify-center items-center absolute bg-[#000000e0]`}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -115,7 +127,7 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
           onClick={handleClose}
         >
           <motion.div
-            className="w-11/12 h-11/12 flex flex-col items-center"
+            className="min-w-sm px-4 h-11/12 flex flex-col items-center"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -136,7 +148,7 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              <MdOutlineClear className="text-md text-white"/>
+              <MdOutlineClear className="text-md text-white" />
             </motion.div>
 
             <motion.img
@@ -159,7 +171,9 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
             >
               <p className="text-white text-3xl">Spotify</p>
               <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#bbcdcc]">
-                <span className="text-green-800 text-lg]">${selectedSubscriptionDetails.price}</span>
+                <span className="text-green-800 text-lg]">
+                  ${selectedSubscriptionDetails.price}
+                </span>
               </div>
             </motion.div>
 
@@ -172,7 +186,9 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
               exit="exit"
             >
               <span className="mr-2 text-[#838383] font-bold">Next bill: </span>
-              <span className="text-white">{getFormattedNextBillingDate()}</span>
+              <span className="text-white">
+                {getFormattedNextBillingDate()}
+              </span>
             </motion.div>
 
             <motion.div
@@ -186,14 +202,16 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
             >
               <span className="text-[#838383] font-bold">Payment method </span>
               <div className="flex justify-center items-center">
-                <img src={getSubscriptionCardImage(selectedSubscriptionDetails)} className="w-10 h-6 rounded-md object-cover mr-2" />
+                <img
+                  src={getSubscriptionCardImage(selectedSubscriptionDetails)}
+                  className="w-10 h-6 rounded-md object-cover mr-2"
+                />
                 <span className="text-white">5064</span>
               </div>
             </motion.div>
 
-            {
-              nextBillingResult.daysRemaining &&
-                <motion.div
+            {nextBillingResult.daysRemaining && (
+              <motion.div
                 className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
                 variants={itemVariants}
                 custom={5}
@@ -204,10 +222,12 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
               >
                 <span className="text-[#838383] font-bold">Remaing</span>
                 <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#cdbbbb]">
-                  <span className="text-red-800 text-lg]">{nextBillingResult.daysRemaining}{' '}days</span>
+                  <span className="text-red-800 text-lg]">
+                    {nextBillingResult.daysRemaining} days
+                  </span>
                 </div>
               </motion.div>
-            }
+            )}
 
             <motion.div
               className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
@@ -219,7 +239,9 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
               whileHover={{ backgroundColor: "#3d3d3d" }}
             >
               <span className="text-[#838383] font-bold">Period </span>
-              <SubscriptionTypeAndDot value={selectedSubscriptionDetails.type}/>
+              <SubscriptionTypeAndDot
+                value={selectedSubscriptionDetails.type}
+              />
             </motion.div>
 
             <motion.div
@@ -232,7 +254,9 @@ export default function SubscriptionDetailModal({selectedSubscriptionDetails, cl
               whileHover={{ backgroundColor: "#3d3d3d" }}
             >
               <span className="text-[#838383] font-bold">Plan </span>
-              <span className="text-white">{selectedSubscriptionDetails.plan}</span>
+              <span className="text-white">
+                {selectedSubscriptionDetails.plan}
+              </span>
             </motion.div>
 
             <motion.div

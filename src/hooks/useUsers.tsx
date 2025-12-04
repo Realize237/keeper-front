@@ -4,7 +4,7 @@ import type {
   UserLoginInput,
   UserResponse,
 } from "../interfaces/users";
-import { createUser, getAllUsers, getUserInfo, loginUser } from "../api/users";
+import { createUser, getAllUsers, getUserInfo, loginUser, logoutUser } from "../api/users";
 import { env } from "../utils/env";
 
 export const useUserList = () => {
@@ -36,6 +36,17 @@ export const useLoginUser = () => {
     },
   });
 };
+
+export const useLogoutUser = ()=> {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: logoutUser,
+    onSuccess: ()=> {
+      queryClient.setQueryData(["userInfo"], null)
+      queryClient.invalidateQueries({queryKey: ["userInfo"]})
+    }
+  })
+}
 
 export const useUserInfo = () => {
   return useQuery<UserResponse>({

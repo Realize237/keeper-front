@@ -124,7 +124,7 @@ const Subscriptions = () => {
   }, [currentDate]);
 
   return (
-    <>
+    <div className="flex justify-center">
       {!isEmpty(selectedSubsciptionsByDay) && (
         <SelectedDaySubscriptionsListModal
           selectedSubsciptionsByDay={getSelectedSubscriptions()}
@@ -141,7 +141,7 @@ const Subscriptions = () => {
       )}
 
       <motion.div
-        className="w-11/12 h-11/12 border-gray-700"
+        className="w-11/12 h-11/12 mx-auto border-gray-700"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -251,7 +251,7 @@ const Subscriptions = () => {
           />
         </motion.div>
       </BottomSheet>
-    </>
+    </div>
   );
 };
 
