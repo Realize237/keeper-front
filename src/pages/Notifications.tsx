@@ -11,34 +11,26 @@ import { motion } from "framer-motion";
 import { env } from "../utils/env";
 import NotificationFilterToggle from "../components/notifications/NotificationFilterToggle";
 import {
-  useDeleteAllUsersNotifications,
-  useDeleteMultipleNotifications,
-  useDeleteSingleNotification,
-  useToggleMultipleNotificationStatus,
-  useToggleSingleNotificationStatus,
+  useUpdateNotification,
+  useDeleteNotifications,
   useUserNotifications,
 } from "../hooks/useNotifications";
+import NotificationSkeletonLoader from "../components/notifications/SkeletonLoader";
 
 const NotificationsPage: React.FC = () => {
-  const { data: notifications } = useUserNotifications();
+  const { data: notifications, isLoading } = useUserNotifications();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [swipedId, setSwipedId] = useState<number | null>(null);
 
-  const toggleSingleNotStatus = useToggleSingleNotificationStatus();
-  const deleteSingleNotification = useDeleteSingleNotification();
-  const deleteMultipleNotifications = useDeleteMultipleNotifications();
-  const deleteAllUserNotifications = useDeleteAllUsersNotifications();
-  const toggleMultipleNotificationReadStatus =
-    useToggleMultipleNotificationStatus();
+  const updateNotificationMutation = useUpdateNotification();
+  const deleteNotificationMutation = useDeleteNotifications();
 
-  // Pagination
   const [page, setPage] = useState(1);
   const perPage = parseInt(env.PER_PAGE ?? "3");
 
-  // Filtered + searched notifications
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return notifications;
@@ -81,31 +73,33 @@ const NotificationsPage: React.FC = () => {
   // Handlers
   const toggleRead = useCallback(
     (id: number) => {
-      toggleSingleNotStatus.mutate(id);
+      updateNotificationMutation.mutate({ids: [id], all:false});
       setSwipedId(null);
     },
-    [toggleSingleNotStatus]
+    [updateNotificationMutation]
   );
 
   const deleteNotification = useCallback(
     (id: number) => {
-        deleteSingleNotification.mutate(id);
+        deleteNotificationMutation.mutate({ids: [id], all: false});
         setSwipedId(null);
     },
-    [deleteSingleNotification]
+    [deleteNotificationMutation]
   );
 
   const markAllAsRead = useCallback(() => {
     if (notifications) {
-      toggleMultipleNotificationReadStatus.mutate(notifications);
+      deleteNotificationMutation.mutate({ids:notifications.map(not => not.id), all: true});
     }
-  }, [toggleMultipleNotificationReadStatus, notifications]);
+  }, [deleteNotificationMutation, notifications]);
 
   const deleteAll = useCallback(() => {
     if (!confirm("Are you sure you want to delete all notifications?")) return;
-    deleteAllUserNotifications.mutate();
+    if (notifications) {
+      deleteNotificationMutation.mutate({ids: notifications?.map(not => not.id), all: true});
+    }
     setSelectedIds(new Set());
-  }, [deleteAllUserNotifications]);
+  }, [deleteNotificationMutation, notifications]);
 
   const toggleSelect = useCallback((id: number) => {
     setSelectedIds((prev) => {
@@ -127,10 +121,10 @@ const NotificationsPage: React.FC = () => {
     if (selectedIds.size === 0) return;
     if (!confirm(`Delete ${selectedIds.size} notification(s)?`)) return;
     if (selectedIds) {
-      deleteMultipleNotifications.mutate([...selectedIds]);
+      deleteNotificationMutation.mutate({ids: [...selectedIds], all: false});
     }
     setSelectedIds(new Set());
-  }, [selectedIds, deleteMultipleNotifications]);
+  }, [selectedIds, deleteNotificationMutation]);
 
   const toggleSelectedStatus = useCallback(
     () => {
@@ -138,12 +132,12 @@ const NotificationsPage: React.FC = () => {
       const selectedNotifications = notifications
         ?.filter((not) => selectedIds.has(not.id))
       if (selectedNotifications) {
-        toggleMultipleNotificationReadStatus.mutate(selectedNotifications);
+        updateNotificationMutation.mutate({ids: selectedNotifications.map(not => not.id), all: false});
       }
       setSelectedIds(new Set());
       setSelectMode(false);
     },
-    [selectedIds, toggleMultipleNotificationReadStatus, notifications]
+    [selectedIds, updateNotificationMutation, notifications]
   );
 
   const navigate = useNavigate();
@@ -201,7 +195,13 @@ const NotificationsPage: React.FC = () => {
               <NotificationFilterToggle style="p-3" onChange={setFilter} />
             </div>
 
-            <NotificationList
+            {
+              isLoading ?
+              <div className="flex space-y-4">
+                <NotificationSkeletonLoader />
+              </div>
+              :
+              <NotificationList
               notifications={currentItems!}
               swipedId={swipedId}
               setSwipedId={setSwipedId}
@@ -210,7 +210,7 @@ const NotificationsPage: React.FC = () => {
               toggleSelect={toggleSelect}
               onToggleRead={toggleRead}
               onDelete={deleteNotification}
-            />
+            />}
 
             {totalFiltered > perPage && (
               <div className="mt-4">

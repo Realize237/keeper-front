@@ -28,3 +28,8 @@ export interface Notification {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export interface NotificationRequest {
+    ids: number[];
+    all: boolean;
+};

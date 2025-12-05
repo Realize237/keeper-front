@@ -6,6 +6,10 @@ interface Props {
   onClick?: () => void;
 }
 
+const getBadgeValue = (value:number) => {
+   return value > 9 ? "9+" : value
+};
+
 const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
   return (
     <motion.div
@@ -16,7 +20,6 @@ const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
     >
       <MdOutlineNotifications className="text-xl text-white" />
 
-      {/* Badge Number */}
       {count > 0 && (
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
@@ -30,7 +33,7 @@ const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
             rounded-full font-semibold px-1
           "
         >
-          {count > 9 ? "9+" : count}
+          {getBadgeValue(count)}
         </motion.div>
       )}
     </motion.div>

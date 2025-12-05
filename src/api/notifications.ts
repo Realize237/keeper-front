@@ -2,12 +2,12 @@ import axios from "axios";
 import { processError } from "../utils";
 import { env } from "../utils/env";
 import { API_PATHS } from "./api-paths";
-import type { Notification } from "../interfaces/notifications";
+import type { NotificationRequest } from "../interfaces/notifications";
 
 export const getAllNotifications = async () => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.BASE}`,
+      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_ALL_NOTIFICATIONS}`,
       { withCredentials: true }
     );
     return response.data;
@@ -19,7 +19,7 @@ export const getAllNotifications = async () => {
 export const getAllUsersNotifications = async () => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_MY}`,
+      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}`,
       { withCredentials: true }
     );
     return response.data.data;
@@ -28,10 +28,10 @@ export const getAllUsersNotifications = async () => {
   }
 };
 
-export const toggleSingleNotificationReadStatus = async (id: number) => {
+export const updateNotification = async (notificationRequest: NotificationRequest) => {
   try {
     const response = await axios.patch<{ message: string, statusCode: number }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.UPDATE_SINGLE}/${id}/toggle-read`,
+      `${env.API_URL}${API_PATHS.NOTIFICATIONS.UPDATE_NOTIFICATION_STATUS(notificationRequest.ids, notificationRequest.all)}`,
       {},
       { withCredentials: true }
     );
@@ -42,52 +42,10 @@ export const toggleSingleNotificationReadStatus = async (id: number) => {
   }
 };
 
-export const toggleMultipleNotificationReadStatus = async (notifications: Notification[]) => {
-  try {
-    const response = await axios.patch<{ message: string, statusCode: number }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.UPDATE_MULTIPLE}`,
-      {
-        ids: notifications.map((not) => not.id),
-      },
-      { withCredentials: true }
-    );
-
-    return response.data;
-  } catch (err) {
-    return processError(err);
-  }
-};
-
-export const deleteSingleNotification = async (id: number) => {
+export const deleteNotification = async (notificationRequest: NotificationRequest) => {
   try {
     const response = await axios.delete<{ message: string, statusCode: number }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.SINGLE}/${id}`,
-      { withCredentials: true }
-    );
-
-    return response.data;
-  } catch (err) {
-    return processError(err);
-  }
-};
-
-export const deleteMultipleNotifications = async (ids: number[]) => {
-  try {
-    const response = await axios.delete<{ message: string, statusCode: number }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.DELETE_MULTIPLE}?ids=${ids}`,
-      { withCredentials: true }
-    );
-
-    return response.data;
-  } catch (err) {
-    return processError(err);
-  }
-};
-
-export const deleteAllUserNotifications = async () => {
-  try {
-    const response = await axios.delete<{ message: string, statusCode: number }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.DELETE_ALL}`,
+      `${env.API_URL}${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`,
       { withCredentials: true }
     );
 
