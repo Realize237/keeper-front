@@ -8,5 +8,14 @@ export const API_PATHS = {
     SUBSCRIPTIONS:{
         GET_ALL_SUBSCRIPTIONS: '/subscriptions',
         ADD_SUBSCRIPTION: '/subscriptions',
+    },
+    NOTIFICATIONS: {
+        BASE: '/notifications',
+        SINGLE: '/notifications/single',
+        GET_MY: "/notifications/user/all",
+        UPDATE_SINGLE: "/notifications",
+        UPDATE_MULTIPLE: "/notifications",
+        DELETE_MULTIPLE: "/notifications/multiple",
+        DELETE_ALL: "/notifications/user/all"
     }
 }

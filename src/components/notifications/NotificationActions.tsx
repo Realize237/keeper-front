@@ -10,9 +10,8 @@ type Props = {
   onMarkAllRead: () => void;
   onDeleteAll: () => void;
   onDeleteSelected: () => void;
-  onMarkSelectedAsRead: () => void;
-  onMarkSelectedAsUnread: () => void;
-  onChangeFilter: (filter: boolean) => void;
+  toggleStatus: () => void;
+  onChangeFilter: (filter: string) => void;
 };
 
 const NotificationActions: React.FC<Props> = ({
@@ -23,8 +22,7 @@ const NotificationActions: React.FC<Props> = ({
   onMarkAllRead,
   onDeleteAll,
   onDeleteSelected,
-  onMarkSelectedAsRead,
-  onMarkSelectedAsUnread,
+  toggleStatus,
   onChangeFilter
 }) => {
   return (
@@ -40,11 +38,8 @@ const NotificationActions: React.FC<Props> = ({
 
           {selectedCount > 0 && (
             <>
-              <button onClick={onMarkSelectedAsRead} className="px-3 py-2 rounded-full bg-green-600/20 text-sm border border-green-600">
-                Mark Read
-              </button>
-              <button onClick={onMarkSelectedAsUnread} className="px-3 py-2 rounded-full bg-blue-600/20 text-sm border border-blue-600">
-                Mark Unread
+              <button onClick={toggleStatus} className="px-3 py-2 rounded-full bg-green-600/20 text-sm border border-green-600">
+                Toggle status
               </button>
               <button onClick={onDeleteSelected} className="px-3 py-2 rounded-full bg-red-600/20 text-sm border border-red-600">
                 Delete ({selectedCount})

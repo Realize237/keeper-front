@@ -6,18 +6,25 @@ import {
   FiTrash2,
   FiCheck,
   FiMoreHorizontal,
-  FiAlertTriangle,
-  FiInfo,
-  FiShoppingBag,
+  FiMessageCircle,
 } from "react-icons/fi";
-import type { Notification } from "../../interfaces/notifications";
-import { MdUndo } from "react-icons/md";
+import {
+  NotificationStatus,
+  NotificationType,
+  type Notification,
+} from "../../interfaces/notifications";
+import {
+  MdEmail,
+  MdSecurity,
+  MdUndo,
+  MdWhatsapp,
+} from "react-icons/md";
 import { formatTime } from "../../utils";
 
 type Props = {
   notification: Notification;
   isSwiped: boolean;
-  setSwipedId: (id: string | null) => void;
+  setSwipedId: (id: number | null) => void;
   selectMode: boolean;
   selected: boolean;
   toggleSelect: () => void;
@@ -54,11 +61,10 @@ const NotificationItem: React.FC<Props> = ({
   };
 
   const iconMap = {
-    success: <FiCheck className="w-7 h-7 text-white" />,
-    error: <FiAlertTriangle className="w-7 h-7" />,
-    warning: <FiAlertTriangle className="w-7 h-7" />,
-    info: <FiInfo className="w-7 h-7" />,
-    promo: <FiShoppingBag className="w-7 h-7" />,
+    [NotificationType.SYSTEM]: <MdSecurity className="w-7 h-7" />,
+    [NotificationType.EMAIL]: <MdEmail className="w-7 h-7" />,
+    [NotificationType.SMS]: <FiMessageCircle className="w-7 h-7" />,
+    [NotificationType.WHATSAPP]: <MdWhatsapp className="w-7 h-7" />,
   };
 
   return (
@@ -68,10 +74,14 @@ const NotificationItem: React.FC<Props> = ({
         <div className="absolute inset-0 flex items-center justify-end pr-4 gap-2 pointer-events-none">
           <button
             onClick={onToggleRead}
-            title={notification.isRead ? "Mark as unread" : "Mark as read"}
+            title={
+              notification.status === NotificationStatus.READ
+                ? "Mark as unread"
+                : "Mark as read"
+            }
             className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
           >
-            {notification.isRead ? (
+            {notification.status === NotificationStatus.READ ? (
               <MdUndo className="w-4 h-4" />
             ) : (
               <FiCheck className="w-4 h-4" />
@@ -93,7 +103,9 @@ const NotificationItem: React.FC<Props> = ({
         className={`relative transition-transform duration-200 transform ${
           isSwiped ? "-translate-x-24" : "translate-x-0"
         } rounded-3xl p-4 ${
-          notification.isRead ? "border border-neutral-800" : "bg-neutral-800"
+          notification.status === NotificationStatus.READ
+            ? "border border-neutral-800"
+            : "bg-neutral-800"
         } overflow-hidden`}
       >
         <div className="flex items-start gap-4">
@@ -111,10 +123,12 @@ const NotificationItem: React.FC<Props> = ({
           <div className="shrink-0 mt-1">
             <div
               className={`w-14 h-14 rounded-full ${
-                notification.isRead ? "bg-neutral-800" : "bg-[#171717]"
+                notification.status === NotificationStatus.READ
+                  ? "bg-neutral-800"
+                  : "bg-[#171717]"
               } flex items-center justify-center text-white`}
             >
-              {iconMap[notification.type]}
+              {iconMap[notification.notificationType]}
             </div>
           </div>
 
@@ -123,18 +137,22 @@ const NotificationItem: React.FC<Props> = ({
             <div className="flex items-start justify-between gap-2">
               <h4
                 className={`font-semibold truncate ${
-                  notification.isRead ? "text-neutral-300" : "text-white"
+                  notification.status === NotificationStatus.READ
+                    ? "text-neutral-300"
+                    : "text-white"
                 }`}
               >
                 {notification.title}
               </h4>
               <div className="text-xs text-neutral-400 ml-2 whitespace-nowrap">
-                {formatTime(notification.timestamp)}
+                {formatTime(notification.createdAt)}
               </div>
             </div>
             <p
               className={`text-sm mt-1 line-clamp-2 ${
-                notification.isRead ? "text-neutral-400" : "text-neutral-200"
+                notification.status === NotificationStatus.READ
+                  ? "text-neutral-400"
+                  : "text-neutral-200"
               }`}
             >
               {notification.message}
@@ -152,8 +170,7 @@ const NotificationItem: React.FC<Props> = ({
                   className="w-full h-full object-cover"
                 />
               </div>
-            )
-            }
+            )}
           </div>
 
           {/* actions chevron */}
@@ -182,10 +199,14 @@ const NotificationItem: React.FC<Props> = ({
           <div className="hidden md:flex items-center justify-end pr-4 gap-2 pointer-events-none">
             <button
               onClick={onToggleRead}
-              title={notification.isRead ? "Mark as unread" : "Mark as read"}
+              title={
+                notification.status === NotificationStatus.READ
+                  ? "Mark as unread"
+                  : "Mark as read"
+              }
               className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
             >
-              {notification.isRead ? (
+              {notification.status === NotificationStatus.READ ? (
                 <MdUndo className="w-4 h-4" />
               ) : (
                 <FiCheck className="w-4 h-4" />
