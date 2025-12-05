@@ -18,9 +18,10 @@ import {
   useToggleSingleNotificationStatus,
   useUserNotifications,
 } from "../hooks/useNotifications";
+import NotificationSkeletonLoader from "../components/notifications/SkeletonLoader";
 
 const NotificationsPage: React.FC = () => {
-  const { data: notifications } = useUserNotifications();
+  const { data: notifications, isLoading } = useUserNotifications();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectMode, setSelectMode] = useState(false);
@@ -201,7 +202,13 @@ const NotificationsPage: React.FC = () => {
               <NotificationFilterToggle style="p-3" onChange={setFilter} />
             </div>
 
-            <NotificationList
+            {
+              isLoading ?
+              <div className="flex space-y-4">
+                <NotificationSkeletonLoader />
+              </div>
+              :
+              <NotificationList
               notifications={currentItems!}
               swipedId={swipedId}
               setSwipedId={setSwipedId}
@@ -210,7 +217,7 @@ const NotificationsPage: React.FC = () => {
               toggleSelect={toggleSelect}
               onToggleRead={toggleRead}
               onDelete={deleteNotification}
-            />
+            />}
 
             {totalFiltered > perPage && (
               <div className="mt-4">
