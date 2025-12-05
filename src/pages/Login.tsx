@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 
+
 import { Link, useSearchParams } from "react-router-dom";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { IMAGES } from "../assets";
@@ -20,7 +21,9 @@ export default function Login() {
   const error = searchParams.get("error");
   const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]);
 
+
   const toastShownRef = useRef(false);
+
 
   useEffect(() => {
     if (error && !toastShownRef.current) {

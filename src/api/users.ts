@@ -74,6 +74,7 @@ export const logoutUser = async () => {
     const response = await axios.post<{ message: string }>(
       `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
       null,
+      {withCredentials: true}
     );
 
     return response.data;
