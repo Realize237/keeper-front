@@ -1,7 +1,7 @@
 import axios from "axios";
 import { env } from "../utils/env";
 import { API_PATHS } from "./api-paths";
-import type {
+import {
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -73,7 +73,7 @@ export const logoutUser = async () => {
   try {
     const response = await axios.post<{ message: string }>(
       `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
-      null,
+      {},
       {withCredentials: true}
     );
 

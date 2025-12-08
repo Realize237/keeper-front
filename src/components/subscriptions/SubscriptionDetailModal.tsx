@@ -26,8 +26,8 @@ export default function SubscriptionDetailModal({
 }: SubscriptionDetailModalProps) {
   const [isOpen, setIsOpen] = useState(true);
   const nextBillingResult: BillingResult = getNextBillingDate(
-    selectedSubscriptionDetails.details.startDate,
-    selectedSubscriptionDetails.details.endDate,
+    new Date(selectedSubscriptionDetails.details.startDate),
+    new Date(selectedSubscriptionDetails.details.endDate),
     selectedSubscriptionDetails.type
   );
 
@@ -169,7 +169,9 @@ export default function SubscriptionDetailModal({
               animate="visible"
               exit="exit"
             >
-              <p className="text-white text-3xl">Spotify</p>
+              <p className="text-white text-3xl">
+                {selectedSubscriptionDetails?.details?.name}
+              </p>
               <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#bbcdcc]">
                 <span className="text-green-800 text-lg]">
                   ${selectedSubscriptionDetails.price}
@@ -220,7 +222,7 @@ export default function SubscriptionDetailModal({
                 exit="exit"
                 whileHover={{ backgroundColor: "#3d3d3d" }}
               >
-                <span className="text-[#838383] font-bold">Remaing</span>
+                <span className="text-[#838383] font-bold">Remaining</span>
                 <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#cdbbbb]">
                   <span className="text-red-800 text-lg]">
                     {nextBillingResult.daysRemaining} days

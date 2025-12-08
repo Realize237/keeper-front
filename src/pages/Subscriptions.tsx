@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { TbScreenshot } from "react-icons/tb";
 import { daysOfWeek, monthsOfYear } from "../constants";
@@ -18,10 +18,14 @@ import {
   normalizedDate,
   updateCurrentDateToSelectedDate,
 } from "../utils";
-import { getMonthlySubscriptions } from "../api/subscription";
 import BottomSheet from "../components/ui/BottomSheet";
 import type { Value } from "../interfaces/calendar";
 import SubscriptionTypeAndDot from "../components/ui/SubscriptionTypeAndDot";
+import { useMonthlySubscriptions } from "../hooks/useSubscriptions";
+import CalendarSkeleton, {
+  MonthlyHeaderSkeleton,
+} from "../components/calendar/CalendarSkeleton";
+import ErrorState from "../components/common/ErrorState";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -46,8 +50,6 @@ const itemVariants = {
 const Subscriptions = () => {
   const [selectDay, setSelectDay] = useState<number | null>(null);
   const [currentDate, onChangeCalendarValue] = useState<Value>(new Date());
-  const [groupedMonthlySubscriptions, setGroupedMonthlySubscriptions] =
-    useState<SubscriptionsGroupedByDay>({});
   const [selectedSubsciptionsByDay, setSelectedSubscriptionsByDay] =
     useState<SubscriptionsGroupedByDay>({});
   const [selectedSubscriptionDetails, setSelectedSubscriptionDetails] =
@@ -58,12 +60,14 @@ const Subscriptions = () => {
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
 
-  const getGroupedMonthlySubscriptions = async () => {
-    const subscriptions = await getMonthlySubscriptions(
-      normalizedDate(currentDate)
-    );
-    return subscriptions;
-  };
+  const normalized = normalizedDate(currentDate);
+
+  const {
+    data: groupedMonthlySubscriptions = {},
+    isLoading,
+    error,
+    refetch,
+  } = useMonthlySubscriptions(normalized);
 
   const getDaySubscriptions = useCallback(
     (day: number) => {
@@ -112,16 +116,6 @@ const Subscriptions = () => {
 
     return 0;
   }, [groupedMonthlySubscriptions]);
-
-  useEffect(() => {
-    getGroupedMonthlySubscriptions()
-      .then((subscriptions) => {
-        setGroupedMonthlySubscriptions(subscriptions);
-      })
-      .catch((err) =>
-        console.error("[get]: groupedMonthlySubscriptions: ", err)
-      );
-  }, [currentDate]);
 
   return (
     <div className="flex justify-center">
@@ -183,10 +177,14 @@ const Subscriptions = () => {
             <span className="text-gray-400 text-md md:mr-2 md:mt-0 mt-4">
               Monthly total:
             </span>
-            <span className="text-white text-md">
-              {" "}
-              ${getTotalMonthlySubscriptions}
-            </span>
+            {isLoading ? (
+              <span className="bg-[#3a3a3a] animate-pulse w-12 h-3"></span>
+            ) : (
+              <span className="text-white text-md">
+                {" "}
+                ${getTotalMonthlySubscriptions}
+              </span>
+            )}
           </div>
         </motion.div>
 
@@ -210,9 +208,7 @@ const Subscriptions = () => {
               key={day}
               onClick={() => setSelectDay(index)}
               className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
-                selectDay === index
-                  ? "border-1 border-[#303031]"
-                  : "bg-[#464646]"
+                selectDay === index ? "border border-[#303031]" : "bg-[#464646]"
               } cursor-pointer h-auto flex justify-center items-center`}
               whileHover={{ scale: 1.05, backgroundColor: "#3f3f3f" }}
               whileTap={{ scale: 0.95 }}
@@ -224,22 +220,42 @@ const Subscriptions = () => {
 
         {/* day of the month */}
         <motion.div variants={itemVariants}>
-          <Calendar
-            date={currentDate}
-            getDaySubscriptions={getDaySubscriptions}
-            groupedMonthlySubscriptions={groupedMonthlySubscriptions}
-          />
+          {isLoading && (
+            <>
+              <MonthlyHeaderSkeleton />
+              <CalendarSkeleton />
+            </>
+          )}
+          {!isLoading && !error && (
+            <Calendar
+              date={currentDate}
+              getDaySubscriptions={getDaySubscriptions}
+              groupedMonthlySubscriptions={groupedMonthlySubscriptions}
+            />
+          )}
         </motion.div>
 
-        <motion.div
-          className="w-full mt-4"
-          onClick={openBottomSheet}
-          whileHover={{ scale: 1.05 }}
-        >
-          <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
-            Select Date
-          </button>
-        </motion.div>
+        {error && (
+          <ErrorState
+            message="Failed to load subscriptions."
+            onRetry={() => refetch()}
+          />
+        )}
+
+        {isLoading ? (
+          <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
+        ) : error ? null : (
+          <motion.div
+            className="w-full mt-4"
+            onClick={openBottomSheet}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
+              Select Date
+            </button>
+          </motion.div>
+        )}
       </motion.div>
 
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>

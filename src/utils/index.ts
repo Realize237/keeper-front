@@ -93,6 +93,7 @@ export const getNextBillingDate = (
   console.log("Type passed: ", type);
   // Normalize dates to midnight
   const normalize = (d: Date) =>
+
     new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
   const start = normalize(startDate);
@@ -232,3 +233,12 @@ export const getAvatarInitials = (name?: string | null): string => {
   const second = words[1][0];
   return (first + second).toUpperCase();
 };
+
+export const formatTime = (date: string | Date | number) => {
+  return moment(date).fromNow();
+};
+
+
+function moment(date: string | number | Date) {
+  throw new Error("Function not implemented.");
+}
