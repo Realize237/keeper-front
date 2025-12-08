@@ -1,10 +1,15 @@
-import { CookiesProvider } from 'react-cookie'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Subscriptions from './pages/Subscriptions'
-import MainLayout from './layouts/MainLayout'
-import NotificationsPage from './pages/Notifications'
+import { CookiesProvider } from "react-cookie";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Subscriptions from "./pages/Subscriptions";
+import MainLayout from "./layouts/MainLayout";
+import NotificationsPage from "./pages/Notifications";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
@@ -22,7 +27,6 @@ export default function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path='/notifications' element={<NotificationsPage />} />
               <Route
                 element={
                   <ProtectedRoute>
@@ -34,6 +38,7 @@ export default function App() {
                 <Route path="/cards" element={<Cards />} />
                 <Route path="/shared-plan" element={<SharedPlan />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/notifications" element={<NotificationsPage />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />

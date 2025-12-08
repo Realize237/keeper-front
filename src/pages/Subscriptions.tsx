@@ -26,8 +26,10 @@ import CalendarSkeleton, {
   MonthlyHeaderSkeleton,
 } from "../components/calendar/CalendarSkeleton";
 import ErrorState from "../components/common/ErrorState";
-import { MdOutlineNotifications } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useUserNotifications } from "../hooks/useNotifications";
+import NotificationBell from "../components/notifications/NotificationBell";
+import { NotificationStatus } from "../interfaces/notifications";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -58,6 +60,8 @@ const Subscriptions = () => {
     useState<Subscription | null>(null);
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+
+  const usersNotifications = useUserNotifications();
 
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
@@ -121,6 +125,13 @@ const Subscriptions = () => {
     return 0;
   }, [groupedMonthlySubscriptions]);
 
+  const unReadCount = useMemo(() => {
+    if (!usersNotifications.data) return 0;
+    return usersNotifications.data?.filter(
+      (not) => not.status === NotificationStatus.UNREAD
+    ).length;
+  }, [usersNotifications]);
+
   return (
     <div className="flex justify-center">
       {!isEmpty(selectedSubsciptionsByDay) && (
@@ -154,14 +165,10 @@ const Subscriptions = () => {
             <span className="text-gray-400 text-3xl">List</span>
           </div>
           <div className="flex items-center space-x-3">
-            <motion.div
-              className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
-              whileHover={{ scale: 1.1 }}
+            <NotificationBell
+              count={unReadCount}
               onClick={() => navigate("/notifications")}
-              whileTap={{ scale: 0.95 }}
-            >
-              <MdOutlineNotifications className="text-xl text-white" />
-            </motion.div>
+            />
             <motion.div
               className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
               whileHover={{ scale: 1.1 }}

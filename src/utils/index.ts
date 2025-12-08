@@ -237,8 +237,3 @@ export const getAvatarInitials = (name?: string | null): string => {
 export const formatTime = (date: string | Date | number) => {
   return moment(date).fromNow();
 };
-
-
-function moment(date: string | number | Date) {
-  throw new Error("Function not implemented.");
-}
