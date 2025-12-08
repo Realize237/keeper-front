@@ -1,17 +1,16 @@
-// components/notifications/NotificationList.tsx
 import React from 'react';
 import NotificationItem from '../../components/notifications/NotificationItem';
 import type { Notification } from '../../interfaces/notifications';
 
 type Props = {
   notifications: Notification[];
-  swipedId: string | null;
-  setSwipedId: (id: string | null) => void;
+  swipedId: number | null;
+  setSwipedId: (id: number | null) => void;
   selectMode: boolean;
-  selectedIds: Set<string>;
-  toggleSelect: (id: string) => void;
-  onToggleRead: (id: string) => void;
-  onDelete: (id: string) => void;
+  selectedIds: Set<number>;
+  toggleSelect: (id: number) => void;
+  onToggleRead: (id: number) => void;
+  onDelete: (id: number) => void;
 };
 
 const NotificationList: React.FC<Props> = ({
@@ -24,7 +23,7 @@ const NotificationList: React.FC<Props> = ({
   onToggleRead,
   onDelete,
 }) => {
-  if (notifications.length === 0) {
+  if (!notifications || !notifications.length) {
     return (
       <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-8 text-center">
         <h3 className="text-lg font-semibold text-neutral-200">No notifications</h3>

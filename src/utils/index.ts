@@ -1,7 +1,6 @@
 import { IMAGES } from "../assets";
 import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
-import type { Notification } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
 import moment from "moment";
 
@@ -237,18 +236,4 @@ export const getAvatarInitials = (name?: string | null): string => {
 
 export const formatTime = (date: string | Date | number) => {
   return moment(date).fromNow();
-};
-
-export const getTypeColor = (type: Notification["type"]) => {
-  switch (type) {
-    case "success":
-      return "bg-gradient-to-br from-green-800/15 to-green-900/10 border-green-700/40";
-    case "warning":
-      return "bg-gradient-to-br from-yellow-800/10 to-yellow-900/8 border-yellow-700/40";
-    case "error":
-      return "bg-gradient-to-br from-red-800/12 to-red-900/8 border-red-700/40";
-    case "info":
-    default:
-      return "bg-gradient-to-br from-blue-800/10 to-blue-900/8 border-blue-700/40";
-  }
 };

@@ -22,8 +22,10 @@ import { getMonthlySubscriptions } from "../api/subscription";
 import BottomSheet from "../components/ui/BottomSheet";
 import type { Value } from "../interfaces/calendar";
 import SubscriptionTypeAndDot from "../components/ui/SubscriptionTypeAndDot";
-import { MdOutlineNotifications } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useUserNotifications } from "../hooks/useNotifications";
+import NotificationBell from "../components/notifications/NotificationBell";
+import { NotificationStatus } from "../interfaces/notifications";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -56,6 +58,8 @@ const Subscriptions = () => {
     useState<Subscription | null>(null);
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+
+  const usersNotifications = useUserNotifications();
 
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
@@ -126,6 +130,10 @@ const Subscriptions = () => {
   }, [currentDate]);
 
   const navigate = useNavigate();
+  const unReadCount = useMemo(() => {
+      if (!usersNotifications.data) return 0
+      return usersNotifications.data?.filter(not => not.status === NotificationStatus.UNREAD).length;
+  }, [usersNotifications])
 
   return (
     <div className="flex justify-center">
@@ -160,14 +168,7 @@ const Subscriptions = () => {
             <span className="text-gray-400 text-3xl">List</span>
           </div>
           <div className="flex items-center space-x-3">
-            <motion.div
-            className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
-            whileHover={{ scale: 1.1 }}
-            onClick={() => navigate("/notifications")}
-            whileTap={{ scale: 0.95 }}
-          >
-            <MdOutlineNotifications className="text-xl text-white" />
-          </motion.div>
+            <NotificationBell count={unReadCount} onClick={() => navigate("/notifications")} />
           <motion.div
             className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
             whileHover={{ scale: 1.1 }}
@@ -225,7 +226,7 @@ const Subscriptions = () => {
               onClick={() => setSelectDay(index)}
               className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
                 selectDay === index
-                  ? "border-1 border-[#303031]"
+                  ? "border border-[#303031]"
                   : "bg-[#464646]"
               } cursor-pointer h-auto flex justify-center items-center`}
               whileHover={{ scale: 1.05, backgroundColor: "#3f3f3f" }}
