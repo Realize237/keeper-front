@@ -12,7 +12,11 @@ import MainLayout from "./layouts/MainLayout";
 import NotificationsPage from "./pages/Notifications";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
+import Cards from "./pages/Cards";
+import SharedPlan from "./pages/SharedPlan";
+import Profile from "./pages/Profile";
+import NavLayout from "./layouts/NavLayout";
 
 export default function App() {
   return (
@@ -32,13 +36,17 @@ export default function App() {
                 }
               />
               <Route
-                path="/subscriptions"
                 element={
                   <ProtectedRoute>
-                    <Subscriptions />
+                    <NavLayout />
                   </ProtectedRoute>
                 }
-              />
+              >
+                <Route path="/subscriptions" element={<Subscriptions />} />
+                <Route path="/cards" element={<Cards />} />
+                <Route path="/shared-plan" element={<SharedPlan />} />
+                <Route path="/profile" element={<Profile />} />
+              </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>

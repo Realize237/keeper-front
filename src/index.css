@@ -72,3 +72,9 @@ button {
     transform: scale(-1)
   }
 }
+
+.spinner {
+  border-top-color: transparent;
+  border-radius: 9999px;
+  animation: spin 1s linear infinite;
+}

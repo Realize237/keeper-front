@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import useIsChromeExtension from "../hooks/useIsChromeExtension";
-import { getBrowserDimensions } from "../utils/environment";
+
+
 import { Link, useSearchParams } from "react-router-dom";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { IMAGES } from "../assets";
@@ -12,34 +12,30 @@ import { env } from "../utils/env";
 import toast from "react-hot-toast";
 import { useCookies } from "react-cookie";
 
-
 export default function Login() {
   const navigate = useNavigate();
-  const isChromeExtension = useIsChromeExtension();
   const [showPassword, setShowPassword] = useState(false);
-  const { mutate, isPending   } = useLoginUser();
+  const { mutate, isPending } = useLoginUser();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const error = searchParams.get("error");
-  const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]) 
+  const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]);
 
 
+  const toastShownRef = useRef(false);
 
 
-const toastShownRef = useRef(false);
+  useEffect(() => {
+    if (error && !toastShownRef.current) {
+      toastShownRef.current = true;
+      toast.error(error);
 
-useEffect(() => {
-  if (error && !toastShownRef.current) {
-    toastShownRef.current = true; // mark as shown
-    toast.error(error);
-
-    // Clear the URL param
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("error");
-    window.history.replaceState({}, "", `${location.pathname}?${newParams}`);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [error]);
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("error");
+      window.history.replaceState({}, "", `${location.pathname}?${newParams}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   const {
     register,
@@ -56,67 +52,65 @@ useEffect(() => {
     },
   });
 
-    useEffect(()=> {
-    if(cookies.rememberMe){
+  useEffect(() => {
+    if (cookies.rememberMe) {
       reset({
         email: cookies.rememberMe.email,
         password: cookies.rememberMe.password,
-        rememberMe: cookies.rememberMe.rememberMe
-      })
+        rememberMe: cookies.rememberMe.rememberMe,
+      });
     }
-  }, [cookies, reset])
+  }, [cookies, reset]);
 
   useEffect(() => {
-  const subscription = watch((_, { name }) => {
-    if (loginError && (name === "email" || name === "password")) {
-      setLoginError(null); // clear login error on user edit
-    }
-  });
-  return () => subscription.unsubscribe();
-}, [watch, loginError]);
-
-
+    const subscription = watch((_, { name }) => {
+      if (loginError && (name === "email" || name === "password")) {
+        setLoginError(null); // clear login error on user edit
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, loginError]);
 
   const onSubmit = (data: {
     email: string;
     password: string;
     rememberMe: boolean;
   }) => {
-
-    if(data.rememberMe){
+    if (data.rememberMe) {
       setCookies(
         "rememberMe",
-        {email:data.email, password: data.password, rememberMe: data.rememberMe},
-        {path: "/login", maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION)}
-      )
-    }else{
-      removeCookie("rememberMe")
+        {
+          email: data.email,
+          password: data.password,
+          rememberMe: data.rememberMe,
+        },
+        { path: "/login", maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION) }
+      );
+    } else {
+      removeCookie("rememberMe");
     }
-    
+
     mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-            navigate("/subscriptions", {
+          navigate("/subscriptions", {
             replace: true,
           });
         },
         onError: (error) => {
-            if (
+          if (
             error.message.includes("User not found") ||
             error.message.includes("Invalid credentials")
           ) {
             setLoginError("Invalid email or password");
-          }else{
-              toast.error(error.message || "Something went wrong");
+          } else {
+            toast.error(error.message || "Something went wrong");
           }
         },
       }
     );
   };
-
-
-
 
   const handleGoogleLogin = () => {
     window.location.href = env.GOOGLE_CALLBACK_URL;
@@ -171,15 +165,9 @@ useEffect(() => {
   };
 
   return (
-    <div
-      className={`${
-        isChromeExtension ? "rounded-2xl overflow-hidden" : ""
-      } ${getBrowserDimensions(
-        isChromeExtension
-      )} flex flex-col items-center justify-center bg-[#171717] min-h-screen`}
-    >
+    <div className="flex flex-col  py-8 overflow-hidden">
       <motion.div
-        className="w-11/12 max-w-md flex flex-col items-center justify-center mt-4"
+        className="w-11/12 max-w-md mx-auto flex flex-col items-center justify-center "
         variants={containerVariants}
         initial="hidden"
         animate="visible"

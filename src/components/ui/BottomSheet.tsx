@@ -7,13 +7,12 @@ interface BottomSheetProps {
 }
 
 const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
-
   return isOpen ? (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 z-40 flex justify-center items-end"
+      className="fixed inset-0 bg-black/50 z-100 flex justify-center items-end"
       onClick={onClose}
     >
       <motion.div
