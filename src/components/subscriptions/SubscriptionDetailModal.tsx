@@ -5,6 +5,7 @@ import {
   formatToReadableDate,
   getNextBillingDate,
   getSubscriptionCardImage,
+  pluralize,
 } from "../../utils";
 import { MdOutlineClear } from "react-icons/md";
 import SubscriptionTypeAndDot from "../ui/SubscriptionTypeAndDot";
@@ -225,7 +226,7 @@ export default function SubscriptionDetailModal({
                 <span className="text-[#838383] font-bold">Remaining</span>
                 <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#cdbbbb]">
                   <span className="text-red-800 text-lg]">
-                    {nextBillingResult.daysRemaining} days
+                    {pluralize(nextBillingResult.daysRemaining, "day", "days")}
                   </span>
                 </div>
               </motion.div>
