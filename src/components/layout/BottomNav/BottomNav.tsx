@@ -1,17 +1,21 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { NavItems } from "../../../constants/NavItems";
+import { activeNavItems } from "../../../utils";
 
 const BottomNav = () => {
   const location = useLocation();
-  const activeIndex = NavItems.findIndex(
+  const length = activeNavItems.length;
+  const activeIndex = activeNavItems.findIndex(
     (item) => item.path === location.pathname
   );
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 w-full h-16 bg-[#2f2f2f] border-t shadow-md z-50 sm:max-w-md sm:mx-auto sm:rounded-t-xl sm:bottom-5 sm:shadow-lg sm:hidden">
-      <div className="relative grid grid-cols-4 h-full">
-        {NavItems.map((menu, index) => {
+    <div className="fixed bottom-0 left-0 right-0 w-full h-16 bg-[#2f2f2f]  shadow-md z-50 sm:max-w-md sm:mx-auto sm:rounded-t-xl sm:bottom-5 sm:shadow-lg sm:hidden">
+      <div
+        className="relative grid h-full"
+        style={{ gridTemplateColumns: `repeat(${length}, 1fr)` }}
+      >
+        {activeNavItems.map((menu, index) => {
           const Icon = menu.icon;
           const isActive = index === activeIndex;
 
@@ -60,8 +64,8 @@ const BottomNav = () => {
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
           className="absolute top-0 h-1 bg-[#CDFF00] rounded-full"
           style={{
-            width: "3rem",
-            left: `calc(${activeIndex * 25}% + 12.5% - 1.5rem)`,
+            width: `${100 / length}%`,
+            left: `${(100 / length) * activeIndex}%`,
           }}
         />
       </div>
