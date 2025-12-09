@@ -91,7 +91,6 @@ export const getNextBillingDate = (
   type: "MONTHLY" | "YEARLY",
   fromDate: Date = new Date()
 ): BillingResult => {
-  console.log("Type passed: ", type);
   // Normalize dates to midnight
   const normalize = (d: Date) =>
     new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -237,3 +236,7 @@ export const getAvatarInitials = (name?: string | null): string => {
 export const formatTime = (date: string | Date | number) => {
   return moment(date).fromNow();
 };
+
+
+export const pluralize = (count: number, singular: string, plural: string) =>
+  `${count} ${count === 1 ? singular : plural}`;
