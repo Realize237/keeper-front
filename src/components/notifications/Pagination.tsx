@@ -23,7 +23,7 @@ const Pagination: React.FC<Props> = ({
   perPage = 10,
   totalItems,
 }) => {
-  const visiblePages = parseInt(env.VISIBLE_PAGES??5);
+  const visiblePages = parseInt(env.VISIBLE_PAGE_COUNT??5);
   const half = Math.floor(visiblePages / 2);
 
   let start = Math.max(1, current - half);

@@ -1,4 +1,3 @@
-// components/notifications/NotificationsPage.tsx
 import React, { useMemo, useState, useCallback } from "react";
 import NotificationsHeader from "../components/notifications/NotificationsHeader";
 import NotificationList from "../components/notifications/NotificationList";
@@ -29,27 +28,25 @@ const NotificationsPage: React.FC = () => {
   const deleteNotificationMutation = useDeleteNotifications();
 
   const [page, setPage] = useState(1);
-  const perPage = parseInt(env.PER_PAGE ?? "3");
+  const perPage = parseInt(env.ROWS_PER_PAGE ?? "3");
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return notifications;
     if (!notifications) return [];
     return notifications.filter(
-      (n) =>
-        n.title.toLowerCase().includes(q) || n.message.toLowerCase().includes(q)
+      (notification) =>
+        notification.title.toLowerCase().includes(q) || notification.message.toLowerCase().includes(q)
     );
   }, [notifications, searchQuery]);
 
   const [filter, setFilter] = useState<string>(NotificationStatus.UNREAD);
-
-  // 1. Filter read/unread BEFORE pagination
+  
   const filteredByRead = useMemo(() => {
     if (!filtered) return [];
-    return filtered?.filter((n) => n.status === filter);
+    return filtered?.filter((notification) => notification.status === filter);
   }, [filtered, filter]);
 
-  // 2. Correct pagination
   const totalPages = Math.max(
     1,
     Math.ceil((filteredByRead?.length ?? 0) / perPage)
@@ -65,12 +62,11 @@ const NotificationsPage: React.FC = () => {
 
   const unreadCount = useMemo(
     () =>
-      notifications?.filter((n) => n.status === NotificationStatus.UNREAD)
+      notifications?.filter((notification) => notification.status === NotificationStatus.UNREAD)
         .length,
     [notifications]
   );
 
-  // Handlers
   const toggleRead = useCallback(
     (id: number) => {
       updateNotificationMutation.mutate({ids: [id], all:false});
@@ -89,14 +85,14 @@ const NotificationsPage: React.FC = () => {
 
   const markAllAsRead = useCallback(() => {
     if (notifications) {
-      updateNotificationMutation.mutate({ids:notifications.map(not => not.id), all: true});
+      updateNotificationMutation.mutate({ids:notifications.map(notification => notification.id), all: true});
     }
   }, [updateNotificationMutation, notifications]);
 
   const deleteAll = useCallback(() => {
     if (!confirm("Are you sure you want to delete all notifications?")) return;
     if (notifications) {
-      deleteNotificationMutation.mutate({ids: notifications?.map(not => not.id), all: true});
+      deleteNotificationMutation.mutate({ids: notifications?.map(notification => notification.id), all: true});
     }
     setSelectedIds(new Set());
   }, [deleteNotificationMutation, notifications]);
@@ -113,7 +109,7 @@ const NotificationsPage: React.FC = () => {
   const toggleSelectAll = useCallback(() => {
     setSelectedIds((prev) => {
       if (prev.size === currentItems?.length) return new Set();
-      return new Set(currentItems?.map((n) => n.id));
+      return new Set(currentItems?.map((notification) => notification.id));
     });
   }, [currentItems]);
 
@@ -130,9 +126,9 @@ const NotificationsPage: React.FC = () => {
     () => {
       if (selectedIds.size === 0) return;
       const selectedNotifications = notifications
-        ?.filter((not) => selectedIds.has(not.id))
+        ?.filter((notification) => selectedIds.has(notification.id))
       if (selectedNotifications) {
-        updateNotificationMutation.mutate({ids: selectedNotifications.map(not => not.id), all: false});
+        updateNotificationMutation.mutate({ids: selectedNotifications.map(notification => notification.id), all: false});
       }
       setSelectedIds(new Set());
       setSelectMode(false);
@@ -142,7 +138,6 @@ const NotificationsPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // utility to close swipe when page changes or select mode changes
   React.useEffect(() => {
     setSwipedId(null);
   }, [page, selectMode]);
@@ -176,7 +171,6 @@ const NotificationsPage: React.FC = () => {
         />
 
         <div className="mt-4">
-          {/* Left pane - list */}
           <div className="w-full">
             <div className="mb-3 hidden md:flex items-center justify-between gap-3">
               <NotificationActions

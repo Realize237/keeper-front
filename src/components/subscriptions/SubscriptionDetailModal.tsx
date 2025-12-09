@@ -14,6 +14,7 @@ import {
   type SubscriptionModalType,
 } from "../../interfaces/subscription";
 import type { BillingResult } from "../../interfaces/billings";
+import NotificationReminder from "../notifications/Reminder";
 
 interface SubscriptionDetailModalProps {
   selectedSubscriptionDetails: Subscription;
@@ -262,7 +263,7 @@ export default function SubscriptionDetailModal({
             </motion.div>
 
             <motion.div
-              className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
+              className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-start"
               variants={itemVariants}
               custom={8}
               initial="hidden"
@@ -271,10 +272,7 @@ export default function SubscriptionDetailModal({
               whileHover={{ backgroundColor: "#3d3d3d" }}
             >
               <span className="text-[#838383] font-bold">Remind me </span>
-              <div className="flex flex-col justify-around items-center">
-                <span className="text-white">1 day before</span>
-                <button className="cursor-pointer">Add notification</button>
-              </div>
+              <NotificationReminder subscription={selectedSubscriptionDetails} />
             </motion.div>
           </motion.div>
         </motion.div>

@@ -1,6 +1,7 @@
 import { IMAGES } from "../assets";
 import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
+import { ICustomReminder } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
 import moment from "moment";
 
@@ -237,3 +238,44 @@ export const getAvatarInitials = (name?: string | null): string => {
 export const formatTime = (date: string | Date | number) => {
   return moment(date).fromNow();
 };
+
+export function getReminderDate(
+  endDate: string | Date,
+  reminder: string,
+  custom?: ICustomReminder
+): Date {
+  const base = moment(endDate).clone();
+
+  const reminderMap: Record<string, [number, moment.unitOfTime.DurationConstructor]> = {
+    "5 minutes before": [5, "minutes"],
+    "10 minutes before": [10, "minutes"],
+    "30 minutes before": [30, "minutes"],
+    "1 hour before": [1, "hours"],
+    "1 day before": [1, "days"],
+    "2 days before": [2, "days"],
+    "1 week": [1, "weeks"],
+    "2 weeks": [2, "weeks"],
+    "3 weeks": [3, "weeks"],
+    "1 month": [1, "months"],
+    "2 months": [2, "months"],
+    "3 months": [3, "months"],
+    "4 months": [4, "months"],
+    "5 months": [5, "months"],
+    "6 months": [6, "months"],
+  };
+
+  if (reminder.toLowerCase() === "custom") {
+    if (!custom || !custom.value || !custom.unit) {
+      throw new Error("Couldn't add reminder select atleast date and time of custom reminder.");
+    }
+    return base.subtract(custom.value, custom.unit).toDate();
+  }
+
+  const mapped = reminderMap[reminder];
+  if (!mapped) {
+    throw new Error(`Unknown reminder value: ${reminder}`);
+  }
+
+  const [value, unit] = mapped;
+  return base.subtract(value, unit).toDate();
+}
