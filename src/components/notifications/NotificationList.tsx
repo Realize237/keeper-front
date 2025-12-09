@@ -35,17 +35,17 @@ const NotificationList: React.FC<Props> = ({
   return (
     <div className="space-y-3">
       
-      {notifications.map((n) => (
+      {notifications.map((notification) => (
         <NotificationItem
-          key={n.id}
-          notification={n}
-          isSwiped={swipedId === n.id}
+          key={notification.id}
+          notification={notification}
+          isSwiped={swipedId === notification.id}
           setSwipedId={setSwipedId}
           selectMode={selectMode}
-          selected={selectedIds.has(n.id)}
-          toggleSelect={() => toggleSelect(n.id)}
-          onToggleRead={() => onToggleRead(n.id)}
-          onDelete={() => onDelete(n.id)}
+          selected={selectedIds.has(notification.id)}
+          toggleSelect={() => toggleSelect(notification.id)}
+          onToggleRead={() => onToggleRead(notification.id)}
+          onDelete={() => onDelete(notification.id)}
         />
       ))}
     </div>
