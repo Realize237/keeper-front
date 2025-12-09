@@ -11,7 +11,6 @@ import { useUser } from "../context/UserContext";
 
 export const useUserNotifications = () => {
   const {user} = useUser();
-  console.log("User: ", user)
   return useQuery<Notification[]>({
     queryKey: notificationKeys.user,
     queryFn: () => getAllUsersNotifications(user?.id as number),
