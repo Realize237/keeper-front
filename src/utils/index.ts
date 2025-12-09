@@ -1,8 +1,10 @@
 import { IMAGES } from "../assets";
+import { NavItems } from "../constants/NavItems";
 import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
 import type { Subscription } from "../interfaces/subscription";
 import moment from "moment";
+
 
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
@@ -237,6 +239,7 @@ export const formatTime = (date: string | Date | number) => {
   return moment(date).fromNow();
 };
 
+export const activeNavItems = NavItems.filter((item) => item.visible);
 
 export const pluralize = (count: number, singular: string, plural: string) =>
   `${count} ${count === 1 ? singular : plural}`;
