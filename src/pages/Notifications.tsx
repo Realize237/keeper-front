@@ -89,9 +89,9 @@ const NotificationsPage: React.FC = () => {
 
   const markAllAsRead = useCallback(() => {
     if (notifications) {
-      deleteNotificationMutation.mutate({ids:notifications.map(not => not.id), all: true});
+      updateNotificationMutation.mutate({ids:notifications.map(not => not.id), all: true});
     }
-  }, [deleteNotificationMutation, notifications]);
+  }, [updateNotificationMutation, notifications]);
 
   const deleteAll = useCallback(() => {
     if (!confirm("Are you sure you want to delete all notifications?")) return;

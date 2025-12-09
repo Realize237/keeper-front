@@ -16,10 +16,10 @@ export const getAllNotifications = async () => {
   }
 };
 
-export const getAllUsersNotifications = async () => {
+export const getAllUsersNotifications = async (userId: number) => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}`,
+      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}/${userId}`,
       { withCredentials: true }
     );
     return response.data.data;
