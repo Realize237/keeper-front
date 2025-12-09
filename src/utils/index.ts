@@ -93,7 +93,6 @@ export const getNextBillingDate = (
   type: "MONTHLY" | "YEARLY",
   fromDate: Date = new Date()
 ): BillingResult => {
-  console.log("Type passed: ", type);
   // Normalize dates to midnight
   const normalize = (d: Date) =>
     new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -241,3 +240,6 @@ export const formatTime = (date: string | Date | number) => {
 };
 
 export const activeNavItems = NavItems.filter((item) => item.visible);
+
+export const pluralize = (count: number, singular: string, plural: string) =>
+  `${count} ${count === 1 ? singular : plural}`;
