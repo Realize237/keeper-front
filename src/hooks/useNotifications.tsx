@@ -7,17 +7,21 @@ import {
   updateNotification
 } from "../api/notifications";
 import { notificationKeys } from "../queryKeys/notificationKeys";
+import { useUser } from "../context/UserContext";
 
 export const useUserNotifications = () => {
+  const {user} = useUser();
+  console.log("User: ", user)
   return useQuery<Notification[]>({
-    queryKey: notificationKeys.all,
-    queryFn: getAllUsersNotifications,
+    queryKey: notificationKeys.user,
+    queryFn: () => getAllUsersNotifications(user?.id as number),
+    enabled:!!user?.id
   });
 };
 
 export const useAllNotifications = () => {
   return useQuery<Notification[]>({
-    queryKey: notificationKeys.user,
+    queryKey: notificationKeys.all,
     queryFn: getAllNotifications,
   });
 };
