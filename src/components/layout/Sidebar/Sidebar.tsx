@@ -2,11 +2,11 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { NavItems } from "../../../constants/NavItems";
+import { activeNavItems } from "../../../utils";
 
 const Sidebar = () => {
   const location = useLocation();
-  const activeIndex = NavItems.findIndex(
+  const activeIndex = activeNavItems.findIndex(
     (item) => item.path === location.pathname
   );
 
@@ -15,7 +15,6 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -23,12 +22,11 @@ const Sidebar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={toggleSidebar} // closes sidebar when clicked
+            onClick={toggleSidebar}
           />
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
       <motion.div
         initial={{ x: -220 }}
         animate={{ x: isOpen ? 0 : -300 }}
@@ -44,7 +42,7 @@ const Sidebar = () => {
         </h1>
 
         <nav className="flex flex-col gap-2 relative">
-          {NavItems.map((menu, index) => {
+          {activeNavItems.map((menu, index) => {
             const Icon = menu.icon;
             const isActive = index === activeIndex;
 
@@ -85,7 +83,6 @@ const Sidebar = () => {
                   </AnimatePresence>
                 </motion.div>
 
-                {/* Active indicator bar */}
                 {isActive && isOpen && (
                   <motion.div
                     layoutId="active-bar"
