@@ -6,7 +6,6 @@ import { ICustomReminder } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
 import moment from "moment";
 
-
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
   const month = date.getMonth(); // 0-11
@@ -247,7 +246,10 @@ export function getReminderDate(
 ): Date {
   const base = moment(endDate).clone();
 
-  const reminderMap: Record<string, [number, moment.unitOfTime.DurationConstructor]> = {
+  const reminderMap: Record<
+    string,
+    [number, moment.unitOfTime.DurationConstructor]
+  > = {
     "5 minutes before": [5, "minutes"],
     "10 minutes before": [10, "minutes"],
     "30 minutes before": [30, "minutes"],
@@ -267,7 +269,9 @@ export function getReminderDate(
 
   if (reminder.toLowerCase() === "custom") {
     if (!custom || !custom.value || !custom.unit) {
-      throw new Error("Couldn't add reminder select atleast date and time of custom reminder.");
+      throw new Error(
+        "Couldn't add reminder select atleast date and time of custom reminder."
+      );
     }
     return base.subtract(custom.value, custom.unit).toDate();
   }
@@ -284,3 +288,7 @@ export const activeNavItems = NavItems.filter((item) => item.visible);
 
 export const pluralize = (count: number, singular: string, plural: string) =>
   `${count} ${count === 1 ? singular : plural}`;
+
+export function groupClassNames(...classes: (string | undefined | null | false)[]) {
+  return classes.filter(Boolean).join(" ");
+}
