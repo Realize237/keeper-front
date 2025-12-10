@@ -1,4 +1,3 @@
-// components/notifications/NotificationSkeletonLoader.tsx
 import React from "react";
 
 interface SkeletonProps {

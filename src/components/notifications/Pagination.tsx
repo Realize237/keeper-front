@@ -12,7 +12,7 @@ type Props = {
   current: number;
   total: number;
   onChange: (page: number) => void;
-  perPage?: number;
+  itemsPerPage?: number;
   totalItems?: number;
 };
 
@@ -20,10 +20,10 @@ const Pagination: React.FC<Props> = ({
   current,
   total,
   onChange,
-  perPage = 10,
+  itemsPerPage = 10,
   totalItems,
 }) => {
-  const visiblePages = parseInt(env.VISIBLE_PAGES??5);
+  const visiblePages = parseInt(env.VISIBLE_PAGE_COUNT);
   const half = Math.floor(visiblePages / 2);
 
   let start = Math.max(1, current - half);
@@ -40,9 +40,9 @@ const Pagination: React.FC<Props> = ({
     <div className="flex items-center justify-around gap-4 flex-wrap w-full py-4">
       {/* Summary */}
       <div className="text-sm text-neutral-400">
-        Showing {(current - 1) * perPage + 1} -{" "}
-        {Math.min(current * perPage, totalItems ?? total * perPage)} of{" "}
-        {totalItems ?? total * perPage}
+        Showing {(current - 1) * itemsPerPage + 1} -{" "}
+        {Math.min(current * itemsPerPage, totalItems ?? total * itemsPerPage)} of{" "}
+        {totalItems ?? total * itemsPerPage}
       </div>
 
       {/* Pagination */}
