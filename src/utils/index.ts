@@ -1,9 +1,11 @@
 import { IMAGES } from "../assets";
+import { NavItems } from "../constants/NavItems";
 import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
 import { ICustomReminder } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
 import moment from "moment";
+
 
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
@@ -92,7 +94,6 @@ export const getNextBillingDate = (
   type: "MONTHLY" | "YEARLY",
   fromDate: Date = new Date()
 ): BillingResult => {
-  console.log("Type passed: ", type);
   // Normalize dates to midnight
   const normalize = (d: Date) =>
     new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -279,3 +280,7 @@ export function getReminderDate(
   const [value, unit] = mapped;
   return base.subtract(value, unit).toDate();
 }
+export const activeNavItems = NavItems.filter((item) => item.visible);
+
+export const pluralize = (count: number, singular: string, plural: string) =>
+  `${count} ${count === 1 ? singular : plural}`;
