@@ -4,6 +4,9 @@ export const API_PATHS = {
     CREATE_USER: "/users",
     LOGIN: "/users/login",
     GET_USER_INFO: "/users/me",
+    LOGOUT: "/users/logout",
+    UPDATE_USER: (id: number) => `/users/${id}`,
+    CHANGE_PASSWORD: (id: number) => `/users/change-password/${id}`,
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: "/subscriptions",

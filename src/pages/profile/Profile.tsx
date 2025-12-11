@@ -7,6 +7,7 @@ import {
   FaCreditCard,
   FaEdit,
   FaFileAlt,
+  FaLock,
   FaQuestionCircle,
   FaShieldAlt,
   FaSignOutAlt,
@@ -14,15 +15,15 @@ import {
 } from "react-icons/fa";
 import { type IconType } from "react-icons";
 
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/UserContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BottomSheet from "../components/ui/BottomSheet";
+import BottomSheet from "../../components/ui/BottomSheet";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLogoutUser } from "../hooks/useUsers";
-import { getAvatarInitials } from "../utils";
-import Modal from "../components/ui/Modal";
-import { useDeviceType } from "../hooks/useDeviceType";
+import { useLogoutUser } from "../../hooks/useUsers";
+import { getAvatarInitials } from "../../utils";
+import Modal from "../../components/ui/Modal";
+import { useDeviceType } from "../../hooks/useDeviceType";
 
 interface MenuItem {
   icon: IconType;
@@ -59,6 +60,12 @@ const menuItems: MenuItem[] = [
     subtitle: "",
 
     path: "/settings",
+  },
+  {
+    icon: FaLock,
+    label: "Change Password",
+    subtitle: "Update your password",
+    path: "/profile/change-password",
   },
 ];
 
@@ -128,7 +135,7 @@ const Profile = () => {
             className="w-12 h-12 object-cover rounded-full"
           />
         ) : (
-          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#CDFF00] text-black font-bold">
+          <div className="w-12 h-12 text-xl flex items-center justify-center rounded-full bg-[#CDFF00] text-black font-bold">
             {getAvatarInitials(user?.name || "")}
           </div>
         )}
@@ -138,7 +145,10 @@ const Profile = () => {
             <p className="font-bold text-xl">{user?.name}</p>
             <p className="text-xs text-gray-400">{user?.email}</p>
           </div>
-          <button className="p-1 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-700 transition">
+          <button
+            onClick={() => navigate("/profile/edit")}
+            className="p-1 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-700 transition"
+          >
             <FaEdit className="w-4 h-4" />
           </button>
         </div>
@@ -252,7 +262,9 @@ const Profile = () => {
                 </motion.button>
 
                 <motion.button
-                  onClick={() => logout()}
+                  onClick={() => {
+                    logout();
+                  }}
                   className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
                   whileHover={{
                     scale: 1.05,

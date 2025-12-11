@@ -1,17 +1,36 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import App from './App.tsx'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import {
+  MutationCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import App from "./App.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+interface MutationMeta {
+  invalidate?: unknown[][];
+}
 
-createRoot(document.getElementById('root')!).render(
+const queryClient = new QueryClient({
+  mutationCache: new MutationCache({
+    onSuccess: (_data, _variables, _context, mutation) => {
+      const meta = mutation.meta as MutationMeta;
+      if (meta?.invalidate) {
+        meta.invalidate.forEach((key: unknown[]) => {
+          queryClient.invalidateQueries({ queryKey: key });
+        });
+      }
+    },
+  }),
+});
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-       <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

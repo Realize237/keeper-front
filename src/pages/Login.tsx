@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+
 import { Link, useSearchParams } from "react-router-dom";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { IMAGES } from "../assets";
@@ -9,7 +10,10 @@ import { useNavigate } from "react-router-dom";
 import { env } from "../utils/env";
 import toast from "react-hot-toast";
 import { useCookies } from "react-cookie";
-import { FORGOT_PASSWORD_STEPS, ForgotPasswordStepsType } from "../interfaces/auth";
+import {
+  FORGOT_PASSWORD_STEPS,
+  ForgotPasswordStepsType,
+} from "../interfaces/auth";
 import PasswordResetRequest from "../components/auth/PasswordResetRequest";
 import OTPVerification from "../components/auth/OTPVerification";
 import PasswordReset from "../components/auth/PasswordReset";
@@ -22,10 +26,10 @@ export default function Login() {
   const [searchParams] = useSearchParams();
   const error = searchParams.get("error");
   const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]);
-  const [forgotPasswordStep, setForgotPasswordStep] = useState<ForgotPasswordStepsType | null>(null);
+  const [forgotPasswordStep, setForgotPasswordStep] =
+    useState<ForgotPasswordStepsType | null>(null);
 
   const toastShownRef = useRef(false);
-
 
   useEffect(() => {
     if (error && !toastShownRef.current) {
@@ -67,7 +71,7 @@ export default function Login() {
   useEffect(() => {
     const subscription = watch((_, { name }) => {
       if (loginError && (name === "email" || name === "password")) {
-        setLoginError(null); // clear login error on user edit
+        setLoginError(null);
       }
     });
     return () => subscription.unsubscribe();
@@ -284,7 +288,11 @@ export default function Login() {
               </label>
             </div>
             <button
-              onClick={() => setForgotPasswordStep(FORGOT_PASSWORD_STEPS.PASSWORD_REQUEST as ForgotPasswordStepsType)}
+              onClick={() =>
+                setForgotPasswordStep(
+                  FORGOT_PASSWORD_STEPS.PASSWORD_REQUEST as ForgotPasswordStepsType
+                )
+              }
               className="text-[#CDFF00] text-sm hover:opacity-80 transition duration-300"
             >
               Forgot Password?
@@ -454,18 +462,18 @@ export default function Login() {
           </Link>
         </motion.p>
       </motion.div>
-      <PasswordResetRequest 
+      <PasswordResetRequest
         onSubmit={() => {}}
         isOpen={forgotPasswordStep === FORGOT_PASSWORD_STEPS.PASSWORD_REQUEST}
         onClose={() => setForgotPasswordStep(null)}
       />
-      <OTPVerification 
+      <OTPVerification
         onSubmit={() => {}}
         isOpen={forgotPasswordStep === FORGOT_PASSWORD_STEPS.OTP}
         onClose={() => setForgotPasswordStep(null)}
         onResend={() => {}}
       />
-      <PasswordReset 
+      <PasswordReset
         onSubmit={() => {}}
         isOpen={forgotPasswordStep === FORGOT_PASSWORD_STEPS.PASSWORD_RESET}
         onClose={() => setForgotPasswordStep(null)}

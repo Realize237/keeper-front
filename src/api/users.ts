@@ -2,9 +2,11 @@ import axios from "axios";
 import { env } from "../utils/env";
 import { API_PATHS } from "./api-paths";
 import {
+  IEmailPasswordInput,
   UserInput,
   UserLoginInput,
   UserResponse,
+  UserUpdateInput,
 } from "../interfaces/users";
 import { processError } from "../utils";
 
@@ -74,7 +76,42 @@ export const logoutUser = async () => {
     const response = await axios.post<{ message: string }>(
       `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
       {},
-      {withCredentials: true}
+      { withCredentials: true }
+    );
+
+    return response.data;
+  } catch (err: any) {
+    return processError(err);
+  }
+};
+
+export const updateUser = async (user: UserUpdateInput, id: number) => {
+  try {
+    const response = await axios.patch<{ statusCode: number; message: string }>(
+      `${env.API_URL}${API_PATHS.USERS.UPDATE_USER(id)}`,
+      {
+        ...user,
+      },
+      { withCredentials: true }
+    );
+
+    return response.data;
+  } catch (err: any) {
+    return processError(err);
+  }
+};
+
+export const changeUserPassword = async (
+  data: IEmailPasswordInput,
+  id: number
+) => {
+  try {
+    const response = await axios.patch<{ statusCode: number; message: string }>(
+      `${env.API_URL}${API_PATHS.USERS.CHANGE_PASSWORD(id)}`,
+      {
+        ...data,
+      },
+      { withCredentials: true }
     );
 
     return response.data;

@@ -15,8 +15,10 @@ import { UserProvider } from "./context/UserContext";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import Cards from "./pages/Cards";
 import SharedPlan from "./pages/SharedPlan";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile/Profile";
 import NavLayout from "./layouts/NavLayout";
+import EditProfile from "./pages/profile/EditProfile";
+import ChangePassword from "./pages/profile/ChangePassword";
 
 export default function App() {
   return (
@@ -37,7 +39,11 @@ export default function App() {
                 <Route path="/subscriptions" element={<Subscriptions />} />
                 <Route path="/cards" element={<Cards />} />
                 <Route path="/shared-plan" element={<SharedPlan />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile">
+                  <Route index element={<Profile />} />
+                  <Route path="edit" element={<EditProfile />} />
+                  <Route path="change-password" element={<ChangePassword />} />
+                </Route>
                 <Route path="/notifications" element={<NotificationsPage />} />
               </Route>
 

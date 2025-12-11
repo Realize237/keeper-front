@@ -7,7 +7,7 @@ export const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
   const { user, isUserReady } = useUser();
   const location = useLocation();
 
-  if (!isUserReady) return <FullScreenLoader />;
+  if (!user && !isUserReady) return <FullScreenLoader />;
 
   if (!user && location.pathname !== "/login") {
     return <Navigate to="/login" replace />;
