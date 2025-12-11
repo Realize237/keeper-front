@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 
-
 import { Link, useSearchParams } from "react-router-dom";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { IMAGES } from "../assets";
@@ -21,9 +20,7 @@ export default function Login() {
   const error = searchParams.get("error");
   const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]);
 
-
   const toastShownRef = useRef(false);
-
 
   useEffect(() => {
     if (error && !toastShownRef.current) {
@@ -65,7 +62,7 @@ export default function Login() {
   useEffect(() => {
     const subscription = watch((_, { name }) => {
       if (loginError && (name === "email" || name === "password")) {
-        setLoginError(null); // clear login error on user edit
+        setLoginError(null);
       }
     });
     return () => subscription.unsubscribe();
