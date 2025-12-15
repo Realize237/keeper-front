@@ -2,7 +2,7 @@ import { IMAGES } from "../assets";
 import { NavItems } from "../constants/NavItems";
 import type { BillingResult } from "../interfaces/billings";
 import type { Value } from "../interfaces/calendar";
-import { ICustomReminder } from "../interfaces/notifications";
+import { ICustomReminder, NotifType } from "../interfaces/notifications";
 import type { Subscription } from "../interfaces/subscription";
 import moment from "moment";
 
@@ -240,12 +240,11 @@ export const formatTime = (date: string | Date | number) => {
 };
 
 export function getReminderDate(
-  endDate: string | Date,
   reminder: string,
+  isCustom = false,
   custom?: ICustomReminder
-): Date {
-  const base = moment(endDate).clone();
-
+) {
+  console.log("Reminder Dates: ", reminder, "Custom: ", custom);
   const reminderMap: Record<
     string,
     [number, moment.unitOfTime.DurationConstructor]
@@ -256,39 +255,74 @@ export function getReminderDate(
     "1 hour before": [1, "hours"],
     "1 day before": [1, "days"],
     "2 days before": [2, "days"],
-    "1 week": [1, "weeks"],
-    "2 weeks": [2, "weeks"],
-    "3 weeks": [3, "weeks"],
-    "1 month": [1, "months"],
-    "2 months": [2, "months"],
-    "3 months": [3, "months"],
-    "4 months": [4, "months"],
-    "5 months": [5, "months"],
-    "6 months": [6, "months"],
+    "1 week before": [1, "weeks"],
+    "2 weeks before": [2, "weeks"],
+    "3 weeks before": [3, "weeks"],
+    "1 month before": [1, "months"],
+    "2 months before": [2, "months"],
+    "3 months before": [3, "months"],
+    "4 months before": [4, "months"],
+    "5 months before": [5, "months"],
+    "6 months before": [6, "months"],
   };
 
-  if (reminder.toLowerCase() === "custom") {
-    if (!custom || !custom.value || !custom.unit) {
+  const mapped = reminderMap[reminder];
+  if (!mapped) {
+    if (!custom || !custom.value || (!custom.unit && isCustom)) {
       throw new Error(
         "Couldn't add reminder select atleast date and time of custom reminder."
       );
     }
-    return base.subtract(custom.value, custom.unit).toDate();
-  }
-
-  const mapped = reminderMap[reminder];
-  if (!mapped) {
-    throw new Error(`Unknown reminder value: ${reminder}`);
+    return { unit: custom.unit, value: custom.value };
   }
 
   const [value, unit] = mapped;
-  return base.subtract(value, unit).toDate();
+  return { value, unit };
 }
+
+export function getReminderString(
+  value: number,
+  unit: moment.unitOfTime.DurationConstructor,
+  notificationType?: NotifType[]
+): { combinedKeyValue: string; isCustom: boolean } {
+  const reverseReminderMap: Record<string, string> = {
+    "5-minutes": "5 minutes",
+    "10-minutes": "10 minutes",
+    "30-minutes": "30 minutes",
+    "1-hours": "1 hour",
+    "1-days": "1 day",
+    "2-days": "2 days",
+    "1-weeks": "1 week",
+    "2-weeks": "2 weeks",
+    "3-weeks": "3 weeks",
+    "1-months": "1 month",
+    "2-months": "2 months",
+    "3-months": "3 months",
+    "4-months": "4 months",
+    "5-months": "5 months",
+    "6-months": "6 months",
+  };
+
+  const key = `${value}-${unit}`;
+  const reminder = reverseReminderMap[key];
+
+  if (!reminder) {
+    const combinedKey = `${value} ${unit} before, via ${
+      notificationType?.join(",") ?? "EMAIL"
+    }`;
+    return { combinedKeyValue: combinedKey, isCustom: true };
+  }
+
+  return { combinedKeyValue: `${reminder} before`, isCustom: false };
+}
+
 export const activeNavItems = NavItems.filter((item) => item.visible);
 
 export const pluralize = (count: number, singular: string, plural: string) =>
   `${count} ${count === 1 ? singular : plural}`;
 
-export function groupClassNames(...classes: (string | undefined | null | false)[]) {
+export function groupClassNames(
+  ...classes: (string | undefined | null | false)[]
+) {
   return classes.filter(Boolean).join(" ");
 }

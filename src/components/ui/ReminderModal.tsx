@@ -9,6 +9,7 @@ import {
   NotifType,
 } from "../../interfaces/notifications";
 import MultiSelectDropdown from "./MultiSelectDropdown";
+import { Button } from "./Button";
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -58,6 +59,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
           <input
             type="number"
             value={custom.value}
+            min={1}
             onChange={(e) =>
               setCustom({ ...custom, value: Number(e.target.value) })
             }
@@ -78,15 +80,15 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         </div>
 
         <div className="flex justify-between mt-5">
-          <button className="text-blue-500" onClick={onClose}>
+          <Button className="bg-transparent" onClick={onClose}>
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => onSave(custom)}
-            className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+            className="px-5 py-2 text-neutral-800 rounded-lg"
           >
             Done
-          </button>
+          </Button>
         </div>
       </motion.div>
     </motion.div>

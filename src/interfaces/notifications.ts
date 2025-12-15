@@ -1,3 +1,5 @@
+import { Subscription } from "./subscription";
+
 export const NotificationType = {
   SYSTEM: "SYSTEM",
   EMAIL: "EMAIL",
@@ -54,15 +56,15 @@ export const ReminderOptions: ReminderOptionType[] = [
   { value: "1 hour before", subscriptionType: "BOTH" },
   { value: "1 day before", subscriptionType: "BOTH" },
   { value: "2 days before", subscriptionType: "BOTH" },
-  { value: "1 week", subscriptionType: "BOTH" },
-  { value: "2 weeks", subscriptionType: "BOTH" },
-  { value: "3 weeks", subscriptionType: "BOTH" },
-  { value: "1 month", subscriptionType: "YEARLY" },
-  { value: "2 months", subscriptionType: "YEARLY" },
-  { value: "3 months", subscriptionType: "YEARLY" },
-  { value: "4 months", subscriptionType: "YEARLY" },
-  { value: "5 months", subscriptionType: "YEARLY" },
-  { value: "6 months", subscriptionType: "YEARLY" },
+  { value: "1 week before", subscriptionType: "BOTH" },
+  { value: "2 weeks before", subscriptionType: "BOTH" },
+  { value: "3 weeks before", subscriptionType: "BOTH" },
+  { value: "1 month before", subscriptionType: "YEARLY" },
+  { value: "2 months before", subscriptionType: "YEARLY" },
+  { value: "3 months before", subscriptionType: "YEARLY" },
+  { value: "4 months before", subscriptionType: "YEARLY" },
+  { value: "5 months before", subscriptionType: "YEARLY" },
+  { value: "6 months before", subscriptionType: "YEARLY" },
   { value: "Custom", subscriptionType: "BOTH" },
 ];
 
@@ -78,4 +80,22 @@ export interface INotificationReminder {
   custom?: ICustomReminder;
 }
 
-export type IReminderRequest = Omit<INotificationReminder, "id">;
+export interface IReminderRequest {
+  unit: string;
+  value: number;
+  notificationType?: NotifType[];
+  subscriptionId: number;
+}
+
+export interface IReminderUpdate extends IReminderRequest {
+  id: number;
+}
+
+export interface ISubscriptionRemindersUpdate {
+    updatedReminders: IReminderRequest[];
+    subscriptionId: number;
+}
+
+export interface IReminderResponse extends IReminderUpdate {
+  subscription: Subscription;
+}

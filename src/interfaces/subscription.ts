@@ -1,5 +1,6 @@
 import { IMAGES } from "../assets";
 import type { CARD_TYPES } from "./cards";
+import { IReminderResponse } from "./notifications";
 import type { UserResponse } from "./users";
 
 export const SUBSCRIPTION_PLANS = {
@@ -38,6 +39,7 @@ export interface Subscription {
   card: keyof typeof CARD_TYPES;
   details: SubscriptionDetails;
   user: UserResponse;
+  reminders: IReminderResponse[];
   created_at: string;
   updated_at: string;
 }
