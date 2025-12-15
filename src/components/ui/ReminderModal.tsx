@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Dropdown from "../notifications/Dropdown";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ICustomReminder,
   CustomUnits,
@@ -9,6 +9,7 @@ import {
   NotifType,
 } from "../../interfaces/notifications";
 import MultiSelectDropdown from "./MultiSelectDropdown";
+import { Button } from "./Button";
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -24,6 +25,11 @@ const ReminderModal: React.FC<CustomModalProps> = ({
   const [custom, setCustom] = useState<ICustomReminder>(
     item as ICustomReminder
   );
+  const reminderValueError = useMemo(() => {
+    if (Number(custom.value) < 30 && custom.unit == CustomUnits.MINS)
+      return "Reminder should be greater than 30 minutes";
+    return null;
+  }, [custom.value, custom.unit]);
 
   return (
     <motion.div
@@ -58,11 +64,19 @@ const ReminderModal: React.FC<CustomModalProps> = ({
           <input
             type="number"
             value={custom.value}
+<<<<<<< HEAD
+            min={30}
+=======
+            min={1}
+>>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
             onChange={(e) =>
               setCustom({ ...custom, value: Number(e.target.value) })
             }
             className="w-full border rounded-lg px-3 py-2"
           />
+          {reminderValueError && (
+            <div className="text-red-500 text-xs">{reminderValueError}</div>
+          )}
 
           <Dropdown
             label="Unit"
@@ -78,15 +92,24 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         </div>
 
         <div className="flex justify-between mt-5">
-          <button className="text-blue-500" onClick={onClose}>
+          <Button className="bg-transparent" onClick={onClose}>
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+<<<<<<< HEAD
+            onClick={() => {
+              if (!reminderValueError) {
+                onSave(custom);
+              }
+            }}
+            className="px-5 py-2 text-neutral-800 hover:opacity-70 rounded-lg"
+=======
             onClick={() => onSave(custom)}
-            className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+            className="px-5 py-2 text-neutral-800 rounded-lg"
+>>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
           >
             Done
-          </button>
+          </Button>
         </div>
       </motion.div>
     </motion.div>

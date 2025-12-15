@@ -1,3 +1,5 @@
+import { Subscription } from "./subscription";
+
 export const NotificationType = {
   SYSTEM: "SYSTEM",
   EMAIL: "EMAIL",
@@ -11,13 +13,13 @@ export const NotificationStatus = {
 };
 
 export type NotifStatus = keyof typeof NotificationStatus;
-export type NotifType = keyof typeof NotificationType;
+export type NotificationType = keyof typeof NotificationType;
 
 export interface Notification {
   id: number;
   title: string;
   message: string;
-  notificationType: NotifType;
+  notificationType: NotificationType;
   status: NotifStatus;
   icon?: React.ReactNode;
   image?: string;
@@ -47,27 +49,8 @@ export interface ReminderOptionType {
   subscriptionType: "BOTH" | "YEARLY";
 }
 
-export const ReminderOptions: ReminderOptionType[] = [
-  { value: "5 minutes before", subscriptionType: "BOTH" },
-  { value: "10 minutes before", subscriptionType: "BOTH" },
-  { value: "30 minutes before", subscriptionType: "BOTH" },
-  { value: "1 hour before", subscriptionType: "BOTH" },
-  { value: "1 day before", subscriptionType: "BOTH" },
-  { value: "2 days before", subscriptionType: "BOTH" },
-  { value: "1 week", subscriptionType: "BOTH" },
-  { value: "2 weeks", subscriptionType: "BOTH" },
-  { value: "3 weeks", subscriptionType: "BOTH" },
-  { value: "1 month", subscriptionType: "YEARLY" },
-  { value: "2 months", subscriptionType: "YEARLY" },
-  { value: "3 months", subscriptionType: "YEARLY" },
-  { value: "4 months", subscriptionType: "YEARLY" },
-  { value: "5 months", subscriptionType: "YEARLY" },
-  { value: "6 months", subscriptionType: "YEARLY" },
-  { value: "Custom", subscriptionType: "BOTH" },
-];
-
 export interface ICustomReminder {
-  type: NotifType[];
+  type: NotificationType[];
   value: number;
   unit: CustomUnitType;
 }
@@ -78,4 +61,22 @@ export interface INotificationReminder {
   custom?: ICustomReminder;
 }
 
-export type IReminderRequest = Omit<INotificationReminder, "id">;
+export interface IReminderRequest {
+  unit: string;
+  value: number;
+  notificationType?: NotificationType[];
+  subscriptionId: number;
+}
+
+export interface IReminderUpdate extends IReminderRequest {
+  id: number;
+}
+
+export interface ISubscriptionRemindersUpdate {
+    updatedReminders: IReminderRequest[];
+    subscriptionId: number;
+}
+
+export interface IReminderResponse extends IReminderUpdate {
+  subscription: Subscription;
+}

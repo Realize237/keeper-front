@@ -27,6 +27,14 @@ export const API_PATHS = {
     DELETE_NOTIFICATION: (ids: number[], all = false) =>
       `/notifications?ids=${ids}&all=${all}`,
   },
+  REMINDERS: {
+    GET_ALL_REMINDERS: "/reminders",
+    ADD_REMINDER: "/reminders",
+    UPDATE_REMINDER: (id: number) => `/reminders/${id}`,
+    UPDATE_SUBSCRIPTION_REMINDER: (id: number) => `/reminders/subscription/${id}`,
+    DELETE_REMINDER: (id: number) => `/reminders/${id}`,
+    DELETE_SUBSCRIPTION_REMINDERS: (id: number) => `/reminders/subscription/${id}`,
+  },
   GOOGLE: {
     CALENDAR_AUTH: "/auth/google/calendar",
     CALENDAR_STATUS: "/auth/google/calendar/status",
