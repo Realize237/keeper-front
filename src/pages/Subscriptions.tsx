@@ -77,6 +77,8 @@ const Subscriptions = () => {
     refetch,
   } = useMonthlySubscriptions(normalized);
 
+  console.log("Use monthly subscriptions: ", groupedMonthlySubscriptions)
+
   const getDaySubscriptions = useCallback(
     (day: number) => {
       const isFoundInGroupedData = Object.keys(
