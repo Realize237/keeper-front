@@ -10,7 +10,14 @@ export const API_PATHS = {
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: "/subscriptions",
+    GET_USER_SUBSCRIPTIONS: (userId: number) => `/subscriptions/user/${userId}`,
+    GET_SUBSCRIPTION_DETAILS: (subscriptionId: number) =>
+      `/subscriptions/${subscriptionId}`,
     ADD_SUBSCRIPTION: "/subscriptions",
+    ADD_TO_GOOGLE_CALENDAR: (subscriptionId: number) =>
+      `/subscriptions/${subscriptionId}/add-to-calendar`,
+    REMOVE_FROM_GOOGLE_CALENDAR: (subscriptionId: number) =>
+      `/subscriptions/${subscriptionId}/remove-from-calendar`,
   },
   NOTIFICATIONS: {
     GET_ALL_NOTIFICATIONS: "/notifications",
@@ -19,5 +26,10 @@ export const API_PATHS = {
       `/notifications/toggle-read?ids=${ids}&all=${all}`,
     DELETE_NOTIFICATION: (ids: number[], all = false) =>
       `/notifications?ids=${ids}&all=${all}`,
+  },
+  GOOGLE: {
+    CALENDAR_AUTH: "/auth/google/calendar",
+    CALENDAR_STATUS: "/auth/google/calendar/status",
+    CALENDAR_DISCONNECT: "/auth/google/calendar/disconnect",
   },
 };
