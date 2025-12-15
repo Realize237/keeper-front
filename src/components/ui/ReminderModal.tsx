@@ -6,6 +6,7 @@ import {
   CustomUnits,
   CustomUnitType,
   NotificationType,
+  NotifType,
 } from "../../interfaces/notifications";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { Button } from "./Button";
@@ -56,7 +57,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             }))}
             selected={custom.type}
             onChange={(values) =>
-              setCustom({ ...custom, type: values as NotificationType[] })
+              setCustom({ ...custom, type: values as NotifType[] })
             }
           />
 

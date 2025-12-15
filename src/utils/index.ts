@@ -156,7 +156,11 @@ export const normalizedDate = (value: Value): Date => {
   return new Date(); // fallback to today
 };
 
-export const getSubscriptionCardImage = (subscription: Subscription) => {
+export const getSubscriptionCardImage = (
+  subscription: Subscription | undefined
+) => {
+  if (!subscription) return IMAGES.Visa; // default fallback
+
   switch (subscription.card) {
     case "MASTER":
       return IMAGES.MasterCard;
@@ -203,7 +207,7 @@ export const updateCurrentDateToSelectedDate = (
 };
 
 // to format api error message
-export const processError = (err: any) => {
+export const processError = (err: unknown) => {
   throw new Error(
     err?.response?.data?.message || err.message || "Request failed"
   );
@@ -244,6 +248,10 @@ export function getReminderDate(
   isCustom = false,
   custom?: ICustomReminder
 ) {
+<<<<<<< HEAD
+=======
+  console.log("Reminder Dates: ", reminder, "Custom: ", custom);
+>>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
   const reminderMap: Record<
     string,
     [number, moment.unitOfTime.DurationConstructor]
