@@ -7,8 +7,8 @@ import {
   INotificationReminder,
   IReminderRequest,
   IReminderUpdate,
-  NotifType,
-  ReminderOptions,
+  NotificationType,
+  ReminderOptionType,
 } from "../../interfaces/notifications";
 import { Subscription } from "../../interfaces/subscription";
 import { FiPlus } from "react-icons/fi";
@@ -21,6 +21,7 @@ import {
 } from "../../hooks/useReminders";
 import toast from "react-hot-toast";
 import { Button } from "../ui/Button";
+import { ReminderOptions } from "../../constants";
 
 const NotificationReminder = ({
   subscription,
@@ -46,7 +47,7 @@ const NotificationReminder = ({
             reminder.notificationType
           );
           const reminderString = combinedKeyValue;
-          setReminderOptions((prev) => {
+          setReminderOptions((prev:ReminderOptionType[]) => {
             const exists = prev.some(
               (option) => option.value.trim() === reminderString.trim()
             );
@@ -64,7 +65,7 @@ const NotificationReminder = ({
               ? {
                   unit: reminder.unit as moment.unitOfTime.DurationConstructor,
                   value: reminder.value,
-                  type: reminder.notificationType as NotifType[],
+                  type: reminder.notificationType as NotificationType[],
                 }
               : undefined,
           };
@@ -80,7 +81,7 @@ const NotificationReminder = ({
   const addReminderMutation = useAddReminder();
   const updateSubscriptionRemindersMutation = useUpdateSubscriptionReminders();
   const deleteSubscriptionRemindersMutation = useDeleteSubscriptionReminders();
-  const deleteAReminderMutation = useDeleteReminder();
+  const deleteReminderMutation = useDeleteReminder();
 
   const handleAddReminder = () => {
     const newItem: INotificationReminder = {
@@ -100,7 +101,7 @@ const NotificationReminder = ({
   const handleDeleteReminder = (id: string) => {
     setReminders((prev) => prev.filter((reminder) => reminder.id !== id));
     if (isReminderUpdated) {
-      deleteAReminderMutation.mutate(parseInt(id), {
+      deleteReminderMutation.mutate(parseInt(id), {
          onSuccess: () => {
           toast.success("Reminder deleted successfully !");
         },

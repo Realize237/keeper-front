@@ -17,7 +17,6 @@ export const addReminders = async (newReminder: IReminderRequest[]) => {
     );
     return response.data;
   } catch (error) {
-    console.log("Error: ", error)
     processError(error);
   }
 };

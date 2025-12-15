@@ -21,7 +21,6 @@ const Dropdown: React.FC<DropdownProps> = ({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close when clicking outside
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -37,7 +36,6 @@ const Dropdown: React.FC<DropdownProps> = ({
       <div className="w-full">
         <div className="text-xs text-gray-500 mb-1">{label}</div>
 
-        {/* Trigger */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -51,7 +49,6 @@ const Dropdown: React.FC<DropdownProps> = ({
           <span className="text-xs">▾</span>
         </button>
 
-        {/* Dropdown */}
         {open && (
           <div
             className={groupClassNames(
@@ -80,7 +77,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         )}
       </div>
 
-      {/* Delete icon */}
       {onDelete && (
         <MdClose
           className="block lg:hidden group-hover:block text-neutral-500 cursor-pointer hover:text-neutral-400"

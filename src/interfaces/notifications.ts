@@ -13,13 +13,13 @@ export const NotificationStatus = {
 };
 
 export type NotifStatus = keyof typeof NotificationStatus;
-export type NotifType = keyof typeof NotificationType;
+export type NotificationType = keyof typeof NotificationType;
 
 export interface Notification {
   id: number;
   title: string;
   message: string;
-  notificationType: NotifType;
+  notificationType: NotificationType;
   status: NotifStatus;
   icon?: React.ReactNode;
   image?: string;
@@ -49,27 +49,8 @@ export interface ReminderOptionType {
   subscriptionType: "BOTH" | "YEARLY";
 }
 
-export const ReminderOptions: ReminderOptionType[] = [
-  { value: "5 minutes before", subscriptionType: "BOTH" },
-  { value: "10 minutes before", subscriptionType: "BOTH" },
-  { value: "30 minutes before", subscriptionType: "BOTH" },
-  { value: "1 hour before", subscriptionType: "BOTH" },
-  { value: "1 day before", subscriptionType: "BOTH" },
-  { value: "2 days before", subscriptionType: "BOTH" },
-  { value: "1 week before", subscriptionType: "BOTH" },
-  { value: "2 weeks before", subscriptionType: "BOTH" },
-  { value: "3 weeks before", subscriptionType: "BOTH" },
-  { value: "1 month before", subscriptionType: "YEARLY" },
-  { value: "2 months before", subscriptionType: "YEARLY" },
-  { value: "3 months before", subscriptionType: "YEARLY" },
-  { value: "4 months before", subscriptionType: "YEARLY" },
-  { value: "5 months before", subscriptionType: "YEARLY" },
-  { value: "6 months before", subscriptionType: "YEARLY" },
-  { value: "Custom", subscriptionType: "BOTH" },
-];
-
 export interface ICustomReminder {
-  type: NotifType[];
+  type: NotificationType[];
   value: number;
   unit: CustomUnitType;
 }
@@ -83,7 +64,7 @@ export interface INotificationReminder {
 export interface IReminderRequest {
   unit: string;
   value: number;
-  notificationType?: NotifType[];
+  notificationType?: NotificationType[];
   subscriptionId: number;
 }
 
