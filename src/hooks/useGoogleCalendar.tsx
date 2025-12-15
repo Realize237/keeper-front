@@ -1,0 +1,49 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  initiateGoogleCalendarAuth,
+  checkGoogleCalendarAccess,
+  disconnectGoogleCalendar,
+} from "../services/googleCalendarService";
+import { useUser } from "../context/UserContext";
+import toast from "react-hot-toast";
+import { googleCalendarKeys } from "../queryKeys/googleCalendarKeys";
+
+export const useGoogleCalendarAccess = () => {
+  const { user } = useUser();
+
+  return useQuery({
+    queryKey: googleCalendarKeys.access(user?.id),
+    queryFn: () => checkGoogleCalendarAccess(user!.id),
+    enabled: !!user?.id,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useConnectGoogleCalendar = () => {
+  const { user } = useUser();
+
+  return useMutation({
+    mutationFn: () => initiateGoogleCalendarAuth(user!.id),
+
+    meta: {
+      invalidate: [googleCalendarKeys.access(user?.id)],
+    },
+  });
+};
+
+export const useDisconnectGoogleCalendar = () => {
+  const { user } = useUser();
+
+  return useMutation({
+    mutationFn: () => disconnectGoogleCalendar(user!.id),
+    onSuccess: () => {
+      toast.success("Google Calendar disconnected");
+    },
+    onError: () => {
+      toast.error("Failed to disconnect Google Calendar");
+    },
+    meta: {
+      invalidate: [googleCalendarKeys.access(user?.id)],
+    },
+  });
+};
