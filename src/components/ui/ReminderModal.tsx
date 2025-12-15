@@ -63,7 +63,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
           <input
             type="number"
             value={custom.value}
-            min={30}
+            min={1}
             onChange={(e) =>
               setCustom({ ...custom, value: Number(e.target.value) })
             }
