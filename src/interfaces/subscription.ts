@@ -36,6 +36,7 @@ export interface Subscription {
   price: number;
   reccurring: boolean;
   card: keyof typeof CARD_TYPES;
+  calendarLink?: string;
   details: SubscriptionDetails;
   user: UserResponse;
   created_at: string;
@@ -210,3 +211,8 @@ export const SUBSCRIPTION_SAMPLES: Subscription[] = [
     },
   },
 ];
+
+export interface IAddToCalendar {
+  title: string;
+  description: string;
+}

@@ -9,7 +9,6 @@ import {
 } from "../../interfaces/subscription";
 
 import { formatToReadableDate } from "../../utils";
-
 interface SelectedDaySubscriptionsListModalProps {
   selectedSubsciptionsByDay: Subscription[];
   closeSubscriptionModals: (type: SubscriptionModalType) => void;
