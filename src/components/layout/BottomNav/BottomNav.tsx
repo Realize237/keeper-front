@@ -1,6 +1,6 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { activeNavItems } from "../../../utils";
+import { NavLink, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { activeNavItems } from '../../../utils';
 
 const BottomNav = () => {
   const location = useLocation();
@@ -29,13 +29,13 @@ const BottomNav = () => {
               <motion.div
                 className="flex flex-col items-center justify-center gap-1"
                 initial={false}
-                animate={{ color: isActive ? "#CDFF00" : "#9CA3AF" }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                animate={{ color: isActive ? '#CDFF00' : '#9CA3AF' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               >
                 <motion.div
                   initial={{ scale: 1 }}
                   animate={{ scale: isActive ? 1.2 : 1 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 >
                   <Icon />
                 </motion.div>
@@ -61,7 +61,7 @@ const BottomNav = () => {
 
         <motion.div
           layout
-          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
           className="absolute top-0 h-1 bg-[#CDFF00] rounded-full"
           style={{
             width: `${100 / length}%`,

@@ -1,14 +1,14 @@
-import axios from "axios";
-import { env } from "../utils/env";
-import { API_PATHS } from "./api-paths";
+import axios from 'axios';
+import { env } from '../utils/env';
+import { API_PATHS } from './api-paths';
 import {
   IEmailPasswordInput,
   UserInput,
   UserLoginInput,
   UserResponse,
   UserUpdateInput,
-} from "../interfaces/users";
-import { processError } from "../utils";
+} from '../interfaces/users';
+import { processError } from '../utils';
 
 export const createUser = async (user: UserInput) => {
   try {

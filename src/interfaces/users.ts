@@ -14,10 +14,10 @@ export interface IEmailPasswordInput {
   confirmPassword: string;
 }
 
-export type UserInput = Pick<User, "name" | "email" | "password">;
+export type UserInput = Pick<User, 'name' | 'email' | 'password'>;
 
-export type UserLoginInput = Omit<UserInput, "name">;
+export type UserLoginInput = Omit<UserInput, 'name'>;
 
-export type UserResponse = Omit<User, "password">;
+export type UserResponse = Omit<User, 'password'>;
 
 export type UserUpdateInput = Partial<UserInput>;

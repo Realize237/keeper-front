@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface SkeletonProps {
   count?: number;
@@ -7,7 +7,7 @@ interface SkeletonProps {
 
 const NotificationSkeletonLoader: React.FC<SkeletonProps> = ({
   count = 3,
-  className = "",
+  className = '',
 }) => {
   return (
     <div className={`space-y-4 w-full ${className}`}>

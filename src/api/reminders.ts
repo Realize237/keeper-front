@@ -1,12 +1,12 @@
-import axios from "axios";
-import { processError } from "../utils";
-import { env } from "../utils/env";
-import { API_PATHS } from "./api-paths";
+import axios from 'axios';
+import { processError } from '../utils';
+import { env } from '../utils/env';
+import { API_PATHS } from './api-paths';
 import type {
   IReminderRequest,
   IReminderUpdate,
   ISubscriptionRemindersUpdate,
-} from "../interfaces/notifications";
+} from '../interfaces/notifications';
 
 export const addReminders = async (newReminder: IReminderRequest[]) => {
   try {

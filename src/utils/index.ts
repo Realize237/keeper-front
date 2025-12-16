@@ -1,10 +1,10 @@
-import { IMAGES } from "../assets";
-import { NavItems } from "../constants/NavItems";
-import type { BillingResult } from "../interfaces/billings";
-import type { Value } from "../interfaces/calendar";
-import { ICustomReminder, NotifType } from "../interfaces/notifications";
-import type { Subscription } from "../interfaces/subscription";
-import moment from "moment";
+import { IMAGES } from '../assets';
+import { NavItems } from '../constants/NavItems';
+import type { BillingResult } from '../interfaces/billings';
+import type { Value } from '../interfaces/calendar';
+import { ICustomReminder, NotifType } from '../interfaces/notifications';
+import type { Subscription } from '../interfaces/subscription';
+import moment from 'moment';
 
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
@@ -21,7 +21,7 @@ export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   let currentWeek: string[] = [];
 
   for (let i = 0; i < firstWeekday; i++) {
-    currentWeek.push("");
+    currentWeek.push('');
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
@@ -35,7 +35,7 @@ export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
 
   if (currentWeek.length > 0) {
     while (currentWeek.length < 7) {
-      currentWeek.push("");
+      currentWeek.push('');
     }
     weeks.push(currentWeek);
   }
@@ -90,7 +90,7 @@ const addYearsSafe = (d: Date, years: number): Date => {
 export const getNextBillingDate = (
   startDate: Date,
   endDate: Date | null,
-  type: "MONTHLY" | "YEARLY",
+  type: 'MONTHLY' | 'YEARLY',
   fromDate: Date = new Date()
 ): BillingResult => {
   // Normalize dates to midnight
@@ -103,12 +103,12 @@ export const getNextBillingDate = (
 
   // Check if subscription has expired (today is past endDate)
   if (today > end) {
-    return { date: null, status: "EXPIRED", daysRemaining: null };
+    return { date: null, status: 'EXPIRED', daysRemaining: null };
   }
 
   // Check if startDate is after endDate (invalid)
   if (start > end) {
-    return { date: null, status: "EXPIRED", daysRemaining: null };
+    return { date: null, status: 'EXPIRED', daysRemaining: null };
   }
 
   // Helper to compute days remaining
@@ -127,7 +127,7 @@ export const getNextBillingDate = (
 
       return {
         date: nextBilling,
-        status: isDueToday ? "DUE TODAY" : "ACTIVE",
+        status: isDueToday ? 'DUE TODAY' : 'ACTIVE',
         daysRemaining: daysLeft,
       };
     }
@@ -135,13 +135,13 @@ export const getNextBillingDate = (
     // Move to next billing cycle
     i++;
     nextBilling =
-      type === "MONTHLY" ? addMonthsSafe(start, i) : addYearsSafe(start, i);
+      type === 'MONTHLY' ? addMonthsSafe(start, i) : addYearsSafe(start, i);
   }
 
   // No future billing date found within subscription period
   return {
     date: null,
-    status: "EXPIRED",
+    status: 'EXPIRED',
     daysRemaining: null,
   };
 };
@@ -162,9 +162,9 @@ export const getSubscriptionCardImage = (
   if (!subscription) return IMAGES.Visa; // default fallback
 
   switch (subscription.card) {
-    case "MASTER":
+    case 'MASTER':
       return IMAGES.MasterCard;
-    case "PAYPAL":
+    case 'PAYPAL':
       return IMAGES.Paypal;
     default:
       return IMAGES.Visa;
@@ -174,10 +174,10 @@ export const getSubscriptionCardImage = (
 export const formatToReadableDate = (dateString: string): string => {
   const date = new Date(dateString);
 
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 };
 
@@ -187,11 +187,11 @@ export const updateCurrentDateToSelectedDate = (
 ): Date => {
   // Validate inputs
   if (!(currentDate instanceof Date) || isNaN(currentDate.getTime())) {
-    throw new Error("Invalid currentDate: must be a valid Date object");
+    throw new Error('Invalid currentDate: must be a valid Date object');
   }
 
   if (!Number.isInteger(clickedDay) || clickedDay < 1 || clickedDay > 31) {
-    throw new Error("Invalid clickedDay: must be an integer between 1 and 31");
+    throw new Error('Invalid clickedDay: must be an integer between 1 and 31');
   }
 
   const year = currentDate.getFullYear();
@@ -209,30 +209,30 @@ export const updateCurrentDateToSelectedDate = (
 // to format api error message
 export const processError = (err: unknown) => {
   throw new Error(
-    err?.response?.data?.message || err.message || "Request failed"
+    err?.response?.data?.message || err.message || 'Request failed'
   );
 };
 
 export const getAvatarInitials = (name?: string | null): string => {
   if (!name?.trim()) {
-    return "?";
+    return '?';
   }
 
   const words = name
     .trim()
-    .replace(/[^a-zA-ZÀ-ÿ\s]/g, "") // Keep letters and accented characters
+    .replace(/[^a-zA-ZÀ-ÿ\s]/g, '') // Keep letters and accented characters
     .split(/\s+/)
     .filter((word) => word.length > 0);
 
   if (words.length === 0) {
-    return "?";
+    return '?';
   }
 
   const first = words[0][0];
 
   if (words.length === 1) {
     const secondChar = words[0][1];
-    return (first + (secondChar || "")).toUpperCase();
+    return (first + (secondChar || '')).toUpperCase();
   }
 
   const second = words[1][0];
@@ -248,29 +248,25 @@ export function getReminderDate(
   isCustom = false,
   custom?: ICustomReminder
 ) {
-<<<<<<< HEAD
-=======
-  console.log("Reminder Dates: ", reminder, "Custom: ", custom);
->>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
   const reminderMap: Record<
     string,
     [number, moment.unitOfTime.DurationConstructor]
   > = {
-    "5 minutes before": [5, "minutes"],
-    "10 minutes before": [10, "minutes"],
-    "30 minutes before": [30, "minutes"],
-    "1 hour before": [1, "hours"],
-    "1 day before": [1, "days"],
-    "2 days before": [2, "days"],
-    "1 week before": [1, "weeks"],
-    "2 weeks before": [2, "weeks"],
-    "3 weeks before": [3, "weeks"],
-    "1 month before": [1, "months"],
-    "2 months before": [2, "months"],
-    "3 months before": [3, "months"],
-    "4 months before": [4, "months"],
-    "5 months before": [5, "months"],
-    "6 months before": [6, "months"],
+    '5 minutes before': [5, 'minutes'],
+    '10 minutes before': [10, 'minutes'],
+    '30 minutes before': [30, 'minutes'],
+    '1 hour before': [1, 'hours'],
+    '1 day before': [1, 'days'],
+    '2 days before': [2, 'days'],
+    '1 week before': [1, 'weeks'],
+    '2 weeks before': [2, 'weeks'],
+    '3 weeks before': [3, 'weeks'],
+    '1 month before': [1, 'months'],
+    '2 months before': [2, 'months'],
+    '3 months before': [3, 'months'],
+    '4 months before': [4, 'months'],
+    '5 months before': [5, 'months'],
+    '6 months before': [6, 'months'],
   };
 
   const mapped = reminderMap[reminder];
@@ -293,21 +289,21 @@ export function getReminderString(
   notificationType?: NotifType[]
 ): { combinedKeyValue: string; isCustom: boolean } {
   const reverseReminderMap: Record<string, string> = {
-    "5-minutes": "5 minutes",
-    "10-minutes": "10 minutes",
-    "30-minutes": "30 minutes",
-    "1-hours": "1 hour",
-    "1-days": "1 day",
-    "2-days": "2 days",
-    "1-weeks": "1 week",
-    "2-weeks": "2 weeks",
-    "3-weeks": "3 weeks",
-    "1-months": "1 month",
-    "2-months": "2 months",
-    "3-months": "3 months",
-    "4-months": "4 months",
-    "5-months": "5 months",
-    "6-months": "6 months",
+    '5-minutes': '5 minutes',
+    '10-minutes': '10 minutes',
+    '30-minutes': '30 minutes',
+    '1-hours': '1 hour',
+    '1-days': '1 day',
+    '2-days': '2 days',
+    '1-weeks': '1 week',
+    '2-weeks': '2 weeks',
+    '3-weeks': '3 weeks',
+    '1-months': '1 month',
+    '2-months': '2 months',
+    '3-months': '3 months',
+    '4-months': '4 months',
+    '5-months': '5 months',
+    '6-months': '6 months',
   };
 
   const key = `${value}-${unit}`;
@@ -315,7 +311,7 @@ export function getReminderString(
 
   if (!reminder) {
     const combinedKey = `${value} ${unit} before, via ${
-      notificationType?.join(",") ?? "EMAIL"
+      notificationType?.join(',') ?? 'EMAIL'
     }`;
     return { combinedKeyValue: combinedKey, isCustom: true };
   }
@@ -331,5 +327,5 @@ export const pluralize = (count: number, singular: string, plural: string) =>
 export function groupClassNames(
   ...classes: (string | undefined | null | false)[]
 ) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }

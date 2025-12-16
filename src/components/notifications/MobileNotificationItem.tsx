@@ -1,11 +1,16 @@
-import { FiCheck, FiAlertTriangle, FiInfo, FiShoppingBag } from "react-icons/fi";
+import {
+  FiCheck,
+  FiAlertTriangle,
+  FiInfo,
+  FiShoppingBag,
+} from 'react-icons/fi';
 
 interface NotificationCardProps {
   title: string;
   message: string;
   timestamp: string;
-  type: "success" | "error" | "warning" | "info" | "promo";
-  image?: string; 
+  type: 'success' | 'error' | 'warning' | 'info' | 'promo';
+  image?: string;
   onClick?: () => void;
 }
 

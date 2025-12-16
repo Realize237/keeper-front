@@ -1,13 +1,13 @@
-import { motion } from "framer-motion";
-import { GoEye, GoEyeClosed } from "react-icons/go";
-import { useState } from "react";
+import { motion } from 'framer-motion';
+import { GoEye, GoEyeClosed } from 'react-icons/go';
+import { useState } from 'react';
 import {
   FieldError,
   RegisterOptions,
   UseFormRegister,
   FieldValues,
   Path,
-} from "react-hook-form";
+} from 'react-hook-form';
 
 type FormInputProps<FormValues extends FieldValues> = {
   type?: string;
@@ -20,7 +20,7 @@ type FormInputProps<FormValues extends FieldValues> = {
 };
 
 export default function FormInput<FormValues extends FieldValues>({
-  type = "text",
+  type = 'text',
   placeholder,
   error,
   register,
@@ -31,10 +31,10 @@ export default function FormInput<FormValues extends FieldValues>({
   const [showPassword, setShowPassword] = useState(false);
 
   const inputType =
-    passwordToggle && type === "password"
+    passwordToggle && type === 'password'
       ? showPassword
-        ? "text"
-        : "password"
+        ? 'text'
+        : 'password'
       : type;
 
   return (
@@ -49,7 +49,7 @@ export default function FormInput<FormValues extends FieldValues>({
           type={inputType}
           placeholder={placeholder}
           className={`w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] pr-12 ${
-            error ? "border border-red-500" : ""
+            error ? 'border border-red-500' : ''
           }`}
         />
 
@@ -66,7 +66,7 @@ export default function FormInput<FormValues extends FieldValues>({
 
       {error && (
         <p className="text-red-500 text-xs mt-1">
-          {typeof error === "string" ? error : error.message}
+          {typeof error === 'string' ? error : error.message}
         </p>
       )}
     </motion.div>

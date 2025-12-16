@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { activeNavItems } from "../../../utils";
+import { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { activeNavItems } from '../../../utils';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -30,12 +30,12 @@ const Sidebar = () => {
       <motion.div
         initial={{ x: -220 }}
         animate={{ x: isOpen ? 0 : -300 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         className="fixed top-0 left-0 h-screen rounded-2xl w-64 bg-[#2f2f2f] text-gray-400 p-6 flex flex-col z-40"
       >
         <h1
           className={`text-white text-2xl font-bold mb-8 ${
-            isOpen ? "" : "hidden"
+            isOpen ? '' : 'hidden'
           }`}
         >
           Menu
@@ -56,13 +56,13 @@ const Sidebar = () => {
                 <motion.div
                   className="flex items-center gap-3"
                   initial={false}
-                  animate={{ color: isActive ? "#CDFF00" : "#9CA3AF" }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  animate={{ color: isActive ? '#CDFF00' : '#9CA3AF' }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 >
                   <motion.div
                     initial={{ scale: 1 }}
                     animate={{ scale: isActive ? 1.2 : 1 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   >
                     <Icon />
                   </motion.div>

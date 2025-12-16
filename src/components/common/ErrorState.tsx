@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 type ErrorStateProps = {
   message?: string;
@@ -6,7 +6,7 @@ type ErrorStateProps = {
 };
 
 const ErrorState = ({
-  message = "Something went wrong.",
+  message = 'Something went wrong.',
   onRetry,
 }: ErrorStateProps) => {
   return (
@@ -19,7 +19,7 @@ const ErrorState = ({
       <motion.div
         initial={{ scale: 0.5 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200 }}
+        transition={{ type: 'spring', stiffness: 200 }}
         className="w-14 h-14 rounded-full bg-[#3e3e3e]/50 text-white flex items-center justify-center mb-4 border border-[#525252]"
       >
         ⚠️

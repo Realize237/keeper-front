@@ -1,6 +1,6 @@
-import { createContext, use, type FC, type ReactNode } from "react";
-import type { UserResponse } from "../interfaces/users";
-import { useUserInfo } from "../hooks/useUsers";
+import { createContext, use, type FC, type ReactNode } from 'react';
+import type { UserResponse } from '../interfaces/users';
+import { useUserInfo } from '../hooks/useUsers';
 
 interface UserContextType {
   user: UserResponse | null;
@@ -29,7 +29,7 @@ export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
 export const useUser = () => {
   const ctx = use(UserContext);
   if (!ctx) {
-    throw new Error("useUser must be used inside a <UserProvider>");
+    throw new Error('useUser must be used inside a <UserProvider>');
   }
   return ctx;
 };
