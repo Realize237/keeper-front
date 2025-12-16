@@ -1,13 +1,13 @@
-import { motion } from "framer-motion";
-import { MdOutlineNotifications } from "react-icons/md";
+import { motion } from 'framer-motion';
+import { MdOutlineNotifications } from 'react-icons/md';
 
 interface Props {
   count?: number;
   onClick?: () => void;
 }
 
-const getBadgeValue = (value:number) => {
-   return value > 9 ? "9+" : value
+const getBadgeValue = (value: number) => {
+  return value > 9 ? '9+' : value;
 };
 
 const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {

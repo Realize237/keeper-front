@@ -9,13 +9,20 @@ type Props = {
   onSearch: (q: string) => void;
 };
 
-const NotificationsHeader: React.FC<Props> = ({ title = 'Notifications', unreadCount, totalCount, searchQuery, onSearch }) => {
+const NotificationsHeader: React.FC<Props> = ({
+  title = 'Notifications',
+  unreadCount,
+  totalCount,
+  searchQuery,
+  onSearch,
+}) => {
   return (
     <div className="bg-neutral-900/40 border border-neutral-800 rounded-xl px-4 py-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
       <div>
         <h1 className="text-2xl lg:text-3xl font-bold">{title}</h1>
         <p className="text-sm text-neutral-400 mt-1">
-          <span className="font-medium text-white">{unreadCount}</span> unread • <span className="text-neutral-300">{totalCount}</span> total
+          <span className="font-medium text-white">{unreadCount}</span> unread •{' '}
+          <span className="text-neutral-300">{totalCount}</span> total
         </p>
       </div>
 

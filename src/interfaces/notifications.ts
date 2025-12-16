@@ -1,15 +1,15 @@
-import { Subscription } from "./subscription";
+import { Subscription } from './subscription';
 
 export const NotificationType = {
-  SYSTEM: "SYSTEM",
-  EMAIL: "EMAIL",
-  SMS: "SMS",
-  WHATSAPP: "WHATSAPP",
+  SYSTEM: 'SYSTEM',
+  EMAIL: 'EMAIL',
+  SMS: 'SMS',
+  WHATSAPP: 'WHATSAPP',
 };
 
 export const NotificationStatus = {
-  UNREAD: "UNREAD",
-  READ: "READ",
+  UNREAD: 'UNREAD',
+  READ: 'READ',
 };
 
 export type NotifStatus = keyof typeof NotificationStatus;
@@ -24,7 +24,7 @@ export interface Notification {
   icon?: React.ReactNode;
   image?: string;
   to: number;
-  from?: string | "SYSTEM";
+  from?: string | 'SYSTEM';
   broadcast: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -36,17 +36,17 @@ export interface NotificationRequest {
 }
 
 export const CustomUnits = {
-  MINS: "minutes",
-  HOURS: "hours",
-  DAYS: "days",
-  WEEKS: "weeks",
+  MINS: 'minutes',
+  HOURS: 'hours',
+  DAYS: 'days',
+  WEEKS: 'weeks',
 };
 
 export type CustomUnitType = moment.unitOfTime.DurationConstructor;
 
 export interface ReminderOptionType {
   value: string;
-  subscriptionType: "BOTH" | "YEARLY";
+  subscriptionType: 'BOTH' | 'YEARLY';
 }
 
 export interface ICustomReminder {
@@ -73,8 +73,8 @@ export interface IReminderUpdate extends IReminderRequest {
 }
 
 export interface ISubscriptionRemindersUpdate {
-    updatedReminders: IReminderRequest[];
-    subscriptionId: number;
+  updatedReminders: IReminderRequest[];
+  subscriptionId: number;
 }
 
 export interface IReminderResponse extends IReminderUpdate {

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Google Calendar Connection Failed</title>
     <style>
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -37,7 +37,14 @@
   </head>
   <body>
     <div class="container">
-      <div class="error-icon"><img width="48" height="48" src="https://img.icons8.com/color/48/delete-sign--v1.png" alt="delete-sign--v1" /></div>
+      <div class="error-icon">
+        <img
+          width="48"
+          height="48"
+          src="https://img.icons8.com/color/48/delete-sign--v1.png"
+          alt="delete-sign--v1"
+        />
+      </div>
       <h1>Connection Failed</h1>
       <p>Unable to connect to Google Calendar.</p>
       <p>Please try again or contact support.</p>
@@ -45,14 +52,13 @@
     </div>
 
     <script>
-      
       const urlParams = new URLSearchParams(window.location.search);
-      const errorMessage = urlParams.get("error") || "Authentication failed";
+      const errorMessage = urlParams.get('error') || 'Authentication failed';
 
       if (window.opener) {
         window.opener.postMessage(
           {
-            type: "GOOGLE_CALENDAR_AUTH_ERROR",
+            type: 'GOOGLE_CALENDAR_AUTH_ERROR',
             message: errorMessage,
           },
           window.location.origin

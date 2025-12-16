@@ -1,20 +1,23 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Notification, NotificationRequest } from "../interfaces/notifications";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import type {
+  Notification,
+  NotificationRequest,
+} from '../interfaces/notifications';
 import {
   deleteNotification,
   getAllNotifications,
   getAllUsersNotifications,
-  updateNotification
-} from "../api/notifications";
-import { notificationKeys } from "../queryKeys/notificationKeys";
-import { useUser } from "../context/UserContext";
+  updateNotification,
+} from '../api/notifications';
+import { notificationKeys } from '../queryKeys/notificationKeys';
+import { useUser } from '../context/UserContext';
 
 export const useUserNotifications = () => {
-  const {user} = useUser();
+  const { user } = useUser();
   return useQuery<Notification[]>({
     queryKey: notificationKeys.user,
     queryFn: () => getAllUsersNotifications(user?.id as number),
-    enabled:!!user?.id
+    enabled: !!user?.id,
   });
 };
 
@@ -43,7 +46,11 @@ export const useUpdateNotification = () => {
 export const useDeleteNotifications = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<{ statusCode: number; message: string }, Error, NotificationRequest>({
+  return useMutation<
+    { statusCode: number; message: string },
+    Error,
+    NotificationRequest
+  >({
     mutationFn: deleteNotification,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notificationKeys.user });

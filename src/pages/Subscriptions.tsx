@@ -1,35 +1,35 @@
-import { useCallback, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { TbScreenshot } from "react-icons/tb";
-import { daysOfWeek, monthsOfYear } from "../constants";
-import Calendar from "../components/calendar/Calendar";
-import SelectCalendarDate from "../components/ui/Calendar";
+import { useCallback, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { TbScreenshot } from 'react-icons/tb';
+import { daysOfWeek, monthsOfYear } from '../constants';
+import Calendar from '../components/calendar/Calendar';
+import SelectCalendarDate from '../components/ui/Calendar';
 import {
   SUBSCRIPTION_TYPES,
   SubscriptionModalTypes,
   type Subscription,
   type SubscriptionModalType,
   type SubscriptionsGroupedByDay,
-} from "../interfaces/subscription";
-import SubscriptionDetailModal from "../components/subscriptions/SubscriptionDetailModal";
-import SelectedDaySubscriptionsListModal from "../components/subscriptions/SelectedDaySubscriptionsListModal";
+} from '../interfaces/subscription';
+import SubscriptionDetailModal from '../components/subscriptions/SubscriptionDetailModal';
+import SelectedDaySubscriptionsListModal from '../components/subscriptions/SelectedDaySubscriptionsListModal';
 import {
   isEmpty,
   normalizedDate,
   updateCurrentDateToSelectedDate,
-} from "../utils";
-import BottomSheet from "../components/ui/BottomSheet";
-import type { Value } from "../interfaces/calendar";
-import SubscriptionTypeAndDot from "../components/ui/SubscriptionTypeAndDot";
-import { useMonthlySubscriptions } from "../hooks/useSubscriptions";
+} from '../utils';
+import BottomSheet from '../components/ui/BottomSheet';
+import type { Value } from '../interfaces/calendar';
+import SubscriptionTypeAndDot from '../components/ui/SubscriptionTypeAndDot';
+import { useMonthlySubscriptions } from '../hooks/useSubscriptions';
 import CalendarSkeleton, {
   MonthlyHeaderSkeleton,
-} from "../components/calendar/CalendarSkeleton";
-import ErrorState from "../components/common/ErrorState";
-import { useNavigate } from "react-router-dom";
-import { useUserNotifications } from "../hooks/useNotifications";
-import NotificationBell from "../components/notifications/NotificationBell";
-import { NotificationStatus } from "../interfaces/notifications";
+} from '../components/calendar/CalendarSkeleton';
+import ErrorState from '../components/common/ErrorState';
+import { useNavigate } from 'react-router-dom';
+import { useUserNotifications } from '../hooks/useNotifications';
+import NotificationBell from '../components/notifications/NotificationBell';
+import { NotificationStatus } from '../interfaces/notifications';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -77,7 +77,7 @@ const Subscriptions = () => {
     refetch,
   } = useMonthlySubscriptions(normalized);
 
-  console.log("Use monthly subscriptions: ", groupedMonthlySubscriptions)
+  console.log('Use monthly subscriptions: ', groupedMonthlySubscriptions);
 
   const getDaySubscriptions = useCallback(
     (day: number) => {
@@ -169,7 +169,7 @@ const Subscriptions = () => {
           <div className="flex items-center space-x-3">
             <NotificationBell
               count={unReadCount}
-              onClick={() => navigate("/notifications")}
+              onClick={() => navigate('/notifications')}
             />
             <motion.div
               className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
@@ -204,7 +204,7 @@ const Subscriptions = () => {
               <span className="bg-[#3a3a3a] animate-pulse w-12 h-3"></span>
             ) : (
               <span className="text-white text-md">
-                {" "}
+                {' '}
                 ${getTotalMonthlySubscriptions}
               </span>
             )}
@@ -231,9 +231,9 @@ const Subscriptions = () => {
               key={day}
               onClick={() => setSelectDay(index)}
               className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
-                selectDay === index ? "border border-[#303031]" : "bg-[#464646]"
+                selectDay === index ? 'border border-[#303031]' : 'bg-[#464646]'
               } cursor-pointer h-auto flex justify-center items-center`}
-              whileHover={{ scale: 1.05, backgroundColor: "#3f3f3f" }}
+              whileHover={{ scale: 1.05, backgroundColor: '#3f3f3f' }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="text-gray-400 text-sm">{day}</span>

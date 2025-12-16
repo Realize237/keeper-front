@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { Button } from "../ui/Button";
-import { Input } from "../ui/Input";
-import { motion } from "framer-motion";
-import { MdClose } from "react-icons/md";
-import { useState, useRef, useEffect } from "react";
+import { Button } from '../ui/Button';
+import { Input } from '../ui/Input';
+import { motion } from 'framer-motion';
+import { MdClose } from 'react-icons/md';
+import { useState, useRef, useEffect } from 'react';
 
 interface OtpProps {
   onSubmit: (code: string) => void;
@@ -12,8 +12,15 @@ interface OtpProps {
   isOpen: boolean;
 }
 
-export default function OTPVerification({ onSubmit, onResend, onClose, isOpen }: OtpProps) {
-  const [otp, setOtp] = useState<string[]>(Array.from<string>({length:6}).fill(""));
+export default function OTPVerification({
+  onSubmit,
+  onResend,
+  onClose,
+  isOpen,
+}: OtpProps) {
+  const [otp, setOtp] = useState<string[]>(
+    Array.from<string>({ length: 6 }).fill('')
+  );
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const [secondsLeft, setSecondsLeft] = useState<number>(120);
   const [isResendAvailable, setIsResendAvailable] = useState(false);
@@ -51,7 +58,7 @@ export default function OTPVerification({ onSubmit, onResend, onClose, isOpen }:
     const newOtp = [...otp];
 
     if (value.length > 1) {
-      const values = value.slice(0, 6 - index).split("");
+      const values = value.slice(0, 6 - index).split('');
       for (let i = 0; i < values.length; i++) {
         newOtp[index + i] = values[i];
       }
@@ -67,23 +74,26 @@ export default function OTPVerification({ onSubmit, onResend, onClose, isOpen }:
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
       inputsRef.current[index - 1]?.focus();
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (otp.some((v) => v === "")) return;
-    onSubmit(otp.join(""));
+    if (otp.some((v) => v === '')) return;
+    onSubmit(otp.join(''));
   };
 
   const formatTime = (sec: number) => {
     const minutes = Math.floor(sec / 60)
       .toString()
-      .padStart(2, "0");
-    const seconds = (sec % 60).toString().padStart(2, "0");
+      .padStart(2, '0');
+    const seconds = (sec % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
   };
 
@@ -119,7 +129,9 @@ export default function OTPVerification({ onSubmit, onResend, onClose, isOpen }:
                 pattern="\d*"
                 maxLength={6}
                 value={value}
-                ref={(el) => { inputsRef.current[i] = el; }}
+                ref={(el) => {
+                  inputsRef.current[i] = el;
+                }}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
                 className="w-10 h-12 text-white text-center rounded-lg"
@@ -135,14 +147,16 @@ export default function OTPVerification({ onSubmit, onResend, onClose, isOpen }:
         <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
           <span>
             {isResendAvailable
-              ? "You can resend the code now."
+              ? 'You can resend the code now.'
               : `Resend available in ${formatTime(secondsLeft)}`}
           </span>
           <button
             onClick={handleResend}
             disabled={!isResendAvailable}
             className={`text-sm font-semibold ${
-              isResendAvailable ? "text-blue-500 hover:underline" : "text-gray-500 cursor-not-allowed"
+              isResendAvailable
+                ? 'text-blue-500 hover:underline'
+                : 'text-gray-500 cursor-not-allowed'
             }`}
           >
             Resend

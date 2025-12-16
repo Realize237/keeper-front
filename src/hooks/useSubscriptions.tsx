@@ -1,20 +1,20 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addSubscriptionToGoogleCalendar,
   getSubscriptionDetails,
   removeSubscriptionFromGoogleCalendar,
-} from "../api/subscription";
+} from '../api/subscription';
 import type {
   IAddToCalendar,
   Subscription,
   SubscriptionsGroupedByDay,
-} from "../interfaces/subscription";
+} from '../interfaces/subscription';
 import {
   subscriptionKeys,
   type SubscriptionFilters,
-} from "../queryKeys/subscriptionKeys";
-import { useUser } from "../context/UserContext";
-import { getMonthlySubscriptions } from "../services/subscriptionService";
+} from '../queryKeys/subscriptionKeys';
+import { useUser } from '../context/UserContext';
+import { getMonthlySubscriptions } from '../services/subscriptionService';
 
 export const useMonthlySubscriptions = (date: Date) => {
   const { user } = useUser();

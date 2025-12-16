@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -16,10 +16,10 @@ const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
       onClick={onClose}
     >
       <motion.div
-        initial={{ y: "100%" }}
+        initial={{ y: '100%' }}
         animate={{ y: 0 }}
-        exit={{ y: "100%" }}
-        transition={{ type: "spring", stiffness: 200, damping: 30 }}
+        exit={{ y: '100%' }}
+        transition={{ type: 'spring', stiffness: 200, damping: 30 }}
         className="w-full max-w-md bg-[#1f1f1f] rounded-t-3xl p-4 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >

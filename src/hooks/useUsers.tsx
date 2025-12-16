@@ -1,11 +1,11 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type {
   IEmailPasswordInput,
   UserInput,
   UserLoginInput,
   UserResponse,
   UserUpdateInput,
-} from "../interfaces/users";
+} from '../interfaces/users';
 import {
   changeUserPassword,
   createUser,
@@ -14,13 +14,13 @@ import {
   loginUser,
   logoutUser,
   updateUser,
-} from "../api/users";
-import { env } from "../utils/env";
-import { userKeys } from "../queryKeys/userKeys";
+} from '../api/users';
+import { env } from '../utils/env';
+import { userKeys } from '../queryKeys/userKeys';
 
 export const useUserList = () => {
   return useQuery<UserResponse[]>({
-    queryKey: ["users"],
+    queryKey: ['users'],
     queryFn: getAllUsers,
   });
 };

@@ -1,6 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, type ReactNode } from "react";
-import { IoClose } from "react-icons/io5";
+import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, type ReactNode } from 'react';
+import { IoClose } from 'react-icons/io5';
 
 type ModalProps = {
   isOpen: boolean;
@@ -15,19 +15,19 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   title,
   children,
-  width = "max-w-xl",
+  width = 'max-w-xl',
 }) => {
   // Lock scroll when modal is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
 
     // Cleanup on unmount
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -43,9 +43,9 @@ const Modal: React.FC<ModalProps> = ({
           onClick={onClose}
         >
           <motion.div
-            initial={{ opacity: 0, y: "-100%" }}
-            animate={{ opacity: 1, y: "0%" }}
-            exit={{ opacity: 0, y: "-100%" }}
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: '0%' }}
+            exit={{ opacity: 0, y: '-100%' }}
             transition={{ duration: 0.4 }}
             onClick={(e) => e.stopPropagation()}
             className={`relative bg-black text-gray-100 w-full mx-4 ${width} rounded-2xl p-6 shadow-xl z-50`}

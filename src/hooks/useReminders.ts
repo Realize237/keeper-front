@@ -1,12 +1,12 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "../context/UserContext";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useUser } from '../context/UserContext';
 import {
   IReminderRequest,
   IReminderResponse,
   IReminderUpdate,
   ISubscriptionRemindersUpdate,
-} from "../interfaces/notifications";
-import { reminderKeys } from "../queryKeys/reminderKeys";
+} from '../interfaces/notifications';
+import { reminderKeys } from '../queryKeys/reminderKeys';
 import {
   addReminders,
   deleteReminder,
@@ -15,11 +15,11 @@ import {
   getAllUsersReminders,
   updateReminder,
   updateSubscriptionReminders,
-} from "../api/reminders";
+} from '../api/reminders';
 import {
   SubscriptionFilters,
   subscriptionKeys,
-} from "../queryKeys/subscriptionKeys";
+} from '../queryKeys/subscriptionKeys';
 
 export const useUserReminders = () => {
   const { user } = useUser();
