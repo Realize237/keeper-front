@@ -1,7 +1,7 @@
-import axios from "axios";
-import { API_PATHS } from "../api/api-paths";
-import { env } from "../utils/env";
-import { processError } from "../utils";
+import axios from 'axios';
+import { API_PATHS } from '../api/api-paths';
+import { env } from '../utils/env';
+import { processError } from '../utils';
 
 export interface GoogleCalendarAuthResponse {
   success: boolean;
@@ -15,35 +15,35 @@ export const initiateGoogleCalendarAuth = (
   return new Promise((resolve, reject) => {
     const popup = window.open(
       `${env.API_URL}${API_PATHS.GOOGLE.CALENDAR_AUTH}?userId=${userId}&popup=true`,
-      "google-calendar-auth",
-      "width=500,height=600,scrollbars=yes,resizable=yes"
+      'google-calendar-auth',
+      'width=500,height=600,scrollbars=yes,resizable=yes'
     );
     if (!popup) {
-      reject(new Error("Popup blocked. Please allow popups for this site."));
+      reject(new Error('Popup blocked. Please allow popups for this site.'));
       return;
     }
 
     const messageListener = (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return;
 
-      if (event.data.type === "GOOGLE_CALENDAR_AUTH_SUCCESS") {
+      if (event.data.type === 'GOOGLE_CALENDAR_AUTH_SUCCESS') {
         popup.close();
-        window.removeEventListener("message", messageListener);
+        window.removeEventListener('message', messageListener);
         resolve(true);
-      } else if (event.data.type === "GOOGLE_CALENDAR_AUTH_ERROR") {
+      } else if (event.data.type === 'GOOGLE_CALENDAR_AUTH_ERROR') {
         popup.close();
-        window.removeEventListener("message", messageListener);
-        reject(new Error(event.data.message || "Authentication failed"));
+        window.removeEventListener('message', messageListener);
+        reject(new Error(event.data.message || 'Authentication failed'));
       }
     };
 
-    window.addEventListener("message", messageListener);
+    window.addEventListener('message', messageListener);
 
     const checkClosed = setInterval(() => {
       if (popup.closed) {
         clearInterval(checkClosed);
-        window.removeEventListener("message", messageListener);
-        reject(new Error("Authentication cancelled"));
+        window.removeEventListener('message', messageListener);
+        reject(new Error('Authentication cancelled'));
       }
     }, 1000);
   });

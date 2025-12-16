@@ -7,19 +7,18 @@ import { NotificationStatus } from "../interfaces/notifications";
 import { FiChevronLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { env } from "../utils/env";
 import NotificationFilterToggle from "../components/notifications/NotificationFilterToggle";
 import {
   useUpdateNotification,
   useDeleteNotifications,
   useUserNotifications,
-} from "../hooks/useNotifications";
-import NotificationSkeletonLoader from "../components/notifications/SkeletonLoader";
+} from '../hooks/useNotifications';
+import NotificationSkeletonLoader from '../components/notifications/SkeletonLoader';
 
 const NotificationsPage: React.FC = () => {
   const { data: notifications, isLoading } = useUserNotifications();
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [swipedId, setSwipedId] = useState<number | null>(null);
@@ -28,7 +27,7 @@ const NotificationsPage: React.FC = () => {
   const deleteNotificationMutation = useDeleteNotifications();
 
   const [page, setPage] = useState(1);
-  const rowsPerPage = parseInt(env.ROWS_PER_PAGE);
+  const ROWS_PER_PAGE =3;
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -36,12 +35,13 @@ const NotificationsPage: React.FC = () => {
     if (!notifications) return [];
     return notifications.filter(
       (notification) =>
-        notification.title.toLowerCase().includes(q) || notification.message.toLowerCase().includes(q)
+        notification.title.toLowerCase().includes(q) ||
+        notification.message.toLowerCase().includes(q)
     );
   }, [notifications, searchQuery]);
 
   const [filter, setFilter] = useState<string>(NotificationStatus.UNREAD);
-  
+
   const filteredByRead = useMemo(() => {
     if (!filtered) return [];
     return filtered?.filter((notification) => notification.status === filter);
@@ -49,27 +49,28 @@ const NotificationsPage: React.FC = () => {
 
   const totalPages = Math.max(
     1,
-    Math.ceil((filteredByRead?.length ?? 0) / rowsPerPage)
+    Math.ceil((filteredByRead?.length ?? 0) / ROWS_PER_PAGE)
   );
   const currentPage = Math.min(page, totalPages);
 
   const currentItems = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    return filteredByRead?.slice(start, start + rowsPerPage);
-  }, [filteredByRead, currentPage, rowsPerPage]);
+    const start = (currentPage - 1) * ROWS_PER_PAGE;
+    return filteredByRead?.slice(start, start + ROWS_PER_PAGE);
+  }, [filteredByRead, currentPage, ROWS_PER_PAGE]);
 
   const totalFiltered = filteredByRead?.length ?? 0;
 
   const unreadCount = useMemo(
     () =>
-      notifications?.filter((notification) => notification.status === NotificationStatus.UNREAD)
-        .length,
+      notifications?.filter(
+        (notification) => notification.status === NotificationStatus.UNREAD
+      ).length,
     [notifications]
   );
 
   const toggleRead = useCallback(
     (id: number) => {
-      updateNotificationMutation.mutate({ids: [id], all:false});
+      updateNotificationMutation.mutate({ ids: [id], all: false });
       setSwipedId(null);
     },
     [updateNotificationMutation]
@@ -77,22 +78,28 @@ const NotificationsPage: React.FC = () => {
 
   const deleteNotification = useCallback(
     (id: number) => {
-        deleteNotificationMutation.mutate({ids: [id], all: false});
-        setSwipedId(null);
+      deleteNotificationMutation.mutate({ ids: [id], all: false });
+      setSwipedId(null);
     },
     [deleteNotificationMutation]
   );
 
   const markAllAsRead = useCallback(() => {
     if (notifications) {
-      updateNotificationMutation.mutate({ids:notifications.map(notification => notification.id), all: true});
+      updateNotificationMutation.mutate({
+        ids: notifications.map((notification) => notification.id),
+        all: true,
+      });
     }
   }, [updateNotificationMutation, notifications]);
 
   const deleteAll = useCallback(() => {
-    if (!confirm("Are you sure you want to delete all notifications?")) return;
+    if (!confirm('Are you sure you want to delete all notifications?')) return;
     if (notifications) {
-      deleteNotificationMutation.mutate({ids: notifications?.map(notification => notification.id), all: true});
+      deleteNotificationMutation.mutate({
+        ids: notifications?.map((notification) => notification.id),
+        all: true,
+      });
     }
     setSelectedIds(new Set());
   }, [deleteNotificationMutation, notifications]);
@@ -117,24 +124,25 @@ const NotificationsPage: React.FC = () => {
     if (selectedIds.size === 0) return;
     if (!confirm(`Delete ${selectedIds.size} notification(s)?`)) return;
     if (selectedIds) {
-      deleteNotificationMutation.mutate({ids: [...selectedIds], all: false});
+      deleteNotificationMutation.mutate({ ids: [...selectedIds], all: false });
     }
     setSelectedIds(new Set());
   }, [selectedIds, deleteNotificationMutation]);
 
-  const toggleSelectedStatus = useCallback(
-    () => {
-      if (selectedIds.size === 0) return;
-      const selectedNotifications = notifications
-        ?.filter((notification) => selectedIds.has(notification.id))
-      if (selectedNotifications) {
-        updateNotificationMutation.mutate({ids: selectedNotifications.map(notification => notification.id), all: false});
-      }
-      setSelectedIds(new Set());
-      setSelectMode(false);
-    },
-    [selectedIds, updateNotificationMutation, notifications]
-  );
+  const toggleSelectedStatus = useCallback(() => {
+    if (selectedIds.size === 0) return;
+    const selectedNotifications = notifications?.filter((notification) =>
+      selectedIds.has(notification.id)
+    );
+    if (selectedNotifications) {
+      updateNotificationMutation.mutate({
+        ids: selectedNotifications.map((notification) => notification.id),
+        all: false,
+      });
+    }
+    setSelectedIds(new Set());
+    setSelectMode(false);
+  }, [selectedIds, updateNotificationMutation, notifications]);
 
   const navigate = useNavigate();
 
@@ -147,7 +155,7 @@ const NotificationsPage: React.FC = () => {
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
       className="min-h-screen text-white w-full bg-[#171717]"
     >
       <div className="mx-auto w-full px-4 md:px-6 bg-[#171717] lg:px-8 py-6">
@@ -189,30 +197,30 @@ const NotificationsPage: React.FC = () => {
               <NotificationFilterToggle style="p-3" onChange={setFilter} />
             </div>
 
-            {
-              isLoading ?
+            {isLoading ? (
               <div className="flex space-y-4">
                 <NotificationSkeletonLoader />
               </div>
-              :
+            ) : (
               <NotificationList
-              notifications={currentItems!}
-              swipedId={swipedId}
-              setSwipedId={setSwipedId}
-              selectMode={selectMode}
-              selectedIds={selectedIds}
-              toggleSelect={toggleSelect}
-              onToggleRead={toggleRead}
-              onDelete={deleteNotification}
-            />}
+                notifications={currentItems!}
+                swipedId={swipedId}
+                setSwipedId={setSwipedId}
+                selectMode={selectMode}
+                selectedIds={selectedIds}
+                toggleSelect={toggleSelect}
+                onToggleRead={toggleRead}
+                onDelete={deleteNotification}
+              />
+            )}
 
-            {totalFiltered > rowsPerPage && (
+            {totalFiltered > ROWS_PER_PAGE && (
               <div className="mt-4">
                 <Pagination
                   current={currentPage}
                   total={totalPages}
                   onChange={(p) => setPage(p)}
-                  itemsPerPage={rowsPerPage}
+                  itemsPerPage={ROWS_PER_PAGE}
                   totalItems={totalFiltered}
                 />
               </div>

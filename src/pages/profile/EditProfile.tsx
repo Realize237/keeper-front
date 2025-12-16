@@ -1,14 +1,14 @@
-import { FaChevronLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { getAvatarInitials } from "../../utils";
-import { useUser } from "../../context/UserContext";
-import FormInput from "../../components/ui/FormInput";
-import { useForm } from "react-hook-form";
-import { UserInput } from "../../interfaces/users";
-import FormButton from "../../components/ui/FormButton";
-import { useUpdateUser } from "../../hooks/useUsers";
-import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { FaChevronLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { getAvatarInitials } from '../../utils';
+import { useUser } from '../../context/UserContext';
+import FormInput from '../../components/ui/FormInput';
+import { useForm } from 'react-hook-form';
+import { UserInput } from '../../interfaces/users';
+import FormButton from '../../components/ui/FormButton';
+import { useUpdateUser } from '../../hooks/useUsers';
+import toast from 'react-hot-toast';
+import { useEffect, useState } from 'react';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -22,10 +22,10 @@ const EditProfile = () => {
     formState: { errors },
     watch,
   } = useForm<UserInput>({
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
-      name: user?.name || "",
-      email: user?.email || "",
+      name: user?.name || '',
+      email: user?.email || '',
     },
   });
 
@@ -43,7 +43,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
-      if (emailError && name === "email") {
+      if (emailError && name === 'email') {
         setEmailError(undefined);
       }
       return () => subscription.unsubscribe();
@@ -56,20 +56,20 @@ const EditProfile = () => {
     updateUser(
       { user: changedFields, id: Number(user?.id) },
       {
-        onSuccess: () => toast.success("Profile updated successfully"),
+        onSuccess: () => toast.success('Profile updated successfully'),
         onError: (error: Error) => {
-          console.log("error: ", error.message);
+          console.log('error: ', error.message);
           const isEmail = error.message
             .toLowerCase()
             .trim()
-            .includes("Email already in use");
-          console.log("isEmail: ", isEmail);
+            .includes('Email already in use');
+          console.log('isEmail: ', isEmail);
           if (
-            error.message.toLowerCase().trim().includes("email already in use")
+            error.message.toLowerCase().trim().includes('email already in use')
           ) {
             setEmailError(error.message);
           } else {
-            toast.error(error.message || "Error updating profile");
+            toast.error(error.message || 'Error updating profile');
           }
         },
       }
@@ -97,7 +97,7 @@ const EditProfile = () => {
             />
           ) : (
             <div className="w-24 h-24 text-xl flex items-center justify-center rounded-full bg-[#CDFF00] text-black font-bold">
-              {getAvatarInitials(user?.name || "")}
+              {getAvatarInitials(user?.name || '')}
             </div>
           )}
         </div>
@@ -107,14 +107,14 @@ const EditProfile = () => {
             placeholder="Full name"
             register={register}
             rules={{
-              required: "Full name is required",
+              required: 'Full name is required',
               minLength: {
                 value: 2,
-                message: "Name must be at least 2 characters",
+                message: 'Name must be at least 2 characters',
               },
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: "Name can only contain letters and spaces",
+                message: 'Name can only contain letters and spaces',
               },
             }}
             error={errors.name}
@@ -126,10 +126,10 @@ const EditProfile = () => {
             register={register}
             error={errors.email || emailError}
             rules={{
-              required: "Email is required",
+              required: 'Email is required',
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Please enter a valid email",
+                message: 'Please enter a valid email',
               },
             }}
           />

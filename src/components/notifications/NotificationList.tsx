@@ -26,7 +26,9 @@ const NotificationList: React.FC<Props> = ({
   if (!notifications || !notifications.length) {
     return (
       <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-8 text-center">
-        <h3 className="text-lg font-semibold text-neutral-200">No notifications</h3>
+        <h3 className="text-lg font-semibold text-neutral-200">
+          No notifications
+        </h3>
         <p className="text-sm text-neutral-400 mt-2">You're all caught up!</p>
       </div>
     );
@@ -34,7 +36,6 @@ const NotificationList: React.FC<Props> = ({
 
   return (
     <div className="space-y-3">
-      
       {notifications.map((notification) => (
         <NotificationItem
           key={notification.id}

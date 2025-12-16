@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Google Calendar Connected</title>
     <style>
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,8 +38,12 @@
   <body>
     <div class="container">
       <div class="success-icon">
-        <img width="48" height="48" src="https://img.icons8.com/emoji/48/check-mark-button-emoji.png"
-          alt="check-mark-button-emoji" />
+        <img
+          width="48"
+          height="48"
+          src="https://img.icons8.com/emoji/48/check-mark-button-emoji.png"
+          alt="check-mark-button-emoji"
+        />
       </div>
       <h1>Google Calendar Connected!</h1>
       <p>You can now add subscriptions to your calendar.</p>
@@ -47,11 +51,10 @@
     </div>
 
     <script>
-      
       if (window.opener) {
         window.opener.postMessage(
           {
-            type: "GOOGLE_CALENDAR_AUTH_SUCCESS",
+            type: 'GOOGLE_CALENDAR_AUTH_SUCCESS',
           },
           window.location.origin
         );

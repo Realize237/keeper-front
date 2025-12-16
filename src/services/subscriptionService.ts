@@ -1,6 +1,6 @@
-import { getAllUserSubscriptions } from "../api/subscription";
-import type { Subscription } from "../interfaces/subscription";
-import { isSubscriptionActiveThisMonth } from "../utils";
+import { getAllUserSubscriptions } from '../api/subscription';
+import type { Subscription } from '../interfaces/subscription';
+import { isSubscriptionActiveThisMonth } from '../utils';
 
 export const getMonthlySubscriptions = async (
   dateToFilter: Date,

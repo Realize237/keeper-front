@@ -1,10 +1,10 @@
-import { Button } from "../ui/Button";
-import { Input } from "../ui/Input";
-import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { MdClose } from "react-icons/md";
+import { Button } from '../ui/Button';
+import { Input } from '../ui/Input';
+import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { MdClose } from 'react-icons/md';
 
 const passwordResetRequestSchema = z.object({
   email: z.email(),
@@ -16,7 +16,11 @@ interface PasswordResetRequestProps {
   onClose: () => void;
 }
 
-export default function PasswordResetRequest({ onSubmit, isOpen, onClose }: PasswordResetRequestProps) {
+export default function PasswordResetRequest({
+  onSubmit,
+  isOpen,
+  onClose,
+}: PasswordResetRequestProps) {
   const {
     register,
     handleSubmit,
@@ -28,8 +32,10 @@ export default function PasswordResetRequest({ onSubmit, isOpen, onClose }: Pass
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center
-                    bg-black/40 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center
+                    bg-black/40 backdrop-blur-sm"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -55,7 +61,7 @@ export default function PasswordResetRequest({ onSubmit, isOpen, onClose }: Pass
         >
           <Input
             placeholder="Email"
-            {...register("email")}
+            {...register('email')}
             error={errors.email?.message?.toString()}
           />
 

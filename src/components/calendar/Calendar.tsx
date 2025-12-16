@@ -1,19 +1,26 @@
-import { useMemo } from "react"
-import { motion } from "framer-motion";
-import type { Variants } from "framer-motion";
-import { getMonthMatrixMondayFirst, normalizedDate } from "../../utils";
-import SubscriptionCard from "../subscriptions/SubscriptionCard";
-import type { SubscriptionsGroupedByDay } from "../../interfaces/subscription";
-import type { Value } from "../../interfaces/calendar";
+import { useMemo } from 'react';
+import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
+import { getMonthMatrixMondayFirst, normalizedDate } from '../../utils';
+import SubscriptionCard from '../subscriptions/SubscriptionCard';
+import type { SubscriptionsGroupedByDay } from '../../interfaces/subscription';
+import type { Value } from '../../interfaces/calendar';
 
-interface CalendarProps{
-    date: Value | Date,
-    getDaySubscriptions: (day: number) => void
-    groupedMonthlySubscriptions: SubscriptionsGroupedByDay
+interface CalendarProps {
+  date: Value | Date;
+  getDaySubscriptions: (day: number) => void;
+  groupedMonthlySubscriptions: SubscriptionsGroupedByDay;
 }
 
-export default function Calendar({date, getDaySubscriptions, groupedMonthlySubscriptions}: CalendarProps) {
-  const monthMatrix = useMemo(() => getMonthMatrixMondayFirst(normalizedDate(date)), [date]);
+export default function Calendar({
+  date,
+  getDaySubscriptions,
+  groupedMonthlySubscriptions,
+}: CalendarProps) {
+  const monthMatrix = useMemo(
+    () => getMonthMatrixMondayFirst(normalizedDate(date)),
+    [date]
+  );
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -37,35 +44,37 @@ export default function Calendar({date, getDaySubscriptions, groupedMonthlySubsc
 
   return (
     <motion.div
-      className='w-full h-auto grid grid-cols-7 gap-1'
+      className="w-full h-auto grid grid-cols-7 gap-1"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-        {
-            monthMatrix.map((week, weekIndex) => (
-                week.map((day, dayIndex) => (
-                    <motion.div
-                      key={`${weekIndex}-${dayIndex}`}
-                      className={`w-12 h-14 md:w-full mr-1 flex flex-col ${groupedMonthlySubscriptions[Number(day)] ? 'justify-between' :'justify-end'} items-center bg-[#242425] rounded-lg cursor-pointer hover:bg-[#3f3f3f]`}
-                      variants={itemVariants}
-                      whileHover={{ 
-                        scale: 0.95,
-                        transition: { duration: 0.3, ease: "easeOut" }
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={()=> {
-                        if(day){
-                            getDaySubscriptions(Number(day))
-                        }
-                      }}
-                    >
-                        {groupedMonthlySubscriptions[Number(day)] && <SubscriptionCard subscriptions={groupedMonthlySubscriptions[Number(day)]}/>}
-                        <span className='text-gray-400 text-sm mb-1'>{day}</span>
-                    </motion.div>
-                ))
-            ))
-        }
+      {monthMatrix.map((week, weekIndex) =>
+        week.map((day, dayIndex) => (
+          <motion.div
+            key={`${weekIndex}-${dayIndex}`}
+            className={`w-12 h-14 md:w-full mr-1 flex flex-col ${groupedMonthlySubscriptions[Number(day)] ? 'justify-between' : 'justify-end'} items-center bg-[#242425] rounded-lg cursor-pointer hover:bg-[#3f3f3f]`}
+            variants={itemVariants}
+            whileHover={{
+              scale: 0.95,
+              transition: { duration: 0.3, ease: 'easeOut' },
+            }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              if (day) {
+                getDaySubscriptions(Number(day));
+              }
+            }}
+          >
+            {groupedMonthlySubscriptions[Number(day)] && (
+              <SubscriptionCard
+                subscriptions={groupedMonthlySubscriptions[Number(day)]}
+              />
+            )}
+            <span className="text-gray-400 text-sm mb-1">{day}</span>
+          </motion.div>
+        ))
+      )}
     </motion.div>
-  )
+  );
 }

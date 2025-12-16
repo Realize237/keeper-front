@@ -1,15 +1,15 @@
-import { motion } from "framer-motion";
-import Dropdown from "../notifications/Dropdown";
-import { useMemo, useState } from "react";
+import { motion } from 'framer-motion';
+import Dropdown from '../notifications/Dropdown';
+import { useMemo, useState } from 'react';
 import {
   ICustomReminder,
   CustomUnits,
   CustomUnitType,
   NotificationType,
   NotifType,
-} from "../../interfaces/notifications";
-import MultiSelectDropdown from "./MultiSelectDropdown";
-import { Button } from "./Button";
+} from '../../interfaces/notifications';
+import MultiSelectDropdown from './MultiSelectDropdown';
+import { Button } from './Button';
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -27,7 +27,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
   );
   const reminderValueError = useMemo(() => {
     if (Number(custom.value) < 30 && custom.unit == CustomUnits.MINS)
-      return "Reminder should be greater than 30 minutes";
+      return 'Reminder should be greater than 30 minutes';
     return null;
   }, [custom.value, custom.unit]);
 
@@ -78,7 +78,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             label="Unit"
             options={Object.values(CustomUnits).map((notification) => ({
               value: notification,
-              subscriptionType: "BOTH",
+              subscriptionType: 'BOTH',
             }))}
             value={custom.unit}
             onChange={(val) =>

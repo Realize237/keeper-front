@@ -1,27 +1,27 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { AnimatePresence } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import ReminderModal from "../ui/ReminderModal";
-import Dropdown from "./Dropdown";
+import { AnimatePresence } from 'framer-motion';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import ReminderModal from '../ui/ReminderModal';
+import Dropdown from './Dropdown';
 import {
   INotificationReminder,
   IReminderRequest,
   IReminderUpdate,
   NotificationType,
   ReminderOptionType,
-} from "../../interfaces/notifications";
-import { Subscription } from "../../interfaces/subscription";
-import { FiPlus } from "react-icons/fi";
-import { getReminderDate, getReminderString } from "../../utils";
+} from '../../interfaces/notifications';
+import { Subscription } from '../../interfaces/subscription';
+import { FiPlus } from 'react-icons/fi';
+import { getReminderDate, getReminderString } from '../../utils';
 import {
   useAddReminder,
   useDeleteReminder,
   useDeleteSubscriptionReminders,
   useUpdateSubscriptionReminders,
-} from "../../hooks/useReminders";
-import toast from "react-hot-toast";
-import { Button } from "../ui/Button";
-import { ReminderOptions } from "../../constants";
+} from '../../hooks/useReminders';
+import toast from 'react-hot-toast';
+import { Button } from '../ui/Button';
+import { ReminderOptions } from '../../constants';
 
 const NotificationReminder = ({
   subscription,
@@ -47,14 +47,14 @@ const NotificationReminder = ({
             reminder.notificationType
           );
           const reminderString = combinedKeyValue;
-          setReminderOptions((prev:ReminderOptionType[]) => {
+          setReminderOptions((prev: ReminderOptionType[]) => {
             const exists = prev.some(
               (option) => option.value.trim() === reminderString.trim()
             );
             if (exists) return prev;
             return [
               ...prev,
-              { value: reminderString, subscriptionType: "BOTH" },
+              { value: reminderString, subscriptionType: 'BOTH' },
             ];
           });
 
@@ -86,7 +86,7 @@ const NotificationReminder = ({
   const handleAddReminder = () => {
     const newItem: INotificationReminder = {
       id: crypto.randomUUID(),
-      value: "custom",
+      value: 'custom',
     };
     setReminders((prev) => [...prev, newItem]);
   };
@@ -102,8 +102,8 @@ const NotificationReminder = ({
     setReminders((prev) => prev.filter((reminder) => reminder.id !== id));
     if (isReminderUpdated) {
       deleteReminderMutation.mutate(parseInt(id), {
-         onSuccess: () => {
-          toast.success("Reminder deleted successfully !");
+        onSuccess: () => {
+          toast.success('Reminder deleted successfully !');
         },
         onError: (error) => {
           toast.error(`An error occured: ${error.message}`);
@@ -138,23 +138,26 @@ const NotificationReminder = ({
           subscriptionId: subscription.id,
           unit,
           value,
-          notificationType: reminder.custom?.type
+          notificationType: reminder.custom?.type,
         };
       })
       .filter(
         (reminder) =>
           !existingReminderKeys.has(
             `${subscription.id}-${reminder.id}-${reminder.value}`
-          ))
-      ;
+          )
+      );
   }, [reminders, subscription]);
 
   const setReminder = useCallback(() => {
     const remindersRequest: IReminderRequest[] =
-      removeDuplicatesFromRemindersRequest().map((reminder) => ({...reminder, id:undefined}));
-      addReminderMutation.mutate(remindersRequest, {
+      removeDuplicatesFromRemindersRequest().map((reminder) => ({
+        ...reminder,
+        id: undefined,
+      }));
+    addReminderMutation.mutate(remindersRequest, {
       onSuccess: () => {
-        toast.success("Reminder set successfully !");
+        toast.success('Reminder set successfully !');
       },
       onError: (error) => {
         toast.error(`An error occured: ${error.message}`);
@@ -165,7 +168,7 @@ const NotificationReminder = ({
   const deleteSubscriptionReminders = useCallback(() => {
     deleteSubscriptionRemindersMutation.mutate(subscription.id, {
       onSuccess: () => {
-        toast.success("Reminders deleted successfully !");
+        toast.success('Reminders deleted successfully !');
       },
       onError: (error) => {
         toast.error(`An error occured: ${error.message}`);
@@ -193,7 +196,7 @@ const NotificationReminder = ({
       { subscriptionId: subscription.id, updatedReminders },
       {
         onSuccess: () => {
-          toast.success("Reminders updated successfully !");
+          toast.success('Reminders updated successfully !');
         },
         onError: (error) => {
           toast.error(`An error occured: ${error.message}`);
@@ -206,7 +209,7 @@ const NotificationReminder = ({
     () =>
       reminderOptions.filter(
         (option) =>
-          option.subscriptionType === "BOTH" ||
+          option.subscriptionType === 'BOTH' ||
           option.subscriptionType === subscription.type
       ),
     [subscription, reminderOptions]
@@ -218,13 +221,13 @@ const NotificationReminder = ({
         onClick={() => setExpanded((x) => !x)}
         className="w-full flex text-sm items-center text-[#838383] justify-between hover:bg-neutral-700 transition"
       >
-        {expanded ? "Hide options ▲" : "Edit options ▼"}
+        {expanded ? 'Hide options ▲' : 'Edit options ▼'}
       </button>
 
       {expanded && (
         <div
           className="mt-4 space-y-4 animate-fadeIn"
-          style={{ animation: "fadeIn .25s ease" }}
+          style={{ animation: 'fadeIn .25s ease' }}
         >
           {subscription.reminders.length > 0 && (
             <Button
@@ -242,19 +245,19 @@ const NotificationReminder = ({
               >
                 <div className="flex-1">
                   <Dropdown
-                    label={`Reminder ${index+1}`}
+                    label={`Reminder ${index + 1}`}
                     options={filteredReminderOptions}
                     value={reminder.value}
                     onDelete={() => handleDeleteReminder(reminder.id)}
                     onChange={(value) => {
-                      if (value.toLowerCase() === "custom") {
+                      if (value.toLowerCase() === 'custom') {
                         setNewReminder({
                           id: reminder.id,
                           value: reminder.value,
                           custom: {
                             value: 30,
-                            unit: "minutes",
-                            type: ["EMAIL"],
+                            unit: 'minutes',
+                            type: ['EMAIL'],
                           },
                         });
                       } else {
@@ -277,14 +280,16 @@ const NotificationReminder = ({
             >
               Add <FiPlus />
             </button>
-            {reminders.length > 0 && <button
-              onClick={
-                isReminderUpdated ? updateSubscriptionReminders : setReminder
-              }
-              className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs"
-            >
-              {!isReminderUpdated ? "Save" : "Update"}
-            </button>}
+            {reminders.length > 0 && (
+              <button
+                onClick={
+                  isReminderUpdated ? updateSubscriptionReminders : setReminder
+                }
+                className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs"
+              >
+                {!isReminderUpdated ? 'Save' : 'Update'}
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -303,7 +308,7 @@ const NotificationReminder = ({
                 ...prev,
                 {
                   value: reminderString,
-                  subscriptionType: "BOTH",
+                  subscriptionType: 'BOTH',
                 },
               ]);
               updateReminder(newReminder.id, {

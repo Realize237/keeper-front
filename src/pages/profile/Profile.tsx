@@ -12,18 +12,18 @@ import {
   FaShieldAlt,
   FaSignOutAlt,
   FaUser,
-} from "react-icons/fa";
-import { type IconType } from "react-icons";
+} from 'react-icons/fa';
+import { type IconType } from 'react-icons';
 
-import { useUser } from "../../context/UserContext";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BottomSheet from "../../components/ui/BottomSheet";
-import { AnimatePresence, motion } from "framer-motion";
-import { useLogoutUser } from "../../hooks/useUsers";
-import { getAvatarInitials } from "../../utils";
-import Modal from "../../components/ui/Modal";
-import { useDeviceType } from "../../hooks/useDeviceType";
+import { useUser } from '../../context/UserContext';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BottomSheet from '../../components/ui/BottomSheet';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useLogoutUser } from '../../hooks/useUsers';
+import { getAvatarInitials } from '../../utils';
+import Modal from '../../components/ui/Modal';
+import { useDeviceType } from '../../hooks/useDeviceType';
 
 interface MenuItem {
   icon: IconType;
@@ -36,68 +36,68 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     icon: FaUser,
-    label: "Account Details",
-    subtitle: "Manage your Account Details",
-    path: "/profile/account-details",
+    label: 'Account Details',
+    subtitle: 'Manage your Account Details',
+    path: '/profile/account-details',
   },
   {
     icon: FaCreditCard,
-    label: "Payment History",
-    subtitle: "View your past orders",
+    label: 'Payment History',
+    subtitle: 'View your past orders',
 
-    path: "/cards",
+    path: '/cards',
   },
   {
     icon: FaBell,
-    label: "Notification",
-    subtitle: "",
+    label: 'Notification',
+    subtitle: '',
 
-    path: "/notifications",
+    path: '/notifications',
   },
   {
     icon: FaCog,
-    label: "Settings",
-    subtitle: "",
+    label: 'Settings',
+    subtitle: '',
 
-    path: "/settings",
+    path: '/settings',
   },
   {
     icon: FaLock,
-    label: "Change Password",
-    subtitle: "Update your password",
-    path: "/profile/change-password",
+    label: 'Change Password',
+    subtitle: 'Update your password',
+    path: '/profile/change-password',
   },
 ];
 
 const secondaryItems: MenuItem[] = [
   {
     icon: FaComments,
-    label: "Contact Us",
+    label: 'Contact Us',
 
-    path: "/contact",
+    path: '/contact',
   },
   {
     icon: FaFileAlt,
-    label: "Teams & condition",
+    label: 'Teams & condition',
 
-    path: "/terms",
+    path: '/terms',
   },
   {
     icon: FaShieldAlt,
-    label: "Privacy Policy",
+    label: 'Privacy Policy',
 
-    path: "/privacy",
+    path: '/privacy',
   },
   {
     icon: FaQuestionCircle,
-    label: "Get Help",
+    label: 'Get Help',
 
-    path: "/help",
+    path: '/help',
   },
   {
     icon: FaSignOutAlt,
-    label: "Log out",
-    action: "logout",
+    label: 'Log out',
+    action: 'logout',
   },
 ];
 
@@ -109,7 +109,7 @@ const Profile = () => {
   const { isMobile } = useDeviceType();
 
   const handleItemClick = (item: MenuItem) => {
-    if (item.action === "logout") {
+    if (item.action === 'logout') {
       setIsLoggingOut(true);
     } else if (item.path) {
       navigate(item.path);
@@ -136,7 +136,7 @@ const Profile = () => {
           />
         ) : (
           <div className="w-12 h-12 text-xl flex items-center justify-center rounded-full bg-[#CDFF00] text-black font-bold">
-            {getAvatarInitials(user?.name || "")}
+            {getAvatarInitials(user?.name || '')}
           </div>
         )}
 
@@ -146,7 +146,7 @@ const Profile = () => {
             <p className="text-xs text-gray-400">{user?.email}</p>
           </div>
           <button
-            onClick={() => navigate("/profile/edit")}
+            onClick={() => navigate('/profile/edit')}
             className="p-1 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-700 transition"
           >
             <FaEdit className="w-4 h-4" />
@@ -159,7 +159,7 @@ const Profile = () => {
             key={index}
             onClick={() => handleItemClick(item)}
             className="w-full flex items-center justify-between p-4 rounded-xl cursor-pointer"
-            whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+            whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2 }}
           >
@@ -181,7 +181,7 @@ const Profile = () => {
             key={index}
             onClick={() => handleItemClick(item)}
             className="w-full flex items-center justify-between p-4 rounded-xl cursor-pointer"
-            whileHover={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+            whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2 }}
           >
@@ -213,9 +213,9 @@ const Profile = () => {
               <motion.button
                 onClick={() => setIsLoggingOut(false)}
                 className="rounded-full cursor-pointer border w-32 p-4 border-white"
-                whileHover={{ scale: 1.05, backgroundColor: "#ffffff10" }}
+                whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
                 Cancel
               </motion.button>
@@ -225,10 +225,10 @@ const Profile = () => {
                 className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 8px 20px rgba(255, 0, 0, 0.4)",
+                  boxShadow: '0 8px 20px rgba(255, 0, 0, 0.4)',
                 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
                 Yes Logout
               </motion.button>
@@ -254,9 +254,9 @@ const Profile = () => {
                 <motion.button
                   onClick={() => setIsLoggingOut(false)}
                   className="rounded-full cursor-pointer border w-32 p-4 border-white"
-                  whileHover={{ scale: 1.05, backgroundColor: "#ffffff10" }}
+                  whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   Cancel
                 </motion.button>
@@ -268,10 +268,10 @@ const Profile = () => {
                   className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
                   whileHover={{
                     scale: 1.05,
-                    boxShadow: "0 8px 20px rgba(255, 0, 0, 0.4)",
+                    boxShadow: '0 8px 20px rgba(255, 0, 0, 0.4)',
                   }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   Yes Logout
                 </motion.button>

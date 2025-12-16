@@ -1,14 +1,14 @@
-import { CiCircleRemove } from "react-icons/ci";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { CiCircleRemove } from 'react-icons/ci';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import {
   SubscriptionModalTypes,
   type Subscription,
   type SubscriptionModalType,
-} from "../../interfaces/subscription";
+} from '../../interfaces/subscription';
 
-import { formatToReadableDate } from "../../utils";
+import { formatToReadableDate } from '../../utils';
 interface SelectedDaySubscriptionsListModalProps {
   selectedSubsciptionsByDay: Subscription[];
   closeSubscriptionModals: (type: SubscriptionModalType) => void;
@@ -64,7 +64,7 @@ export default function SelectedDaySubscriptionsListModal({
       scale: 1,
       transition: {
         duration: 0.4,
-        type: "spring" as const,
+        type: 'spring' as const,
         stiffness: 100,
         damping: 15,
       },
@@ -90,7 +90,7 @@ export default function SelectedDaySubscriptionsListModal({
       transition: {
         delay: custom * 0.1,
         duration: 0.5,
-        type: "spring" as const,
+        type: 'spring' as const,
         stiffness: 100,
         damping: 12,
       },
@@ -115,7 +115,7 @@ export default function SelectedDaySubscriptionsListModal({
       transition: {
         delay: 0.3 + custom * 0.08,
         duration: 0.5,
-        type: "spring" as const,
+        type: 'spring' as const,
         stiffness: 100,
         damping: 12,
       },
@@ -196,7 +196,7 @@ export default function SelectedDaySubscriptionsListModal({
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    whileHover={{ scale: 1.02, backgroundColor: "#2a2a2ae0" }}
+                    whileHover={{ scale: 1.02, backgroundColor: '#2a2a2ae0' }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       setSelectSubscriptionDetails(subscription);

@@ -1,7 +1,6 @@
-import { groupClassNames } from "../../utils";
+import { groupClassNames } from '../../utils';
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
 }
 
@@ -11,7 +10,7 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const isButtonInActive = loading || props.disabled
+  const isButtonInActive = loading || props.disabled;
   return (
     <button
       {...props}
@@ -19,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={groupClassNames(
         `w-ful text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center space-x-2`,
         className,
-        isButtonInActive ? "bg-neutral-500 cursor-not-allowed": "bg-[#CDFF00]"
+        isButtonInActive ? 'bg-neutral-500 cursor-not-allowed' : 'bg-[#CDFF00]'
       )}
     >
       {loading && (
@@ -44,7 +43,7 @@ export const Button: React.FC<ButtonProps> = ({
           ></path>
         </svg>
       )}
-      <span>{loading ? "Please wait..." : children}</span>
+      <span>{loading ? 'Please wait...' : children}</span>
     </button>
   );
 };
