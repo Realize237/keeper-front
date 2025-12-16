@@ -64,11 +64,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
           <input
             type="number"
             value={custom.value}
-<<<<<<< HEAD
-            min={30}
-=======
             min={1}
->>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
             onChange={(e) =>
               setCustom({ ...custom, value: Number(e.target.value) })
             }
@@ -96,17 +92,8 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             Cancel
           </Button>
           <Button
-<<<<<<< HEAD
-            onClick={() => {
-              if (!reminderValueError) {
-                onSave(custom);
-              }
-            }}
-            className="px-5 py-2 text-neutral-800 hover:opacity-70 rounded-lg"
-=======
             onClick={() => onSave(custom)}
             className="px-5 py-2 text-neutral-800 rounded-lg"
->>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
           >
             Done
           </Button>

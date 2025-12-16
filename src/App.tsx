@@ -19,6 +19,7 @@ import Profile from "./pages/profile/Profile";
 import NavLayout from "./layouts/NavLayout";
 import EditProfile from "./pages/profile/EditProfile";
 import ChangePassword from "./pages/profile/ChangePassword";
+import SetPassword from "./pages/profile/SetPassword";
 
 export default function App() {
   return (
@@ -46,7 +47,7 @@ export default function App() {
                 </Route>
                 <Route path="/notifications" element={<NotificationsPage />} />
               </Route>
-
+              <Route path="set-password" element={<SetPassword />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>

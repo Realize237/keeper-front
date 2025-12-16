@@ -248,10 +248,6 @@ export function getReminderDate(
   isCustom = false,
   custom?: ICustomReminder
 ) {
-<<<<<<< HEAD
-=======
-  console.log("Reminder Dates: ", reminder, "Custom: ", custom);
->>>>>>> 21eee7d81f1b9bad16e3ed244919c36a9904649b
   const reminderMap: Record<
     string,
     [number, moment.unitOfTime.DurationConstructor]

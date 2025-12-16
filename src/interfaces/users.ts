@@ -14,6 +14,13 @@ export interface IEmailPasswordInput {
   confirmPassword: string;
 }
 
+export type ISetPasswordInput = Pick<
+  IEmailPasswordInput,
+  "newPassword" | "confirmPassword"
+> & {
+  token: string;
+};
+
 export type UserInput = Pick<User, "name" | "email" | "password">;
 
 export type UserLoginInput = Omit<UserInput, "name">;

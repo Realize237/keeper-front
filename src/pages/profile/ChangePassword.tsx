@@ -7,8 +7,10 @@ import { toast } from "react-hot-toast";
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { IEmailPasswordInput } from "../../interfaces/users";
-import { useChangeUserPassword } from "../../hooks/useUsers";
-
+import {
+  useChangeUserPassword,
+  useSendSetPasswordEmail,
+} from "../../hooks/useUsers";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -16,6 +18,8 @@ const ChangePassword = () => {
   const [formError, setFormError] = useState<string | undefined>(undefined);
   const { mutate: changePassword, isPending: isChangingPassword } =
     useChangeUserPassword();
+  const { mutate: sendSetPasswordEmail, isPending: isSendingEmail } =
+    useSendSetPasswordEmail();
   const {
     register,
     handleSubmit,
@@ -28,7 +32,7 @@ const ChangePassword = () => {
 
   const onSubmit = async (data: IEmailPasswordInput) => {
     changePassword(
-      { data, id: Number(user?.id) },
+      { data },
       {
         onSuccess: () => {
           toast.success("Password changed successfully");
@@ -145,8 +149,28 @@ const ChangePassword = () => {
               You currently sign in with Google. To create a password for this
               app, we need to send a secure password setup email.
             </p>
-            <FormButton onClick={() => alert("Under development")}>
-              Send Password Setup Email
+            <FormButton
+              onClick={() => {
+                sendSetPasswordEmail(
+                  {
+                    data: { name: user.name, email: user.email },
+                  },
+                  {
+                    onSuccess: () => {
+                      toast.success("Password setup email sent successfully");
+                      navigate(-1);
+                    },
+                    onError: (error: Error) => {
+                      toast.error(
+                        error.message || "Error sending password setup email"
+                      );
+                    },
+                  }
+                );
+              }}
+              disabled={isSendingEmail}
+            >
+              {isSendingEmail ? "Sending..." : "Send Password Setup Email"}
             </FormButton>
           </div>
         </div>

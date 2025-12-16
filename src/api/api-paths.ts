@@ -6,7 +6,9 @@ export const API_PATHS = {
     GET_USER_INFO: "/users/me",
     LOGOUT: "/users/logout",
     UPDATE_USER: (id: number) => `/users/${id}`,
-    CHANGE_PASSWORD: (id: number) => `/users/change-password/${id}`,
+    CHANGE_PASSWORD: `/users/change-password`,
+    SEND_SET_PASSWORD_EMAIL: `/users/send-set-password-email`,
+    SET_PASSWORD: `/users/set-password`,
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: "/subscriptions",
@@ -31,9 +33,11 @@ export const API_PATHS = {
     GET_ALL_REMINDERS: "/reminders",
     ADD_REMINDER: "/reminders",
     UPDATE_REMINDER: (id: number) => `/reminders/${id}`,
-    UPDATE_SUBSCRIPTION_REMINDER: (id: number) => `/reminders/subscription/${id}`,
+    UPDATE_SUBSCRIPTION_REMINDER: (id: number) =>
+      `/reminders/subscription/${id}`,
     DELETE_REMINDER: (id: number) => `/reminders/${id}`,
-    DELETE_SUBSCRIPTION_REMINDERS: (id: number) => `/reminders/subscription/${id}`,
+    DELETE_SUBSCRIPTION_REMINDERS: (id: number) =>
+      `/reminders/subscription/${id}`,
   },
   GOOGLE: {
     CALENDAR_AUTH: "/auth/google/calendar",
