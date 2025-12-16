@@ -1,8 +1,8 @@
-import { processError } from "../utils";
-import axios from "axios";
-import { API_PATHS } from "./api-paths";
-import { env } from "../utils/env";
-import { IAddToCalendar, Subscription } from "../interfaces/subscription";
+import { processError } from '../utils';
+import axios from 'axios';
+import { API_PATHS } from './api-paths';
+import { env } from '../utils/env';
+import { IAddToCalendar, Subscription } from '../interfaces/subscription';
 
 export const getAllUserSubscriptions = async (userId: number) => {
   try {

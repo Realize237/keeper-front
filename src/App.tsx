@@ -1,25 +1,25 @@
-import { CookiesProvider } from "react-cookie";
+import { CookiesProvider } from 'react-cookie';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Subscriptions from "./pages/Subscriptions";
-import MainLayout from "./layouts/MainLayout";
-import NotificationsPage from "./pages/Notifications";
-import { Toaster } from "react-hot-toast";
-import { UserProvider } from "./context/UserContext";
-import { ProtectedRoute } from "./components/common/ProtectedRoute";
-import Cards from "./pages/Cards";
-import SharedPlan from "./pages/SharedPlan";
-import Profile from "./pages/profile/Profile";
-import NavLayout from "./layouts/NavLayout";
-import EditProfile from "./pages/profile/EditProfile";
-import ChangePassword from "./pages/profile/ChangePassword";
-import SetPassword from "./pages/profile/SetPassword";
+} from 'react-router-dom';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Subscriptions from './pages/Subscriptions';
+import MainLayout from './layouts/MainLayout';
+import NotificationsPage from './pages/Notifications';
+import { Toaster } from 'react-hot-toast';
+import { UserProvider } from './context/UserContext';
+import { ProtectedRoute } from './components/common/ProtectedRoute';
+import Cards from './pages/Cards';
+import SharedPlan from './pages/SharedPlan';
+import Profile from './pages/profile/Profile';
+import NavLayout from './layouts/NavLayout';
+import EditProfile from './pages/profile/EditProfile';
+import ChangePassword from './pages/profile/ChangePassword';
+import SetPassword from './pages/profile/SetPassword';
 
 export default function App() {
   return (

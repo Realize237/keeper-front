@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { MdOutlineClear } from "react-icons/md";
+import { motion } from 'framer-motion';
+import { MdOutlineClear } from 'react-icons/md';
 
 interface SubscriptionDetailSkeletonProps {
   onClose: () => void;

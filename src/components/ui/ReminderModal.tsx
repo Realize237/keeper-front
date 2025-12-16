@@ -1,15 +1,15 @@
-import { motion } from "framer-motion";
-import Dropdown from "../notifications/Dropdown";
-import { useMemo, useState } from "react";
+import { motion } from 'framer-motion';
+import Dropdown from '../notifications/Dropdown';
+import { useMemo, useState } from 'react';
 import {
   ICustomReminder,
   CustomUnits,
   CustomUnitType,
   NotificationType,
   NotifType,
-} from "../../interfaces/notifications";
-import MultiSelectDropdown from "./MultiSelectDropdown";
-import { Button } from "./Button";
+} from '../../interfaces/notifications';
+import MultiSelectDropdown from './MultiSelectDropdown';
+import { Button } from './Button';
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -27,7 +27,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
   );
   const reminderValueError = useMemo(() => {
     if (Number(custom.value) < 30 && custom.unit == CustomUnits.MINS)
-      return "Reminder should be greater than 30 minutes";
+      return 'Reminder should be greater than 30 minutes';
     return null;
   }, [custom.value, custom.unit]);
 
@@ -78,7 +78,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             label="Unit"
             options={Object.values(CustomUnits).map((notification) => ({
               value: notification,
-              subscriptionType: "BOTH",
+              subscriptionType: 'BOTH',
             }))}
             value={custom.unit}
             onChange={(val) =>
@@ -92,8 +92,12 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             Cancel
           </Button>
           <Button
-            onClick={() => onSave(custom)}
-            className="px-5 py-2 text-neutral-800 rounded-lg"
+            onClick={() => {
+              if (!reminderValueError) {
+                onSave(custom);
+              }
+            }}
+            className="px-5 py-2 text-neutral-800 hover:opacity-70 rounded-lg"
           >
             Done
           </Button>

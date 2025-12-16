@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import React, { useState, useRef, useEffect } from 'react';
+import { FiChevronDown } from 'react-icons/fi';
 
 interface Option {
   label: string;
@@ -17,7 +17,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
   options,
   selected,
   onChange,
-  placeholder = "Select options",
+  placeholder = 'Select options',
 }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -28,8 +28,8 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
   const toggleValue = (value: string) => {
@@ -48,7 +48,12 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
       >
         <span className="text-sm">
           {selected.length
-            ? selected.map((value) => options.find((option) => option.value === value)?.label).join(", ")
+            ? selected
+                .map(
+                  (value) =>
+                    options.find((option) => option.value === value)?.label
+                )
+                .join(', ')
             : placeholder}
         </span>
         <FiChevronDown className="text-neutral-400" />

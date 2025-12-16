@@ -1,8 +1,8 @@
-import axios from "axios";
-import { processError } from "../utils";
-import { env } from "../utils/env";
-import { API_PATHS } from "./api-paths";
-import type { NotificationRequest } from "../interfaces/notifications";
+import axios from 'axios';
+import { processError } from '../utils';
+import { env } from '../utils/env';
+import { API_PATHS } from './api-paths';
+import type { NotificationRequest } from '../interfaces/notifications';
 
 export const getAllNotifications = async () => {
   try {
@@ -28,9 +28,11 @@ export const getAllUsersNotifications = async (userId: number) => {
   }
 };
 
-export const updateNotification = async (notificationRequest: NotificationRequest) => {
+export const updateNotification = async (
+  notificationRequest: NotificationRequest
+) => {
   try {
-    const response = await axios.patch<{ message: string, statusCode: number }>(
+    const response = await axios.patch<{ message: string; statusCode: number }>(
       `${env.API_URL}${API_PATHS.NOTIFICATIONS.UPDATE_NOTIFICATION_STATUS(notificationRequest.ids, notificationRequest.all)}`,
       {},
       { withCredentials: true }
@@ -42,9 +44,14 @@ export const updateNotification = async (notificationRequest: NotificationReques
   }
 };
 
-export const deleteNotification = async (notificationRequest: NotificationRequest) => {
+export const deleteNotification = async (
+  notificationRequest: NotificationRequest
+) => {
   try {
-    const response = await axios.delete<{ message: string, statusCode: number }>(
+    const response = await axios.delete<{
+      message: string;
+      statusCode: number;
+    }>(
       `${env.API_URL}${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`,
       { withCredentials: true }
     );

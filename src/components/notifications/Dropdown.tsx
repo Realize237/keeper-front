@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { ReminderOptionType } from "../../interfaces/notifications";
-import { MdClose } from "react-icons/md";
-import { groupClassNames } from "../../utils";
+import React, { useEffect, useRef, useState } from 'react';
+import { ReminderOptionType } from '../../interfaces/notifications';
+import { MdClose } from 'react-icons/md';
+import { groupClassNames } from '../../utils';
 
 interface DropdownProps {
   label: string;
@@ -27,8 +27,8 @@ const Dropdown: React.FC<DropdownProps> = ({
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, []);
 
   return (
@@ -40,21 +40,21 @@ const Dropdown: React.FC<DropdownProps> = ({
           type="button"
           onClick={() => setOpen((v) => !v)}
           className={groupClassNames(
-            "w-full bg-inherit border px-3 py-2 text-sm rounded-lg border-neutral-600",
-            "flex items-center justify-between text-neutral-400 shadow-sm",
-            "focus:outline-none focus:ring-2 focus:ring-[#CDFF00]"
+            'w-full bg-inherit border px-3 py-2 text-sm rounded-lg border-neutral-600',
+            'flex items-center justify-between text-neutral-400 shadow-sm',
+            'focus:outline-none focus:ring-2 focus:ring-[#CDFF00]'
           )}
         >
-          <span>{value || "Select reminder"}</span>
+          <span>{value || 'Select reminder'}</span>
           <span className="text-xs">▾</span>
         </button>
 
         {open && (
           <div
             className={groupClassNames(
-              "absolute z-50 bottom-full mb-1 w-full rounded-lg",
-              "border border-neutral-300 bg-white text-gray-800",
-              "shadow-lg max-h-40 overflow-y-auto"
+              'absolute z-50 bottom-full mb-1 w-full rounded-lg',
+              'border border-neutral-300 bg-white text-gray-800',
+              'shadow-lg max-h-40 overflow-y-auto'
             )}
           >
             {options.map((option) => (
@@ -65,9 +65,9 @@ const Dropdown: React.FC<DropdownProps> = ({
                   setOpen(false);
                 }}
                 className={groupClassNames(
-                  "px-3 py-2 text-sm cursor-pointer",
-                  "hover:bg-gray-100",
-                  value === option.value && "bg-gray-200 font-medium"
+                  'px-3 py-2 text-sm cursor-pointer',
+                  'hover:bg-gray-100',
+                  value === option.value && 'bg-gray-200 font-medium'
                 )}
               >
                 {option.value}

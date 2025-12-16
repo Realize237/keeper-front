@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useUser } from "../../context/UserContext";
-import FormInput from "../../components/ui/FormInput";
-import FormButton from "../../components/ui/FormButton";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { FaChevronLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { IEmailPasswordInput } from "../../interfaces/users";
+import { useEffect, useState } from 'react';
+import { useUser } from '../../context/UserContext';
+import FormInput from '../../components/ui/FormInput';
+import FormButton from '../../components/ui/FormButton';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { FaChevronLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { IEmailPasswordInput } from '../../interfaces/users';
 import {
   useChangeUserPassword,
   useSendSetPasswordEmail,
-} from "../../hooks/useUsers";
+} from '../../hooks/useUsers';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -28,23 +28,23 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm<IEmailPasswordInput>();
 
-  const newPassword = watch("newPassword");
+  const newPassword = watch('newPassword');
 
   const onSubmit = async (data: IEmailPasswordInput) => {
     changePassword(
       { data },
       {
         onSuccess: () => {
-          toast.success("Password changed successfully");
+          toast.success('Password changed successfully');
           reset();
         },
         onError: (error: Error) => {
           if (
-            error.message.toLowerCase().includes("old password is incorrect")
+            error.message.toLowerCase().includes('old password is incorrect')
           ) {
             setFormError(error.message);
           } else {
-            toast.error(error.message || "Error changing password");
+            toast.error(error.message || 'Error changing password');
           }
         },
       }
@@ -53,7 +53,7 @@ const ChangePassword = () => {
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
-      if (formError && name === "oldPassword") {
+      if (formError && name === 'oldPassword') {
         setFormError(undefined);
       }
       return () => subscription.unsubscribe();
@@ -74,13 +74,13 @@ const ChangePassword = () => {
         <h3 className="text-xl font-bold ml-4">Change Password</h3>
       </div>
 
-      {user.authType === "EmailAndPassword" && (
+      {user.authType === 'EmailAndPassword' && (
         <p className="max-w-md mx-auto text-gray-300 text-sm mb-6 text-center">
           Enter your current password to confirm your identity before choosing a
           new password.
         </p>
       )}
-      {user.authType === "EmailAndPassword" ? (
+      {user.authType === 'EmailAndPassword' ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="max-w-md mx-auto space-y-4"
@@ -91,7 +91,7 @@ const ChangePassword = () => {
             placeholder="Current Password"
             passwordToggle={true}
             register={register}
-            rules={{ required: "Old password is required" }}
+            rules={{ required: 'Old password is required' }}
             error={errors.oldPassword || formError}
           />
 
@@ -102,15 +102,15 @@ const ChangePassword = () => {
             register={register}
             passwordToggle={true}
             rules={{
-              required: "New password is required",
+              required: 'New password is required',
               minLength: {
                 value: 8,
-                message: "Password must be at least 8 characters",
+                message: 'Password must be at least 8 characters',
               },
               pattern: {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
                 message:
-                  "Password must contain uppercase, lowercase, and numbers",
+                  'Password must contain uppercase, lowercase, and numbers',
               },
             }}
             error={errors.newPassword}
@@ -122,9 +122,9 @@ const ChangePassword = () => {
             register={register}
             passwordToggle={true}
             rules={{
-              required: "Please confirm your new password",
+              required: 'Please confirm your new password',
               validate: (value) =>
-                value === newPassword || "Passwords do not match",
+                value === newPassword || 'Passwords do not match',
             }}
             error={errors.confirmPassword}
           />
@@ -138,7 +138,7 @@ const ChangePassword = () => {
               Cancel
             </FormButton>
             <FormButton type="submit" disabled={isChangingPassword}>
-              {isChangingPassword ? "Updating..." : "Update Password"}
+              {isChangingPassword ? 'Updating...' : 'Update Password'}
             </FormButton>
           </div>
         </form>
@@ -157,12 +157,12 @@ const ChangePassword = () => {
                   },
                   {
                     onSuccess: () => {
-                      toast.success("Password setup email sent successfully");
+                      toast.success('Password setup email sent successfully');
                       navigate(-1);
                     },
                     onError: (error: Error) => {
                       toast.error(
-                        error.message || "Error sending password setup email"
+                        error.message || 'Error sending password setup email'
                       );
                     },
                   }
@@ -170,7 +170,7 @@ const ChangePassword = () => {
               }}
               disabled={isSendingEmail}
             >
-              {isSendingEmail ? "Sending..." : "Send Password Setup Email"}
+              {isSendingEmail ? 'Sending...' : 'Send Password Setup Email'}
             </FormButton>
           </div>
         </div>

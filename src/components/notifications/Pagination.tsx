@@ -1,12 +1,12 @@
 // components/notifications/Pagination.tsx
-import React from "react";
+import React from 'react';
 import {
   FiChevronLeft,
   FiChevronRight,
   FiChevronsLeft,
   FiChevronsRight,
-} from "react-icons/fi";
-import { env } from "../../utils/env";
+} from 'react-icons/fi';
+import { env } from '../../utils/env';
 
 type Props = {
   current: number;
@@ -40,9 +40,9 @@ const Pagination: React.FC<Props> = ({
     <div className="flex items-center justify-around gap-4 flex-wrap w-full py-4">
       {/* Summary */}
       <div className="text-sm text-neutral-400">
-        Showing {(current - 1) * itemsPerPage + 1} -{" "}
-        {Math.min(current * itemsPerPage, totalItems ?? total * itemsPerPage)} of{" "}
-        {totalItems ?? total * itemsPerPage}
+        Showing {(current - 1) * itemsPerPage + 1} -{' '}
+        {Math.min(current * itemsPerPage, totalItems ?? total * itemsPerPage)}{' '}
+        of {totalItems ?? total * itemsPerPage}
       </div>
 
       {/* Pagination */}
@@ -73,8 +73,8 @@ const Pagination: React.FC<Props> = ({
             onClick={() => onChange(p)}
             className={`px-3 py-1 text-sm cursor-pointer rounded-md transition ${
               p === current
-                ? "bg-blue-600 text-white"
-                : "bg-neutral-900/40 border border-neutral-800 text-neutral-300 hover:bg-neutral-800/50"
+                ? 'bg-blue-600 text-white'
+                : 'bg-neutral-900/40 border border-neutral-800 text-neutral-300 hover:bg-neutral-800/50'
             }`}
           >
             {p}

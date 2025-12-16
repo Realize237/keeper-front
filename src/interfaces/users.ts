@@ -16,15 +16,15 @@ export interface IEmailPasswordInput {
 
 export type ISetPasswordInput = Pick<
   IEmailPasswordInput,
-  "newPassword" | "confirmPassword"
+  'newPassword' | 'confirmPassword'
 > & {
   token: string;
 };
 
-export type UserInput = Pick<User, "name" | "email" | "password">;
+export type UserInput = Pick<User, 'name' | 'email' | 'password'>;
 
-export type UserLoginInput = Omit<UserInput, "name">;
+export type UserLoginInput = Omit<UserInput, 'name'>;
 
-export type UserResponse = Omit<User, "password">;
+export type UserResponse = Omit<User, 'password'>;
 
 export type UserUpdateInput = Partial<UserInput>;

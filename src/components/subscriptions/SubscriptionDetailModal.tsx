@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import {
   getNextBillingDate,
   getSubscriptionCardImage,
   pluralize,
-} from "../../utils";
-import { MdOutlineClear } from "react-icons/md";
-import SubscriptionTypeAndDot from "../ui/SubscriptionTypeAndDot";
+} from '../../utils';
+import { MdOutlineClear } from 'react-icons/md';
+import SubscriptionTypeAndDot from '../ui/SubscriptionTypeAndDot';
 import {
   SubscriptionModalTypes,
   type Subscription,
   type SubscriptionModalType,
-} from "../../interfaces/subscription";
-import type { BillingResult } from "../../interfaces/billings";
-import NotificationReminder from "../notifications/Reminder";
-import { FaCalendarPlus, FaEye, FaTrash } from "react-icons/fa";
+} from '../../interfaces/subscription';
+import type { BillingResult } from '../../interfaces/billings';
+import NotificationReminder from '../notifications/Reminder';
+import { FaCalendarPlus, FaEye, FaTrash } from 'react-icons/fa';
 import {
   useAddSubscriptionToGoogleCalendar,
   useRemoveSubscriptionFromGoogleCalendar,
   useSubscriptionsDetails,
-} from "../../hooks/useSubscriptions";
+} from '../../hooks/useSubscriptions';
 import {
   useGoogleCalendarAccess,
   useConnectGoogleCalendar,
-} from "../../hooks/useGoogleCalendar";
-import toast from "react-hot-toast";
-import Spinner from "../ui/Spinner";
-import SubscriptionDetailSkeleton from "./SubscriptionDetailSkeleton";
-import ErrorState from "../common/ErrorState";
+} from '../../hooks/useGoogleCalendar';
+import toast from 'react-hot-toast';
+import Spinner from '../ui/Spinner';
+import SubscriptionDetailSkeleton from './SubscriptionDetailSkeleton';
+import ErrorState from '../common/ErrorState';
 
 interface SubscriptionDetailModalProps {
   selectedSubscriptionDetails: Subscription;
@@ -63,12 +63,12 @@ export default function SubscriptionDetailModal({
     : null;
 
   function formatToReadableDate(date: string | Date) {
-    const d = typeof date === "string" ? new Date(date) : date;
+    const d = typeof date === 'string' ? new Date(date) : date;
 
-    return d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
   }
 
@@ -78,14 +78,14 @@ export default function SubscriptionDetailModal({
     useRemoveSubscriptionFromGoogleCalendar();
 
   const getFormattedNextBillingDate = () => {
-    if (!nextBillingResult) return "Loading...";
+    if (!nextBillingResult) return 'Loading...';
 
     switch (nextBillingResult.status) {
-      case "ACTIVE":
+      case 'ACTIVE':
         return formatToReadableDate(
           new Date(nextBillingResult.date as Date).toDateString()
         );
-      case "DUE TODAY":
+      case 'DUE TODAY':
       default:
         return nextBillingResult.status;
     }
@@ -96,19 +96,19 @@ export default function SubscriptionDetailModal({
   } — $${subscriptionDetails?.price.toFixed(2)}`;
 
   const next = nextBillingResult
-    ? nextBillingResult.status === "EXPIRED"
-      ? "expired"
-      : nextBillingResult.status === "ACTIVE"
-      ? formatToReadableDate(nextBillingResult.date!)
-      : nextBillingResult.status.toLowerCase()
-    : "loading";
+    ? nextBillingResult.status === 'EXPIRED'
+      ? 'expired'
+      : nextBillingResult.status === 'ACTIVE'
+        ? formatToReadableDate(nextBillingResult.date!)
+        : nextBillingResult.status.toLowerCase()
+    : 'loading';
 
   const description = `${
     subscriptionDetails?.details.name
   } — $${subscriptionDetails?.price.toFixed(
     2
   )} ${subscriptionDetails?.type?.toLowerCase()} plan, ${
-    nextBillingResult?.status === "EXPIRED"
+    nextBillingResult?.status === 'EXPIRED'
       ? `subscription expired on ${formatToReadableDate(
           subscriptionDetails?.details.endDate || new Date()
         )}`
@@ -153,7 +153,7 @@ export default function SubscriptionDetailModal({
       scale: 1,
       transition: {
         duration: 0.4,
-        type: "spring" as const,
+        type: 'spring' as const,
         stiffness: 100,
         damping: 15,
       },
@@ -179,7 +179,7 @@ export default function SubscriptionDetailModal({
       transition: {
         delay: custom * 0.1,
         duration: 0.5,
-        type: "spring" as const,
+        type: 'spring' as const,
         stiffness: 100,
         damping: 12,
       },
@@ -195,13 +195,13 @@ export default function SubscriptionDetailModal({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -213,10 +213,10 @@ export default function SubscriptionDetailModal({
       },
       {
         onSuccess: () =>
-          toast.success("Your subscription is now on Google Calendar."),
+          toast.success('Your subscription is now on Google Calendar.'),
         onError: (error: Error) =>
           toast.error(
-            error?.message || "Failed to add subscription to Google Calendar."
+            error?.message || 'Failed to add subscription to Google Calendar.'
           ),
       }
     );
@@ -230,11 +230,11 @@ export default function SubscriptionDetailModal({
     if (!hasGoogleCalendarAccess) {
       connectGoogleCalendar(undefined, {
         onSuccess: () => {
-          toast.success("Google Calendar connected");
+          toast.success('Google Calendar connected');
           addSubscriptionToCalendar();
         },
         onError: (error: Error) => {
-          toast.error(error?.message || "Failed to connect Google Calendar");
+          toast.error(error?.message || 'Failed to connect Google Calendar');
         },
       });
       return;
@@ -250,11 +250,11 @@ export default function SubscriptionDetailModal({
       },
       {
         onSuccess: () =>
-          toast.success("Subscription removed from Google Calendar."),
+          toast.success('Subscription removed from Google Calendar.'),
         onError: (error: Error) =>
           toast.error(
             error.message ||
-              "Failed to remove subscription from Google Calendar. Please try again."
+              'Failed to remove subscription from Google Calendar. Please try again.'
           ),
       }
     );
@@ -376,7 +376,7 @@ export default function SubscriptionDetailModal({
                   exit="exit"
                 >
                   <span className="mr-2 text-[#838383] font-bold">
-                    Next bill:{" "}
+                    Next bill:{' '}
                   </span>
                   <span className="text-white">
                     {getFormattedNextBillingDate()}
@@ -390,10 +390,10 @@ export default function SubscriptionDetailModal({
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  whileHover={{ backgroundColor: "#3d3d3d" }}
+                  whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">
-                    Payment method{" "}
+                    Payment method{' '}
                   </span>
                   <div className="flex justify-center items-center">
                     <img
@@ -412,7 +412,7 @@ export default function SubscriptionDetailModal({
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    whileHover={{ backgroundColor: "#3d3d3d" }}
+                    whileHover={{ backgroundColor: '#3d3d3d' }}
                   >
                     <span className="text-[#838383] font-bold">Remaining</span>
                     <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#cdbbbb]">
@@ -420,10 +420,10 @@ export default function SubscriptionDetailModal({
                         {nextBillingResult?.daysRemaining
                           ? pluralize(
                               nextBillingResult.daysRemaining,
-                              "day",
-                              "days"
+                              'day',
+                              'days'
                             )
-                          : ""}
+                          : ''}
                       </span>
                     </div>
                   </motion.div>
@@ -436,11 +436,11 @@ export default function SubscriptionDetailModal({
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  whileHover={{ backgroundColor: "#3d3d3d" }}
+                  whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">Period </span>
                   <SubscriptionTypeAndDot
-                    value={subscriptionDetails?.type || "MONTHLY"}
+                    value={subscriptionDetails?.type || 'MONTHLY'}
                   />
                 </motion.div>
 
@@ -451,7 +451,7 @@ export default function SubscriptionDetailModal({
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  whileHover={{ backgroundColor: "#3d3d3d" }}
+                  whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">Plan </span>
                   <span className="text-white">
@@ -466,7 +466,7 @@ export default function SubscriptionDetailModal({
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  whileHover={{ backgroundColor: "#3d3d3d" }}
+                  whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">Remind me </span>
                   <NotificationReminder
@@ -480,7 +480,7 @@ export default function SubscriptionDetailModal({
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  whileHover={{ backgroundColor: "#3d3d3d" }}
+                  whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">
                     Sync to Google Calendar
@@ -491,8 +491,8 @@ export default function SubscriptionDetailModal({
                         onClick={onAddToGoogleCalendar}
                         className={`flex items-center gap-1 px-3 py-1 text-xs bg-[#CDFF00] rounded transition ${
                           isAddingPending || isConnecting
-                            ? "cursor-not-allowed opacity-50"
-                            : "cursor-pointer"
+                            ? 'cursor-not-allowed opacity-50'
+                            : 'cursor-pointer'
                         }`}
                       >
                         {isAddingPending || isConnecting ? (
@@ -516,8 +516,8 @@ export default function SubscriptionDetailModal({
                           onClick={onRemoveFromGoogleCalendar}
                           className={`flex items-center gap-1 px-3 py-1 text-xs bg-red-600 rounded hover:bg-red-700 transition ${
                             isRemoving
-                              ? "cursor-not-allowed opacity-50"
-                              : "cursor-pointer"
+                              ? 'cursor-not-allowed opacity-50'
+                              : 'cursor-pointer'
                           }`}
                         >
                           {isRemoving ? (

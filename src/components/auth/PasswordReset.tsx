@@ -1,20 +1,23 @@
-import { Button } from "../ui/Button";
-import { Input } from "../ui/Input";
-import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { MdClose } from "react-icons/md";
+import { Button } from '../ui/Button';
+import { Input } from '../ui/Input';
+import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { MdClose } from 'react-icons/md';
 
 const resetSchema = z
   .object({
-    newPassword: z.string().min(6, "Password must be at least 6 characters"),
+    newPassword: z.string().min(6, 'Password must be at least 6 characters'),
     confirmPassword: z.string(),
   })
-  .refine((formValues) => formValues.newPassword === formValues.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+  .refine(
+    (formValues) => formValues.newPassword === formValues.confirmPassword,
+    {
+      path: ['confirmPassword'],
+      message: 'Passwords do not match',
+    }
+  );
 
 interface PasswordResetProp {
   isOpen: boolean;
@@ -22,7 +25,11 @@ interface PasswordResetProp {
   onSubmit: (newPassword: string) => void;
 }
 
-export default function PasswordReset({ onSubmit, onClose, isOpen }: PasswordResetProp) {
+export default function PasswordReset({
+  onSubmit,
+  onClose,
+  isOpen,
+}: PasswordResetProp) {
   const {
     register,
     handleSubmit,
@@ -34,8 +41,10 @@ export default function PasswordReset({ onSubmit, onClose, isOpen }: PasswordRes
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center
-                    bg-black/40 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center
+                    bg-black/40 backdrop-blur-sm"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -50,7 +59,9 @@ export default function PasswordReset({ onSubmit, onClose, isOpen }: PasswordRes
           <MdClose size={22} />
         </button>
 
-        <h2 className="text-white text-xl font-semibold">Create New Password</h2>
+        <h2 className="text-white text-xl font-semibold">
+          Create New Password
+        </h2>
         <p className="text-gray-400 text-sm">
           Choose a strong password for your account.
         </p>
@@ -62,14 +73,14 @@ export default function PasswordReset({ onSubmit, onClose, isOpen }: PasswordRes
           <Input
             type="password"
             placeholder="New password"
-            {...register("newPassword")}
+            {...register('newPassword')}
             error={errors.newPassword?.message}
           />
 
           <Input
             type="password"
             placeholder="Confirm password"
-            {...register("confirmPassword")}
+            {...register('confirmPassword')}
             error={errors.confirmPassword?.message}
           />
 

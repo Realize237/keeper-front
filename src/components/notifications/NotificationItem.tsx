@@ -1,5 +1,5 @@
 // components/notifications/NotificationItem.tsx
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import {
   FiCheckCircle,
   FiCircle,
@@ -7,19 +7,14 @@ import {
   FiCheck,
   FiMoreHorizontal,
   FiMessageCircle,
-} from "react-icons/fi";
+} from 'react-icons/fi';
 import {
   NotificationStatus,
   NotificationType,
   type Notification,
-} from "../../interfaces/notifications";
-import {
-  MdEmail,
-  MdSecurity,
-  MdUndo,
-  MdWhatsapp,
-} from "react-icons/md";
-import { formatTime } from "../../utils";
+} from '../../interfaces/notifications';
+import { MdEmail, MdSecurity, MdUndo, MdWhatsapp } from 'react-icons/md';
+import { formatTime } from '../../utils';
 
 type Props = {
   notification: Notification;
@@ -76,8 +71,8 @@ const NotificationItem: React.FC<Props> = ({
             onClick={onToggleRead}
             title={
               notification.status === NotificationStatus.READ
-                ? "Mark as unread"
-                : "Mark as read"
+                ? 'Mark as unread'
+                : 'Mark as read'
             }
             className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
           >
@@ -101,11 +96,11 @@ const NotificationItem: React.FC<Props> = ({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className={`relative transition-transform duration-200 transform ${
-          isSwiped ? "-translate-x-24" : "translate-x-0"
+          isSwiped ? '-translate-x-24' : 'translate-x-0'
         } rounded-3xl p-4 ${
           notification.status === NotificationStatus.READ
-            ? "border border-neutral-800"
-            : "bg-neutral-800"
+            ? 'border border-neutral-800'
+            : 'bg-neutral-800'
         } overflow-hidden`}
       >
         <div className="flex items-start gap-4">
@@ -124,8 +119,8 @@ const NotificationItem: React.FC<Props> = ({
             <div
               className={`w-14 h-14 rounded-full ${
                 notification.status === NotificationStatus.READ
-                  ? "bg-neutral-800"
-                  : "bg-[#171717]"
+                  ? 'bg-neutral-800'
+                  : 'bg-[#171717]'
               } flex items-center justify-center text-white`}
             >
               {iconMap[notification.notificationType]}
@@ -138,8 +133,8 @@ const NotificationItem: React.FC<Props> = ({
               <h4
                 className={`font-semibold truncate ${
                   notification.status === NotificationStatus.READ
-                    ? "text-neutral-300"
-                    : "text-white"
+                    ? 'text-neutral-300'
+                    : 'text-white'
                 }`}
               >
                 {notification.title}
@@ -151,8 +146,8 @@ const NotificationItem: React.FC<Props> = ({
             <p
               className={`text-sm mt-1 line-clamp-2 ${
                 notification.status === NotificationStatus.READ
-                  ? "text-neutral-400"
-                  : "text-neutral-200"
+                  ? 'text-neutral-400'
+                  : 'text-neutral-200'
               }`}
             >
               {notification.message}
@@ -188,7 +183,7 @@ const NotificationItem: React.FC<Props> = ({
               >
                 <FiMoreHorizontal
                   className={`w-5 h-5 text-neutral-400 cursor-pointer transition-transform ${
-                    isSwiped ? "rotate-180" : ""
+                    isSwiped ? 'rotate-180' : ''
                   }`}
                 />
               </button>
@@ -201,8 +196,8 @@ const NotificationItem: React.FC<Props> = ({
               onClick={onToggleRead}
               title={
                 notification.status === NotificationStatus.READ
-                  ? "Mark as unread"
-                  : "Mark as read"
+                  ? 'Mark as unread'
+                  : 'Mark as read'
               }
               className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
             >

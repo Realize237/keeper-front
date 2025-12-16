@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
 
-import { Link, useSearchParams } from "react-router-dom";
-import { GoEye, GoEyeClosed } from "react-icons/go";
-import { IMAGES } from "../assets";
-import { useLoginUser } from "../hooks/useUsers";
-import { useNavigate } from "react-router-dom";
-import { env } from "../utils/env";
-import toast from "react-hot-toast";
-import { useCookies } from "react-cookie";
+import { Link, useSearchParams } from 'react-router-dom';
+import { GoEye, GoEyeClosed } from 'react-icons/go';
+import { IMAGES } from '../assets';
+import { useLoginUser } from '../hooks/useUsers';
+import { useNavigate } from 'react-router-dom';
+import { env } from '../utils/env';
+import toast from 'react-hot-toast';
+import { useCookies } from 'react-cookie';
 import {
   FORGOT_PASSWORD_STEPS,
   ForgotPasswordStepsType,
-} from "../interfaces/auth";
-import PasswordResetRequest from "../components/auth/PasswordResetRequest";
-import OTPVerification from "../components/auth/OTPVerification";
-import PasswordReset from "../components/auth/PasswordReset";
+} from '../interfaces/auth';
+import PasswordResetRequest from '../components/auth/PasswordResetRequest';
+import OTPVerification from '../components/auth/OTPVerification';
+import PasswordReset from '../components/auth/PasswordReset';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ export default function Login() {
   const { mutate, isPending } = useLoginUser();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
-  const error = searchParams.get("error");
-  const [cookies, setCookies, removeCookie] = useCookies(["rememberMe"]);
+  const error = searchParams.get('error');
+  const [cookies, setCookies, removeCookie] = useCookies(['rememberMe']);
   const [forgotPasswordStep, setForgotPasswordStep] =
     useState<ForgotPasswordStepsType | null>(null);
 
@@ -37,8 +37,8 @@ export default function Login() {
       toast.error(error);
 
       const newParams = new URLSearchParams(searchParams);
-      newParams.delete("error");
-      window.history.replaceState({}, "", `${location.pathname}?${newParams}`);
+      newParams.delete('error');
+      window.history.replaceState({}, '', `${location.pathname}?${newParams}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
@@ -50,10 +50,10 @@ export default function Login() {
     reset,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       rememberMe: false,
     },
   });
@@ -70,7 +70,7 @@ export default function Login() {
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
-      if (loginError && (name === "email" || name === "password")) {
+      if (loginError && (name === 'email' || name === 'password')) {
         setLoginError(null);
       }
     });
@@ -84,34 +84,34 @@ export default function Login() {
   }) => {
     if (data.rememberMe) {
       setCookies(
-        "rememberMe",
+        'rememberMe',
         {
           email: data.email,
           password: data.password,
           rememberMe: data.rememberMe,
         },
-        { path: "/login", maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION) }
+        { path: '/login', maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION) }
       );
     } else {
-      removeCookie("rememberMe");
+      removeCookie('rememberMe');
     }
 
     mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-          navigate("/subscriptions", {
+          navigate('/subscriptions', {
             replace: true,
           });
         },
         onError: (error) => {
           if (
-            error.message.includes("User not found") ||
-            error.message.includes("Invalid credentials")
+            error.message.includes('User not found') ||
+            error.message.includes('Invalid credentials')
           ) {
-            setLoginError("Invalid email or password");
+            setLoginError('Invalid email or password');
           } else {
-            toast.error(error.message || "Something went wrong");
+            toast.error(error.message || 'Something went wrong');
           }
         },
       }
@@ -124,7 +124,7 @@ export default function Login() {
 
   const getInputClass = (fieldName: string) => {
     const baseClass =
-      "w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition";
+      'w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition';
     return errors[fieldName as keyof typeof errors]
       ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
       : baseClass;
@@ -152,15 +152,15 @@ export default function Login() {
   };
 
   const buttonVariants = {
-    hover: { scale: 1.02, boxShadow: "0 8px 25px rgba(205, 255, 0, 0.4)" },
+    hover: { scale: 1.02, boxShadow: '0 8px 25px rgba(205, 255, 0, 0.4)' },
     tap: { scale: 0.98 },
   };
 
   const socialButtonVariants = {
     hover: {
       y: -4,
-      borderColor: "#CDFF00",
-      boxShadow: "0 8px 20px rgba(205, 255, 0, 0.2)",
+      borderColor: '#CDFF00',
+      boxShadow: '0 8px 20px rgba(205, 255, 0, 0.2)',
     },
     tap: { y: -2 },
   };
@@ -202,14 +202,14 @@ export default function Login() {
             <input
               type="email"
               placeholder="Email address"
-              {...register("email", {
-                required: "Email is required",
+              {...register('email', {
+                required: 'Email is required',
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Please enter a valid email",
+                  message: 'Please enter a valid email',
                 },
               })}
-              className={getInputClass("email")}
+              className={getInputClass('email')}
             />
             {errors.email && (
               <motion.p
@@ -226,16 +226,16 @@ export default function Login() {
           <motion.div className="mb-4" variants={itemVariants}>
             <div className="relative w-full">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
-                {...register("password", {
-                  required: "Password is required",
+                {...register('password', {
+                  required: 'Password is required',
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters",
+                    message: 'Password must be at least 8 characters',
                   },
                 })}
-                className={`${getInputClass("password")} pr-12`}
+                className={`${getInputClass('password')} pr-12`}
               />
               <motion.button
                 onClick={() => setShowPassword(!showPassword)}
@@ -277,7 +277,7 @@ export default function Login() {
               <input
                 type="checkbox"
                 id="rememberMe"
-                {...register("rememberMe")}
+                {...register('rememberMe')}
                 className="w-4 h-4 bg-[#2a2a2a] border border-gray-500 rounded cursor-pointer accent-[#CDFF00]"
               />
               <label
@@ -304,15 +304,15 @@ export default function Login() {
             type="submit"
             className={`w-full ${
               isPending
-                ? "bg-[#8fb103] cursor-not-allowed"
-                : "bg-[#CDFF00] cursor-pointer"
+                ? 'bg-[#8fb103] cursor-not-allowed'
+                : 'bg-[#CDFF00] cursor-pointer'
             } text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
             disabled={isPending}
           >
-            {isPending ? "Logging in ..." : "Login now"}
+            {isPending ? 'Logging in ...' : 'Login now'}
           </motion.button>
         </motion.form>
 
@@ -330,9 +330,9 @@ export default function Login() {
             <motion.div
               className="absolute w-16 h-20 flex items-center justify-center"
               style={{
-                left: "7%",
-                bottom: "40%",
-                transform: "translateY(-20%) rotate(-12deg)",
+                left: '7%',
+                bottom: '40%',
+                transform: 'translateY(-20%) rotate(-12deg)',
               }}
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
@@ -347,9 +347,9 @@ export default function Login() {
             <motion.div
               className="absolute w-16 h-20 flex items-center justify-center"
               style={{
-                left: "25%",
-                bottom: "30%",
-                transform: "translate(-50%, 50%) rotate(-8deg)",
+                left: '25%',
+                bottom: '30%',
+                transform: 'translate(-50%, 50%) rotate(-8deg)',
               }}
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
@@ -364,9 +364,9 @@ export default function Login() {
             <motion.div
               className="absolute w-16 h-20 flex items-center justify-center"
               style={{
-                left: "42%",
-                bottom: "22%",
-                transform: "translateX(-50%) rotate(0deg)",
+                left: '42%',
+                bottom: '22%',
+                transform: 'translateX(-50%) rotate(0deg)',
               }}
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
@@ -381,9 +381,9 @@ export default function Login() {
             <motion.div
               className="absolute w-16 h-20 flex items-center justify-center"
               style={{
-                right: "26%",
-                bottom: "25%",
-                transform: "translate(50%, 50%) rotate(8deg)",
+                right: '26%',
+                bottom: '25%',
+                transform: 'translate(50%, 50%) rotate(8deg)',
               }}
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
@@ -398,9 +398,9 @@ export default function Login() {
             <motion.div
               className="absolute w-16 h-20 flex items-center justify-center"
               style={{
-                right: "8%",
-                bottom: "35%",
-                transform: "translateY(50%) rotate(12deg)",
+                right: '8%',
+                bottom: '35%',
+                transform: 'translateY(50%) rotate(12deg)',
               }}
               variants={itemVariants}
               whileHover={{ scale: 1.1 }}
@@ -453,9 +453,9 @@ export default function Login() {
           variants={itemVariants}
           className="text-gray-400 text-xs text-center"
         >
-          New to Keeper?{" "}
+          New to Keeper?{' '}
           <Link
-            to={"/"}
+            to={'/'}
             className="text-[#CDFF00] transition duration-300 hover:opacity-80"
           >
             Sign up

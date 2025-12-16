@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { GoEye, GoEyeClosed } from "react-icons/go";
-import { env } from "../utils/env";
-import { useCreateUser } from "../hooks/useUsers";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { GoEye, GoEyeClosed } from 'react-icons/go';
+import { env } from '../utils/env';
+import { useCreateUser } from '../hooks/useUsers';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,12 +20,12 @@ export default function Register() {
     formState: { errors },
     watch,
   } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
@@ -34,7 +34,7 @@ export default function Register() {
     return e.target.value;
   };
 
-  const password = watch("password");
+  const password = watch('password');
 
   const onSubmit = (data: {
     name: string;
@@ -46,17 +46,17 @@ export default function Register() {
       { name: data.name, email: data.email, password: data.password },
       {
         onError: (error) => {
-          console.log("registration error: ", error);
+          console.log('registration error: ', error);
           if (
-            error.message.includes("An account with this email already exists")
+            error.message.includes('An account with this email already exists')
           ) {
             setEmailError(error.message);
           } else {
-            toast.error(error.message || "Something went wrong");
+            toast.error(error.message || 'Something went wrong');
           }
         },
         onSuccess: () => {
-          navigate("/login");
+          navigate('/login');
         },
       }
     );
@@ -68,7 +68,7 @@ export default function Register() {
 
   const getInputClass = (fieldName: string) => {
     const baseClass =
-      "w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition";
+      'w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition';
     return errors[fieldName as keyof typeof errors]
       ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
       : baseClass;
@@ -96,15 +96,15 @@ export default function Register() {
   };
 
   const buttonVariants = {
-    hover: { scale: 1.02, boxShadow: "0 8px 25px rgba(205, 255, 0, 0.4)" },
+    hover: { scale: 1.02, boxShadow: '0 8px 25px rgba(205, 255, 0, 0.4)' },
     tap: { scale: 0.98 },
   };
 
   const socialButtonVariants = {
     hover: {
       y: -4,
-      borderColor: "#CDFF00",
-      boxShadow: "0 8px 20px rgba(205, 255, 0, 0.2)",
+      borderColor: '#CDFF00',
+      boxShadow: '0 8px 20px rgba(205, 255, 0, 0.2)',
     },
     tap: { y: -2 },
   };
@@ -133,9 +133,9 @@ export default function Register() {
           variants={itemVariants}
           className="text-gray-400 text-xs md:text-sm mb-8"
         >
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link
-            to={"/login"}
+            to={'/login'}
             className="text-[#CDFF00] hover:opacity-80 transition duration-300 hover:underline"
           >
             Login
@@ -152,18 +152,18 @@ export default function Register() {
             <input
               type="text"
               placeholder="Full name"
-              {...register("name", {
-                required: "Full name is required",
+              {...register('name', {
+                required: 'Full name is required',
                 minLength: {
                   value: 2,
-                  message: "Name must be at least 2 characters",
+                  message: 'Name must be at least 2 characters',
                 },
                 pattern: {
                   value: /^[a-zA-Z\s]+$/,
-                  message: "Name can only contain letters and spaces",
+                  message: 'Name can only contain letters and spaces',
                 },
               })}
-              className={getInputClass("name")}
+              className={getInputClass('name')}
             />
             {errors.name && (
               <motion.p
@@ -181,15 +181,15 @@ export default function Register() {
             <input
               type="email"
               placeholder="Email address"
-              {...register("email", {
-                required: "Email is required",
+              {...register('email', {
+                required: 'Email is required',
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Please enter a valid email",
+                  message: 'Please enter a valid email',
                 },
                 onChange: handleEmailChange,
               })}
-              className={getInputClass("email")}
+              className={getInputClass('email')}
             />
             {errors.email && (
               <motion.p
@@ -215,21 +215,21 @@ export default function Register() {
           <motion.div className="mb-4" variants={itemVariants}>
             <div className="relative w-full">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Password"
-                {...register("password", {
-                  required: "Password is required",
+                {...register('password', {
+                  required: 'Password is required',
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters",
+                    message: 'Password must be at least 8 characters',
                   },
                   pattern: {
                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
                     message:
-                      "Password must contain uppercase, lowercase, and numbers",
+                      'Password must contain uppercase, lowercase, and numbers',
                   },
                 })}
-                className={`${getInputClass("password")} pr-12`}
+                className={`${getInputClass('password')} pr-12`}
               />
               <motion.button
                 onClick={() => setShowPassword(!showPassword)}
@@ -257,14 +257,14 @@ export default function Register() {
           <motion.div className="mb-6" variants={itemVariants}>
             <div className="relative w-full">
               <input
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 placeholder="Confirm password"
-                {...register("confirmPassword", {
-                  required: "Please confirm your password",
+                {...register('confirmPassword', {
+                  required: 'Please confirm your password',
                   validate: (value) =>
-                    value === password || "Passwords do not match",
+                    value === password || 'Passwords do not match',
                 })}
-                className={`${getInputClass("confirmPassword")} pr-12`}
+                className={`${getInputClass('confirmPassword')} pr-12`}
               />
               <motion.button
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -297,15 +297,15 @@ export default function Register() {
             type="submit"
             className={`w-full ${
               isPending
-                ? "bg-[#8fb103] cursor-not-allowed"
-                : "bg-[#CDFF00] cursor-pointer"
+                ? 'bg-[#8fb103] cursor-not-allowed'
+                : 'bg-[#CDFF00] cursor-pointer'
             } text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
             disabled={isPending}
           >
-            {isPending ? "Creating account ..." : "Continue"}
+            {isPending ? 'Creating account ...' : 'Continue'}
           </motion.button>
         </motion.form>
 
@@ -365,8 +365,8 @@ export default function Register() {
             className="text-[#CDFF00] transition duration-300 hover:opacity-80 underline"
           >
             Terms of use
-          </a>{" "}
-          and{" "}
+          </a>{' '}
+          and{' '}
           <a
             href="#"
             className="text-[#CDFF00] transition duration-300 hover:opacity-80 underline"
