@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type {
   IEmailPasswordInput,
+  ISetPasswordInput,
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -13,6 +14,8 @@ import {
   getUserInfo,
   loginUser,
   logoutUser,
+  sendSetPasswordEmail,
+  setPassword,
   updateUser,
 } from '../api/users';
 import { env } from '../utils/env';
@@ -20,7 +23,7 @@ import { userKeys } from '../queryKeys/userKeys';
 
 export const useUserList = () => {
   return useQuery<UserResponse[]>({
-    queryKey: ['users'],
+    queryKey: userKeys.lists(),
     queryFn: getAllUsers,
   });
 };
@@ -53,14 +56,38 @@ export const useChangeUserPassword = () => {
   return useMutation<
     { statusCode: number; message: string },
     Error,
-    { data: IEmailPasswordInput; id: number }
+    { data: IEmailPasswordInput }
   >({
-    mutationFn: ({ data, id }) => changeUserPassword(data, id),
+    mutationFn: ({ data }) => changeUserPassword(data),
     meta: {
       invalidate: [userKeys.info],
     },
   });
 };
+
+export const useSendSetPasswordEmail = () => {
+  return useMutation<
+    { statusCode: number; message: string },
+    Error,
+    { data: { name: string; email: string } }
+  >({
+    mutationFn: ({ data }) => sendSetPasswordEmail(data),
+  });
+};
+
+export const useSetPassword = () => {
+  return useMutation<
+    { statusCode: number; message: string },
+    Error,
+    { data: ISetPasswordInput }
+  >({
+    mutationFn: ({ data }) => setPassword(data),
+    meta: {
+      invalidate: [userKeys.info],
+    },
+  });
+};
+
 export const useLoginUser = () => {
   return useMutation<{ message: string }, Error, UserLoginInput>({
     mutationFn: loginUser,

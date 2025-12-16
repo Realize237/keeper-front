@@ -6,7 +6,9 @@ export const API_PATHS = {
     GET_USER_INFO: '/users/me',
     LOGOUT: '/users/logout',
     UPDATE_USER: (id: number) => `/users/${id}`,
-    CHANGE_PASSWORD: (id: number) => `/users/change-password/${id}`,
+    CHANGE_PASSWORD: `/users/change-password`,
+    SEND_SET_PASSWORD_EMAIL: `/users/send-set-password-email`,
+    SET_PASSWORD: `/users/set-password`,
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: '/subscriptions',
