@@ -10,6 +10,7 @@ interface OtpProps {
   onResend: () => void;
   onClose: () => void;
   isOpen: boolean;
+  isSubmitting: boolean;
 }
 
 export default function OTPVerification({
@@ -17,9 +18,10 @@ export default function OTPVerification({
   onResend,
   onClose,
   isOpen,
+  isSubmitting = false
 }: OtpProps) {
   const [otp, setOtp] = useState<string[]>(
-    Array.from<string>({ length: 6 }).fill('')
+    Array.from<string>({ length: 5 }).fill('')
   );
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const [secondsLeft, setSecondsLeft] = useState<number>(120);
@@ -116,30 +118,30 @@ export default function OTPVerification({
 
         <h2 className="text-white text-xl font-semibold">Enter OTP</h2>
         <p className="text-gray-400 text-sm">
-          Enter the 6-digit code sent to your email.
+          Enter the 5-digit code sent to your email.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex justify-between space-x-2">
+          <div className="flex justify-between space-x-3">
             {otp.map((value, i) => (
               <Input
                 key={i}
                 type="text"
                 inputMode="numeric"
                 pattern="\d*"
-                maxLength={6}
+                maxLength={5}
                 value={value}
                 ref={(el) => {
                   inputsRef.current[i] = el;
                 }}
                 onChange={(e) => handleChange(i, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(i, e)}
-                className="w-10 h-12 text-white text-center rounded-lg"
+                className="text-white w-full text-center rounded-lg"
               />
             ))}
           </div>
 
-          <Button type="submit" className="w-full mt-7">
+          <Button type="submit" loading={isSubmitting} className="w-full mt-7">
             Verify Code
           </Button>
         </form>
