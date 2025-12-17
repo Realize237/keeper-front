@@ -16,7 +16,6 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { data, isLoading, isFetching } = useUserInfo();
-
   const isUserReady = !isLoading && !isFetching;
 
   return (

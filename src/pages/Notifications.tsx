@@ -1,14 +1,13 @@
-import React, { useMemo, useState, useCallback } from 'react';
-import NotificationsHeader from '../components/notifications/NotificationsHeader';
-import NotificationList from '../components/notifications/NotificationList';
-import NotificationActions from '../components/notifications/NotificationActions';
-import Pagination from '../components/notifications/Pagination';
-import { NotificationStatus } from '../interfaces/notifications';
-import { FiChevronLeft } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { env } from '../utils/env';
-import NotificationFilterToggle from '../components/notifications/NotificationFilterToggle';
+import React, { useMemo, useState, useCallback } from "react";
+import NotificationsHeader from "../components/notifications/NotificationsHeader";
+import NotificationList from "../components/notifications/NotificationList";
+import NotificationActions from "../components/notifications/NotificationActions";
+import Pagination from "../components/notifications/Pagination";
+import { NotificationStatus } from "../interfaces/notifications";
+import { FiChevronLeft } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import NotificationFilterToggle from "../components/notifications/NotificationFilterToggle";
 import {
   useUpdateNotification,
   useDeleteNotifications,
@@ -28,7 +27,7 @@ const NotificationsPage: React.FC = () => {
   const deleteNotificationMutation = useDeleteNotifications();
 
   const [page, setPage] = useState(1);
-  const rowsPerPage = parseInt(env.ROWS_PER_PAGE);
+  const ROWS_PER_PAGE =3;
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -50,14 +49,14 @@ const NotificationsPage: React.FC = () => {
 
   const totalPages = Math.max(
     1,
-    Math.ceil((filteredByRead?.length ?? 0) / rowsPerPage)
+    Math.ceil((filteredByRead?.length ?? 0) / ROWS_PER_PAGE)
   );
   const currentPage = Math.min(page, totalPages);
 
   const currentItems = useMemo(() => {
-    const start = (currentPage - 1) * rowsPerPage;
-    return filteredByRead?.slice(start, start + rowsPerPage);
-  }, [filteredByRead, currentPage, rowsPerPage]);
+    const start = (currentPage - 1) * ROWS_PER_PAGE;
+    return filteredByRead?.slice(start, start + ROWS_PER_PAGE);
+  }, [filteredByRead, currentPage, ROWS_PER_PAGE]);
 
   const totalFiltered = filteredByRead?.length ?? 0;
 
@@ -215,13 +214,13 @@ const NotificationsPage: React.FC = () => {
               />
             )}
 
-            {totalFiltered > rowsPerPage && (
+            {totalFiltered > ROWS_PER_PAGE && (
               <div className="mt-4">
                 <Pagination
                   current={currentPage}
                   total={totalPages}
                   onChange={(p) => setPage(p)}
-                  itemsPerPage={rowsPerPage}
+                  itemsPerPage={ROWS_PER_PAGE}
                   totalItems={totalFiltered}
                 />
               </div>

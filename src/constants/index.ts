@@ -1,4 +1,6 @@
-import { ReminderOptionType } from '../interfaces/notifications';
+import { ToastOptions } from "react-hot-toast";
+import { ReminderOptionType } from "../interfaces/notifications";
+
 
 export const daysOfWeek = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 export const monthsOfYear: Record<number, string> = {
@@ -34,3 +36,14 @@ export const ReminderOptions: ReminderOptionType[] = [
   { value: '6 months before', subscriptionType: 'YEARLY' },
   { value: 'Custom', subscriptionType: 'BOTH' },
 ];
+
+export const SOCKET_OPTIONS = {
+  transports: ["websocket"],
+  autoConnect: true,
+  withCredentials: true,
+};
+
+export const TOASTER_OPTIONS:ToastOptions = {
+  duration: 60000 ,
+  position: "top-right"
+};
