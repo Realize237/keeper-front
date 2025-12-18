@@ -44,4 +44,7 @@ export const API_PATHS = {
     CALENDAR_STATUS: '/auth/google/calendar/status',
     CALENDAR_DISCONNECT: '/auth/google/calendar/disconnect',
   },
+  PUSH_TOKEN: {
+    REGISTER_TOKEN: '/push-tokens/save',
+  },
 };
