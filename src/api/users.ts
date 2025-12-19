@@ -75,11 +75,11 @@ export const getAllUsers = async () => {
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (clientPushToken: string) => {
   try {
-    const response = await axios.post<{ message: string }>(
+    const response = await axios.post<{ statusCode: number; message: string }>(
       `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
-      {},
+      { clientPushToken },
       { withCredentials: true }
     );
 

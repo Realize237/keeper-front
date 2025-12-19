@@ -11,7 +11,7 @@ import Subscriptions from './pages/Subscriptions';
 import MainLayout from './layouts/MainLayout';
 import NotificationsPage from './pages/Notifications';
 import { Toaster } from 'react-hot-toast';
-import { UserProvider } from './context/UserContext';
+import { UserProvider, useUser } from './context/UserContext';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 import Cards from './pages/Cards';
 import SharedPlan from './pages/SharedPlan';
@@ -20,6 +20,31 @@ import NavLayout from './layouts/NavLayout';
 import EditProfile from './pages/profile/EditProfile';
 import ChangePassword from './pages/profile/ChangePassword';
 import SetPassword from './pages/profile/SetPassword';
+import { useEffect } from 'react';
+import { getFirebaseToken } from './config/firebase';
+import { useSaveWebPushToken } from './hooks/usePushToken';
+
+function PushTokenHandler() {
+  const { isUserReady, user } = useUser();
+  const { mutate: saveWebPushToken } = useSaveWebPushToken();
+
+  useEffect(() => {
+    const getClientPushToken = async () => {
+      if (Notification.permission === 'granted') {
+        const fcmToken = await getFirebaseToken();
+        if (fcmToken) {
+          saveWebPushToken(fcmToken);
+        }
+      }
+    };
+
+    if (isUserReady && user) {
+      getClientPushToken();
+    }
+  }, [isUserReady, user, saveWebPushToken]);
+
+  return null;
+}
 import { TOASTER_OPTIONS } from './constants';
 import { SocketProvider } from './context/SocketContext';
 
@@ -27,6 +52,27 @@ export default function App() {
   return (
     <CookiesProvider>
       <UserProvider>
+        <PushTokenHandler />
+        <Router basename="/">
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                element={
+                  <ProtectedRoute>
+                    <NavLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="/subscriptions" element={<Subscriptions />} />
+                <Route path="/cards" element={<Cards />} />
+                <Route path="/shared-plan" element={<SharedPlan />} />
+                <Route path="/profile">
+                  <Route index element={<Profile />} />
+                  <Route path="edit" element={<EditProfile />} />
+                  <Route path="change-password" element={<ChangePassword />} />
+                </Route>
         <SocketProvider>
           <Router basename="/">
             <Routes>

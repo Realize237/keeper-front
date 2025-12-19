@@ -124,7 +124,7 @@ export const useLoginUser = () => {
 export const useLogoutUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: logoutUser,
+    mutationFn: (clientPushToken: string) => logoutUser(clientPushToken),
     onSuccess: () => {
       queryClient.setQueryData(userKeys.info, null);
     },

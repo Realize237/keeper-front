@@ -24,6 +24,7 @@ import { useLogoutUser } from '../../hooks/useUsers';
 import { getAvatarInitials } from '../../utils';
 import Modal from '../../components/ui/Modal';
 import { useDeviceType } from '../../hooks/useDeviceType';
+import { getFirebaseToken } from '../../config/firebase';
 
 interface MenuItem {
   icon: IconType;
@@ -115,6 +116,12 @@ const Profile = () => {
       navigate(item.path);
     }
   };
+
+  const onLogout = async () => {
+    const fcmToken = await getFirebaseToken();
+    logout(fcmToken || '');
+  };
+
   return (
     <div className="text-white w-11/12 mx-auto py-8">
       <div className="flex items-center mb-6">
@@ -221,7 +228,7 @@ const Profile = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => logout()}
+                onClick={onLogout}
                 className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
                 whileHover={{
                   scale: 1.05,
@@ -262,9 +269,7 @@ const Profile = () => {
                 </motion.button>
 
                 <motion.button
-                  onClick={() => {
-                    logout();
-                  }}
+                  onClick={onLogout}
                   className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
                   whileHover={{
                     scale: 1.05,
