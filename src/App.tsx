@@ -4,7 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom';
+} from "react-router-dom";
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Subscriptions from './pages/Subscriptions';
@@ -45,6 +45,8 @@ function PushTokenHandler() {
 
   return null;
 }
+import { TOASTER_OPTIONS } from './constants';
+import { SocketProvider } from './context/SocketContext';
 
 export default function App() {
   return (
@@ -71,6 +73,35 @@ export default function App() {
                   <Route path="edit" element={<EditProfile />} />
                   <Route path="change-password" element={<ChangePassword />} />
                 </Route>
+        <SocketProvider>
+          <Router basename="/">
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route path="/" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                  element={
+                    <ProtectedRoute>
+                      <NavLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route path="/subscriptions" element={<Subscriptions />} />
+                  <Route path="/cards" element={<Cards />} />
+                  <Route path="/shared-plan" element={<SharedPlan />} />
+                  <Route path="/profile">
+                    <Route index element={<Profile />} />
+                    <Route path="edit" element={<EditProfile />} />
+                    <Route
+                      path="change-password"
+                      element={<ChangePassword />}
+                    />
+                  </Route>
+                  <Route
+                    path="/notifications"
+                    element={<NotificationsPage />}
+                  />
+                
                 <Route path="/notifications" element={<NotificationsPage />} />
               </Route>
               <Route path="set-password" element={<SetPassword />} />
@@ -78,7 +109,8 @@ export default function App() {
             </Route>
           </Routes>
         </Router>
-        <Toaster />
+                  <Toaster toastOptions={{...TOASTER_OPTIONS}} />
+        </SocketProvider>
       </UserProvider>
     </CookiesProvider>
   );

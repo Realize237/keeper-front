@@ -1,4 +1,5 @@
-import { Subscription } from './subscription';
+import { Toast } from "react-hot-toast";
+import { Subscription } from "./subscription";
 
 export const NotificationType = {
   SYSTEM: 'SYSTEM',
@@ -79,4 +80,21 @@ export interface ISubscriptionRemindersUpdate {
 
 export interface IReminderResponse extends IReminderUpdate {
   subscription: Subscription;
+}
+
+type RealtimeNotificationType = "info" | "success" | "error" | "warning";
+
+export interface NotificationPayload {
+  title: string;
+  message: string;
+  type: RealtimeNotificationType;
+  actionLabel?: string;
+  onAction?: () => void;
+}
+
+export interface ToastContentProps extends NotificationPayload {
+  id: string;
+  count: number;
+  t: Toast;
+  stackIndex: number;
 }
