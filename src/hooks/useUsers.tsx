@@ -1,7 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type {
   IEmailPasswordInput,
+  IResetPassword,
   ISetPasswordInput,
+  IValidateToken,
+  PasswordRequestInput,
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -14,9 +17,12 @@ import {
   getUserInfo,
   loginUser,
   logoutUser,
+  requestPasswordRequest,
+  resetPassword,
   sendSetPasswordEmail,
   setPassword,
   updateUser,
+  validateForgotPasswordToken,
 } from '../api/users';
 import { env } from '../utils/env';
 import { userKeys } from '../queryKeys/userKeys';
@@ -73,6 +79,24 @@ export const useSendSetPasswordEmail = () => {
   >({
     mutationFn: ({ data }) => sendSetPasswordEmail(data),
   });
+};
+
+export const useRequestPasswordReset = () => {
+  return useMutation<{statusCode: number; message:string}, Error, PasswordRequestInput>({
+    mutationFn: requestPasswordRequest
+  })
+};
+
+export const useValidateForgotPasswordToken = () => {
+  return useMutation<{statusCode: number; message:string}, Error, IValidateToken>({
+    mutationFn: validateForgotPasswordToken
+  })
+};
+
+export const useResetPassword = () => {
+  return useMutation<{statusCode: number; message:string}, Error, IResetPassword>({
+    mutationFn: resetPassword
+  })
 };
 
 export const useSetPassword = () => {
