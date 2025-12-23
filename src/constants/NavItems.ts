@@ -1,11 +1,7 @@
 import type { IconType } from 'react-icons';
-import {
-  FaCalendarAlt,
-  FaCreditCard,
-  FaUserCircle,
-  FaUsers,
-} from 'react-icons/fa';
+import { FaCalendarAlt, FaCreditCard, FaUsers } from 'react-icons/fa';
 import { env } from '../utils/env';
+import { HiOutlineUser } from 'react-icons/hi2';
 
 export type NavItem = {
   label: string;
@@ -27,7 +23,8 @@ export const NavItems: NavItem[] = [
   },
   { label: 'Shared Plan', icon: FaUsers, path: '/shared-plan', visible: false },
   { label: 'Cards', icon: FaCreditCard, path: '/cards', visible: false },
-  { label: 'Profile', icon: FaUserCircle, path: '/profile', visible: false },
+
+  { label: 'Profile', icon: HiOutlineUser, path: '/profile', visible: false },
 ].map((item) => ({
   ...item,
   visible: activeNavItems.includes(item.label.trim().toLocaleLowerCase()),

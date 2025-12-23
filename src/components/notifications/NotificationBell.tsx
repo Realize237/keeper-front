@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { MdOutlineNotifications } from 'react-icons/md';
+
+import { IoIosNotificationsOutline } from 'react-icons/io';
 
 interface Props {
   count?: number;
@@ -13,12 +14,12 @@ const getBadgeValue = (value: number) => {
 const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
   return (
     <motion.div
-      className="relative flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
+      className="relative flex justify-center items-center cursor-pointer p-3  rounded-full hover:bg-white/5"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
     >
-      <MdOutlineNotifications className="text-xl text-white" />
+      <IoIosNotificationsOutline className="text-xl text-white" />
 
       {count > 0 && (
         <motion.div
@@ -26,7 +27,7 @@ const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.2 }}
           className="
-            absolute -top-1 -right-1 
+            absolute top-1 right-1 
             bg-red-500 text-white text-xs 
             min-w-[18px] h-[18px] 
             flex items-center justify-center 

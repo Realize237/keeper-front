@@ -32,4 +32,6 @@ export const env = {
   FIREBASE_MEASUREMENT_ID: getEnv('FIREBASE_MEASUREMENT_ID'),
   FIREBASE_VAPID_KEY: getEnv('FIREBASE_VAPID_KEY'),
   SOCKET_URL: getEnv('SOCKET_URL', 'http://localhost:7000'),
+  APP_LOGO_URL: getEnv('APP_LOGO_URL'),
+  APP_WEBSITE_URL: getEnv('APP_WEBSITE_URL'),
 };
