@@ -23,17 +23,19 @@ interface PasswordResetProp {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (newPassword: string) => void;
+  isSubmitting: boolean;
 }
 
 export default function PasswordReset({
   onSubmit,
   onClose,
   isOpen,
+  isSubmitting = false,
 }: PasswordResetProp) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(resetSchema),
   });
@@ -73,12 +75,14 @@ export default function PasswordReset({
           <Input
             type="password"
             placeholder="New password"
+            className="pr-4"
             {...register('newPassword')}
             error={errors.newPassword?.message}
           />
 
           <Input
             type="password"
+            className="pr-4"
             placeholder="Confirm password"
             {...register('confirmPassword')}
             error={errors.confirmPassword?.message}

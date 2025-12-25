@@ -3,7 +3,10 @@ import { env } from '../utils/env';
 import { API_PATHS } from './api-paths';
 import {
   IEmailPasswordInput,
+  IResetPassword,
   ISetPasswordInput,
+  IValidateToken,
+  PasswordRequestInput,
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -21,7 +24,7 @@ export const createUser = async (user: UserInput) => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -37,7 +40,7 @@ export const loginUser = async (loginData: UserLoginInput) => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -52,7 +55,7 @@ export const getUserInfo = async () => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -67,21 +70,21 @@ export const getAllUsers = async () => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (clientPushToken: string) => {
   try {
-    const response = await axios.post<{ message: string }>(
-      `${API_PATHS.USERS.LOGOUT}`,
-      {},
+    const response = await axios.post<{ statusCode: number; message: string }>(
+      `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
+      { clientPushToken },
       { withCredentials: true }
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -97,7 +100,7 @@ export const updateUser = async (user: UserUpdateInput, id: number) => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -113,7 +116,7 @@ export const changeUserPassword = async (data: IEmailPasswordInput) => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -124,12 +127,12 @@ export const sendSetPasswordEmail = async (data: {
 }) => {
   try {
     const response = await axios.post<{ statusCode: number; message: string }>(
-      `${env.API_URL}${API_PATHS.USERS.SEND_SET_PASSWORD_EMAIL(userId)}`,
+      `${API_PATHS.USERS.SEND_SET_PASSWORD_EMAIL(data.email)}`,
       { ...data },
       { withCredentials: true }
     );
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
   }
 };
@@ -137,7 +140,7 @@ export const sendSetPasswordEmail = async (data: {
 export const setPassword = async (data: ISetPasswordInput) => {
   try {
     const response = await axios.post<{ statusCode: number; message: string }>(
-      `${env.API_URL}${API_PATHS.USERS.SET_PASSWORD}`,
+      `${API_PATHS.USERS.SET_PASSWORD}`,
       {
         ...data,
       },
@@ -145,7 +148,43 @@ export const setPassword = async (data: ISetPasswordInput) => {
     );
 
     return response.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     return processError(err);
+  }
+};
+
+export const requestPasswordRequest = async (data: PasswordRequestInput) => {
+  try {
+    const response = await axios.post(
+      `${API_PATHS.USERS.REQUEST_PASSWORD_RESET}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    return processError(error);
+  }
+};
+
+export const validateForgotPasswordToken = async (data: IValidateToken) => {
+  try {
+    const response = await axios.post(
+      `${API_PATHS.USERS.VALIDATE_FORGOT_PASSWORD_OTP}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    return processError(error);
+  }
+};
+
+export const resetPassword = async (data: IResetPassword) => {
+  try {
+    const response = await axios.patch(
+      `${API_PATHS.USERS.RESET_PASSWORD(data.email)}`,
+      { newPassword: data.newPassword }
+    );
+    return response.data;
+  } catch (error) {
+    return processError(error);
   }
 };

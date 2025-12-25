@@ -28,6 +28,10 @@ import CalendarSkeleton, {
 import ErrorState from '../components/common/ErrorState';
 import { useNavigate } from 'react-router-dom';
 import { useUserNotifications } from '../hooks/useNotifications';
+import NotificationPermissionModal from '../components/ui/NotificationPermissionModal';
+import { useNotificationPermission } from '../hooks/useNotificationPermission';
+import toast from 'react-hot-toast';
+import { useEffect } from 'react';
 import NotificationBell from '../components/notifications/NotificationBell';
 import { NotificationStatus } from '../interfaces/notifications';
 
@@ -63,6 +67,14 @@ const Subscriptions = () => {
 
   const usersNotifications = useUserNotifications();
 
+  const {
+    showModal,
+    checkAndShowModal,
+    handlePermissionGranted,
+    handleModalClose,
+    hasAskedBefore,
+  } = useNotificationPermission();
+
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
 
@@ -70,14 +82,21 @@ const Subscriptions = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!hasAskedBefore()) {
+      const timer = setTimeout(() => {
+        checkAndShowModal();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [hasAskedBefore, checkAndShowModal]);
+
   const {
     data: groupedMonthlySubscriptions = {},
     isLoading,
     error,
     refetch,
   } = useMonthlySubscriptions(normalized);
-
-  console.log('Use monthly subscriptions: ', groupedMonthlySubscriptions);
 
   const getDaySubscriptions = useCallback(
     (day: number) => {
@@ -290,6 +309,19 @@ const Subscriptions = () => {
           />
         </motion.div>
       </BottomSheet>
+
+      <NotificationPermissionModal
+        isOpen={showModal}
+        onClose={() => {
+          handleModalClose();
+        }}
+        onPermissionGranted={() => {
+          handlePermissionGranted();
+          toast.success(
+            "Notifications enabled! You'll get reminders for your subscriptions."
+          );
+        }}
+      />
     </div>
   );
 };

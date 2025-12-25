@@ -7,8 +7,12 @@ export const API_PATHS = {
     LOGOUT: '/api/users/logout',
     UPDATE_USER: (id: number) => `/api/users/${id}`,
     CHANGE_PASSWORD: `/api/users/change-password`,
-    SEND_SET_PASSWORD_EMAIL: `/api/users/send-set-password-email`,
+    SEND_SET_PASSWORD_EMAIL: (email: string) =>
+      `/api/users/send-set-password-email/${email}`,
     SET_PASSWORD: `/api/users/set-password`,
+    REQUEST_PASSWORD_RESET: '/api/users/reset-password/request',
+    VALIDATE_FORGOT_PASSWORD_OTP: '/api/users/reset-password/token/validate',
+    RESET_PASSWORD: (email: string) => `/api/users/password/reset/${email}`,
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: '/api/subscriptions',
@@ -56,5 +60,8 @@ export const API_PATHS = {
     GET_TRANSACTIONS: '/api/plaid/transactions',
     GET_RECURRING_TRANSACTIONS: '/api/plaid/transactions/recurring',
     REFRESH_TRANSACTIONS: '/api/plaid/transactions/refresh',
+  },
+  PUSH_TOKEN: {
+    REGISTER_TOKEN: '/api/push-tokens/save',
   },
 };

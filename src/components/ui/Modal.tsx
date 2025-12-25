@@ -17,7 +17,6 @@ const Modal: React.FC<ModalProps> = ({
   children,
   width = 'max-w-xl',
 }) => {
-  // Lock scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -25,7 +24,6 @@ const Modal: React.FC<ModalProps> = ({
       document.body.style.overflow = '';
     }
 
-    // Cleanup on unmount
     return () => {
       document.body.style.overflow = '';
     };
