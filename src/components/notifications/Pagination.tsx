@@ -6,7 +6,6 @@ import {
   FiChevronsLeft,
   FiChevronsRight,
 } from 'react-icons/fi';
-import { env } from '../../utils/env';
 
 type Props = {
   current: number;
@@ -23,14 +22,14 @@ const Pagination: React.FC<Props> = ({
   itemsPerPage = 10,
   totalItems,
 }) => {
-  const visiblePages = parseInt(env.VISIBLE_PAGE_COUNT);
-  const half = Math.floor(visiblePages / 2);
+  const VISIBLE_PAGES = 5;
+  const half = Math.floor(VISIBLE_PAGES / 2);
 
   let start = Math.max(1, current - half);
-  const end = Math.min(total, start + visiblePages - 1);
+  const end = Math.min(total, start + VISIBLE_PAGES - 1);
 
-  if (end - start + 1 < visiblePages) {
-    start = Math.max(1, end - visiblePages + 1);
+  if (end - start + 1 < VISIBLE_PAGES) {
+    start = Math.max(1, end - VISIBLE_PAGES + 1);
   }
 
   const pages: number[] = [];

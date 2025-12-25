@@ -14,17 +14,19 @@ interface PasswordResetRequestProps {
   onSubmit: (email: string) => void;
   isOpen: boolean;
   onClose: () => void;
+  isSubmitting: boolean;
 }
 
 export default function PasswordResetRequest({
   onSubmit,
   isOpen,
   onClose,
+  isSubmitting = false,
 }: PasswordResetRequestProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(passwordResetRequestSchema),
   });
@@ -61,6 +63,7 @@ export default function PasswordResetRequest({
         >
           <Input
             placeholder="Email"
+            type="email"
             {...register('email')}
             error={errors.email?.message?.toString()}
           />

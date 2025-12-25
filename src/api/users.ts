@@ -3,7 +3,10 @@ import { env } from '../utils/env';
 import { API_PATHS } from './api-paths';
 import {
   IEmailPasswordInput,
+  IResetPassword,
   ISetPasswordInput,
+  IValidateToken,
+  PasswordRequestInput,
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -72,11 +75,11 @@ export const getAllUsers = async () => {
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (clientPushToken: string) => {
   try {
-    const response = await axios.post<{ message: string }>(
+    const response = await axios.post<{ statusCode: number; message: string }>(
       `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
-      {},
+      { clientPushToken },
       { withCredentials: true }
     );
 
@@ -147,5 +150,41 @@ export const setPassword = async (data: ISetPasswordInput) => {
     return response.data;
   } catch (err: any) {
     return processError(err);
+  }
+};
+
+export const requestPasswordRequest = async (data: PasswordRequestInput) => {
+  try {
+    const response = await axios.post(
+      `${env.API_URL}${API_PATHS.USERS.REQUEST_PASSWORD_RESET}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    return processError(error);
+  }
+};
+
+export const validateForgotPasswordToken = async (data: IValidateToken) => {
+  try {
+    const response = await axios.post(
+      `${env.API_URL}${API_PATHS.USERS.VALIDATE_FORGOT_PASSWORD_OTP}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    return processError(error);
+  }
+};
+
+export const resetPassword = async (data: IResetPassword) => {
+  try {
+    const response = await axios.patch(
+      `${env.API_URL}${API_PATHS.USERS.RESET_PASSWORD(data.email)}`,
+      { newPassword: data.newPassword }
+    );
+    return response.data;
+  } catch (error) {
+    return processError(error);
   }
 };

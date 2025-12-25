@@ -9,6 +9,9 @@ export const API_PATHS = {
     CHANGE_PASSWORD: `/users/change-password`,
     SEND_SET_PASSWORD_EMAIL: `/users/send-set-password-email`,
     SET_PASSWORD: `/users/set-password`,
+    REQUEST_PASSWORD_RESET: '/users/reset-password/request',
+    VALIDATE_FORGOT_PASSWORD_OTP: '/users/reset-password/token/validate',
+    RESET_PASSWORD: (email: string) => `/users/password/reset/${email}`,
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: '/subscriptions',
@@ -43,5 +46,8 @@ export const API_PATHS = {
     CALENDAR_AUTH: '/auth/google/calendar',
     CALENDAR_STATUS: '/auth/google/calendar/status',
     CALENDAR_DISCONNECT: '/auth/google/calendar/disconnect',
+  },
+  PUSH_TOKEN: {
+    REGISTER_TOKEN: '/push-tokens/save',
   },
 };
