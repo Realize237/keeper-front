@@ -7,7 +7,7 @@ import type { NotificationRequest } from '../interfaces/notifications';
 export const getAllNotifications = async () => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_ALL_NOTIFICATIONS}`,
+      `${API_PATHS.NOTIFICATIONS.GET_ALL_NOTIFICATIONS}`,
       { withCredentials: true }
     );
     return response.data;
@@ -19,7 +19,7 @@ export const getAllNotifications = async () => {
 export const getAllUsersNotifications = async (userId: number) => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}/${userId}`,
+      `${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}/${userId}`,
       { withCredentials: true }
     );
     return response.data.data;
@@ -33,7 +33,7 @@ export const updateNotification = async (
 ) => {
   try {
     const response = await axios.patch<{ message: string; statusCode: number }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.UPDATE_NOTIFICATION_STATUS(notificationRequest.ids, notificationRequest.all)}`,
+      `${API_PATHS.NOTIFICATIONS.UPDATE_NOTIFICATION_STATUS(notificationRequest.ids, notificationRequest.all)}`,
       {},
       { withCredentials: true }
     );
@@ -52,7 +52,7 @@ export const deleteNotification = async (
       message: string;
       statusCode: number;
     }>(
-      `${env.API_URL}${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`,
+      `${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`,
       { withCredentials: true }
     );
 

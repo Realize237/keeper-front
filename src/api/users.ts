@@ -14,7 +14,7 @@ import { processError } from '../utils';
 export const createUser = async (user: UserInput) => {
   try {
     const response = await axios.post<{ statusCode: number; message: string }>(
-      `${env.API_URL}${API_PATHS.USERS.CREATE_USER}`,
+      `${API_PATHS.USERS.CREATE_USER}`,
       {
         ...user,
       }
@@ -29,7 +29,7 @@ export const createUser = async (user: UserInput) => {
 export const loginUser = async (loginData: UserLoginInput) => {
   try {
     const response = await axios.post<{ message: string }>(
-      `${env.API_URL}${API_PATHS.USERS.LOGIN}`,
+      `${API_PATHS.USERS.LOGIN}`,
       {
         ...loginData,
       },
@@ -45,7 +45,7 @@ export const loginUser = async (loginData: UserLoginInput) => {
 export const getUserInfo = async () => {
   try {
     const response = await axios.get<UserResponse>(
-      `${env.API_URL}${API_PATHS.USERS.GET_USER_INFO}`,
+      `${API_PATHS.USERS.GET_USER_INFO}`,
       {
         withCredentials: true, // ← enable sending cookies
       }
@@ -60,7 +60,7 @@ export const getUserInfo = async () => {
 export const getAllUsers = async () => {
   try {
     const response = await axios.get<UserResponse[]>(
-      `${env.API_URL}${API_PATHS.USERS.GET_ALL_USERS}`,
+      `${API_PATHS.USERS.GET_ALL_USERS}`,
       {
         withCredentials: true, // ← enable sending cookies
       }
@@ -75,7 +75,7 @@ export const getAllUsers = async () => {
 export const logoutUser = async () => {
   try {
     const response = await axios.post<{ message: string }>(
-      `${env.API_URL}${API_PATHS.USERS.LOGOUT}`,
+      `${API_PATHS.USERS.LOGOUT}`,
       {},
       { withCredentials: true }
     );
