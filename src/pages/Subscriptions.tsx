@@ -31,6 +31,10 @@ import toast from 'react-hot-toast';
 import SubscriptionStatCard from '../components/subscriptions/SubscriptionStatCard';
 import { FaWallet } from 'react-icons/fa';
 import SubscriptionIconGroup from '../components/subscriptions/SubscriptionIconGroup';
+import SubscriptionFilterModal, {
+  type FilterData,
+} from '../components/subscriptions/SubscriptionFilterModal';
+import { CiFilter } from 'react-icons/ci';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -72,6 +76,11 @@ const Subscriptions = () => {
 
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const handleApplyFilters = (filters: FilterData) => {
+    console.log('filters: ', filters);
+  };
 
   const normalized = normalizedDate(currentDate);
 
@@ -222,7 +231,6 @@ const Subscriptions = () => {
           closeSubscriptionModals={closeSubscriptionModals}
         />
       )}
-
       <motion.div
         className="w-11/12 h-11/12 mx-auto border-gray-700"
         variants={containerVariants}
@@ -336,42 +344,44 @@ const Subscriptions = () => {
             )}
           </div>
           <div className="md:sticky md:mt-4">
-            <p className="text-xs uppercase tracking-wider text-white/40">
+            <p className="text-xs uppercase tracking-wider text-white/40 mb-2">
               Filter
             </p>
 
-            <div
+            <motion.button
+              onClick={() => setOpenFilter(true)}
+              whileHover={{
+                y: -1,
+                backgroundColor: 'rgba(255,255,255,0.08)',
+              }}
+              whileTap={{
+                scale: 0.98,
+                y: 0,
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 400,
+                damping: 30,
+              }}
               className="
-      mt-4 rounded-2xl p-3
-      bg-white/5 backdrop-blur-xl
-      border border-white/10
-      shadow-sm
-    "
+    w-full flex items-center justify-between
+    rounded-2xl px-4 py-3
+    bg-white/5 backdrop-blur-xl
+    border border-white/10
+    text-sm text-white
+    gap-1
+  "
             >
-              <p className="text-sm font-medium text-white mb-2">Category</p>
+              <span>Filter </span>
 
-              <div className="flex flex-col gap-1">
-                {['All', 'Streaming', 'Software', 'Cloud', 'Finance'].map(
-                  (item) => (
-                    <button
-                      key={item}
-                      data-active={item === 'All'}
-                      className="
-            w-full text-left px-4 py-2.5 rounded-xl text-sm
-            text-white/60
-            transition-all duration-200
-            hover:bg-white/10 hover:text-white
-            data-[active=true]:bg-white/50
-            data-[active=true]:text-black
-            
-          "
-                    >
-                      {item}
-                    </button>
-                  )
-                )}
-              </div>
-            </div>
+              <motion.span
+                whileHover={{ x: 2 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="text-white/50"
+              >
+                <CiFilter />
+              </motion.span>
+            </motion.button>
           </div>
         </div>
         {error && (
@@ -381,7 +391,6 @@ const Subscriptions = () => {
           />
         )}
       </motion.div>
-
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <motion.div variants={itemVariants}>
           <SelectCalendarDate
@@ -391,7 +400,6 @@ const Subscriptions = () => {
           />
         </motion.div>
       </BottomSheet>
-
       <NotificationPermissionModal
         isOpen={showModal}
         onClose={() => {
@@ -403,6 +411,11 @@ const Subscriptions = () => {
             "Notifications enabled! You'll get reminders for your subscriptions."
           );
         }}
+      />
+      <SubscriptionFilterModal
+        isOpen={openFilter}
+        onClose={() => setOpenFilter(false)}
+        onApplyFilters={handleApplyFilters}
       />
     </div>
   );

@@ -38,7 +38,7 @@ const Header = () => {
     open
   );
   return (
-    <div className="flex justify-end bg-teal-1000 p-4 border-b border-b-white/10">
+    <div className="flex justify-end  p-4 border-b border-b-white/10">
       <div className="flex items-center gap-6">
         <div>
           <LanguageSwitcher />
