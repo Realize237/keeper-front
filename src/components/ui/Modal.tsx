@@ -23,7 +23,6 @@ const Modal: React.FC<ModalProps> = ({
     } else {
       document.body.style.overflow = '';
     }
-
     return () => {
       document.body.style.overflow = '';
     };
@@ -46,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({
             exit={{ opacity: 0, y: '-100%' }}
             transition={{ duration: 0.4 }}
             onClick={(e) => e.stopPropagation()}
-            className={`relative bg-black text-gray-100 w-full mx-4 ${width} rounded-2xl p-6 shadow-xl z-50`}
+            className={`relative bg-[#171717] text-gray-100 w-full mx-4 ${width} rounded-2xl p-6 shadow-xl z-50`}
           >
             <button
               onClick={onClose}

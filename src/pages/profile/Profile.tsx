@@ -11,20 +11,18 @@ import {
   FaQuestionCircle,
   FaShieldAlt,
   FaSignOutAlt,
-  FaUser,
 } from 'react-icons/fa';
 import { type IconType } from 'react-icons';
 
 import { useUser } from '../../context/UserContext';
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import BottomSheet from '../../components/ui/BottomSheet';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useLogoutUser } from '../../hooks/useUsers';
+
+import { motion } from 'framer-motion';
 import { getAvatarInitials } from '../../utils';
-import Modal from '../../components/ui/Modal';
-import { useDeviceType } from '../../hooks/useDeviceType';
-import { getFirebaseToken } from '../../config/firebase';
+
+import { HiOutlineUser } from 'react-icons/hi2';
+import { useLogoutModal } from '../../context/LogoutContext';
 
 interface MenuItem {
   icon: IconType;
@@ -36,7 +34,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    icon: FaUser,
+    icon: HiOutlineUser,
     label: 'Account Details',
     subtitle: 'Manage your Account Details',
     path: '/profile/account-details',
@@ -105,21 +103,14 @@ const secondaryItems: MenuItem[] = [
 const Profile = () => {
   const { user } = useUser();
   const navigate = useNavigate();
-  const { mutate: logout } = useLogoutUser();
-  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
-  const { isMobile } = useDeviceType();
+  const { requestLogout } = useLogoutModal();
 
   const handleItemClick = (item: MenuItem) => {
     if (item.action === 'logout') {
-      setIsLoggingOut(true);
+      requestLogout();
     } else if (item.path) {
       navigate(item.path);
     }
-  };
-
-  const onLogout = async () => {
-    const fcmToken = await getFirebaseToken();
-    logout(fcmToken || '');
   };
 
   return (
@@ -202,89 +193,6 @@ const Profile = () => {
           </motion.button>
         ))}
       </div>
-
-      <BottomSheet
-        isOpen={isLoggingOut && isMobile}
-        onClose={() => setIsLoggingOut(false)}
-      >
-        <motion.div>
-          <div className="flex font-medium justify-center items-center border-b border-white pb-4 pt-8">
-            Logout
-          </div>
-          <div className="flex flex-col space-y-8">
-            <p className="text-center mt-8">
-              Are you sure you want to log out?
-            </p>
-
-            <div className="flex justify-center gap-10">
-              <motion.button
-                onClick={() => setIsLoggingOut(false)}
-                className="rounded-full cursor-pointer border w-32 p-4 border-white"
-                whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              >
-                Cancel
-              </motion.button>
-
-              <motion.button
-                onClick={onLogout}
-                className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '0 8px 20px rgba(255, 0, 0, 0.4)',
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              >
-                Yes Logout
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
-      </BottomSheet>
-      <AnimatePresence>
-        <Modal
-          isOpen={isLoggingOut && !isMobile}
-          onClose={() => setIsLoggingOut(false)}
-        >
-          <motion.div>
-            <div className="flex font-medium justify-center items-center border-b border-white pb-4 pt-8">
-              Logout
-            </div>
-            <div className="flex flex-col space-y-8">
-              <p className="text-center mt-8">
-                Are you sure you want to log out?
-              </p>
-
-              <div className="flex justify-center gap-10">
-                <motion.button
-                  onClick={() => setIsLoggingOut(false)}
-                  className="rounded-full cursor-pointer border w-32 p-4 border-white"
-                  whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                >
-                  Cancel
-                </motion.button>
-
-                <motion.button
-                  onClick={onLogout}
-                  className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: '0 8px 20px rgba(255, 0, 0, 0.4)',
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                >
-                  Yes Logout
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
-        </Modal>
-      </AnimatePresence>
     </div>
   );
 };

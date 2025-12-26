@@ -47,53 +47,56 @@ function PushTokenHandler() {
 }
 import { TOASTER_OPTIONS } from './constants';
 import { SocketProvider } from './context/SocketContext';
+import { LogoutProvider } from './context/LogoutContext';
 
 export default function App() {
   return (
     <CookiesProvider>
       <UserProvider>
         <PushTokenHandler />
-        <SocketProvider>
-          <Router basename="/">
-            <Routes>
-              <Route element={<MainLayout />}>
-                <Route path="/" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route
-                  element={
-                    <ProtectedRoute>
-                      <NavLayout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route path="/subscriptions" element={<Subscriptions />} />
-                  <Route path="/cards" element={<Cards />} />
-                  <Route path="/shared-plan" element={<SharedPlan />} />
-                  <Route path="/profile">
-                    <Route index element={<Profile />} />
-                    <Route path="edit" element={<EditProfile />} />
+        <LogoutProvider>
+          <SocketProvider>
+            <Router basename="/">
+              <Routes>
+                <Route element={<MainLayout />}>
+                  <Route path="/" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    element={
+                      <ProtectedRoute>
+                        <NavLayout />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route path="/subscriptions" element={<Subscriptions />} />
+                    <Route path="/cards" element={<Cards />} />
+                    <Route path="/shared-plan" element={<SharedPlan />} />
+                    <Route path="/profile">
+                      <Route index element={<Profile />} />
+                      <Route path="edit" element={<EditProfile />} />
+                      <Route
+                        path="change-password"
+                        element={<ChangePassword />}
+                      />
+                    </Route>
                     <Route
-                      path="change-password"
-                      element={<ChangePassword />}
+                      path="/notifications"
+                      element={<NotificationsPage />}
+                    />
+
+                    <Route
+                      path="/notifications"
+                      element={<NotificationsPage />}
                     />
                   </Route>
-                  <Route
-                    path="/notifications"
-                    element={<NotificationsPage />}
-                  />
-
-                  <Route
-                    path="/notifications"
-                    element={<NotificationsPage />}
-                  />
+                  <Route path="set-password" element={<SetPassword />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Route>
-                <Route path="set-password" element={<SetPassword />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Route>
-            </Routes>
-          </Router>
-          <Toaster toastOptions={{ ...TOASTER_OPTIONS }} />
-        </SocketProvider>
+              </Routes>
+            </Router>
+            <Toaster toastOptions={{ ...TOASTER_OPTIONS }} />
+          </SocketProvider>
+        </LogoutProvider>
       </UserProvider>
     </CookiesProvider>
   );

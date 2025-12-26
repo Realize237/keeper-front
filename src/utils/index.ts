@@ -2,7 +2,7 @@ import { IMAGES } from '../assets';
 import { NavItems } from '../constants/NavItems';
 import type { BillingResult } from '../interfaces/billings';
 import type { Value } from '../interfaces/calendar';
-import { ICustomReminder, NotifType } from '../interfaces/notifications';
+import { ICustomReminder, NotificationType } from '../interfaces/notifications';
 import type { Subscription } from '../interfaces/subscription';
 import moment from 'moment';
 
@@ -286,7 +286,7 @@ export function getReminderDate(
 export function getReminderString(
   value: number,
   unit: moment.unitOfTime.DurationConstructor,
-  notificationType?: NotifType[]
+  notificationType?: NotificationType[]
 ): { combinedKeyValue: string; isCustom: boolean } {
   const reverseReminderMap: Record<string, string> = {
     '5-minutes': '5 minutes',

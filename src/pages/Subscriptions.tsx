@@ -1,11 +1,11 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TbScreenshot } from 'react-icons/tb';
+import { IoIosTrendingUp } from 'react-icons/io';
+import { CiCreditCard1 } from 'react-icons/ci';
 import { daysOfWeek, monthsOfYear } from '../constants';
 import Calendar from '../components/calendar/Calendar';
 import SelectCalendarDate from '../components/ui/Calendar';
 import {
-  SUBSCRIPTION_TYPES,
   SubscriptionModalTypes,
   type Subscription,
   type SubscriptionModalType,
@@ -20,20 +20,21 @@ import {
 } from '../utils';
 import BottomSheet from '../components/ui/BottomSheet';
 import type { Value } from '../interfaces/calendar';
-import SubscriptionTypeAndDot from '../components/ui/SubscriptionTypeAndDot';
 import { useMonthlySubscriptions } from '../hooks/useSubscriptions';
 import CalendarSkeleton, {
   MonthlyHeaderSkeleton,
 } from '../components/calendar/CalendarSkeleton';
 import ErrorState from '../components/common/ErrorState';
-import { useNavigate } from 'react-router-dom';
-import { useUserNotifications } from '../hooks/useNotifications';
 import NotificationPermissionModal from '../components/ui/NotificationPermissionModal';
 import { useNotificationPermission } from '../hooks/useNotificationPermission';
 import toast from 'react-hot-toast';
-import { useEffect } from 'react';
-import NotificationBell from '../components/notifications/NotificationBell';
-import { NotificationStatus } from '../interfaces/notifications';
+import SubscriptionStatCard from '../components/subscriptions/SubscriptionStatCard';
+import { FaWallet } from 'react-icons/fa';
+import SubscriptionIconGroup from '../components/subscriptions/SubscriptionIconGroup';
+import SubscriptionFilterModal, {
+  type FilterData,
+} from '../components/subscriptions/SubscriptionFilterModal';
+import { CiFilter } from 'react-icons/ci';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -65,8 +66,6 @@ const Subscriptions = () => {
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
-  const usersNotifications = useUserNotifications();
-
   const {
     showModal,
     checkAndShowModal,
@@ -77,10 +76,13 @@ const Subscriptions = () => {
 
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const handleApplyFilters = (filters: FilterData) => {
+    console.log('filters: ', filters);
+  };
 
   const normalized = normalizedDate(currentDate);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!hasAskedBefore()) {
@@ -146,12 +148,72 @@ const Subscriptions = () => {
     return 0;
   }, [groupedMonthlySubscriptions]);
 
-  const unReadCount = useMemo(() => {
-    if (!usersNotifications.data) return 0;
-    return usersNotifications.data?.filter(
-      (not) => not.status === NotificationStatus.UNREAD
-    ).length;
-  }, [usersNotifications]);
+  const getRemainingAmount = useMemo(() => {
+    if (!isEmpty(groupedMonthlySubscriptions)) {
+      const allSubscriptions = Object.values(
+        groupedMonthlySubscriptions
+      ).flat();
+      const now = new Date();
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+      const currentMonthBills = allSubscriptions.filter((subscription) => {
+        const nextBillingDate = new Date(subscription.details.endDate);
+        return (
+          nextBillingDate >= now &&
+          nextBillingDate <= endOfMonth &&
+          subscription.reccurring
+        );
+      });
+
+      const totalCurrentMonth = currentMonthBills.reduce(
+        (total, subscription) => total + subscription.price,
+        0
+      );
+
+      return Number(totalCurrentMonth.toFixed(2));
+    }
+    return 0;
+  }, [groupedMonthlySubscriptions]);
+
+  const getProgressPercentage = useMemo(() => {
+    const totalMonthly = getTotalMonthlySubscriptions;
+    const remaining = getRemainingAmount;
+
+    if (totalMonthly === 0) return 100;
+
+    const paidAmount = totalMonthly - remaining;
+    const progressPercent = Math.round((paidAmount / totalMonthly) * 100);
+
+    return Math.max(0, Math.min(progressPercent, 100));
+  }, [getTotalMonthlySubscriptions, getRemainingAmount]);
+
+  // Get subscriptions that will be billed soon (next 7 days)
+  const getNextBillingSubscriptions = useMemo(() => {
+    if (!isEmpty(groupedMonthlySubscriptions)) {
+      const allSubscriptions = Object.values(
+        groupedMonthlySubscriptions
+      ).flat();
+      const now = new Date();
+      const next7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+      return allSubscriptions.filter((subscription) => {
+        const nextBillingDate = new Date(subscription.details.endDate);
+        return (
+          nextBillingDate >= now &&
+          nextBillingDate <= next7Days &&
+          subscription.reccurring
+        );
+      });
+    }
+    return [];
+  }, [groupedMonthlySubscriptions]);
+
+  const getNextBillingAmount = useMemo(() => {
+    return getNextBillingSubscriptions.reduce(
+      (total, sub) => total + sub.price,
+      0
+    );
+  }, [getNextBillingSubscriptions]);
 
   return (
     <div className="flex justify-center">
@@ -169,137 +231,166 @@ const Subscriptions = () => {
           closeSubscriptionModals={closeSubscriptionModals}
         />
       )}
-
       <motion.div
         className="w-11/12 h-11/12 mx-auto border-gray-700"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Header */}
-        <motion.div
-          className="w-full h-auto p-2 pb-6 mb-2 flex border-b border-[#2f2f2f] justify-between items-center"
-          variants={itemVariants}
-        >
-          <div>
-            <span className="text-white text-3xl mr-4">Calendar</span>
-            <span className="text-gray-400 text-3xl">List</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <NotificationBell
-              count={unReadCount}
-              onClick={() => navigate('/notifications')}
-            />
-            <motion.div
-              className="flex justify-center items-center cursor-pointer p-3 bg-[#2f2f2f] rounded-full hover:bg-[#3f3f3f]"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <TbScreenshot className="text-xl text-white" />
-            </motion.div>
-          </div>
-        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+          <SubscriptionStatCard
+            variant="stat"
+            icon={<FaWallet size={20} />}
+            title="Monthly Total"
+            value={`$${getTotalMonthlySubscriptions}`}
+            badge={
+              monthsOfYear[new Date(normalizedDate(currentDate)).getMonth() + 1]
+            }
+          />
+          <SubscriptionStatCard
+            variant="progress"
+            icon={<IoIosTrendingUp size={20} />}
+            title="Left to pay"
+            value={`$${getRemainingAmount}`}
+            progress={getProgressPercentage}
+            accent="orange"
+          />
+          <SubscriptionStatCard
+            variant="status"
+            icon={<CiCreditCard1 size={20} />}
+            title="Next 7 days"
+            secondaryText={`$${getNextBillingAmount.toFixed(2)}`}
+            accent="indigo"
+            customContent={
+              <div className="mt-2">
+                <SubscriptionIconGroup
+                  subscriptions={getNextBillingSubscriptions}
+                  maxVisible={3}
+                  size="sm"
+                />
+              </div>
+            }
+          />
+        </div>
 
-        {/* Body */}
-        <motion.div
-          className="w-full h-auto pt-6 flex justify-between items-center"
-          variants={itemVariants}
-        >
-          <div>
-            <span className="text-white text-2xl">
-              {
-                monthsOfYear[
-                  new Date(normalizedDate(currentDate)).getMonth() + 1
-                ]
-              }
-              , {new Date(normalizedDate(currentDate)).getFullYear()}
-            </span>
-          </div>
-          <div className="flex justify-center flex-col md:flex-row items-center">
-            <span className="text-gray-400 text-md md:mr-2 md:mt-0 mt-4">
-              Monthly total:
-            </span>
+        <div className="flex flex-col-reverse md:flex-row  mt-6 gap-6">
+          <div className="grow">
+            <motion.div
+              className="w-full h-auto  flex justify-between items-center"
+              variants={itemVariants}
+            >
+              <div>
+                <span className="text-white text-2xl">
+                  {
+                    monthsOfYear[
+                      new Date(normalizedDate(currentDate)).getMonth() + 1
+                    ]
+                  }
+                  , {new Date(normalizedDate(currentDate)).getFullYear()}
+                </span>
+              </div>
+            </motion.div>
+            {/* days of the week */}
+            <motion.div
+              className="w-full h-auto p-2 my-2 grid grid-cols-7"
+              variants={itemVariants}
+            >
+              {daysOfWeek.map((day, index) => (
+                <motion.button
+                  key={day}
+                  onClick={() => setSelectDay(index)}
+                  className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
+                    selectDay === index
+                      ? 'border border-[#303031]'
+                      : 'bg-[#464646]'
+                  } cursor-pointer h-auto flex justify-center items-center`}
+                  whileHover={{ scale: 1.05, backgroundColor: '#3f3f3f' }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="text-gray-400 text-sm">{day}</span>
+                </motion.button>
+              ))}
+            </motion.div>
+
+            {/* day of the month */}
+            <motion.div variants={itemVariants}>
+              {isLoading && (
+                <>
+                  <MonthlyHeaderSkeleton />
+                  <CalendarSkeleton />
+                </>
+              )}
+              {!isLoading && !error && (
+                <Calendar
+                  date={currentDate}
+                  getDaySubscriptions={getDaySubscriptions}
+                  groupedMonthlySubscriptions={groupedMonthlySubscriptions}
+                />
+              )}
+            </motion.div>
             {isLoading ? (
-              <span className="bg-[#3a3a3a] animate-pulse w-12 h-3"></span>
-            ) : (
-              <span className="text-white text-md">
-                {' '}
-                ${getTotalMonthlySubscriptions}
-              </span>
+              <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
+            ) : error ? null : (
+              <motion.div
+                className="w-full mt-4"
+                onClick={openBottomSheet}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
+                  Select Date
+                </button>
+              </motion.div>
             )}
           </div>
-        </motion.div>
+          <div className="md:sticky md:mt-4">
+            <p className="text-xs uppercase tracking-wider text-white/40 mb-2">
+              Filter
+            </p>
 
-        {/* Year and Month */}
-        <motion.div
-          className="w-full h-auto mb-4 flex items-center"
-          variants={itemVariants}
-        >
-          {Object.entries(SUBSCRIPTION_TYPES).map(([key, value]) => (
-            <SubscriptionTypeAndDot key={key} value={value} />
-          ))}
-        </motion.div>
-
-        {/* days of the week */}
-        <motion.div
-          className="w-full h-auto p-2 my-2 grid grid-cols-7"
-          variants={itemVariants}
-        >
-          {daysOfWeek.map((day, index) => (
             <motion.button
-              key={day}
-              onClick={() => setSelectDay(index)}
-              className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
-                selectDay === index ? 'border border-[#303031]' : 'bg-[#464646]'
-              } cursor-pointer h-auto flex justify-center items-center`}
-              whileHover={{ scale: 1.05, backgroundColor: '#3f3f3f' }}
-              whileTap={{ scale: 0.95 }}
+              onClick={() => setOpenFilter(true)}
+              whileHover={{
+                y: -1,
+                backgroundColor: 'rgba(255,255,255,0.08)',
+              }}
+              whileTap={{
+                scale: 0.98,
+                y: 0,
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 400,
+                damping: 30,
+              }}
+              className="
+    w-full flex items-center justify-between
+    rounded-2xl px-4 py-3
+    bg-white/5 backdrop-blur-xl
+    border border-white/10
+    text-sm text-white
+    gap-1
+  "
             >
-              <span className="text-gray-400 text-sm">{day}</span>
+              <span>Filter </span>
+
+              <motion.span
+                whileHover={{ x: 2 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="text-white/50"
+              >
+                <CiFilter />
+              </motion.span>
             </motion.button>
-          ))}
-        </motion.div>
-
-        {/* day of the month */}
-        <motion.div variants={itemVariants}>
-          {isLoading && (
-            <>
-              <MonthlyHeaderSkeleton />
-              <CalendarSkeleton />
-            </>
-          )}
-          {!isLoading && !error && (
-            <Calendar
-              date={currentDate}
-              getDaySubscriptions={getDaySubscriptions}
-              groupedMonthlySubscriptions={groupedMonthlySubscriptions}
-            />
-          )}
-        </motion.div>
-
+          </div>
+        </div>
         {error && (
           <ErrorState
             message="Failed to load subscriptions."
             onRetry={() => refetch()}
           />
         )}
-
-        {isLoading ? (
-          <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
-        ) : error ? null : (
-          <motion.div
-            className="w-full mt-4"
-            onClick={openBottomSheet}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          >
-            <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
-              Select Date
-            </button>
-          </motion.div>
-        )}
       </motion.div>
-
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <motion.div variants={itemVariants}>
           <SelectCalendarDate
@@ -309,7 +400,6 @@ const Subscriptions = () => {
           />
         </motion.div>
       </BottomSheet>
-
       <NotificationPermissionModal
         isOpen={showModal}
         onClose={() => {
@@ -321,6 +411,11 @@ const Subscriptions = () => {
             "Notifications enabled! You'll get reminders for your subscriptions."
           );
         }}
+      />
+      <SubscriptionFilterModal
+        isOpen={openFilter}
+        onClose={() => setOpenFilter(false)}
+        onApplyFilters={handleApplyFilters}
       />
     </div>
   );
