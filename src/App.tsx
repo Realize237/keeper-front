@@ -20,6 +20,8 @@ import NavLayout from './layouts/NavLayout';
 import EditProfile from './pages/profile/EditProfile';
 import ChangePassword from './pages/profile/ChangePassword';
 import SetPassword from './pages/profile/SetPassword';
+import { PlaidstartProvider } from './context/PlaidContext';
+import Plaid from './pages/Plaid';
 import { useEffect } from 'react';
 import { getFirebaseToken } from './config/firebase';
 import { useSaveWebPushToken } from './hooks/usePushToken';
@@ -55,6 +57,7 @@ export default function App() {
       <UserProvider>
         <PushTokenHandler />
         <LogoutProvider>
+        <PlaidstartProvider>
           <SocketProvider>
             <Router basename="/">
               <Routes>
@@ -68,6 +71,7 @@ export default function App() {
                       </ProtectedRoute>
                     }
                   >
+                    <Route path="/plaid" element={<Plaid />} />
                     <Route path="/subscriptions" element={<Subscriptions />} />
                     <Route path="/cards" element={<Cards />} />
                     <Route path="/shared-plan" element={<SharedPlan />} />
@@ -96,7 +100,8 @@ export default function App() {
             </Router>
             <Toaster toastOptions={{ ...TOASTER_OPTIONS }} />
           </SocketProvider>
-        </LogoutProvider>
+           </PlaidstartProvider>
+          </LogoutProvider>
       </UserProvider>
     </CookiesProvider>
   );

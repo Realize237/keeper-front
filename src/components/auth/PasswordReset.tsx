@@ -30,7 +30,7 @@ export default function PasswordReset({
   onSubmit,
   onClose,
   isOpen,
-  isSubmitting = false
+  isSubmitting = false,
 }: PasswordResetProp) {
   const {
     register,
@@ -75,14 +75,14 @@ export default function PasswordReset({
           <Input
             type="password"
             placeholder="New password"
-            className='pr-4'
+            className="pr-4"
             {...register('newPassword')}
             error={errors.newPassword?.message}
           />
 
           <Input
             type="password"
-            className='pr-4'
+            className="pr-4"
             placeholder="Confirm password"
             {...register('confirmPassword')}
             error={errors.confirmPassword?.message}

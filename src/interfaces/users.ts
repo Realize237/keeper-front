@@ -25,11 +25,11 @@ export type UserInput = Pick<User, 'name' | 'email' | 'password'>;
 export type PasswordRequestInput = Pick<User, 'email'>;
 export interface IValidateToken extends PasswordRequestInput {
   token: string;
-};
+}
 
 export interface IResetPassword extends PasswordRequestInput {
   newPassword: string;
-};
+}
 
 export type UserLoginInput = Omit<UserInput, 'name'>;
 
