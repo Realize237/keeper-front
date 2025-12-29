@@ -26,8 +26,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               type === 'password' ? (showPassword ? 'text' : 'password') : type
             }
             className={groupClassNames(
-              "w-full p-4 rounded-full outline-none",
-              type === 'text' ? 'text-center' : 'placeholder:text-left text-left'
+              'w-full p-4 rounded-full outline-none',
+              type === 'text'
+                ? 'text-center'
+                : 'placeholder:text-left text-left'
             )}
           />
           {type === 'password' &&
