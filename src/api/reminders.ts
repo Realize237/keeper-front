@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { processError } from '../utils';
-import { env } from '../utils/env';
 import { API_PATHS } from './api-paths';
 import type {
   IReminderRequest,
@@ -11,7 +10,7 @@ import type {
 export const addReminders = async (newReminder: IReminderRequest[]) => {
   try {
     const response = await axios.post(
-      `${env.API_URL}${API_PATHS.REMINDERS.ADD_REMINDER}`,
+      `${API_PATHS.REMINDERS.ADD_REMINDER}`,
       newReminder,
       { withCredentials: true }
     );
@@ -24,7 +23,7 @@ export const addReminders = async (newReminder: IReminderRequest[]) => {
 export const getAllReminders = async () => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.REMINDERS.GET_ALL_REMINDERS}`,
+      `${API_PATHS.REMINDERS.GET_ALL_REMINDERS}`,
       { withCredentials: true }
     );
     return response.data;
@@ -36,7 +35,7 @@ export const getAllReminders = async () => {
 export const getAllUsersReminders = async (userId: number) => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.REMINDERS.GET_ALL_REMINDERS}?userId=${userId}`,
+      `${API_PATHS.REMINDERS.GET_ALL_REMINDERS}?userId=${userId}`,
       { withCredentials: true }
     );
     return response.data.data;
@@ -48,7 +47,7 @@ export const getAllUsersReminders = async (userId: number) => {
 export const getAllSubscriptionReminders = async (subscriptionId: number) => {
   try {
     const response = await axios.get(
-      `${env.API_URL}${API_PATHS.REMINDERS.GET_ALL_REMINDERS}?subscriptionId=${subscriptionId}`,
+      `${API_PATHS.REMINDERS.GET_ALL_REMINDERS}?subscriptionId=${subscriptionId}`,
       { withCredentials: true }
     );
     return response.data.data;
@@ -60,7 +59,7 @@ export const getAllSubscriptionReminders = async (subscriptionId: number) => {
 export const updateReminder = async (reminderUpdate: IReminderUpdate) => {
   try {
     const response = await axios.patch<{ message: string; statusCode: number }>(
-      `${env.API_URL}${API_PATHS.REMINDERS.UPDATE_REMINDER(reminderUpdate.id)}`,
+      `${API_PATHS.REMINDERS.UPDATE_REMINDER(reminderUpdate.id)}`,
       reminderUpdate,
       { withCredentials: true }
     );
@@ -76,7 +75,7 @@ export const deleteReminder = async (reminderId: number) => {
     const response = await axios.delete<{
       message: string;
       statusCode: number;
-    }>(`${env.API_URL}${API_PATHS.REMINDERS.DELETE_REMINDER(reminderId)}`, {
+    }>(`${API_PATHS.REMINDERS.DELETE_REMINDER(reminderId)}`, {
       withCredentials: true,
     });
 
@@ -92,9 +91,7 @@ export const updateSubscriptionReminders = async ({
 }: ISubscriptionRemindersUpdate) => {
   try {
     const response = await axios.patch<{ message: string; statusCode: number }>(
-      `${env.API_URL}${API_PATHS.REMINDERS.UPDATE_SUBSCRIPTION_REMINDER(
-        subscriptionId
-      )}`,
+      `${API_PATHS.REMINDERS.UPDATE_SUBSCRIPTION_REMINDER(subscriptionId)}`,
       updatedReminders,
       { withCredentials: true }
     );
@@ -110,12 +107,9 @@ export const deleteSubscriptionReminders = async (subscriptionId: number) => {
     const response = await axios.delete<{
       message: string;
       statusCode: number;
-    }>(
-      `${env.API_URL}${API_PATHS.REMINDERS.DELETE_SUBSCRIPTION_REMINDERS(
-        subscriptionId
-      )}`,
-      { withCredentials: true }
-    );
+    }>(`${API_PATHS.REMINDERS.DELETE_SUBSCRIPTION_REMINDERS(subscriptionId)}`, {
+      withCredentials: true,
+    });
 
     return response.data;
   } catch (err) {

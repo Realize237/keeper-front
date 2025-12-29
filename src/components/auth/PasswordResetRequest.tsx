@@ -21,7 +21,7 @@ export default function PasswordResetRequest({
   onSubmit,
   isOpen,
   onClose,
-  isSubmitting = false
+  isSubmitting = false,
 }: PasswordResetRequestProps) {
   const {
     register,
@@ -63,7 +63,7 @@ export default function PasswordResetRequest({
         >
           <Input
             placeholder="Email"
-            type='email'
+            type="email"
             {...register('email')}
             error={errors.email?.message?.toString()}
           />
