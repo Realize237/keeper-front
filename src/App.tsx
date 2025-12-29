@@ -49,13 +49,15 @@ function PushTokenHandler() {
 }
 import { TOASTER_OPTIONS } from './constants';
 import { SocketProvider } from './context/SocketContext';
+import { LogoutProvider } from './context/LogoutContext';
 
 export default function App() {
   return (
     <CookiesProvider>
       <UserProvider>
+        <PushTokenHandler />
+        <LogoutProvider>
         <PlaidstartProvider>
-          <PushTokenHandler />
           <SocketProvider>
             <Router basename="/">
               <Routes>
@@ -98,7 +100,8 @@ export default function App() {
             </Router>
             <Toaster toastOptions={{ ...TOASTER_OPTIONS }} />
           </SocketProvider>
-        </PlaidstartProvider>
+           </PlaidstartProvider>
+          </LogoutProvider>
       </UserProvider>
     </CookiesProvider>
   );
