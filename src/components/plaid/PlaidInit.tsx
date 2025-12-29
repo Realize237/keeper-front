@@ -11,7 +11,6 @@ const PlaidInit = () => {
     linkSuccess,
     linkTokenError,
     isSubscriptionSynced,
-    products = [],
   } = useContext(PlaidContext);
 
   const { mutate: syncCardSubscriptions, isPending: isSyncing } =
