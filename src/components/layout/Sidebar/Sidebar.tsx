@@ -11,9 +11,12 @@ interface SidebarProps {
 
 const Sidebar = ({ onToggle }: SidebarProps) => {
   const location = useLocation();
-  const activeIndex = activeNavItems.findIndex(
-    (item) => item.path === location.pathname
-  );
+  const activeIndex = activeNavItems.findIndex((item) => {
+    if (item.path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(item.path);
+  });
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -24,7 +27,6 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
   };
 
   useEffect(() => {
-    // Notify parent of initial state
     onToggle?.(isOpen);
   }, [onToggle, isOpen]);
 
@@ -34,13 +36,10 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className="fixed top-0 left-0  border-r border-r-white/10 text-gray-400 p-4 flex flex-col "
     >
-      {/* Header */}
-      <div className="flex  h-[100px]   justify-between mb-8 relative">
+      <div className="flex  h-25   justify-between mb-8 relative">
         <div className="flex justify-between gap-2 overflow-hidden">
-          {/* Logo — always visible */}
           <img src={env.APP_LOGO_URL} alt="Logo" className="h-8 w-8 shrink-0" />
 
-          {/* App name — only when open */}
           <AnimatePresence>
             {isOpen && (
               <motion.h1
@@ -75,7 +74,6 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
               end
               className="relative flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/5"
             >
-              {/* Active Indicator */}
               {isActive && (
                 <motion.div
                   layoutId="active-bar"
@@ -83,7 +81,6 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                 />
               )}
 
-              {/* Icon */}
               <motion.div
                 animate={{
                   color: isActive ? '#CDFF00' : '#9CA3AF',
@@ -95,7 +92,6 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                 <Icon />
               </motion.div>
 
-              {/* Label */}
               <AnimatePresence>
                 {isOpen && (
                   <motion.span

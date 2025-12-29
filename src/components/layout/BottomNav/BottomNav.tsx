@@ -5,9 +5,12 @@ import { activeNavItems } from '../../../utils';
 const BottomNav = () => {
   const location = useLocation();
   const length = activeNavItems.length;
-  const activeIndex = activeNavItems.findIndex(
-    (item) => item.path === location.pathname
-  );
+  const activeIndex = activeNavItems.findIndex((item) => {
+    if (item.path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(item.path);
+  });
 
   return (
     <div className="fixed bottom-0 left-0 right-0 w-full h-16 bg-[#2f2f2f]  shadow-md z-50 sm:max-w-md sm:mx-auto sm:rounded-t-xl sm:bottom-5 sm:shadow-lg sm:hidden">
