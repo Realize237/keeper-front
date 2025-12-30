@@ -11,9 +11,12 @@ interface SidebarProps {
 
 const Sidebar = ({ onToggle }: SidebarProps) => {
   const location = useLocation();
-  const activeIndex = activeNavItems.findIndex(
-    (item) => item.path === location.pathname
-  );
+  const activeIndex = activeNavItems.findIndex((item) => {
+    if (item.path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(item.path);
+  });
 
   const [isOpen, setIsOpen] = useState(true);
 

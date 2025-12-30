@@ -19,10 +19,10 @@ import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
-import { getAvatarInitials } from '../../utils';
 
 import { HiOutlineUser } from 'react-icons/hi2';
 import { useLogoutModal } from '../../context/LogoutContext';
+import { Avatar } from '../../components/ui/Avatar';
 
 interface MenuItem {
   icon: IconType;
@@ -113,85 +113,70 @@ const Profile = () => {
     }
   };
 
-  return (
-    <div className="text-white w-11/12 mx-auto py-8">
-      <div className="flex items-center mb-6">
-        <button
-          onClick={() => navigate(-1)}
-          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-gray-700 transition"
-        >
-          <FaChevronLeft className="w-5 h-5" />
-        </button>
-        <h3 className="text-xl font-bold ml-4">Profile</h3>
-      </div>
-
-      <div className="p-3 flex items-center rounded-xl border border-gray-700">
-        {user?.photo ? (
-          <img
-            src={user.photo}
-            alt="Profile"
-            className="w-12 h-12 object-cover rounded-full"
-          />
-        ) : (
-          <div className="w-12 h-12 text-xl flex items-center justify-center rounded-full bg-[#CDFF00] text-black font-bold">
-            {getAvatarInitials(user?.name || '')}
-          </div>
-        )}
-
-        <div className="flex w-full justify-between items-center ml-4">
-          <div>
-            <p className="font-bold text-xl">{user?.name}</p>
-            <p className="text-xs text-gray-400">{user?.email}</p>
-          </div>
-          <button
-            onClick={() => navigate('/profile/edit')}
-            className="p-1 flex items-center cursor-pointer justify-center rounded-full hover:bg-gray-700 transition"
-          >
-            <FaEdit className="w-4 h-4" />
-          </button>
+  const Row = ({ item }: { item: MenuItem }) => (
+    <motion.button
+      onClick={() => handleItemClick(item)}
+      whileTap={{ scale: 0.98 }}
+      className="
+      w-full flex items-center justify-between
+      px-4 py-3
+      rounded-xl
+      hover:bg-white/5
+      transition
+    "
+    >
+      <div className="flex items-center gap-3">
+        <item.icon className="w-5 h-5 text-white/60" />
+        <div className="text-left">
+          <p className="text-sm font-medium">{item.label}</p>
+          {item.subtitle && (
+            <p className="text-xs text-white/40">{item.subtitle}</p>
+          )}
         </div>
       </div>
-      <div className="space-y-2 bg-[#2f2f2f] rounded-2xl mt-8">
-        {menuItems.map((item, index) => (
-          <motion.button
-            key={index}
-            onClick={() => handleItemClick(item)}
-            className="w-full flex items-center justify-between p-4 rounded-xl cursor-pointer"
-            whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="flex items-center space-x-4">
-              <item.icon className="w-5 h-5" />
-              <div className="text-left">
-                <p className="font-semibold">{item.label}</p>
-                {item.subtitle && <p className="text-xs">{item.subtitle}</p>}
-              </div>
-            </div>
-            <FaChevronRight className="w-5 h-5" />
-          </motion.button>
-        ))}
+      <FaChevronRight className="w-4 h-4 text-white/30" />
+    </motion.button>
+  );
+
+  return (
+    <div className="text-white w-11/12 mx-auto py-8">
+      <div className="flex items-center mb-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 rounded-full hover:bg-white/10 transition"
+        >
+          <FaChevronLeft className="w-5 h-5 text-white/80" />
+        </button>
+        <h3 className="text-lg font-semibold ml-4">Profile</h3>
       </div>
 
-      <div className="space-y-2 bg-[#2f2f2f] rounded-2xl mt-8">
-        {secondaryItems.map((item, index) => (
-          <motion.button
-            key={index}
-            onClick={() => handleItemClick(item)}
-            className="w-full flex items-center justify-between p-4 rounded-xl cursor-pointer"
-            whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="flex items-center space-x-4">
-              <item.icon className="w-5 h-5" />
-              <div className="text-left">
-                <p className="font-semibold">{item.label}</p>
-              </div>
-            </div>
-            <FaChevronRight className="w-5 h-5" />
-          </motion.button>
-        ))}
+      <div className="flex items-center p-4 rounded-2xl bg-white/5 backdrop-blur-xl">
+        <Avatar size="xl" name={user?.name || ''} src={user?.photo || ''} />
+
+        <div className="flex-1 ml-4">
+          <p className="text-base font-medium">{user?.name}</p>
+          <p className="text-xs text-white/50">{user?.email}</p>
+        </div>
+
+        <button
+          onClick={() => navigate('/profile/edit')}
+          className="p-2 rounded-full hover:bg-white/10 transition"
+        >
+          <FaEdit className="w-4 h-4 text-white/70" />
+        </button>
+      </div>
+      <div className="mt-8 space-y-6">
+        <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
+          {menuItems.map((item, i) => (
+            <Row key={i} item={item} />
+          ))}
+        </div>
+
+        <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
+          {secondaryItems.map((item, i) => (
+            <Row key={i} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   );
