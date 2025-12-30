@@ -50,6 +50,7 @@ function PushTokenHandler() {
 import { TOASTER_OPTIONS } from './constants';
 import { SocketProvider } from './context/SocketContext';
 import { LogoutProvider } from './context/LogoutContext';
+import AccountDetails from './pages/profile/AccountDetails';
 
 export default function App() {
   return (
@@ -84,6 +85,10 @@ export default function App() {
                         <Route
                           path="change-password"
                           element={<ChangePassword />}
+                        />
+                        <Route
+                          path="account-details"
+                          element={<AccountDetails />}
                         />
                       </Route>
                       <Route
