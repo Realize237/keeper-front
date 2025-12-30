@@ -18,7 +18,7 @@ export default function OTPVerification({
   onResend,
   onClose,
   isOpen,
-  isSubmitting = false
+  isSubmitting = false,
 }: OtpProps) {
   const [otp, setOtp] = useState<string[]>(
     Array.from<string>({ length: 5 }).fill('')

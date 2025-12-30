@@ -82,21 +82,33 @@ export const useSendSetPasswordEmail = () => {
 };
 
 export const useRequestPasswordReset = () => {
-  return useMutation<{statusCode: number; message:string}, Error, PasswordRequestInput>({
-    mutationFn: requestPasswordRequest
-  })
+  return useMutation<
+    { statusCode: number; message: string },
+    Error,
+    PasswordRequestInput
+  >({
+    mutationFn: requestPasswordRequest,
+  });
 };
 
 export const useValidateForgotPasswordToken = () => {
-  return useMutation<{statusCode: number; message:string}, Error, IValidateToken>({
-    mutationFn: validateForgotPasswordToken
-  })
+  return useMutation<
+    { statusCode: number; message: string },
+    Error,
+    IValidateToken
+  >({
+    mutationFn: validateForgotPasswordToken,
+  });
 };
 
 export const useResetPassword = () => {
-  return useMutation<{statusCode: number; message:string}, Error, IResetPassword>({
-    mutationFn: resetPassword
-  })
+  return useMutation<
+    { statusCode: number; message: string },
+    Error,
+    IResetPassword
+  >({
+    mutationFn: resetPassword,
+  });
 };
 
 export const useSetPassword = () => {

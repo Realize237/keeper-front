@@ -5,7 +5,12 @@ import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
 import { IMAGES } from '../assets';
-import { useLoginUser, useRequestPasswordReset, useResetPassword, useValidateForgotPasswordToken } from '../hooks/useUsers';
+import {
+  useLoginUser,
+  useRequestPasswordReset,
+  useResetPassword,
+  useValidateForgotPasswordToken,
+} from '../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
 import { env } from '../utils/env';
 import toast from 'react-hot-toast';
@@ -25,7 +30,7 @@ export default function Login() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const error = searchParams.get('error');
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const requestResetPasswordMutation = useRequestPasswordReset();
   const validateForgotPasswordTokenMutation = useValidateForgotPasswordToken();
   const resetPasswordMutation = useResetPassword();
@@ -174,40 +179,62 @@ export default function Login() {
     tap: { scale: 0.95 },
   };
 
-  const requestPasswordRequest = useCallback((email: string) => {
-    setEmail(email);
-    requestResetPasswordMutation.mutate({email}, {
-      onSuccess: () => {
-        setForgotPasswordStep(FORGOT_PASSWORD_STEPS.OTP as ForgotPasswordStepsType);
-      },
-      onError: (error) => {
-        toast.error(`An error occurred: ${error.message}`);
-      }
-    });
-  }, [requestResetPasswordMutation])
+  const requestPasswordRequest = useCallback(
+    (email: string) => {
+      setEmail(email);
+      requestResetPasswordMutation.mutate(
+        { email },
+        {
+          onSuccess: () => {
+            setForgotPasswordStep(
+              FORGOT_PASSWORD_STEPS.OTP as ForgotPasswordStepsType
+            );
+          },
+          onError: (error) => {
+            toast.error(`An error occurred: ${error.message}`);
+          },
+        }
+      );
+    },
+    [requestResetPasswordMutation]
+  );
 
-  const validateForgotPasswordToken = useCallback((token: string) => {
-    validateForgotPasswordTokenMutation.mutate({email, token}, {
-      onSuccess: () => {
-        setForgotPasswordStep(FORGOT_PASSWORD_STEPS.PASSWORD_RESET as ForgotPasswordStepsType);
-      },
-      onError: (error) => {
-        toast.error(`An error occurred: ${error.message}`);
-      }
-    });
-  }, [validateForgotPasswordTokenMutation, email])
+  const validateForgotPasswordToken = useCallback(
+    (token: string) => {
+      validateForgotPasswordTokenMutation.mutate(
+        { email, token },
+        {
+          onSuccess: () => {
+            setForgotPasswordStep(
+              FORGOT_PASSWORD_STEPS.PASSWORD_RESET as ForgotPasswordStepsType
+            );
+          },
+          onError: (error) => {
+            toast.error(`An error occurred: ${error.message}`);
+          },
+        }
+      );
+    },
+    [validateForgotPasswordTokenMutation, email]
+  );
 
-  const resetPassword = useCallback((newPassword: string) => {
-    resetPasswordMutation.mutate({email, newPassword}, {
-      onSuccess: () => {
-        toast.success("Password reset successfully")
-        setForgotPasswordStep(null);
-      },
-      onError: (error) => {
-        toast.error(`An error occurred: ${error.message}`);
-      }
-    });
-  }, [resetPasswordMutation, email]);
+  const resetPassword = useCallback(
+    (newPassword: string) => {
+      resetPasswordMutation.mutate(
+        { email, newPassword },
+        {
+          onSuccess: () => {
+            toast.success('Password reset successfully');
+            setForgotPasswordStep(null);
+          },
+          onError: (error) => {
+            toast.error(`An error occurred: ${error.message}`);
+          },
+        }
+      );
+    },
+    [resetPasswordMutation, email]
+  );
 
   return (
     <div className="flex flex-col  py-8 overflow-hidden">
