@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { IoNotifications, IoClose } from 'react-icons/io5';
 import FormButton from './FormButton';
+import { useTranslation } from 'react-i18next';
 
 interface NotificationPermissionModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export default function NotificationPermissionModal({
   onPermissionGranted,
 }: NotificationPermissionModalProps) {
   const [isRequesting, setIsRequesting] = useState(false);
+  const { t } = useTranslation();
 
   const handleRequestPermission = async () => {
     setIsRequesting(true);
@@ -74,7 +76,7 @@ export default function NotificationPermissionModal({
                   <IoNotifications className="text-black text-xl" />
                 </div>
                 <h3 className="text-white text-lg font-semibold">
-                  Stay Updated
+                  {t('notifications.permission_modal.title')}
                 </h3>
               </div>
               <button
@@ -87,8 +89,7 @@ export default function NotificationPermissionModal({
 
             <div className="mb-6">
               <p className="text-gray-300 text-sm leading-relaxed">
-                Get notified about your upcoming subscription payments and never
-                miss a billing date again.
+                {t('notifications.permission_modal.description')}
               </p>
             </div>
 
@@ -99,7 +100,7 @@ export default function NotificationPermissionModal({
                 className="flex-1"
                 size="sm"
               >
-                Not Now
+                {t('notifications.permission_modal.notNow')}
               </FormButton>
               <FormButton
                 onClick={handleRequestPermission}
@@ -107,7 +108,9 @@ export default function NotificationPermissionModal({
                 className="flex-1"
                 size="sm"
               >
-                {isRequesting ? 'Requesting...' : 'Allow Notifications'}
+                {isRequesting
+                  ? t('notifications.permission_modal.requesting')
+                  : t('notifications.permission_modal.allow')}
               </FormButton>
             </div>
           </motion.div>

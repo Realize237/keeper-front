@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { getFirebaseToken } from '../config/firebase';
 import { useSaveWebPushToken } from './usePushToken';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 export const useNotificationPermission = () => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [permission, setPermission] = useState<NotificationPermission>(() => {
     return 'Notification' in window ? Notification.permission : 'default';
@@ -24,21 +26,19 @@ export const useNotificationPermission = () => {
       if (fcmToken) {
         saveWebPushToken(fcmToken, {
           onSuccess: () => {
-            toast.success('Notifications enabled successfully!');
+            toast.success(t('notifications.enabled_success'));
           },
           onError: () => {
-            toast.error('Failed to save notification token. Please try again.');
+            toast.error(t('notifications.save_token_error'));
           },
         });
       } else {
-        toast.error('Failed to get notification token. Please try again.');
+        toast.error(t('notifications.get_token_error'));
       }
 
       localStorage.setItem('notificationPermissionAsked', 'true');
     } catch {
-      toast.error(
-        'Permission not granted. Please enable notifications in your browser settings.'
-      );
+      toast.error(t('notifications.get_token_error'));
       localStorage.setItem('notificationPermissionAsked', 'true');
     }
   };

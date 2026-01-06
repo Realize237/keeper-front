@@ -4,12 +4,21 @@ import { useState } from 'react';
 import FormButton from '../ui/FormButton';
 import PriceRangeSlider from './PriceRangeSlider';
 import { FilterOption } from './FilterOption';
+import { useTranslation } from 'react-i18next';
 
 interface FilterData {
   categories: string[];
   priceRange: [number, number];
 }
 
+const categories = [
+  'streaming',
+  'music',
+  'gaming',
+  'productivity',
+  'news',
+  'fitness',
+];
 const SubscriptionFilterModal = ({
   isOpen,
   onClose,
@@ -19,6 +28,7 @@ const SubscriptionFilterModal = ({
   onClose: () => void;
   onApplyFilters?: (filters: FilterData) => void;
 }) => {
+  const { t } = useTranslation();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
 
@@ -46,18 +56,17 @@ const SubscriptionFilterModal = ({
         : [...prev, category]
     );
   };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Filters" width="max-w-md">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t('subscriptions.filter.title_plural')}
+      width="max-w-md"
+    >
       <div className="space-y-6">
-        <FilterSection title="Category">
-          {[
-            'Streaming',
-            'Music',
-            'Gaming',
-            'Productivity',
-            'News',
-            'Fitness',
-          ].map((item) => (
+        <FilterSection title={t('subscriptions.filter.category')}>
+          {categories.map((item) => (
             <FilterOption
               key={item}
               label={item}
@@ -66,7 +75,9 @@ const SubscriptionFilterModal = ({
             />
           ))}
         </FilterSection>
-        <p className="text-sm font-medium text-white mt-6 mb-2">Price range</p>
+        <p className="text-sm font-medium text-white mt-6 mb-2">
+          {t('subscriptions.filter.price_range')}
+        </p>
         <hr className="text-white/50" />
         <PriceRangeSlider
           minPrice={0}
@@ -78,10 +89,10 @@ const SubscriptionFilterModal = ({
 
         <div className="flex justify-between gap-2 mt-4">
           <FormButton type="button" onClick={onClose} variant="secondary">
-            Cancel
+            {t('common.cancel')}
           </FormButton>
           <FormButton type="button" onClick={handleApplyFilters}>
-            Show results
+            {t('subscriptions.filter.show_results')}
           </FormButton>
         </div>
       </div>

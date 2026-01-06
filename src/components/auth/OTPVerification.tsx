@@ -4,6 +4,7 @@ import { Input } from '../ui/Input';
 import { motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface OtpProps {
   onSubmit: (code: string) => void;
@@ -26,7 +27,7 @@ export default function OTPVerification({
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const [secondsLeft, setSecondsLeft] = useState<number>(120);
   const [isResendAvailable, setIsResendAvailable] = useState(false);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (isOpen) {
       setSecondsLeft(120);
@@ -112,14 +113,15 @@ export default function OTPVerification({
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-300 hover:text-white"
+          aria-label={t('common.close')}
         >
           <MdClose size={22} />
         </button>
 
-        <h2 className="text-white text-xl font-semibold">Enter OTP</h2>
-        <p className="text-gray-400 text-sm">
-          Enter the 5-digit code sent to your email.
-        </p>
+        <h2 className="text-white text-xl font-semibold">
+          {t('auth.otp.title')}
+        </h2>
+        <p className="text-gray-400 text-sm">{t('auth.otp.description')}</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex justify-between space-x-3">
@@ -142,15 +144,15 @@ export default function OTPVerification({
           </div>
 
           <Button type="submit" loading={isSubmitting} className="w-full mt-7">
-            Verify Code
+            {t('auth.otp.actions.submit')}
           </Button>
         </form>
 
         <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
           <span>
             {isResendAvailable
-              ? 'You can resend the code now.'
-              : `Resend available in ${formatTime(secondsLeft)}`}
+              ? t('auth.otp.resend.available')
+              : t('auth.otp.resend.wait', { time: formatTime(secondsLeft) })}
           </span>
           <button
             onClick={handleResend}
@@ -161,7 +163,7 @@ export default function OTPVerification({
                 : 'text-gray-500 cursor-not-allowed'
             }`}
           >
-            Resend
+            {t('auth.otp.resend.button')}
           </button>
         </div>
       </motion.div>

@@ -14,9 +14,11 @@ import {
   useUserNotifications,
 } from '../hooks/useNotifications';
 import NotificationSkeletonLoader from '../components/notifications/SkeletonLoader';
+import { useTranslation } from 'react-i18next';
 
 const NotificationsPage: React.FC = () => {
   const { data: notifications, isLoading } = useUserNotifications();
+  const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectMode, setSelectMode] = useState(false);
@@ -94,7 +96,7 @@ const NotificationsPage: React.FC = () => {
   }, [updateNotificationMutation, notifications]);
 
   const deleteAll = useCallback(() => {
-    if (!confirm('Are you sure you want to delete all notifications?')) return;
+    if (!confirm(t('notifications.confirm_delete_all'))) return;
     if (notifications) {
       deleteNotificationMutation.mutate({
         ids: notifications?.map((notification) => notification.id),
@@ -122,7 +124,9 @@ const NotificationsPage: React.FC = () => {
 
   const deleteSelected = useCallback(() => {
     if (selectedIds.size === 0) return;
-    if (!confirm(`Delete ${selectedIds.size} notification(s)?`)) return;
+    t('notifications.confirm_delete_selected', {
+      count: selectedIds.size,
+    });
     if (selectedIds) {
       deleteNotificationMutation.mutate({ ids: [...selectedIds], all: false });
     }
@@ -167,11 +171,11 @@ const NotificationsPage: React.FC = () => {
       hover:bg-neutral-800/50 transition"
           >
             <FiChevronLeft className="w-4 h-4" />
-            <span className="text-sm">Back</span>
+            <span className="text-sm capitalize">{t('common.back')}</span>
           </button>
         </div>
         <NotificationsHeader
-          title="Notifications"
+          title={t('notifications.title')}
           unreadCount={unreadCount!}
           totalCount={notifications?.length ?? 0}
           searchQuery={searchQuery}

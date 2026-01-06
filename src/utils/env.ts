@@ -1,5 +1,3 @@
-import { FIREBASE_VAPID_KEY } from '../config/firebase';
-
 function getEnv(key: string, defaultValue?: string): string {
   // Vite prefixes public env vars with VITE_
   const vitKey = `VITE_${key}`;
