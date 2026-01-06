@@ -17,6 +17,7 @@ type FormInputProps<FormValues extends FieldValues> = {
   name: Path<FormValues>;
   rules?: RegisterOptions<FormValues>;
   passwordToggle?: boolean;
+  disabled?: boolean;
 };
 
 export default function FormInput<FormValues extends FieldValues>({
@@ -27,6 +28,7 @@ export default function FormInput<FormValues extends FieldValues>({
   name,
   rules,
   passwordToggle = false,
+  disabled = false,
 }: FormInputProps<FormValues>) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -48,12 +50,13 @@ export default function FormInput<FormValues extends FieldValues>({
           {...register(name, rules)}
           type={inputType}
           placeholder={placeholder}
+          disabled={disabled}
           className={`w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] pr-12 ${
             error ? 'border border-red-500' : ''
-          }`}
+          } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`} // <-- styling for disabled
         />
 
-        {passwordToggle && (
+        {passwordToggle && !disabled && (
           <motion.button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}

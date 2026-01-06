@@ -58,7 +58,6 @@ const EditProfile = () => {
       {
         onSuccess: () => toast.success('Profile updated successfully'),
         onError: (error: Error) => {
-          console.log('error: ', error.message);
           const isEmail = error.message
             .toLowerCase()
             .trim()
@@ -124,6 +123,7 @@ const EditProfile = () => {
             name="email"
             placeholder="Email address"
             register={register}
+            disabled={true}
             error={errors.email || emailError}
             rules={{
               required: 'Email is required',
