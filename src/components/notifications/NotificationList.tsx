@@ -1,6 +1,7 @@
 import React from 'react';
 import NotificationItem from '../../components/notifications/NotificationItem';
 import type { Notification } from '../../interfaces/notifications';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   notifications: Notification[];
@@ -23,13 +24,16 @@ const NotificationList: React.FC<Props> = ({
   onToggleRead,
   onDelete,
 }) => {
+  const { t } = useTranslation();
   if (!notifications || !notifications.length) {
     return (
       <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-8 text-center">
         <h3 className="text-lg font-semibold text-neutral-200">
-          No notifications
+          {t('notifications.empty.title')}
         </h3>
-        <p className="text-sm text-neutral-400 mt-2">You're all caught up!</p>
+        <p className="text-sm text-neutral-400 mt-2">
+          {t('notifications.empty.subtitle')}
+        </p>
       </div>
     );
   }

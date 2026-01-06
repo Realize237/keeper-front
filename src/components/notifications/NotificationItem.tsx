@@ -1,4 +1,3 @@
-// components/notifications/NotificationItem.tsx
 import React, { useRef } from 'react';
 import {
   FiCheckCircle,
@@ -14,7 +13,8 @@ import {
   type Notification,
 } from '../../interfaces/notifications';
 import { MdEmail, MdSecurity, MdUndo, MdWhatsapp } from 'react-icons/md';
-import { formatTime } from '../../utils';
+import { useTranslation } from 'react-i18next';
+import { formatTimeFromNow } from '../../utils';
 
 type Props = {
   notification: Notification;
@@ -38,6 +38,7 @@ const NotificationItem: React.FC<Props> = ({
   onDelete,
 }) => {
   const touchStartX = useRef<number | null>(null);
+  const { t } = useTranslation();
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.changedTouches[0].clientX;
@@ -64,15 +65,14 @@ const NotificationItem: React.FC<Props> = ({
 
   return (
     <div className="relative w-full">
-      {/* Hidden actions */}
       {(isSwiped || showImagePreview) && (
         <div className="absolute inset-0 flex items-center justify-end pr-4 gap-2 pointer-events-none">
           <button
             onClick={onToggleRead}
             title={
               notification.status === NotificationStatus.READ
-                ? 'Mark as unread'
-                : 'Mark as read'
+                ? t('notifications.actions.mark_unread')
+                : t('notifications.actions.mark_read')
             }
             className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
           >
@@ -91,7 +91,6 @@ const NotificationItem: React.FC<Props> = ({
           </button>
         </div>
       )}
-      {/* Card */}
       <div
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -114,7 +113,6 @@ const NotificationItem: React.FC<Props> = ({
             </button>
           ) : null}
 
-          {/* icon */}
           <div className="shrink-0 mt-1">
             <div
               className={`w-14 h-14 rounded-full ${
@@ -127,7 +125,6 @@ const NotificationItem: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <h4
@@ -140,7 +137,7 @@ const NotificationItem: React.FC<Props> = ({
                 {notification.title}
               </h4>
               <div className="text-xs text-neutral-400 ml-2 whitespace-nowrap">
-                {formatTime(notification.createdAt)}
+                {formatTimeFromNow(notification.createdAt)}
               </div>
             </div>
             <p
@@ -168,7 +165,6 @@ const NotificationItem: React.FC<Props> = ({
             )}
           </div>
 
-          {/* actions chevron */}
           <div className="shrink-0 ml-2">
             {!selectMode && (
               <button
@@ -196,8 +192,8 @@ const NotificationItem: React.FC<Props> = ({
               onClick={onToggleRead}
               title={
                 notification.status === NotificationStatus.READ
-                  ? 'Mark as unread'
-                  : 'Mark as read'
+                  ? t('notifications.actions.mark_unread')
+                  : t('notifications.actions.mark_read')
               }
               className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
             >
@@ -209,7 +205,7 @@ const NotificationItem: React.FC<Props> = ({
             </button>
             <button
               onClick={onDelete}
-              title="Delete"
+              title={t('common.delete')}
               className="cursor-pointer p-2 rounded-lg text-red-600/60 border border-red-600/60 hover:opacity-70 pointer-events-auto"
             >
               <FiTrash2 className="w-4 h-4" />

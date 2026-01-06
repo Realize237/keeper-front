@@ -9,6 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { Avatar } from '../../components/ui/Avatar';
+import { useTranslation } from 'react-i18next';
 
 const InfoRow = ({
   icon: Icon,
@@ -45,6 +46,7 @@ const InfoRow = ({
 const AccountDetails = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className=" px-4 py-6">
@@ -57,7 +59,7 @@ const AccountDetails = () => {
         </button>
 
         <h1 className="text-lg font-semibold text-white ml-4">
-          Account Details
+          {t('profile.account_details.title')}
         </h1>
       </div>
 
@@ -73,43 +75,52 @@ const AccountDetails = () => {
           </div>
         </div>
         <p className="text-xs uppercase tracking-wider text-white/40 mb-3">
-          Account Information
+          {t('profile.account_details.sections.account_info')}
         </p>
         <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
           <InfoRow
             icon={FaUser}
-            label="Full name"
+            label={t('profile.account_details.fields.full_name')}
             value={user?.name ?? ''}
             onClick={() => navigate('/profile/edit')}
           />
 
-          <InfoRow icon={FaEnvelope} label="Email" value={user?.email ?? ''} />
+          <InfoRow
+            icon={FaEnvelope}
+            label={t('profile.account_details.fields.email')}
+            value={user?.email ?? ''}
+          />
         </div>
         <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 mt-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-white/60">Member since</span>
+            <span className="text-sm text-white/60">
+              {t('profile.account_details.fields.member_since')}
+            </span>
             <span className="text-sm text-white">
-              {new Date(user?.created_at ?? '').toLocaleDateString(undefined, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+              {new Date(user?.created_at ?? '').toLocaleDateString(
+                i18n.language,
+                {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                }
+              )}
             </span>
           </div>
         </div>
         <p className="text-xs uppercase tracking-wider text-white/40 mt-8 mb-3">
-          Security
+          {t('profile.account_details.sections.security')}
         </p>
         <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
           <InfoRow
             icon={FaLock}
-            label="Password"
+            label={t('profile.account_details.fields.password')}
             value="••••••••"
             onClick={() => navigate('/profile/change-password')}
           />
         </div>
         <p className="text-xs uppercase tracking-wider text-red-500/60 mt-10 mb-3">
-          Danger Zone
+          {t('profile.account_details.sections.danger')}
         </p>
         <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-2">
           <button
@@ -123,9 +134,11 @@ const AccountDetails = () => {
     "
           >
             <div className="flex flex-col text-left">
-              <span className="text-sm font-medium">Delete account</span>
+              <span className="text-sm font-medium">
+                {t('profile.account_details.actions.delete_account')}
+              </span>
               <span className="text-xs text-red-400/60">
-                Permanently remove your account and data
+                {t('profile.account_details.actions.delete_description')}
               </span>
             </div>
           </button>

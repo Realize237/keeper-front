@@ -2,9 +2,11 @@ import { IMAGES } from '../assets';
 import { NavItems } from '../constants/NavItems';
 import type { BillingResult } from '../interfaces/billings';
 import type { Value } from '../interfaces/calendar';
-import { ICustomReminder, NotificationType } from '../interfaces/notifications';
 import type { Subscription } from '../interfaces/subscription';
-import moment from 'moment';
+import { dateLocales } from './dateLocales';
+import i18n from './i18n';
+import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
@@ -127,7 +129,7 @@ export const getNextBillingDate = (
 
       return {
         date: nextBilling,
-        status: isDueToday ? 'DUE TODAY' : 'ACTIVE',
+        status: isDueToday ? 'DUE_TODAY' : 'ACTIVE',
         daysRemaining: daysLeft,
       };
     }
@@ -171,16 +173,18 @@ export const getSubscriptionCardImage = (
   }
 };
 
-export const formatToReadableDate = (dateString: string): string => {
-  const date = new Date(dateString);
+export const formatToReadableDate = (
+  dateInput: string | Date,
+  locale: string = 'fr-FR'
+): string => {
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 
-  return date.toLocaleDateString('en-US', {
+  return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  });
+  }).format(date);
 };
-
 export const updateCurrentDateToSelectedDate = (
   currentDate: Date,
   clickedDay: number
@@ -208,8 +212,9 @@ export const updateCurrentDateToSelectedDate = (
 
 // to format api error message
 export const processError = (err: unknown) => {
+  const { t } = useTranslation();
   throw new Error(
-    err?.response?.data?.message || err.message || 'Request failed'
+    err?.response?.data?.message || err.message || t('common.request_failed')
   );
 };
 
@@ -239,85 +244,13 @@ export const getAvatarInitials = (name?: string | null): string => {
   return (first + second).toUpperCase();
 };
 
-export const formatTime = (date: string | Date | number) => {
-  return moment(date).fromNow();
+export const formatTimeFromNow = (date: string | Date | number): string => {
+  const locale = dateLocales[i18n.language] || dateLocales.fr;
+  return formatDistanceToNow(new Date(date), {
+    addSuffix: true,
+    locale,
+  });
 };
-
-export function getReminderDate(
-  reminder: string,
-  isCustom = false,
-  custom?: ICustomReminder
-) {
-  const reminderMap: Record<
-    string,
-    [number, moment.unitOfTime.DurationConstructor]
-  > = {
-    '5 minutes before': [5, 'minutes'],
-    '10 minutes before': [10, 'minutes'],
-    '30 minutes before': [30, 'minutes'],
-    '1 hour before': [1, 'hours'],
-    '1 day before': [1, 'days'],
-    '2 days before': [2, 'days'],
-    '1 week before': [1, 'weeks'],
-    '2 weeks before': [2, 'weeks'],
-    '3 weeks before': [3, 'weeks'],
-    '1 month before': [1, 'months'],
-    '2 months before': [2, 'months'],
-    '3 months before': [3, 'months'],
-    '4 months before': [4, 'months'],
-    '5 months before': [5, 'months'],
-    '6 months before': [6, 'months'],
-  };
-
-  const mapped = reminderMap[reminder];
-  if (!mapped) {
-    if (!custom || !custom.value || (!custom.unit && isCustom)) {
-      throw new Error(
-        "Couldn't add reminder select atleast date and time of custom reminder."
-      );
-    }
-    return { unit: custom.unit, value: custom.value };
-  }
-
-  const [value, unit] = mapped;
-  return { value, unit };
-}
-
-export function getReminderString(
-  value: number,
-  unit: moment.unitOfTime.DurationConstructor,
-  notificationType?: NotificationType[]
-): { combinedKeyValue: string; isCustom: boolean } {
-  const reverseReminderMap: Record<string, string> = {
-    '5-minutes': '5 minutes',
-    '10-minutes': '10 minutes',
-    '30-minutes': '30 minutes',
-    '1-hours': '1 hour',
-    '1-days': '1 day',
-    '2-days': '2 days',
-    '1-weeks': '1 week',
-    '2-weeks': '2 weeks',
-    '3-weeks': '3 weeks',
-    '1-months': '1 month',
-    '2-months': '2 months',
-    '3-months': '3 months',
-    '4-months': '4 months',
-    '5-months': '5 months',
-    '6-months': '6 months',
-  };
-
-  const key = `${value}-${unit}`;
-  const reminder = reverseReminderMap[key];
-
-  if (!reminder) {
-    const combinedKey = `${value} ${unit} before, via ${
-      notificationType?.join(',') ?? 'EMAIL'
-    }`;
-    return { combinedKeyValue: combinedKey, isCustom: true };
-  }
-
-  return { combinedKeyValue: `${reminder} before`, isCustom: false };
-}
 
 export const activeNavItems = NavItems.filter((item) => item.visible);
 

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import PlaidContext from '../../context/PlaidContext';
 import PlaidLink from './PlaidLink';
 import { usePlaidSyncCardSubscriptions } from '../../hooks/usePlaid';
+import { useTranslation } from 'react-i18next';
 
 const PlaidInit = () => {
   const {
@@ -12,6 +13,7 @@ const PlaidInit = () => {
     linkTokenError,
     isSubscriptionSynced,
   } = useContext(PlaidContext);
+  const { t } = useTranslation();
 
   const { mutate: syncCardSubscriptions, isPending: isSyncing } =
     usePlaidSyncCardSubscriptions();
@@ -26,29 +28,27 @@ const PlaidInit = () => {
 
   return (
     <div className="w-3/4 h-3/4 mx-auto my-8 p-6 border border-gray-300 rounded-lg shadow-md overflow-y-auto">
-      <h3 className="text-xl font-bold mb-4">Connect your bank</h3>
+      <h3 className="text-xl font-bold mb-4">{t('plaid.title')}</h3>
 
       {!linkSuccess && (
         <>
           <h4 className="text-lg font-semibold mb-2">
-            Start by linking your bank account
+            {t('plaid.start_title')}
           </h4>
-          <p className="mb-4">
-            Click the button below to launch the Plaid connection flow.
-          </p>
+          <p className="mb-4">{t('plaid.start_description')}</p>
 
           {Object.values(linkTokenError).every((value) => value.length > 0) ? (
             <div className="p-4 bg-red-100 border border-red-300 rounded text-sm text-red-800 mb-4">
               <p>
-                <strong>Link Error Code:</strong>{' '}
+                <strong>{t('plaid.error.code')}:</strong>{' '}
                 <code>{linkTokenError.error_code}</code>
               </p>
               <p>
-                <strong>Link Error Type:</strong>{' '}
+                <strong>{t('plaid.error.type')}:</strong>{' '}
                 <code>{linkTokenError.error_type}</code>
               </p>
               <p>
-                <strong>Link Error Message:</strong>{' '}
+                <strong>{t('plaid.error.message')}:</strong>{' '}
                 {linkTokenError.error_message}
               </p>
             </div>
@@ -57,7 +57,7 @@ const PlaidInit = () => {
               disabled
               className="p-2 bg-blue-500 rounded-md text-white opacity-70 cursor-not-allowed"
             >
-              Loading...
+              {t('plaid.loading')}
             </button>
           ) : (
             <div className="flex justify-start items-center">
@@ -70,7 +70,7 @@ const PlaidInit = () => {
       {linkSuccess && accessToken && (
         <div className="my-6">
           <h4 className="text-lg font-semibold mb-2">
-            Recurring Subscriptions
+            {t('plaid.recurring_title')}
           </h4>
           <button
             onClick={() => lauchSyncCardSubscriptions()}
@@ -82,10 +82,10 @@ const PlaidInit = () => {
             }`}
           >
             {isSyncing
-              ? 'Syncing...'
+              ? t('plaid.syncing')
               : isSubscriptionSynced
-                ? 'Subscriptions Synced'
-                : 'Load all your subscriptions'}
+                ? t('plaid.synced')
+                : t('plaid.load_subscriptions')}
           </button>
         </div>
       )}

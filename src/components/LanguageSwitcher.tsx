@@ -1,28 +1,40 @@
-import { useState, useRef, RefObject } from 'react';
+import { useState, useRef, RefObject, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactCountryFlag from 'react-country-flag';
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import { useCloseOnOutsideInteraction } from '../hooks/useCloseOnOutsideInteraction';
+import { useTranslation } from 'react-i18next';
+import { storage } from '../utils/storage';
+
+const languages = [
+  { code: 'fr', label: 'Français', country: 'FR' },
+  { code: 'en', label: 'English', country: 'GB' },
+];
 
 export default function LanguageSwitcher() {
+  const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState({
-    code: 'en',
-    label: 'English',
-    country: 'GB',
-  });
   const ref = useRef<HTMLDivElement>(null);
 
-  const languages = [
-    { code: 'en', label: 'English', country: 'GB' },
-    { code: 'fr', label: 'Français', country: 'FR' },
-  ];
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setOpen(false);
+  };
+
+  const current = languages.find((l) => l.code === i18n.language);
 
   useCloseOnOutsideInteraction(
     ref as RefObject<HTMLElement>,
     () => setOpen(false),
     open
   );
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem('language');
+    if (savedLang && savedLang !== i18n.language) {
+      i18n.changeLanguage(savedLang);
+    }
+  }, [i18n]);
 
   return (
     <div ref={ref} className="relative inline-block">
@@ -61,14 +73,10 @@ export default function LanguageSwitcher() {
             "
           >
             {languages.map((lang) => {
-              const isSelected = lang.code === current.code;
               return (
                 <button
                   key={lang.code}
-                  onClick={() => {
-                    setCurrent(lang);
-                    setOpen(false);
-                  }}
+                  onClick={() => changeLanguage(lang.code)}
                   className="
                     flex items-center justify-between gap-3 w-full px-4 py-2 text-sm
                     rounded-xl transition-colors
@@ -83,7 +91,7 @@ export default function LanguageSwitcher() {
                     />
                     <span className="font-medium">{lang.label}</span>
                   </div>
-                  {isSelected && (
+                  {lang.code === i18n.language && (
                     <motion.span
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}

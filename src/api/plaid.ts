@@ -1,14 +1,11 @@
-import axios from 'axios';
+import { axiosClient } from '../lib/axiosClient';
 import { API_PATHS } from './api-paths';
 import { processError } from '../utils';
 
 export const getTransactions = async () => {
   try {
-    const response = await axios.get<[]>(
-      `${API_PATHS.PLAID.GET_TRANSACTIONS}`,
-      {
-        withCredentials: true,
-      }
+    const response = await axiosClient.get<[]>(
+      `${API_PATHS.PLAID.GET_TRANSACTIONS}`
     );
 
     return response.data;
@@ -19,11 +16,8 @@ export const getTransactions = async () => {
 
 export const getRecuringTransactions = async () => {
   try {
-    const response = await axios.get<[]>(
-      `${API_PATHS.PLAID.GET_RECURRING_TRANSACTIONS}`,
-      {
-        withCredentials: true,
-      }
+    const response = await axiosClient.get<[]>(
+      `${API_PATHS.PLAID.GET_RECURRING_TRANSACTIONS}`
     );
 
     return response.data;
@@ -34,7 +28,10 @@ export const getRecuringTransactions = async () => {
 
 export const exchangePublicToken = async (public_token: string) => {
   try {
-    const response = await axios.post<{ statusCode: number; message: string }>(
+    const response = await axiosClient.post<{
+      statusCode: number;
+      message: string;
+    }>(
       `${API_PATHS.PLAID.EXCHANGE_PUBLIC_TOKEN}`,
       new URLSearchParams({ public_token }),
       {
@@ -53,10 +50,9 @@ export const exchangePublicToken = async (public_token: string) => {
 
 export const createLinkToken = async () => {
   try {
-    const response = await axios.post<{ link_token: string }>(
+    const response = await axiosClient.post<{ link_token: string }>(
       `${API_PATHS.PLAID.CREATE_LINK_TOKEN}`,
-      {},
-      { withCredentials: true }
+      {}
     );
 
     return response.data;
@@ -67,11 +63,10 @@ export const createLinkToken = async () => {
 
 export const syncCardSubscriptions = async () => {
   try {
-    const response = await axios.post<{ statusCode: number; message: string }>(
-      `${API_PATHS.PLAID.SYNC_CARD_SUBSCRIPTIONS}`,
-      {},
-      { withCredentials: true }
-    );
+    const response = await axiosClient.post<{
+      statusCode: number;
+      message: string;
+    }>(`${API_PATHS.PLAID.SYNC_CARD_SUBSCRIPTIONS}`, {});
 
     return response.data;
   } catch (err: unknown) {

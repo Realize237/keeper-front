@@ -1,9 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { activeNavItems } from '../../../utils';
+import { useTranslation } from 'react-i18next';
 
 const BottomNav = () => {
   const location = useLocation();
+  const { t } = useTranslation();
+
   const length = activeNavItems.length;
   const activeIndex = activeNavItems.findIndex((item) => {
     if (item.path === '/') {
@@ -24,7 +27,7 @@ const BottomNav = () => {
 
           return (
             <NavLink
-              key={menu.label}
+              key={t(menu.labelKey)}
               to={menu.path}
               end
               className="flex flex-col items-center justify-center gap-1 relative w-full"
@@ -46,14 +49,14 @@ const BottomNav = () => {
                 <AnimatePresence>
                   {isActive && (
                     <motion.span
-                      key={menu.label}
+                      key={t(menu.labelKey)}
                       className="text-xs"
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 5 }}
                       transition={{ duration: 0.2 }}
                     >
-                      {menu.label}
+                      {t(menu.labelKey)}
                     </motion.span>
                   )}
                 </AnimatePresence>

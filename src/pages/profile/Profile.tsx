@@ -23,6 +23,7 @@ import { motion } from 'framer-motion';
 import { HiOutlineUser } from 'react-icons/hi2';
 import { useLogoutModal } from '../../context/LogoutContext';
 import { Avatar } from '../../components/ui/Avatar';
+import { useTranslation } from 'react-i18next';
 
 interface MenuItem {
   icon: IconType;
@@ -35,35 +36,30 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     icon: HiOutlineUser,
-    label: 'Account Details',
-    subtitle: 'Manage your Account Details',
+    label: 'profile.menu.account.title',
+    subtitle: 'profile.menu.account.subtitle',
     path: '/profile/account-details',
   },
   {
     icon: FaCreditCard,
-    label: 'Payment History',
-    subtitle: 'View your past orders',
-
+    label: 'profile.menu.payment.title',
+    subtitle: 'profile.menu.payment.subtitle',
     path: '/cards',
   },
   {
     icon: FaBell,
-    label: 'Notification',
-    subtitle: '',
-
+    label: 'profile.menu.notification.title',
     path: '/notifications',
   },
   {
     icon: FaCog,
-    label: 'Settings',
-    subtitle: '',
-
+    label: 'profile.menu.settings.title',
     path: '/settings',
   },
   {
     icon: FaLock,
-    label: 'Change Password',
-    subtitle: 'Update your password',
+    label: 'profile.menu.password.title',
+    subtitle: 'profile.menu.password.subtitle',
     path: '/profile/change-password',
   },
 ];
@@ -71,31 +67,27 @@ const menuItems: MenuItem[] = [
 const secondaryItems: MenuItem[] = [
   {
     icon: FaComments,
-    label: 'Contact Us',
-
+    label: 'profile.menu.contact',
     path: '/contact',
   },
   {
     icon: FaFileAlt,
-    label: 'Teams & condition',
-
+    label: 'profile.menu.terms',
     path: '/terms',
   },
   {
     icon: FaShieldAlt,
-    label: 'Privacy Policy',
-
+    label: 'profile.menu.privacy',
     path: '/privacy',
   },
   {
     icon: FaQuestionCircle,
-    label: 'Get Help',
-
+    label: 'profile.menu.help',
     path: '/help',
   },
   {
     icon: FaSignOutAlt,
-    label: 'Log out',
+    label: 'profile.menu.logout',
     action: 'logout',
   },
 ];
@@ -104,6 +96,7 @@ const Profile = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const { requestLogout } = useLogoutModal();
+  const { t } = useTranslation();
 
   const handleItemClick = (item: MenuItem) => {
     if (item.action === 'logout') {
@@ -128,9 +121,9 @@ const Profile = () => {
       <div className="flex items-center gap-3">
         <item.icon className="w-5 h-5 text-white/60" />
         <div className="text-left">
-          <p className="text-sm font-medium">{item.label}</p>
+          <p className="text-sm font-medium"> {t(item.label)}</p>
           {item.subtitle && (
-            <p className="text-xs text-white/40">{item.subtitle}</p>
+            <p className="text-xs text-white/40"> {t(item.subtitle)}</p>
           )}
         </div>
       </div>
@@ -147,7 +140,10 @@ const Profile = () => {
         >
           <FaChevronLeft className="w-5 h-5 text-white/80" />
         </button>
-        <h3 className="text-lg font-semibold ml-4">Profile</h3>
+        <h3 className="text-lg font-semibold ml-4 capitalize">
+          {' '}
+          {t('profile.title')}
+        </h3>
       </div>
 
       <div className="flex items-center p-4 rounded-2xl bg-white/5 backdrop-blur-xl">

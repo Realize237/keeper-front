@@ -7,6 +7,7 @@ import {
 import { useUser } from '../context/UserContext';
 import toast from 'react-hot-toast';
 import { googleCalendarKeys } from '../queryKeys/googleCalendarKeys';
+import { useTranslation } from 'react-i18next';
 
 export const useGoogleCalendarAccess = () => {
   const { user } = useUser();
@@ -33,14 +34,15 @@ export const useConnectGoogleCalendar = () => {
 
 export const useDisconnectGoogleCalendar = () => {
   const { user } = useUser();
+  const { t } = useTranslation();
 
   return useMutation({
     mutationFn: () => disconnectGoogleCalendar(user!.id),
     onSuccess: () => {
-      toast.success('Google Calendar disconnected');
+      toast.success(t('google_calendar.disconnect'));
     },
     onError: () => {
-      toast.error('Failed to disconnect Google Calendar');
+      toast.error(t('google_calendar.disconnect_failed'));
     },
     meta: {
       invalidate: [googleCalendarKeys.access(user?.id)],
