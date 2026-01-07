@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { getFirebaseToken } from '../config/firebase';
 import { useSaveWebPushToken } from './usePushToken';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { storage } from '../utils/storage';
 
 export const useNotificationPermission = () => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [permission, setPermission] = useState<NotificationPermission>(() => {
     return 'Notification' in window ? Notification.permission : 'default';
@@ -24,33 +27,30 @@ export const useNotificationPermission = () => {
       if (fcmToken) {
         saveWebPushToken(fcmToken, {
           onSuccess: () => {
-            toast.success('Notifications enabled successfully!');
+            toast.success(t('notifications.enabled_success'));
           },
           onError: () => {
-            toast.error('Failed to save notification token. Please try again.');
+            toast.error(t('notifications.save_token_error'));
           },
         });
       } else {
-        toast.error('Failed to get notification token. Please try again.');
+        toast.error(t('notifications.get_token_error'));
       }
 
-      localStorage.setItem('notificationPermissionAsked', 'true');
+      storage.set('notificationPermissionAsked', 'true');
     } catch {
-      toast.error(
-        'Permission not granted. Please enable notifications in your browser settings.'
-      );
-      localStorage.setItem('notificationPermissionAsked', 'true');
+      toast.error(t('notifications.get_token_error'));
+      storage.set('notificationPermissionAsked', 'true');
     }
   };
 
   const handleModalClose = () => {
     setShowModal(false);
-    localStorage.setItem('notificationPermissionAsked', 'true');
+    storage.set('notificationPermissionAsked', 'true');
   };
 
   const hasAskedBefore = () => {
-    const asked =
-      localStorage.getItem('notificationPermissionAsked') === 'true';
+    const asked = storage.get<string>('notificationPermissionAsked') === 'true';
     return asked;
   };
 

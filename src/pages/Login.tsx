@@ -22,8 +22,10 @@ import {
 import PasswordResetRequest from '../components/auth/PasswordResetRequest';
 import OTPVerification from '../components/auth/OTPVerification';
 import PasswordReset from '../components/auth/PasswordReset';
+import { useTranslation } from 'react-i18next';
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { mutate, isPending } = useLoginUser();
@@ -96,7 +98,7 @@ export default function Login() {
         'rememberMe',
         {
           email: data.email,
-          password: data.password,
+
           rememberMe: data.rememberMe,
         },
         { path: '/login', maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION) }
@@ -114,14 +116,12 @@ export default function Login() {
           });
         },
         onError: (error) => {
-          if (
-            error.message.includes('User not found') ||
-            error.message.includes('Invalid credentials')
-          ) {
-            setLoginError('Invalid email or password');
-          } else {
-            toast.error(error.message || 'Something went wrong');
+          const code = error.code;
+          if (code) {
+            setLoginError(t(`login.errors.${code}`));
+            return;
           }
+          toast.error(error.message ?? t('login.errors.UNEXPECTED_ERROR'));
         },
       }
     );
@@ -191,7 +191,9 @@ export default function Login() {
             );
           },
           onError: (error) => {
-            toast.error(`An error occurred: ${error.message}`);
+            toast.error(
+              t('auth.forgot_password.error', { message: error.message })
+            );
           },
         }
       );
@@ -210,7 +212,9 @@ export default function Login() {
             );
           },
           onError: (error) => {
-            toast.error(`An error occurred: ${error.message}`);
+            toast.error(
+              t('auth.forgot_password.error', { message: error.message })
+            );
           },
         }
       );
@@ -224,7 +228,7 @@ export default function Login() {
         { email, newPassword },
         {
           onSuccess: () => {
-            toast.success('Password reset successfully');
+            toast.success(t('auth.forgotPassword.success'));
             setForgotPasswordStep(null);
           },
           onError: (error) => {
@@ -249,13 +253,13 @@ export default function Login() {
           variants={itemVariants}
           className="text-2xl md:text-4xl font-normal text-white"
         >
-          Welcome Back
+          {t('auth.login.title')}
         </motion.h1>
         <motion.span
           variants={itemVariants}
           className="text-xl font-normal text-white mb-8"
         >
-          to Keeper
+          {t('auth.login.subtitle')}
         </motion.span>
 
         <motion.form
@@ -263,16 +267,15 @@ export default function Login() {
           className="w-full"
           variants={itemVariants}
         >
-          {/* Email Input */}
           <motion.div className="mb-4" variants={itemVariants}>
             <input
               type="email"
-              placeholder="Email address"
+              placeholder={t('auth.login.fields.email.placeholder')}
               {...register('email', {
-                required: 'Email is required',
+                required: t('auth.login.fields.email.required'),
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Please enter a valid email',
+                  message: t('auth.login.fields.email.invalid'),
                 },
               })}
               className={getInputClass('email')}
@@ -288,17 +291,16 @@ export default function Login() {
             )}
           </motion.div>
 
-          {/* Password Input */}
           <motion.div className="mb-4" variants={itemVariants}>
             <div className="relative w-full">
               <input
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Password"
+                placeholder={t('auth.login.fields.password.placeholder')}
                 {...register('password', {
-                  required: 'Password is required',
+                  required: t('auth.login.fields.password.required'),
                   minLength: {
                     value: 8,
-                    message: 'Password must be at least 8 characters',
+                    message: t('auth.login.fields.password.min'),
                   },
                 })}
                 className={`${getInputClass('password')} pr-12`}
@@ -334,7 +336,6 @@ export default function Login() {
             )}
           </motion.div>
 
-          {/* Remember Me & Forgot Password */}
           <motion.div
             variants={itemVariants}
             className="flex items-center justify-between w-full mb-6"
@@ -350,7 +351,7 @@ export default function Login() {
                 htmlFor="rememberMe"
                 className="ml-2 text-gray-400 text-sm cursor-pointer"
               >
-                Remember me
+                {t('auth.login.rememberMe')}
               </label>
             </div>
             <button
@@ -361,11 +362,10 @@ export default function Login() {
               }
               className="text-[#CDFF00] text-sm hover:opacity-80 transition duration-300"
             >
-              Forgot Password?
+              {t('auth.login.forgot_password')}
             </button>
           </motion.div>
 
-          {/* Login Button */}
           <motion.button
             type="submit"
             className={`w-full ${
@@ -378,16 +378,16 @@ export default function Login() {
             whileTap="tap"
             disabled={isPending}
           >
-            {isPending ? 'Logging in ...' : 'Login now'}
+            {isPending
+              ? t('auth.login.actions.loading')
+              : t('auth.login.actions.submit')}
           </motion.button>
         </motion.form>
 
-        {/* Social Login Section */}
         <motion.div
           variants={itemVariants}
           className="w-full flex flex-col items-center mb-4"
         >
-          {/* Social Avatars - Semi-circle Layout */}
           <motion.div
             className="relative w-120 h-48 mb-4"
             variants={containerVariants}
@@ -514,17 +514,16 @@ export default function Login() {
           </motion.div>
         </motion.div>
 
-        {/* Footer */}
         <motion.p
           variants={itemVariants}
           className="text-gray-400 text-xs text-center"
         >
-          New to Keeper?{' '}
+          {t('auth.login.footer.text')}{' '}
           <Link
             to={'/'}
             className="text-[#CDFF00] transition duration-300 hover:opacity-80"
           >
-            Sign up
+            {t('auth.login.footer.signup')}
           </Link>
         </motion.p>
       </motion.div>

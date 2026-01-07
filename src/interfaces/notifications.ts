@@ -48,6 +48,8 @@ export type CustomUnitType = moment.unitOfTime.DurationConstructor;
 export interface ReminderOptionType {
   value: string;
   subscriptionType: 'BOTH' | 'YEARLY';
+  label?: string;
+  custom?: ICustomReminder;
 }
 
 export interface ICustomReminder {

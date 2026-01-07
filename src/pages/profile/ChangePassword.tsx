@@ -11,8 +11,10 @@ import {
   useChangeUserPassword,
   useSendSetPasswordEmail,
 } from '../../hooks/useUsers';
+import { useTranslation } from 'react-i18next';
 
 const ChangePassword = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useUser();
   const [formError, setFormError] = useState<string | undefined>(undefined);
@@ -35,17 +37,16 @@ const ChangePassword = () => {
       { data },
       {
         onSuccess: () => {
-          toast.success('Password changed successfully');
+          toast.success(t('change_password.success.changePassword'));
           reset();
         },
         onError: (error: Error) => {
-          if (
-            error.message.toLowerCase().includes('old password is incorrect')
-          ) {
+          const code = error.code;
+          if (code) {
             setFormError(error.message);
-          } else {
-            toast.error(error.message || 'Error changing password');
           }
+
+          toast.error(error.message || t('change_password.errors.generic'));
         },
       }
     );
@@ -67,17 +68,18 @@ const ChangePassword = () => {
       <div className="flex items-center mb-6">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-gray-700 transition"
+          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-white/10 transition"
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
-        <h3 className="text-xl font-bold ml-4">Change Password</h3>
+        <h3 className="text-xl font-bold ml-4 capitalize">
+          {t('change_password.title')}
+        </h3>
       </div>
 
       {user.authType === 'EmailAndPassword' && (
         <p className="max-w-md mx-auto text-gray-300 text-sm mb-6 text-center">
-          Enter your current password to confirm your identity before choosing a
-          new password.
+          {t('change_password.description')}
         </p>
       )}
       {user.authType === 'EmailAndPassword' ? (
@@ -88,29 +90,30 @@ const ChangePassword = () => {
           <FormInput
             name="oldPassword"
             type="password"
-            placeholder="Current Password"
+            placeholder={t('change_password.fields.current_password')}
             passwordToggle={true}
             register={register}
-            rules={{ required: 'Old password is required' }}
+            rules={{
+              required: t('change_password.validation.current_required'),
+            }}
             error={errors.oldPassword || formError}
           />
 
           <FormInput
             name="newPassword"
             type="password"
-            placeholder="New Password"
+            placeholder={t('change_password.fields.new_password')}
             register={register}
             passwordToggle={true}
             rules={{
-              required: 'New password is required',
+              required: t('change_password.validation.new_required'),
               minLength: {
                 value: 8,
-                message: 'Password must be at least 8 characters',
+                message: t('change_password.validation.min_length'),
               },
               pattern: {
                 value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                message:
-                  'Password must contain uppercase, lowercase, and numbers',
+                message: t('change_password.validation.pattern'),
               },
             }}
             error={errors.newPassword}
@@ -118,13 +121,13 @@ const ChangePassword = () => {
           <FormInput
             name="confirmPassword"
             type="password"
-            placeholder="Confirm New Password"
+            placeholder={t('change_password.fields.confirm_password')}
             register={register}
             passwordToggle={true}
             rules={{
-              required: 'Please confirm your new password',
+              required: t('change_password.validation.confirm_required'),
               validate: (value) =>
-                value === newPassword || 'Passwords do not match',
+                value === newPassword || t('change_password.validation.match'),
             }}
             error={errors.confirmPassword}
           />
@@ -135,20 +138,19 @@ const ChangePassword = () => {
               variant="secondary"
               onClick={() => navigate(-1)}
             >
-              Cancel
+              {t('common.cancel')}
             </FormButton>
             <FormButton type="submit" disabled={isChangingPassword}>
-              {isChangingPassword ? 'Updating...' : 'Update Password'}
+              {isChangingPassword
+                ? t('change_password.actions.updating')
+                : t('change_password.actions.update')}
             </FormButton>
           </div>
         </form>
       ) : (
         <div className="text-white w-11/12 mx-auto py-8">
           <div className="max-w-md mx-auto space-y-10">
-            <p>
-              You currently sign in with Google. To create a password for this
-              app, we need to send a secure password setup email.
-            </p>
+            <p>{t('change_password.googleInfo')}</p>
             <FormButton
               onClick={() => {
                 sendSetPasswordEmail(
@@ -157,12 +159,12 @@ const ChangePassword = () => {
                   },
                   {
                     onSuccess: () => {
-                      toast.success('Password setup email sent successfully');
+                      toast.success(t('change_password.success.send_email'));
                       navigate(-1);
                     },
                     onError: (error: Error) => {
                       toast.error(
-                        error.message || 'Error sending password setup email'
+                        error.message || t('change_password.errors.send_email')
                       );
                     },
                   }
@@ -170,7 +172,9 @@ const ChangePassword = () => {
               }}
               disabled={isSendingEmail}
             >
-              {isSendingEmail ? 'Sending...' : 'Send Password Setup Email'}
+              {isSendingEmail
+                ? t('change_password.actions.sending')
+                : t('change_password.actions.send_email')}
             </FormButton>
           </div>
         </div>

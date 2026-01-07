@@ -9,10 +9,12 @@ import FormButton from '../../components/ui/FormButton';
 import { useUpdateUser } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const { t } = useTranslation();
   const { mutate: updateUser } = useUpdateUser();
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
 
@@ -56,21 +58,13 @@ const EditProfile = () => {
     updateUser(
       { user: changedFields, id: Number(user?.id) },
       {
-        onSuccess: () => toast.success('Profile updated successfully'),
+        onSuccess: () => toast.success(t('profile.edit.success')),
         onError: (error: Error) => {
-          console.log('error: ', error.message);
-          const isEmail = error.message
-            .toLowerCase()
-            .trim()
-            .includes('Email already in use');
-          console.log('isEmail: ', isEmail);
-          if (
-            error.message.toLowerCase().trim().includes('email already in use')
-          ) {
+          const code = error.code;
+          if (code) {
             setEmailError(error.message);
-          } else {
-            toast.error(error.message || 'Error updating profile');
           }
+          toast.error(error.message || t('profile.edit.errors.generic'));
         },
       }
     );
@@ -84,7 +78,7 @@ const EditProfile = () => {
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
-        <h3 className="text-xl font-bold ml-4">Edit Profile</h3>
+        <h3 className="text-xl font-bold ml-4">{t('profile.edit.title')}</h3>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
@@ -104,17 +98,17 @@ const EditProfile = () => {
         <div className="flex flex-col space-y-4 mt-4">
           <FormInput
             name="name"
-            placeholder="Full name"
+            placeholder={t('profile.edit.fields.name.placeholder')}
             register={register}
             rules={{
-              required: 'Full name is required',
+              required: t('profile.edit.fields.name.required'),
               minLength: {
                 value: 2,
-                message: 'Name must be at least 2 characters',
+                message: t('profile.edit.fields.name.min'),
               },
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: 'Name can only contain letters and spaces',
+                message: t('profile.edit.fields.name.pattern'),
               },
             }}
             error={errors.name}
@@ -122,14 +116,15 @@ const EditProfile = () => {
 
           <FormInput
             name="email"
-            placeholder="Email address"
+            placeholder={t('profile.edit.fields.email.placeholder')}
             register={register}
+            disabled={true}
             error={errors.email || emailError}
             rules={{
-              required: 'Email is required',
+              required: t('profile.edit.fields.email.required'),
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: 'Please enter a valid email',
+                message: t('profile.edit.fields.email.invalid'),
               },
             }}
           />
@@ -140,10 +135,10 @@ const EditProfile = () => {
               variant="secondary"
               onClick={() => navigate(-1)}
             >
-              Cancel
+              {t('common.cancel')}
             </FormButton>
             <FormButton disabled={isDisabled} type="submit">
-              Save
+              {t('common.save')}
             </FormButton>
           </div>
         </div>

@@ -16,6 +16,7 @@ import { IoIosLogOut } from 'react-icons/io';
 import { useCloseOnOutsideInteraction } from '../../../hooks/useCloseOnOutsideInteraction';
 import { env } from '../../../utils/env';
 import { useLogoutModal } from '../../../context/LogoutContext';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const { user } = useUser();
@@ -24,6 +25,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { requestLogout } = useLogoutModal();
+  const { t } = useTranslation();
 
   const unReadCount = useMemo(() => {
     if (!usersNotifications.data) return 0;
@@ -85,20 +87,25 @@ const Header = () => {
 
                 <div className="py-2 text-sm">
                   <p className="px-4 text-xs text-white/50 uppercase tracking-wide mb-1">
-                    Account
+                    {t('header.account')}
                   </p>
                   <div className="flex flex-col">
                     <button
-                      onClick={() => navigate('/profile')}
+                      onClick={() => {
+                        navigate('/profile');
+                        setOpen(false);
+                      }}
                       className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
                     >
                       <HiOutlineUser className="w-5 h-5 text-white/70" />
-                      <span className="font-medium text-white">Profile</span>
+                      <span className="font-medium text-white">
+                        {t('header.profile')}
+                      </span>
                     </button>
                     <button className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors">
                       <GoListUnordered className="w-5 h-5 text-white/70" />
                       <span className="font-medium text-white">
-                        All Settings
+                        {t('header.visit_website')}
                       </span>
                     </button>
                   </div>
@@ -113,7 +120,7 @@ const Header = () => {
                     >
                       <GoUnlink className="w-5 h-5 text-white/70" />
                       <span className="font-medium text-white">
-                        Visit keepay.com
+                        {t('header.visit_website')}
                       </span>
                     </a>
                     <button
@@ -121,7 +128,9 @@ const Header = () => {
                       className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-600/20 transition-colors"
                     >
                       <IoIosLogOut className="w-5 h-5 text-red-500" />
-                      <span className="font-medium text-red-400">Logout</span>
+                      <span className="font-medium text-red-400">
+                        {t('header.logout')}
+                      </span>
                     </button>
                   </div>
                 </div>

@@ -5,10 +5,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MdClose } from 'react-icons/md';
-
-const passwordResetRequestSchema = z.object({
-  email: z.email(),
-});
+import { useTranslation } from 'react-i18next';
 
 interface PasswordResetRequestProps {
   onSubmit: (email: string) => void;
@@ -23,6 +20,11 @@ export default function PasswordResetRequest({
   onClose,
   isSubmitting = false,
 }: PasswordResetRequestProps) {
+  const { t } = useTranslation();
+  const passwordResetRequestSchema = z.object({
+    email: z.string().email(t('auth.passwordResetRequest.validation.email')),
+  });
+
   const {
     register,
     handleSubmit,
@@ -47,14 +49,17 @@ export default function PasswordResetRequest({
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-300 hover:text-white"
+          aria-label={t('common.close')}
         >
           <MdClose size={22} />
         </button>
 
-        <h2 className="text-white text-xl font-semibold">Password Reset</h2>
+        <h2 className="text-white text-xl font-semibold">
+          {t('auth.password_reset_request.title')}
+        </h2>
 
         <p className="text-gray-400 text-sm">
-          Enter your email to receive a reset code.
+          {t('auth.password_reset_request.description')}
         </p>
 
         <form
@@ -62,14 +67,14 @@ export default function PasswordResetRequest({
           className="space-y-4"
         >
           <Input
-            placeholder="Email"
+            placeholder={t('auth.password_reset_request.email_placeholder')}
             type="email"
             {...register('email')}
             error={errors.email?.message?.toString()}
           />
 
           <Button loading={isSubmitting} className="w-full">
-            Send Code
+            {t('auth.password_reset_request.send_code')}
           </Button>
         </form>
       </motion.div>

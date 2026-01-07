@@ -18,22 +18,22 @@ export const monthsOfYear: Record<number, string> = {
 } as const;
 
 export const ReminderOptions: ReminderOptionType[] = [
-  { value: '5 minutes before', subscriptionType: 'BOTH' },
-  { value: '10 minutes before', subscriptionType: 'BOTH' },
-  { value: '30 minutes before', subscriptionType: 'BOTH' },
-  { value: '1 hour before', subscriptionType: 'BOTH' },
-  { value: '1 day before', subscriptionType: 'BOTH' },
-  { value: '2 days before', subscriptionType: 'BOTH' },
-  { value: '1 week before', subscriptionType: 'BOTH' },
-  { value: '2 weeks before', subscriptionType: 'BOTH' },
-  { value: '3 weeks before', subscriptionType: 'BOTH' },
-  { value: '1 month before', subscriptionType: 'YEARLY' },
-  { value: '2 months before', subscriptionType: 'YEARLY' },
-  { value: '3 months before', subscriptionType: 'YEARLY' },
-  { value: '4 months before', subscriptionType: 'YEARLY' },
-  { value: '5 months before', subscriptionType: 'YEARLY' },
-  { value: '6 months before', subscriptionType: 'YEARLY' },
-  { value: 'Custom', subscriptionType: 'BOTH' },
+  { value: 'MIN_5', subscriptionType: 'BOTH' },
+  { value: 'MIN_10', subscriptionType: 'BOTH' },
+  { value: 'MIN_30', subscriptionType: 'BOTH' },
+  { value: 'HOUR_1', subscriptionType: 'BOTH' },
+  { value: 'DAY_1', subscriptionType: 'BOTH' },
+  { value: 'DAY_2', subscriptionType: 'BOTH' },
+  { value: 'WEEK_1', subscriptionType: 'BOTH' },
+  { value: 'WEEK_2', subscriptionType: 'BOTH' },
+  { value: 'WEEK_3', subscriptionType: 'BOTH' },
+  { value: 'MONTH_1', subscriptionType: 'YEARLY' },
+  { value: 'MONTH_2', subscriptionType: 'YEARLY' },
+  { value: 'MONTH_3', subscriptionType: 'YEARLY' },
+  { value: 'MONTH_4', subscriptionType: 'YEARLY' },
+  { value: 'MONTH_5', subscriptionType: 'YEARLY' },
+  { value: 'MONTH_6', subscriptionType: 'YEARLY' },
+  { value: 'CUSTOM', subscriptionType: 'BOTH' },
 ];
 
 export const SOCKET_OPTIONS = {
@@ -43,6 +43,6 @@ export const SOCKET_OPTIONS = {
 };
 
 export const TOASTER_OPTIONS: ToastOptions = {
-  duration: 60000,
+  duration: 5000,
   position: 'top-right',
 };

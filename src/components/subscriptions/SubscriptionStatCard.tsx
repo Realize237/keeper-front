@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { ACCENTS } from '../../constants/subscription.constants';
 import { cn } from '../../utils/cn';
 import { Card } from '../ui/Card';
@@ -34,6 +35,7 @@ export type SubscriptionStatCardProps =
 const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
   const { icon, title, badge, accent = 'default' } = props;
   const colors = ACCENTS[accent];
+  const { t } = useTranslation();
 
   return (
     <Card className="flex flex-col justify-between overflow-hidden p-4 sm:p-5 md:p-6">
@@ -82,7 +84,7 @@ const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
         {props.variant === 'progress' && (
           <div className="mt-3 sm:mt-4">
             <div className="flex justify-between text-xs sm:text-sm text-white/50 mb-1">
-              <span>Progress</span>
+              <span className="capitalize">{t('subscriptions.progress')}</span>
               <span>{props.progress}%</span>
             </div>
             <div className="h-2 rounded-full bg-white/10 overflow-hidden">
