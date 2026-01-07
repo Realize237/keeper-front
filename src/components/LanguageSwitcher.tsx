@@ -4,7 +4,6 @@ import ReactCountryFlag from 'react-country-flag';
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import { useCloseOnOutsideInteraction } from '../hooks/useCloseOnOutsideInteraction';
 import { useTranslation } from 'react-i18next';
-import { storage } from '../utils/storage';
 
 const languages = [
   { code: 'fr', label: 'Français', country: 'FR' },

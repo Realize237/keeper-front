@@ -38,6 +38,7 @@ function PushTokenHandler() {
     const getClientPushToken = async () => {
       if (Notification.permission === 'granted') {
         const fcmToken = await getFirebaseToken();
+        console.log('fcmToken: ', fcmToken);
         if (fcmToken) {
           saveWebPushToken(fcmToken);
         }
@@ -87,6 +88,7 @@ export default function App() {
                           element={<ChangePassword />}
                         />
                       </Route>
+                      <Route path="/settings" element={<Settings />} />
                       <Route
                         path="/notifications"
                         element={<NotificationsPage />}
