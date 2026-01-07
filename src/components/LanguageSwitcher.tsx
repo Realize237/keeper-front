@@ -28,13 +28,6 @@ export default function LanguageSwitcher() {
     open
   );
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem('language');
-    if (savedLang && savedLang !== i18n.language) {
-      i18n.changeLanguage(savedLang);
-    }
-  }, [i18n]);
-
   return (
     <div ref={ref} className="relative inline-block">
       <button

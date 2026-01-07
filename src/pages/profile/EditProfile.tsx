@@ -118,6 +118,7 @@ const EditProfile = () => {
             name="email"
             placeholder={t('profile.edit.fields.email.placeholder')}
             register={register}
+            disabled={true}
             error={errors.email || emailError}
             rules={{
               required: t('profile.edit.fields.email.required'),

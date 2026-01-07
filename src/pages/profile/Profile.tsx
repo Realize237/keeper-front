@@ -132,7 +132,7 @@ const Profile = () => {
   );
 
   return (
-    <div className="text-white w-11/12 mx-auto py-8">
+    <div className="px-4 py-6 text-white">
       <div className="flex items-center mb-8">
         <button
           onClick={() => navigate(-1)}
@@ -146,32 +146,34 @@ const Profile = () => {
         </h3>
       </div>
 
-      <div className="flex items-center p-4 rounded-2xl bg-white/5 backdrop-blur-xl">
-        <Avatar size="xl" name={user?.name || ''} src={user?.photo || ''} />
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center p-4 rounded-2xl bg-white/5 backdrop-blur-xl">
+          <Avatar size="xl" name={user?.name || ''} src={user?.photo || ''} />
 
-        <div className="flex-1 ml-4">
-          <p className="text-base font-medium">{user?.name}</p>
-          <p className="text-xs text-white/50">{user?.email}</p>
+          <div className="flex-1 ml-4">
+            <p className="text-base font-medium">{user?.name}</p>
+            <p className="text-xs text-white/50">{user?.email}</p>
+          </div>
+
+          <button
+            onClick={() => navigate('/profile/edit')}
+            className="p-2 rounded-full hover:bg-white/10 transition"
+          >
+            <FaEdit className="w-4 h-4 text-white/70" />
+          </button>
         </div>
+        <div className="mt-8 space-y-6">
+          <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
+            {menuItems.map((item, i) => (
+              <Row key={i} item={item} />
+            ))}
+          </div>
 
-        <button
-          onClick={() => navigate('/profile/edit')}
-          className="p-2 rounded-full hover:bg-white/10 transition"
-        >
-          <FaEdit className="w-4 h-4 text-white/70" />
-        </button>
-      </div>
-      <div className="mt-8 space-y-6">
-        <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
-          {menuItems.map((item, i) => (
-            <Row key={i} item={item} />
-          ))}
-        </div>
-
-        <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
-          {secondaryItems.map((item, i) => (
-            <Row key={i} item={item} />
-          ))}
+          <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
+            {secondaryItems.map((item, i) => (
+              <Row key={i} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

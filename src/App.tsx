@@ -29,6 +29,7 @@ import { LogoutProvider } from './context/LogoutContext';
 import { PlaidstartProvider } from './context/PlaidContext';
 import Plaid from './pages/Plaid';
 import Settings from './pages/Settings';
+import AccountDetails from './pages/profile/AccountDetails';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
@@ -86,6 +87,10 @@ export default function App() {
                         <Route
                           path="change-password"
                           element={<ChangePassword />}
+                        />
+                        <Route
+                          path="account-details"
+                          element={<AccountDetails />}
                         />
                       </Route>
                       <Route path="/settings" element={<Settings />} />
