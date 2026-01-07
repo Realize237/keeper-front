@@ -1,10 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ReminderOptionType } from '../../interfaces/notifications';
+import moment from 'moment';
+import {
+  INotificationReminder,
+  ReminderOptionType,
+  NotificationType,
+} from '../../interfaces/notifications';
 import { MdClose } from 'react-icons/md';
 import { groupClassNames } from '../../utils';
+import { useTranslation } from 'react-i18next';
+import { formatReminderDisplay } from '../../utils/reminders';
 
 interface DropdownProps {
   label: string;
+  currentLabel?: string;
   options: ReminderOptionType[];
   value?: string;
   onChange?: (value: string) => void;
@@ -17,9 +25,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   value,
   onChange,
   onDelete,
+  currentLabel,
 }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -45,7 +55,11 @@ const Dropdown: React.FC<DropdownProps> = ({
             'focus:outline-none focus:ring-2 focus:ring-[#CDFF00]'
           )}
         >
-          <span>{value || 'Select reminder'}</span>
+          <span>
+            {currentLabel ||
+              options.find((o) => o.value === value)?.label ||
+              t('common.select_reminder')}
+          </span>
           <span className="text-xs">▾</span>
         </button>
 
@@ -57,22 +71,54 @@ const Dropdown: React.FC<DropdownProps> = ({
               'shadow-lg max-h-40 overflow-y-auto'
             )}
           >
-            {options.map((option) => (
-              <div
-                key={option.value}
-                onClick={() => {
-                  onChange?.(option.value);
-                  setOpen(false);
-                }}
-                className={groupClassNames(
-                  'px-3 py-2 text-sm cursor-pointer',
-                  'hover:bg-gray-100',
-                  value === option.value && 'bg-gray-200 font-medium'
-                )}
-              >
-                {option.value}
-              </div>
-            ))}
+            {options.map((option) => {
+              const displayText = option.custom
+                ? formatReminderDisplay(
+                    {
+                      value: option.value,
+                      custom: option.custom,
+                    } as INotificationReminder,
+                    t
+                  )
+                : option.label ||
+                  (option.value.startsWith('CUSTOM_')
+                    ? option.value.replace(
+                        /CUSTOM_(\d+)_(\w+)_(.+)/,
+                        (_, value, unit, types) => {
+                          const typeArray = types.split(
+                            '_'
+                          ) as NotificationType[];
+                          return formatReminderDisplay(
+                            {
+                              value: option.value,
+                              custom: {
+                                value: parseInt(value),
+                                unit: unit as moment.unitOfTime.DurationConstructor,
+                                type: typeArray,
+                              },
+                            } as INotificationReminder,
+                            t
+                          );
+                        }
+                      )
+                    : t(`reminders.options.${option.value}`));
+              return (
+                <div
+                  key={option.value}
+                  onClick={() => {
+                    onChange?.(option.value);
+                    setOpen(false);
+                  }}
+                  className={groupClassNames(
+                    'px-3 py-2 text-sm cursor-pointer',
+                    'hover:bg-gray-100',
+                    value === option.value && 'bg-gray-200 font-medium'
+                  )}
+                >
+                  {displayText}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -81,7 +127,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         <MdClose
           className="block lg:hidden group-hover:block text-neutral-500 cursor-pointer hover:text-neutral-400"
           size={22}
-          title="Delete reminder"
           onClick={onDelete}
         />
       )}

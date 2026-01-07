@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { activeNavItems } from '../../../utils';
 import { env } from '../../../utils/env';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   onToggle?: (isOpen: boolean) => void;
@@ -11,6 +12,7 @@ interface SidebarProps {
 
 const Sidebar = ({ onToggle }: SidebarProps) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const activeIndex = activeNavItems.findIndex((item) => {
     if (item.path === '/') {
       return location.pathname === '/';
@@ -69,7 +71,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
 
           return (
             <NavLink
-              key={menu.label}
+              key={t(menu.labelKey)}
               to={menu.path}
               end
               className="relative flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/5"
@@ -105,7 +107,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                     transition={{ duration: 0.2 }}
                     className="font-medium text-sm whitespace-nowrap"
                   >
-                    {menu.label}
+                    {t(menu.labelKey)}
                   </motion.span>
                 )}
               </AnimatePresence>

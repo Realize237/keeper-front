@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-query';
 import App from './App.tsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import '../src/utils/i18n';
 
 interface MutationMeta {
   invalidate?: unknown[][];

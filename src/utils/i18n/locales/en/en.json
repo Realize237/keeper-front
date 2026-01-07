@@ -1,0 +1,580 @@
+{
+  "common": {
+    "close": "Close",
+    "select_date": "Select Date",
+    "filter": "Filter",
+    "retry": "Retry",
+    "notifications_enabled": "Notifications enabled! You'll get reminders for your subscriptions.",
+    "cancel": "Cancel",
+    "add": "Add",
+    "loading": "Loading...",
+    "select_reminder": "Select reminder",
+    "done": "Done",
+    "save": "Save",
+    "back": "Back",
+    "select": "Select",
+    "delete": "Delete",
+    "units": {
+      "minute": "{{count}} minute",
+      "minute_other": "{{count}} minutes",
+      "hour": "{{count}} hour",
+      "hour_other": "{{count}} hours",
+      "day": "{{count}} day",
+      "day_other": "{{count}} days",
+      "week": "{{count}} week",
+      "week_other": "{{count}} weeks",
+      "month": "{{count}} month",
+      "month_other": "{{count}} months"
+    },
+    "request_failed": "Request failed"
+  },
+  "errors": {
+    "UNEXPECTED_ERROR": "Something went wrong"
+  },
+  "auth": {
+    "register": {
+      "title": "Create an account",
+      "subtitle": "Already have an account?",
+      "login": "Login",
+
+      "fields": {
+        "name": {
+          "label": "Full name",
+          "required": "Full name is required",
+          "min": "Name must be at least 2 characters",
+          "pattern": "Name can only contain letters and spaces"
+        },
+        "email": {
+          "label": "Email address",
+          "required": "Email is required",
+          "invalid": "Please enter a valid email",
+          "exists": "An account with this email already exists"
+        },
+        "password": {
+          "label": "Password",
+          "required": "Password is required",
+          "min": "Password must be at least 8 characters",
+          "pattern": "Password must contain uppercase, lowercase, and numbers"
+        },
+        "confirm_password": {
+          "label": "Confirm password",
+          "required": "Please confirm your password",
+          "match": "Passwords do not match"
+        }
+      },
+
+      "actions": {
+        "submit": "Continue",
+        "loading": "Creating account ...",
+        "google": "Sign up with Google"
+      },
+
+      "divider": "or sign up with",
+
+      "legal": {
+        "text": "By clicking create account you agree to recognizes",
+        "terms": "Terms of use",
+        "and": "and",
+        "privacy": "Privacy policy"
+      },
+      "errors": {
+        "AUTH_EMAIL_EXISTS": "An account with this email already exists"
+      }
+    },
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "to Keepay",
+
+      "fields": {
+        "email": {
+          "placeholder": "Email address",
+          "required": "Email is required",
+          "invalid": "Please enter a valid email"
+        },
+        "password": {
+          "placeholder": "Password",
+          "required": "Password is required",
+          "min": "Password must be at least 8 characters"
+        },
+        "errors": {
+          "AUTH_INVALID_CREDENTIALS": "Invalid email or password",
+          "AUTH_USER_NOT_FOUND": "No account found with this email",
+          "AUTH_EMAIL_EXISTS": "An account with this email already exists",
+          "UNEXPECTED_ERROR": "Something went wrong"
+        }
+      },
+
+      "rememberMe": "Remember me",
+      "forgot_password": "Forgot password?",
+
+      "actions": {
+        "submit": "Login now",
+        "loading": "Logging in ...",
+        "google": "Continue with Google"
+      },
+
+      "errors": {
+        "invalid_credentials": "Invalid email or password",
+        "generic": "Something went wrong"
+      },
+
+      "footer": {
+        "text": "New to Keepay?",
+        "signup": "Sign up"
+      }
+    },
+
+    "forgot_password": {
+      "success": "Password reset successfully",
+      "error": "An error occurred: {{message}}"
+    },
+    "password_reset_request": {
+      "title": "Password Reset",
+      "description": "Enter your email to receive a reset code.",
+      "email_placeholder": "Email",
+      "send_code": "Send Code",
+      "validation": {
+        "email": "Please enter a valid email address"
+      }
+    },
+    "password_reset": {
+      "title": "Create New Password",
+      "description": "Choose a strong password for your account.",
+      "fields": {
+        "new_password": "New password",
+        "confirm_password": "Confirm password"
+      },
+      "actions": {
+        "submit": "Reset Password"
+      },
+      "validation": {
+        "password_min": "Password must be at least 6 characters",
+        "passwords_match": "Passwords do not match"
+      }
+    },
+    "otp": {
+      "title": "Enter OTP",
+      "description": "Enter the 5-digit code sent to your email.",
+      "actions": {
+        "submit": "Verify Code"
+      },
+      "resend": {
+        "available": "You can resend the code now.",
+        "wait": "Resend available in {{time}}",
+        "button": "Resend"
+      }
+    }
+  },
+  "modals": {
+    "failed_to_load": "Failed to load subscriptions."
+  },
+  "filter": {
+    "title": "Filter"
+  },
+  "subscriptions": {
+    "stat_cards": {
+      "monthly_total": "Monthly Total",
+      "left_to_pay": "Left to pay",
+      "next_7_days": "Next 7 days"
+    },
+
+    "modals": {
+      "failed_to_load": "Failed to load subscriptions."
+    },
+    "filter": {
+      "title": "Filter",
+      "title_plural": "Filters",
+      "category": "Category",
+      "price_range": "Price range",
+      "show_results": "Show results",
+      "categories": {
+        "streaming": "Streaming",
+        "music": "Music",
+        "gaming": "Gaming",
+        "productivity": "Productivity",
+        "news": "News",
+        "fitness": "Fitness"
+      }
+    },
+    "selected_day": {
+      "total": "TOTAL"
+    },
+
+    "progress": "progress",
+    "type": {
+      "MONTHLY": "Monthly",
+      "YEARLY": "Yearly"
+    }
+  },
+  "subscription_details": {
+    "loading": "Loading...",
+    "updating": "Updating...",
+
+    "next_bill": "Next bill",
+    "payment_method": "Payment method",
+    "remaining": "Remaining",
+    "period": "Period",
+    "plan": "Plan",
+    "remind_me": "Remind me",
+    "sync_calendar": "Sync with Google Calendar",
+
+    "billed_next_on": "Billed on {{date}}",
+    "expired_on": "Subscription expired on {{date}}",
+    "description": "{{name}} — ${{price}} {{planType}} plan, {{billingInfo}}, paid with {{card}} ending in {{last4}}, valid from {{startDate}} to {{endDate}}.",
+
+    "errors": {
+      "load_failed": "Failed to load subscription details"
+    },
+
+    "calendar": {
+      "added": "Subscription added to Google Calendar.",
+      "removed": "Subscription removed from Google Calendar.",
+      "add_failed": "Failed to add subscription to Google Calendar.",
+      "remove_failed": "Failed to remove subscription from Google Calendar.",
+      "connected": "Google Calendar connected",
+      "connect_failed": "Failed to connect to Google Calendar"
+    }
+  },
+  "billing": {
+    "status": {
+      "due_today": "Due today",
+      "expired": "Expired",
+      "unknown": "Unknown status"
+    },
+    "plan": {
+      "FREE": "Free",
+      "BASIC": "Basic",
+      "PREMIUM": "Premium"
+    },
+    "dueInDays": "Due in {{count}} day",
+    "dueInDays_other": "Due in {{count}} days"
+  },
+  "calendar": {
+    "days_of_week": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  },
+  "reminders": {
+    "options": {
+      "MIN_5": "5 minutes before",
+      "MIN_10": "10 minutes before",
+      "MIN_30": "30 minutes before",
+      "HOUR_1": "1 hour before",
+      "DAY_1": "1 day before",
+      "DAY_2": "2 days before",
+      "WEEK_1": "1 week before",
+      "WEEK_2": "2 weeks before",
+      "WEEK_3": "3 weeks before",
+      "MONTH_1": "1 month before",
+      "MONTH_2": "2 months before",
+      "MONTH_3": "3 months before",
+      "MONTH_4": "4 months before",
+      "MONTH_5": "5 months before",
+      "MONTH_6": "6 months before",
+      "CUSTOM": "Custom"
+    },
+    "text": {
+      "reminder": "Reminder"
+    },
+    "actions": {
+      "save": "Save",
+      "update": "Update",
+      "edit": "Edit options",
+      "hide": "Hide options",
+      "delete": "Delete reminders"
+    },
+    "messages": {
+      "added": "Reminder set successfully!",
+      "updated": "Reminders updated successfully!",
+      "deleted": "Reminders deleted successfully!",
+      "error": "An error occurred"
+    },
+    "custom": {
+      "title": "Custom reminder",
+      "notification_type": "Notification type",
+      "unit": "Unit",
+      "errors": {
+        "min_minutes": "Reminder should be greater than 30 minutes"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "done": "Done"
+      }
+    },
+    "before": "before",
+    "via": "via",
+    "units": {
+      "minutes": "Minutes",
+      "hours": "Hours",
+      "days": "Days",
+      "weeks": "Weeks"
+    },
+    "types": {
+      "EMAIL": "Email",
+      "PUSH": "Push notification",
+      "SMS": "SMS",
+      "SYSTEM": "System",
+      "WHATSAPP": "WhatsApp"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "menu": {
+      "account": {
+        "title": "Account Details",
+        "subtitle": "Manage your account details"
+      },
+      "payment": {
+        "title": "Payment History",
+        "subtitle": "View your past orders"
+      },
+      "notification": {
+        "title": "Notifications"
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "password": {
+        "title": "Change Password",
+        "subtitle": "Update your password"
+      },
+      "contact": "Contact Us",
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy",
+      "help": "Get Help",
+      "logout": "Log out"
+    },
+    "account_details": {
+      "title": "Account Details",
+      "sections": {
+        "account_info": "Account Information",
+        "security": "Security",
+        "danger": "Danger Zone"
+      },
+      "fields": {
+        "full_name": "Full name",
+        "email": "Email",
+        "password": "Password",
+        "member_since": "Member since"
+      },
+      "actions": {
+        "delete_account": "Delete account",
+        "delete_description": "Permanently remove your account and data"
+      }
+    },
+    "edit": {
+      "title": "Edit Profile",
+      "success": "Profile updated successfully",
+      "errors": {
+        "email_exists": "Email already in use",
+        "generic": "Error updating profile"
+      },
+      "fields": {
+        "name": {
+          "placeholder": "Full name",
+          "required": "Full name is required",
+          "min": "Name must be at least 2 characters",
+          "pattern": "Name can only contain letters and spaces"
+        },
+        "email": {
+          "placeholder": "Email address",
+          "required": "Email is required",
+          "invalid": "Please enter a valid email"
+        }
+      }
+    }
+  },
+  "change_password": {
+    "title": "Change Password",
+    "description": "Enter your current password to confirm your identity before choosing a new password.",
+    "fields": {
+      "current_password": "Current password",
+      "new_password": "New password",
+      "confirm_password": "Confirm new password"
+    },
+    "validation": {
+      "current_required": "Current password is required",
+      "new_required": "New password is required",
+      "confirm_required": "Please confirm your new password",
+      "min_length": "Password must be at least 8 characters",
+      "pattern": "Password must contain uppercase, lowercase, and numbers",
+      "match": "Passwords do not match"
+    },
+    "actions": {
+      "update": "Update password",
+      "updating": "Updating...",
+      "send_email": "Send password setup email",
+      "sending": "Sending..."
+    },
+    "success": {
+      "change_password": "Password changed successfully",
+      "send_email": "Password setup email sent successfully"
+    },
+    "googleInfo": "You currently sign in with Google. To create a password for this app, we need to send a secure password setup email.",
+    "errors": {
+      "generic": "Error changing password",
+      "send_email": "Error sending password setup email"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "confirm_delete_all": "Are you sure you want to delete all notifications?",
+    "confirm_delete_selected": "Delete {{count}} notification?",
+    "confirm_delete_selected_other": "Delete {{count}} notifications",
+    "stats": {
+      "unread": "unread",
+      "total": "total"
+    },
+    "search": {
+      "label": "Search notifications",
+      "placeholder": "Search notifications..."
+    },
+    "actions": {
+      "select": "Select",
+      "toggle_select_page": "Toggle Select Page",
+      "toggle_status": "Toggle status",
+      "delete_selected": "Delete ({{count}})",
+      "mark_all_read": "Mark All Read",
+      "delete_all": "Delete All",
+      "mark_read": "Mark as read",
+      "mark_unread": "Mark as unread"
+    },
+    "filters": {
+      "unread": "Unread",
+      "read": "Read",
+      "all": "All"
+    },
+    "empty": {
+      "title": "No notifications",
+      "subtitle": "You're all caught up!"
+    },
+    "enabled_success": "Notifications enabled successfully!",
+    "save_token_error": "Failed to save notification token. Please try again.",
+    "get_token_error": "Failed to get notification token. Please try again.",
+    "permission_denied": "Permission not granted. Please enable notifications in your browser settings.",
+    "permission_modal": {
+      "title": "Stay Updated",
+      "description": "Get notified about your upcoming subscription payments and never miss a billing date again.",
+      "notNow": "Not Now",
+      "allow": "Allow Notifications",
+      "requesting": "Requesting..."
+    }
+  },
+  "sidebar": {
+    "subscriptions": "Subscriptions",
+    "sharedPlan": "Shared Plan",
+    "cards": "Cards",
+    "profile": "Profile"
+  },
+  "plaid": {
+    "title": "Connect your bank",
+    "start_title": "Start by linking your bank account",
+    "start_description": "Click the button below to launch the Plaid connection flow.",
+    "loading": "Loading...",
+    "recurring_title": "Recurring Subscriptions",
+    "syncing": "Syncing...",
+    "synced": "Subscriptions Synced",
+    "load_subscriptions": "Load all your subscriptions",
+
+    "error": {
+      "code": "Link Error Code",
+      "type": "Link Error Type",
+      "message": "Link Error Message"
+    }
+  },
+
+  "google_calendar": {
+    "auth": {
+      "popup_blocked": "Popup blocked. Please allow popups for this site.",
+      "failed": "Google Calendar authentication failed.",
+      "cancelled": "Google Calendar authentication was cancelled."
+    },
+    "disconnect": "Google Calendar disconnected",
+    "disconnect_failed": "Failed to disconnect Google Calendar"
+  },
+  "header": {
+    "account": "Account",
+    "profile": "Profile",
+    "all_settings": "All Settings",
+    "visit_website": "Visit keepay.com",
+    "logout": "Logout"
+  },
+  "logout": {
+    "title": "Logout",
+    "confirmation": "Are you sure you want to log out?",
+    "confirm": "Yes, logout"
+  },
+  "settings": {
+    "title": "Settings",
+
+    "language": {
+      "title": "Language",
+      "app": "App Language",
+      "subtitle": "Change the app language",
+      "success": "Language updated successfully",
+      "errors": {
+        "update_failed": "Failed to update language"
+      }
+    },
+
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "system": "System default"
+    },
+
+    "notifications": {
+      "title": "Notifications",
+      "push": "Push Notifications"
+    },
+
+    "integrations": {
+      "title": "Integrations",
+      "google": {
+        "description": "Sync events and reminders"
+      }
+    }
+  },
+  "set_password": {
+    "title": "Set Password",
+    "subtitle": "Set a password to sign in directly without using Google.",
+
+    "success": "Password set successfully",
+
+    "actions": {
+      "submit": "Set Password",
+      "setting": "Setting..."
+    },
+
+    "fields": {
+      "new_password": {
+        "placeholder": "New Password",
+        "required": "New password is required",
+        "min_length": "Password must be at least 8 characters",
+        "pattern": "Password must contain uppercase, lowercase, and numbers"
+      },
+      "confirm_password": {
+        "placeholder": "Confirm New Password",
+        "required": "Please confirm your new password",
+        "mismatch": "Passwords do not match"
+      }
+    },
+
+    "errors": {
+      "invalid_token": "Invalid or missing token",
+      "failed": "Failed to set password"
+    }
+  }
+}

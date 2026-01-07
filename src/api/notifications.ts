@@ -1,14 +1,12 @@
-import axios from 'axios';
+import { axiosClient } from '../lib/axiosClient';
 import { processError } from '../utils';
-import { env } from '../utils/env';
 import { API_PATHS } from './api-paths';
 import type { NotificationRequest } from '../interfaces/notifications';
 
 export const getAllNotifications = async () => {
   try {
-    const response = await axios.get(
-      `${API_PATHS.NOTIFICATIONS.GET_ALL_NOTIFICATIONS}`,
-      { withCredentials: true }
+    const response = await axiosClient.get(
+      `${API_PATHS.NOTIFICATIONS.GET_ALL_NOTIFICATIONS}`
     );
     return response.data;
   } catch (error) {
@@ -18,9 +16,8 @@ export const getAllNotifications = async () => {
 
 export const getAllUsersNotifications = async (userId: number) => {
   try {
-    const response = await axios.get(
-      `${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}/${userId}`,
-      { withCredentials: true }
+    const response = await axiosClient.get(
+      `${API_PATHS.NOTIFICATIONS.GET_ALL_USERS_NOTIFICATION}/${userId}`
     );
     return response.data.data;
   } catch (error) {
@@ -32,10 +29,12 @@ export const updateNotification = async (
   notificationRequest: NotificationRequest
 ) => {
   try {
-    const response = await axios.patch<{ message: string; statusCode: number }>(
+    const response = await axiosClient.patch<{
+      message: string;
+      statusCode: number;
+    }>(
       `${API_PATHS.NOTIFICATIONS.UPDATE_NOTIFICATION_STATUS(notificationRequest.ids, notificationRequest.all)}`,
-      {},
-      { withCredentials: true }
+      {}
     );
 
     return response.data;
@@ -48,12 +47,11 @@ export const deleteNotification = async (
   notificationRequest: NotificationRequest
 ) => {
   try {
-    const response = await axios.delete<{
+    const response = await axiosClient.delete<{
       message: string;
       statusCode: number;
     }>(
-      `${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`,
-      { withCredentials: true }
+      `${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`
     );
 
     return response.data;

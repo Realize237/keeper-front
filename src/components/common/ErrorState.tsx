@@ -31,7 +31,7 @@ const ErrorState = ({
         onClick={onRetry}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="px-6 py-3 bg-[#464646] rounded-xl text-gray-200 font-medium tracking-wide 
+        className="px-6 py-3 bg-[#464646] capitalize rounded-xl text-gray-200 font-medium tracking-wide 
                    shadow-sm hover:bg-[#525252] transition-all cursor-pointer"
       >
         Retry

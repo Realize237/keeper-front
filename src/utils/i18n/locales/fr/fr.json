@@ -1,0 +1,571 @@
+{
+  "common": {
+    "close": "Fermer",
+    "select_date": "Sélectionner une date",
+    "filter": "Filtrer",
+    "retry": "Réessayer",
+    "notifications_enabled": "Notifications activées ! Vous recevrez des rappels pour vos abonnements.",
+    "cancel": "Annuler",
+    "add": "Ajouter",
+    "loading": "Chargement…",
+    "select_reminder": "Sélectionner un rappel",
+    "done": "Terminé",
+    "save": "Enregistrer",
+    "back": "Retour",
+    "select": "Sélectionner",
+    "delete": "Supprimer",
+    "units": {
+      "minute": "{{count}} minute",
+      "minute_other": "{{count}} minutes",
+      "hour": "{{count}} heur",
+      "hour_other": "{{count}} heurs",
+      "day": "{{count}} jour",
+      "day_other": "{count}} jours",
+      "week": "{{count}} semaine",
+      "week_other": "{{count}} semaines",
+      "month": "{{count}} mois",
+      "month_other": "{{count}} mois"
+    },
+    "request_failed": "Échec de la requête"
+  },
+  "errors": {
+    "UNEXPECTED_ERROR": "Une erreur est survenue"
+  },
+  "auth": {
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Vous avez déjà un compte ?",
+      "login": "Se connecter",
+
+      "fields": {
+        "name": {
+          "label": "Nom complet",
+          "required": "Le nom complet est requis",
+          "min": "Le nom doit contenir au moins 2 caractères",
+          "pattern": "Le nom ne peut contenir que des lettres et des espaces"
+        },
+        "email": {
+          "label": "Adresse e-mail",
+          "required": "L’adresse e-mail est requise",
+          "invalid": "Veuillez entrer une adresse e-mail valide",
+          "exists": "Un compte avec cette adresse e-mail existe déjà"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "required": "Le mot de passe est requis",
+          "min": "Le mot de passe doit contenir au moins 8 caractères",
+          "pattern": "Le mot de passe doit contenir des majuscules, minuscules et des chiffres"
+        },
+        "confirm_password": {
+          "label": "Confirmer le mot de passe",
+          "required": "Veuillez confirmer votre mot de passe",
+          "match": "Les mots de passe ne correspondent pas"
+        }
+      },
+
+      "actions": {
+        "submit": "Continuer",
+        "loading": "Création du compte...",
+        "google": "S’inscrire avec Google"
+      },
+
+      "divider": "ou s’inscrire avec",
+
+      "legal": {
+        "text": "En cliquant sur créer un compte, vous acceptez les",
+        "terms": "Conditions d’utilisation",
+        "and": "et",
+        "privacy": "Politique de confidentialité"
+      },
+      "errors": {
+        "AUTH_EMAIL_EXISTS": "Un compte avec cet email existe déjà"
+      }
+    },
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "sur Keepay",
+
+      "fields": {
+        "email": {
+          "placeholder": "Adresse e-mail",
+          "required": "L’adresse e-mail est requise",
+          "invalid": "Veuillez entrer une adresse e-mail valide"
+        },
+        "password": {
+          "placeholder": "Mot de passe",
+          "required": "Le mot de passe est requis",
+          "min": "Le mot de passe doit contenir au moins 8 caractères"
+        },
+        "errors": {
+          "AUTH_INVALID_CREDENTIALS": "Email ou mot de passe incorrect",
+          "AUTH_USER_NOT_FOUND": "Aucun compte associé à cet email",
+          "AUTH_EMAIL_EXISTS": "Un compte avec cet email existe déjà"
+        }
+      },
+
+      "rememberMe": "Se souvenir de moi",
+      "forgot_password": "Mot de passe oublié ?",
+
+      "actions": {
+        "submit": "Se connecter",
+        "loading": "Connexion en cours...",
+        "google": "Continuer avec Google"
+      },
+
+      "errors": {
+        "invalid_credentials": "Adresse e-mail ou mot de passe incorrect",
+        "generic": "Une erreur est survenue"
+      },
+
+      "footer": {
+        "text": "Nouveau sur Keepay ?",
+        "signup": "Créer un compte"
+      }
+    },
+
+    "forgot_password": {
+      "success": "Mot de passe réinitialisé avec succès",
+      "error": "Une erreur est survenue : {{message}}"
+    },
+    "password_reset_request": {
+      "title": "Réinitialisation du mot de passe",
+      "description": "Entrez votre email pour recevoir un code de réinitialisation.",
+      "email_placeholder": "Email",
+      "send_code": "Envoyer le code",
+      "validation": {
+        "email": "Veuillez entrer une adresse email valide"
+      }
+    },
+    "password_reset": {
+      "title": "Créer un nouveau mot de passe",
+      "description": "Choisissez un mot de passe fort pour votre compte.",
+      "fields": {
+        "new_password": "Nouveau mot de passe",
+        "confirm_password": "Confirmer le mot de passe"
+      },
+      "actions": {
+        "submit": "Réinitialiser le mot de passe"
+      },
+      "validation": {
+        "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+        "passwords_match": "Les mots de passe ne correspondent pas"
+      }
+    },
+    "otp": {
+      "title": "Saisir le code OTP",
+      "description": "Entrez le code à 5 chiffres envoyé à votre email.",
+      "actions": {
+        "submit": "Vérifier le code"
+      },
+      "resend": {
+        "available": "Vous pouvez renvoyer le code maintenant.",
+        "wait": "Renvoi disponible dans {{time}}",
+        "button": "Renvoyer"
+      }
+    }
+  },
+  "subscriptions": {
+    "stat_cards": {
+      "monthly_total": "Total mensuel",
+      "left_to_pay": "À payer",
+      "next_7_days": "Prochains 7 jours"
+    },
+
+    "modals": {
+      "failed_to_load": "Échec du chargement des abonnements."
+    },
+    "filter": {
+      "title": "Filtrer",
+      "title_plural": "Filtres",
+      "category": "Catégorie",
+      "price_range": "Plage de prix",
+      "show_results": "Afficher les résultats",
+      "categories": {
+        "streaming": "Streaming",
+        "music": "Musique",
+        "gaming": "Jeux",
+        "productivity": "Productivité",
+        "news": "Actualités",
+        "fitness": "Fitness"
+      }
+    },
+    "selected_day": {
+      "total": "TOTAL"
+    },
+    "progress": "progrès",
+    "type": {
+      "MONTHLY": "Mensuel",
+      "YEARLY": "Annuel"
+    }
+  },
+  "subscription_details": {
+    "loading": "Chargement…",
+    "updating": "Mise à jour…",
+
+    "next_bill": "Prochaine facture",
+    "payment_method": "Moyen de paiement",
+    "remaining": "Restant",
+    "period": "Période",
+    "plan": "Forfait",
+    "remind_me": "Me rappeler",
+    "sync_calendar": "Synchroniser avec Google Calendar",
+
+    "billed_next_on": "Facturé le {{date}}",
+    "expired_on": "Abonnement expiré le {{date}}",
+    "description": "{{name}} — forfait {{planType}} à ${{price}}, {{billingInfo}}, payé avec {{card}} se terminant par {{last4}}, valable du {{startDate}} au {{endDate}}.",
+
+    "errors": {
+      "load_failed": "Impossible de charger les détails de l’abonnement"
+    },
+
+    "calendar": {
+      "added": "L’abonnement a été ajouté à Google Calendar.",
+      "removed": "L’abonnement a été supprimé de Google Calendar.",
+      "add_failed": "Échec de l’ajout à Google Calendar.",
+      "remove_failed": "Échec de la suppression de Google Calendar.",
+      "connected": "Google Calendar connecté",
+      "connect_failed": "Échec de la connexion à Google Calendar"
+    }
+  },
+  "billing": {
+    "status": {
+      "due_today": "Dû aujourd’hui",
+      "expired": "Expiré",
+      "unknown": "Statut inconnu"
+    },
+    "plan": {
+      "FREE": "Gratuit",
+      "BASIC": "Basique",
+      "PREMIUM": "Premium"
+    },
+    "dueInDays": "Dû dans {{count}} jour",
+    "dueInDays_other": "Dû dans {{count}} jours"
+  },
+
+  "calendar": {
+    "days_of_week": ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+    "months": {
+      "january": "Janvier",
+      "february": "Février",
+      "march": "Mars",
+      "april": "Avril",
+      "may": "Mai",
+      "june": "Juin",
+      "july": "Juillet",
+      "august": "Août",
+      "september": "Septembre",
+      "october": "Octobre",
+      "november": "Novembre",
+      "december": "Décembre"
+    }
+  },
+  "reminders": {
+    "options": {
+      "MIN_5": "5 minutes avant",
+      "MIN_10": "10 minutes avant",
+      "MIN_30": "30 minutes avant",
+      "HOUR_1": "1 heure avant",
+      "DAY_1": "1 jour avant",
+      "DAY_2": "2 jours avant",
+      "WEEK_1": "1 semaine avant",
+      "WEEK_2": "2 semaines avant",
+      "WEEK_3": "3 semaines avant",
+      "MONTH_1": "1 mois avant",
+      "MONTH_2": "2 mois avant",
+      "MONTH_3": "3 mois avant",
+      "MONTH_4": "4 mois avant",
+      "MONTH_5": "5 mois avant",
+      "MONTH_6": "6 mois avant",
+      "CUSTOM": "Personnalisé"
+    },
+    "text": {
+      "reminder": "Rappel"
+    },
+    "actions": {
+      "save": "Enregistrer",
+      "update": "Mise à jour",
+      "edit": "Options d'édition",
+      "hide": "Masquer les options",
+      "delete": "Supprimer les rappels"
+    },
+    "messages": {
+      "added": "Rappel défini avec succès !",
+      "updated": "Rappels mis à jour avec succès !",
+      "deleted": "Rappels supprimés avec succès !",
+      "error": "Une erreur s'est produite"
+    },
+    "custom": {
+      "title": "Rappel personnalisé",
+      "notification_type": "Type de notification",
+      "unit": "Unité",
+      "errors": {
+        "min_minutes": "Le rappel doit être supérieur à 30 minutes."
+      }
+    },
+    "before": "avant",
+    "via": "par",
+    "units": {
+      "minutes": "Minutes",
+      "hours": "Heures",
+      "days": "Jours",
+      "weeks": "Semaines"
+    },
+    "types": {
+      "EMAIL": "Courriel",
+      "PUSH": "Notification push",
+      "SMS": "SMS",
+      "SYSTEM": "Système",
+      "WHATSAPP": "WhatsApp"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "menu": {
+      "account": {
+        "title": "Détails du compte",
+        "subtitle": "Gérez les détails de votre compte"
+      },
+      "payment": {
+        "title": "Historique des paiements",
+        "subtitle": "Consultez vos commandes passées"
+      },
+      "notification": {
+        "title": "Notifications"
+      },
+      "settings": {
+        "title": "Paramètres"
+      },
+      "password": {
+        "title": "Modifier le mot de passe",
+        "subtitle": "Mettez à jour votre mot de passe"
+      },
+      "contact": "Contactez-nous",
+      "terms": "Conditions générales",
+      "privacy": "Politique de confidentialité",
+      "help": "Obtenir de l'aide",
+      "logout": "Déconnexion"
+    },
+    "account_details": {
+      "title": "Détails du compte",
+      "sections": {
+        "account_info": "Informations sur le compte",
+        "security": "Sécurité",
+        "danger": "Zone dangereuse"
+      },
+      "fields": {
+        "full_name": "Nom complet",
+        "email": "Adresse e-mail",
+        "password": "Mot de passe",
+        "member_since": "Membre depuis"
+      },
+      "actions": {
+        "delete_account": "Supprimer le compte",
+        "delete_description": "Supprimer définitivement votre compte et vos données"
+      }
+    },
+    "edit": {
+      "title": "Modifier le profil",
+      "success": "Profil mis à jour avec succès",
+      "errors": {
+        "email_exists": "Adresse e-mail déjà utilisée",
+        "generic": "Erreur lors de la mise à jour du profil"
+      },
+      "fields": {
+        "name": {
+          "placeholder": "Nom complet",
+          "required": "Le nom complet est obligatoire",
+          "min": "Le nom doit comporter au moins 2 caractères",
+          "pattern": "Le nom ne peut contenir que des lettres et des espaces"
+        },
+        "email": {
+          "placeholder": "Adresse e-mail",
+          "required": "Une adresse e-mail est requise",
+          "invalid": "Veuillez saisir une adresse e-mail valide"
+        }
+      }
+    }
+  },
+  "change_password": {
+    "title": "Modifier le mot de passe",
+    "description": "Entrez votre mot de passe actuel pour confirmer votre identité avant de choisir un nouveau mot de passe.",
+    "fields": {
+      "current_password": "Mot de passe actuel",
+      "new_password": "Nouveau mot de passe",
+      "confirm_password": "Confirmer le nouveau mot de passe"
+    },
+    "validation": {
+      "current_required": "Le mot de passe actuel est requis",
+      "new_required": "Un nouveau mot de passe est requis",
+      "confirm_required": "Veuillez confirmer votre nouveau mot de passe",
+      "min_length": "Le mot de passe doit comporter au moins 8 caractères",
+      "pattern": "Le mot de passe doit contenir des majuscules, des minuscules et des chiffres",
+      "match": "Les mots de passe ne correspondent pas"
+    },
+    "actions": {
+      "update": "Mettre à jour ",
+      "updating": "Mise à jour...",
+      "send_email": "Envoyer un e-mail de configuration du mot de passe",
+      "sending": "Envoi..."
+    },
+    "success": {
+      "change_password": "Mot de passe modifié avec succès",
+      "send_email": "E-mail de configuration du mot de passe envoyé avec succès"
+    },
+    "googleInfo": "Vous vous connectez actuellement avec Google. Pour créer un mot de passe pour cette application, nous devons vous envoyer un e-mail sécurisé de configuration du mot de passe.",
+    "errors": {
+      "generic": "Erreur lors du changement de mot de pass",
+      "send_email": "Erreur lors de l'envoi de l'e-mail de configuration du mot de passe",
+      "OLD_PASSWORD_INCORRECT": "Old password incorrect"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "confirm_delete_all": "Êtes-vous sûr de vouloir supprimer toutes les notifications ?",
+
+    "confirm_delete_selected": "Supprimer {{count}} notification ?",
+    "confirm_delete_selected_other": "Supprimer {{count}} notifications",
+    "stats": {
+      "unread": "non lu",
+      "total": "total"
+    },
+    "search": {
+      "label": "Rechercher les notifications",
+      "placeholder": "Rechercher des notifications..."
+    },
+    "actions": {
+      "select": "Sélectionner",
+      "toggle_select_page": "Basculer Sélectionner la page",
+      "toggle_status": "Activer/désactiver le statut",
+      "delete_selected": "Supprimer ({{count}})",
+      "mark_all_read": "Marquer tout comme lu",
+      "delete_all": "Tout supprimer",
+      "mark_read": "Marquer comme lu",
+      "mark_unread": "Marquer comme non lu"
+    },
+    "filters": {
+      "unread": "Non lu",
+      "read": "Lu",
+      "all": "Tous"
+    },
+    "empty": {
+      "title": "Aucune notification",
+      "subtitle": "Vous êtes à jour !"
+    },
+    "enabled_success": "Les notifications ont été activées avec succès.",
+    "save_token_error": "Impossible d’enregistrer le jeton de notification. Veuillez réessayer.",
+    "get_token_error": "Impossible d’obtenir le jeton de notification. Veuillez réessayer.",
+    "permission_denied": "Autorisation refusée. Veuillez activer les notifications dans les paramètres de votre navigateur.",
+    "permission_modal": {
+      "title": "Restez informé",
+      "description": "Recevez des notifications concernant vos prochains paiements d'abonnement et ne manquez plus jamais une date de facturation.",
+      "notNow": "Pas maintenant",
+      "allow": "Autoriser les notifications",
+      "requesting": "Demande en cours..."
+    }
+  },
+  "sidebar": {
+    "subscriptions": "Abonnements",
+    "sharedPlan": "Plan partagé",
+    "cards": "Cartes",
+    "profile": "Profil"
+  },
+  "plaid": {
+    "title": "Connecter votre banque",
+    "start_title": "Commencez par associer votre compte bancaire",
+    "start_description": "Cliquez sur le bouton ci-dessous pour lancer le flux de connexion Plaid.",
+    "loading": "Chargement...",
+    "recurring_title": "Abonnements récurrents",
+    "syncing": "Synchronisation...",
+    "synced": "Abonnements synchronisés",
+    "load_subscriptions": "Charger tous vos abonnements",
+
+    "error": {
+      "code": "Code d’erreur Plaid",
+      "type": "Type d’erreur Plaid",
+      "message": "Message d’erreur Plaid"
+    }
+  },
+
+  "google_calendar": {
+    "auth": {
+      "popup_blocked": "La fenêtre contextuelle a été bloquée. Veuillez autoriser les popups pour ce site.",
+      "failed": "L’authentification Google Calendar a échoué.",
+      "cancelled": "L’authentification Google Calendar a été annulée."
+    },
+    "disconnect": "Google Calendar déconnecté",
+    "disconnect_failed": "Échec de la déconnexion de Google Calendar"
+  },
+  "header": {
+    "account": "Compte",
+    "profile": "Profil",
+    "all_settings": "Tous les paramètres",
+    "visit_website": "Visiter keepay.com",
+    "logout": "Déconnexion"
+  },
+  "logout": {
+    "title": "Déconnexion",
+    "confirmation": "Êtes-vous sûr de vouloir vous déconnecter ?",
+    "confirm": "Oui, se déconnecter"
+  },
+  "settings": {
+    "title": "Paramètres",
+
+    "language": {
+      "title": "Langue",
+      "app": "Langue de l'application",
+      "subtitle": "Modifier la langue de l'application",
+      "success": "Langue mise à jour avec succès",
+      "errors": {
+        "update_failed": "Échec de la mise à jour de la langue"
+      }
+    },
+
+    "appearance": {
+      "title": "Apparence",
+      "theme": "Thème",
+      "system": "Par défaut du système"
+    },
+
+    "notifications": {
+      "title": "Notifications",
+      "push": "Notifications push"
+    },
+
+    "integrations": {
+      "title": "Intégrations",
+      "google": {
+        "description": "Synchroniser les événements et les rappels"
+      }
+    }
+  },
+  "set_password": {
+    "title": "Définir un mot de passe",
+    "subtitle": "Définissez un mot de passe pour vous connecter sans utiliser Google.",
+
+    "success": "Mot de passe défini avec succès",
+
+    "actions": {
+      "submit": "Définir le mot de passe",
+      "setting": "En cours..."
+    },
+
+    "fields": {
+      "new_password": {
+        "placeholder": "Nouveau mot de passe",
+        "required": "Le mot de passe est requis",
+        "min_length": "Le mot de passe doit contenir au moins 8 caractères",
+        "pattern": "Le mot de passe doit contenir des majuscules, minuscules et chiffres"
+      },
+      "confirm_password": {
+        "placeholder": "Confirmer le mot de passe",
+        "required": "Veuillez confirmer le mot de passe",
+        "mismatch": "Les mots de passe ne correspondent pas"
+      }
+    },
+
+    "errors": {
+      "invalid_token": "Jeton invalide ou manquant",
+      "failed": "Échec de la définition du mot de passe"
+    }
+  }
+}

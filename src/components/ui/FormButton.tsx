@@ -1,5 +1,6 @@
 import { HTMLMotionProps, motion, type Variants } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type ButtonVariant = 'primary' | 'secondary' | 'destructive';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -21,6 +22,7 @@ export const FormButton = ({
   ...props
 }: FormButtonProps) => {
   const baseClasses = 'w-full font-semibold rounded-full transition';
+  const { t } = useTranslation();
 
   const sizeClasses = (() => {
     switch (size) {
@@ -77,7 +79,7 @@ export const FormButton = ({
       style={{ cursor: isDisabled ? 'not-allowed' : 'pointer' }}
       {...props}
     >
-      {isLoading && variant === 'primary' ? 'Loading...' : children}
+      {isLoading && variant === 'primary' ? t('common.loading') : children}
     </motion.button>
   );
 };

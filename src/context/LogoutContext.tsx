@@ -5,6 +5,7 @@ import Modal from '../components/ui/Modal';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDeviceType } from '../hooks/useDeviceType';
 import BottomSheet from '../components/ui/BottomSheet';
+import { useTranslation } from 'react-i18next';
 
 interface LogoutContextType {
   requestLogout: () => void;
@@ -15,6 +16,7 @@ const LogoutContext = createContext<LogoutContextType | undefined>(undefined);
 
 export const LogoutProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   const { mutate: logout, isPending } = useLogoutUser();
   const { isMobile } = useDeviceType();
 
@@ -24,7 +26,7 @@ export const LogoutProvider = ({ children }: { children: ReactNode }) => {
 
   const handleConfirm = async () => {
     const fcmToken = await getFirebaseToken();
-    logout(fcmToken || '');
+    logout(fcmToken ?? '');
     setOpen(false);
   };
 
@@ -38,27 +40,25 @@ export const LogoutProvider = ({ children }: { children: ReactNode }) => {
         <Modal isOpen={open && !isMobile} onClose={handleCancel}>
           <motion.div>
             <div className="flex font-medium justify-center items-center border-b border-white pb-4 pt-8">
-              Logout
+              {t('logout.title')}
             </div>
             <div className="flex flex-col space-y-8">
-              <p className="text-center mt-8">
-                Are you sure you want to log out?
-              </p>
+              <p className="text-center mt-8">{t('logout.confirmation')}</p>
 
               <div className="flex justify-center gap-10">
                 <motion.button
                   onClick={handleCancel}
-                  className="rounded-full cursor-pointer border w-32 p-4 border-white"
+                  className="rounded-full cursor-pointer border  p-4 border-white"
                   whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  Cancel
+                  {t('common.cancel')}
                 </motion.button>
 
                 <motion.button
                   onClick={handleConfirm}
-                  className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
+                  className="rounded-full  cursor-pointer  p-4 text-white bg-red-500"
                   whileHover={{
                     scale: 1.05,
                     boxShadow: '0 8px 20px rgba(255, 0, 0, 0.4)',
@@ -66,7 +66,7 @@ export const LogoutProvider = ({ children }: { children: ReactNode }) => {
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  Yes Logout
+                  {t('logout.confirm')}
                 </motion.button>
               </div>
             </div>
@@ -75,29 +75,27 @@ export const LogoutProvider = ({ children }: { children: ReactNode }) => {
       </AnimatePresence>
 
       <BottomSheet isOpen={open && isMobile} onClose={handleCancel}>
-        <motion.div>
+        <motion.div className="text-white ">
           <div className="flex font-medium justify-center items-center border-b border-white pb-4 pt-8">
-            Logout
+            {t('logout.title')}
           </div>
           <div className="flex flex-col space-y-8">
-            <p className="text-center mt-8">
-              Are you sure you want to log out?
-            </p>
+            <p className="text-center mt-8">{t('logout.confirmation')}</p>
 
             <div className="flex justify-center gap-10">
               <motion.button
                 onClick={handleCancel}
-                className="rounded-full cursor-pointer border w-32 p-4 border-white"
+                className="rounded-full cursor-pointer border  p-4 border-white"
                 whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
-                Cancel
+                {t('common.cancel')}
               </motion.button>
 
               <motion.button
                 onClick={handleConfirm}
-                className="rounded-full  cursor-pointer w-32 p-4 text-white bg-red-500"
+                className="rounded-full  cursor-pointer  p-4 text-white bg-red-500"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: '0 8px 20px rgba(255, 0, 0, 0.4)',
@@ -105,7 +103,7 @@ export const LogoutProvider = ({ children }: { children: ReactNode }) => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
-                Yes Logout
+                {t('logout.confirm')}
               </motion.button>
             </div>
           </div>
