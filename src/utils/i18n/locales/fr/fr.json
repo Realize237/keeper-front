@@ -567,5 +567,11 @@
       "invalid_token": "Jeton invalide ou manquant",
       "failed": "Échec de la définition du mot de passe"
     }
+  },
+  "not_found": {
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "go_back": "Retour",
+    "contact_support": "Nous contacter"
   }
 }

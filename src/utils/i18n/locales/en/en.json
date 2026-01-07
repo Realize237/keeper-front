@@ -576,5 +576,11 @@
       "invalid_token": "Invalid or missing token",
       "failed": "Failed to set password"
     }
+  },
+  "not_found": {
+    "title": "Page not found",
+    "description": "The page you’re looking for doesn’t exist or has been moved.",
+    "go_back": "Go back",
+    "contact_support": "Contact support"
   }
 }

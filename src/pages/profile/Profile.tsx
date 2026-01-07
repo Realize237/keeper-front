@@ -47,11 +47,6 @@ const menuItems: MenuItem[] = [
     path: '/cards',
   },
   {
-    icon: FaBell,
-    label: 'profile.menu.notification.title',
-    path: '/notifications',
-  },
-  {
     icon: FaCog,
     label: 'profile.menu.settings.title',
     path: '/settings',
