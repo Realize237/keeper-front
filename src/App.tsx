@@ -20,11 +20,16 @@ import NavLayout from './layouts/NavLayout';
 import EditProfile from './pages/profile/EditProfile';
 import ChangePassword from './pages/profile/ChangePassword';
 import SetPassword from './pages/profile/SetPassword';
-import { PlaidstartProvider } from './context/PlaidContext';
-import Plaid from './pages/Plaid';
 import { useEffect } from 'react';
 import { getFirebaseToken } from './config/firebase';
 import { useSaveWebPushToken } from './hooks/usePushToken';
+import { TOASTER_OPTIONS } from './constants';
+import { SocketProvider } from './context/SocketContext';
+import { LogoutProvider } from './context/LogoutContext';
+import { PlaidstartProvider } from './context/PlaidContext';
+import Plaid from './pages/Plaid';
+import Settings from './pages/Settings';
+import AccountDetails from './pages/profile/AccountDetails';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
@@ -34,6 +39,7 @@ function PushTokenHandler() {
     const getClientPushToken = async () => {
       if (Notification.permission === 'granted') {
         const fcmToken = await getFirebaseToken();
+        console.log('fcmToken: ', fcmToken);
         if (fcmToken) {
           saveWebPushToken(fcmToken);
         }
@@ -47,10 +53,6 @@ function PushTokenHandler() {
 
   return null;
 }
-import { TOASTER_OPTIONS } from './constants';
-import { SocketProvider } from './context/SocketContext';
-import { LogoutProvider } from './context/LogoutContext';
-import AccountDetails from './pages/profile/AccountDetails';
 
 export default function App() {
   return (
@@ -91,6 +93,7 @@ export default function App() {
                           element={<AccountDetails />}
                         />
                       </Route>
+                      <Route path="/settings" element={<Settings />} />
                       <Route
                         path="/notifications"
                         element={<NotificationsPage />}
@@ -100,6 +103,7 @@ export default function App() {
                         path="/notifications"
                         element={<NotificationsPage />}
                       />
+                      <Route path="/settings" element={<Settings />} />
                     </Route>
                     <Route path="set-password" element={<SetPassword />} />
                     <Route path="*" element={<Navigate to="/" replace />} />

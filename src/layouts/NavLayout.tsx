@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import BottomNav from '../components/layout/BottomNav/BottomNav';
+import BottomNav from '../components/layout/bottomNav/BottomNav';
 import { useUser } from '../context/UserContext';
 import { useDeviceType } from '../hooks/useDeviceType';
-import Sidebar from '../components/layout/Sidebar/Sidebar';
+import Sidebar from '../components/layout/sidebar/Sidebar';
 import { useState } from 'react';
-import Header from '../components/layout/Header/Header';
+import Header from '../components/layout/header/Header';
 
 export default function NavLayout() {
   const { user } = useUser();

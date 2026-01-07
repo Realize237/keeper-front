@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import {
+  formatToReadableDate,
   getNextBillingDate,
   getSubscriptionCardImage,
   pluralize,
@@ -29,6 +30,7 @@ import toast from 'react-hot-toast';
 import Spinner from '../ui/Spinner';
 import SubscriptionDetailSkeleton from './SubscriptionDetailSkeleton';
 import ErrorState from '../common/ErrorState';
+import { useTranslation } from 'react-i18next';
 
 interface SubscriptionDetailModalProps {
   selectedSubscriptionDetails: Subscription;
@@ -40,6 +42,7 @@ export default function SubscriptionDetailModal({
   closeSubscriptionModals,
 }: SubscriptionDetailModalProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const { t, i18n } = useTranslation();
 
   const {
     data: subscriptionDetails,
@@ -62,32 +65,26 @@ export default function SubscriptionDetailModal({
       )
     : null;
 
-  function formatToReadableDate(date: string | Date) {
-    const d = typeof date === 'string' ? new Date(date) : date;
-
-    return d.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  }
-
   const { mutate: addToGoogleCalendar, isPending: isAddingPending } =
     useAddSubscriptionToGoogleCalendar();
   const { mutate: removeFromGoogleCalendar, isPending: isRemoving } =
     useRemoveSubscriptionFromGoogleCalendar();
 
   const getFormattedNextBillingDate = () => {
-    if (!nextBillingResult) return 'Loading...';
+    if (!nextBillingResult) return t('common.loading');
 
     switch (nextBillingResult.status) {
       case 'ACTIVE':
         return formatToReadableDate(
-          new Date(nextBillingResult.date as Date).toDateString()
+          new Date(nextBillingResult.date as Date),
+          i18n.language
         );
-      case 'DUE TODAY':
+      case 'DUE_TODAY':
+        return t('billing.status.due_today');
+      case 'EXPIRED':
+        return t('billing.status.expired');
       default:
-        return nextBillingResult.status;
+        return t('billing.status.unknown');
     }
   };
 
@@ -99,27 +96,36 @@ export default function SubscriptionDetailModal({
     ? nextBillingResult.status === 'EXPIRED'
       ? 'expired'
       : nextBillingResult.status === 'ACTIVE'
-        ? formatToReadableDate(nextBillingResult.date!)
+        ? formatToReadableDate(nextBillingResult.date!, i18n.language)
         : nextBillingResult.status.toLowerCase()
-    : 'loading';
+    : t('subscription_details.loading');
 
-  const description = `${
-    subscriptionDetails?.details.name
-  } — $${subscriptionDetails?.price.toFixed(
-    2
-  )} ${subscriptionDetails?.type?.toLowerCase()} plan, ${
+  const billingInfo =
     nextBillingResult?.status === 'EXPIRED'
-      ? `subscription expired on ${formatToReadableDate(
-          subscriptionDetails?.details.endDate || new Date()
-        )}`
-      : `billed next on ${next}`
-  }, paid with ${
-    subscriptionDetails?.card
-  } ending in 5064, valid from ${formatToReadableDate(
-    subscriptionDetails?.details?.startDate || new Date()
-  )} to ${formatToReadableDate(
-    subscriptionDetails?.details?.endDate || new Date()
-  )}.`;
+      ? t('subscription_details.expired_on', {
+          date: formatToReadableDate(
+            subscriptionDetails?.details.endDate || new Date(),
+            i18n.language
+          ),
+        })
+      : t('subscription_details.billed_next_on', { date: next });
+
+  const description = t('subscription_details.description', {
+    name: subscriptionDetails?.details.name,
+    price: subscriptionDetails?.price.toFixed(2),
+    planType: t(`subscriptions.type.${subscriptionDetails?.type}`),
+    billingInfo,
+    card: subscriptionDetails?.card,
+    last4: '5064',
+    startDate: formatToReadableDate(
+      subscriptionDetails?.details?.startDate || new Date(),
+      i18n.language
+    ),
+    endDate: formatToReadableDate(
+      subscriptionDetails?.details?.endDate || new Date(),
+      i18n.language
+    ),
+  });
 
   const handleClose = () => {
     setIsOpen(false);
@@ -213,10 +219,10 @@ export default function SubscriptionDetailModal({
       },
       {
         onSuccess: () =>
-          toast.success('Your subscription is now on Google Calendar.'),
+          toast.success(t('subscription_details.calendar.added')),
         onError: (error: Error) =>
           toast.error(
-            error?.message || 'Failed to add subscription to Google Calendar.'
+            error?.message || t('subscription_details.calendar.add_failed')
           ),
       }
     );
@@ -230,11 +236,13 @@ export default function SubscriptionDetailModal({
     if (!hasGoogleCalendarAccess) {
       connectGoogleCalendar(undefined, {
         onSuccess: () => {
-          toast.success('Google Calendar connected');
+          toast.success(t('subscription_details.calendar.connected'));
           addSubscriptionToCalendar();
         },
         onError: (error: Error) => {
-          toast.error(error?.message || 'Failed to connect Google Calendar');
+          toast.error(
+            error?.message || t('subscription_details.calendar.connect_failed')
+          );
         },
       });
       return;
@@ -250,15 +258,20 @@ export default function SubscriptionDetailModal({
       },
       {
         onSuccess: () =>
-          toast.success('Subscription removed from Google Calendar.'),
+          toast.success(t('subscription_details.calendar.removed')),
         onError: (error: Error) =>
           toast.error(
-            error.message ||
-              'Failed to remove subscription from Google Calendar. Please try again.'
+            error.message || t('subscription_details.calendar.remove_failed')
           ),
       }
     );
   };
+
+  const daysRemainingText = nextBillingResult?.daysRemaining
+    ? t('billing.dueInDays', {
+        count: nextBillingResult.daysRemaining,
+      })
+    : '';
 
   return (
     <AnimatePresence>
@@ -301,7 +314,7 @@ export default function SubscriptionDetailModal({
                 </motion.div>
                 <div className="flex-1 flex items-center justify-center">
                   <ErrorState
-                    message="Failed to load subscription details"
+                    message={t('subscription_details.errors.load_failed')}
                     onRetry={() => refetch()}
                   />
                 </div>
@@ -317,7 +330,9 @@ export default function SubscriptionDetailModal({
                   >
                     <div className="flex items-center gap-2 px-4 py-2 bg-[#2f2f2f] rounded-full">
                       <Spinner />
-                      <span className="text-white text-sm">Updating...</span>
+                      <span className="text-white text-sm">
+                        {t('subscription_details.updating')}
+                      </span>
                     </div>
                   </motion.div>
                 )}
@@ -376,7 +391,7 @@ export default function SubscriptionDetailModal({
                   exit="exit"
                 >
                   <span className="mr-2 text-[#838383] font-bold">
-                    Next bill:{' '}
+                    {t('subscription_details.next_bill')}:{' '}
                   </span>
                   <span className="text-white">
                     {getFormattedNextBillingDate()}
@@ -393,7 +408,7 @@ export default function SubscriptionDetailModal({
                   whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">
-                    Payment method{' '}
+                    {t('subscription_details.payment_method')}{' '}
                   </span>
                   <div className="flex justify-center items-center">
                     <img
@@ -414,16 +429,12 @@ export default function SubscriptionDetailModal({
                     exit="exit"
                     whileHover={{ backgroundColor: '#3d3d3d' }}
                   >
-                    <span className="text-[#838383] font-bold">Remaining</span>
+                    <span className="text-[#838383] font-bold">
+                      {t('subscription_details.remaining')}
+                    </span>
                     <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#cdbbbb]">
                       <span className="text-red-800 text-lg]">
-                        {nextBillingResult?.daysRemaining
-                          ? pluralize(
-                              nextBillingResult.daysRemaining,
-                              'day',
-                              'days'
-                            )
-                          : ''}
+                        {daysRemainingText}
                       </span>
                     </div>
                   </motion.div>
@@ -438,7 +449,9 @@ export default function SubscriptionDetailModal({
                   exit="exit"
                   whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
-                  <span className="text-[#838383] font-bold">Period </span>
+                  <span className="text-[#838383] font-bold">
+                    {t('subscription_details.period')}{' '}
+                  </span>
                   <SubscriptionTypeAndDot
                     value={subscriptionDetails?.type || 'MONTHLY'}
                   />
@@ -453,9 +466,11 @@ export default function SubscriptionDetailModal({
                   exit="exit"
                   whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
-                  <span className="text-[#838383] font-bold">Plan </span>
+                  <span className="text-[#838383] font-bold">
+                    {t('subscription_details.plan')}{' '}
+                  </span>
                   <span className="text-white">
-                    {subscriptionDetails?.plan}
+                    {t(`billing.plan.${subscriptionDetails?.plan}`)}
                   </span>
                 </motion.div>
 
@@ -468,7 +483,9 @@ export default function SubscriptionDetailModal({
                   exit="exit"
                   whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
-                  <span className="text-[#838383] font-bold">Remind me </span>
+                  <span className="text-[#838383] font-bold">
+                    {t('subscription_details.remind_me')}{' '}
+                  </span>
                   <NotificationReminder
                     subscription={selectedSubscriptionDetails}
                   />
@@ -483,14 +500,21 @@ export default function SubscriptionDetailModal({
                   whileHover={{ backgroundColor: '#3d3d3d' }}
                 >
                   <span className="text-[#838383] font-bold">
-                    Sync to Google Calendar
+                    {t('subscription_details.sync_calendar')}
                   </span>
                   <div className="flex gap-2">
                     {!subscriptionDetails?.calendarLink ? (
                       <button
                         onClick={onAddToGoogleCalendar}
+                        disabled={
+                          isAddingPending ||
+                          isConnecting ||
+                          nextBillingResult?.status === 'EXPIRED'
+                        }
                         className={`flex items-center gap-1 px-3 py-1 text-xs bg-[#CDFF00] rounded transition ${
-                          isAddingPending || isConnecting
+                          isAddingPending ||
+                          isConnecting ||
+                          nextBillingResult?.status === 'EXPIRED'
                             ? 'cursor-not-allowed opacity-50'
                             : 'cursor-pointer'
                         }`}
@@ -499,7 +523,7 @@ export default function SubscriptionDetailModal({
                           <Spinner />
                         ) : (
                           <>
-                            <FaCalendarPlus /> Add
+                            <FaCalendarPlus /> {t('common.add')}
                           </>
                         )}
                       </button>

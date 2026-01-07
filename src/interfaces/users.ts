@@ -6,6 +6,7 @@ export interface User {
   authType: string;
   photo: string | null;
   created_at: Date | string;
+  language: string;
 }
 
 export interface IEmailPasswordInput {
@@ -21,7 +22,7 @@ export type ISetPasswordInput = Pick<
   token: string;
 };
 
-export type UserInput = Pick<User, 'name' | 'email' | 'password'>;
+export type UserInput = Pick<User, 'name' | 'email' | 'password' | 'language'>;
 export type PasswordRequestInput = Pick<User, 'email'>;
 export interface IValidateToken extends PasswordRequestInput {
   token: string;
