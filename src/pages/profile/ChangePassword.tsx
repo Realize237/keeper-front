@@ -40,13 +40,13 @@ const ChangePassword = () => {
           toast.success(t('change_password.success.changePassword'));
           reset();
         },
-        onError: (error: Error) => {
+        onError: (error: Error & { code?: string }) => {
           const code = error.code;
-          if (code) {
-            setFormError(error.message);
+          if (code === 'INCORRECT_PASSWORD' || code === 'USER_NOT_FOUND') {
+            setFormError(t(`change_password.errors.${code}`, error.message));
+          } else {
+            toast.error(error.message || t('change_password.errors.generic'));
           }
-
-          toast.error(error.message || t('change_password.errors.generic'));
         },
       }
     );

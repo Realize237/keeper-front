@@ -6,7 +6,6 @@ import type { Subscription } from '../interfaces/subscription';
 import { dateLocales } from './dateLocales';
 import i18n from './i18n';
 import { formatDistanceToNow } from 'date-fns';
-import { useTranslation } from 'react-i18next';
 
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
@@ -148,7 +147,7 @@ export const getNextBillingDate = (
   };
 };
 
-export const isEmpty = (object: Record<string | number, any>): boolean => {
+export const isEmpty = (object: Record<string | number, unknown>): boolean => {
   return Object.keys(object).length === 0;
 };
 
@@ -211,11 +210,30 @@ export const updateCurrentDateToSelectedDate = (
 };
 
 // to format api error message
-export const processError = (err: unknown) => {
-  const { t } = useTranslation();
-  throw new Error(
-    err?.response?.data?.message || err.message || t('common.request_failed')
-  );
+export const processError = (err: unknown, fallbackMessage?: string) => {
+  const error = err as {
+    response?: {
+      data?: {
+        message?: string;
+        error?: { code?: string };
+      };
+    };
+    message?: string;
+  };
+
+  const defaultMessage =
+    fallbackMessage || i18n.t('common.errors.requestFailed', 'Request failed');
+
+  const errorMessage =
+    error?.response?.data?.message || error?.message || defaultMessage;
+  const errorCode = error?.response?.data?.error?.code;
+
+  const customError = new Error(errorMessage) as Error & { code?: string };
+  if (errorCode) {
+    customError.code = errorCode;
+  }
+
+  throw customError;
 };
 
 export const getAvatarInitials = (name?: string | null): string => {

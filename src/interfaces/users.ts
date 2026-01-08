@@ -22,7 +22,7 @@ export type ISetPasswordInput = Pick<
   token: string;
 };
 
-export type UserInput = Pick<User, 'name' | 'email' | 'password' | 'language'>;
+export type UserInput = Pick<User, 'name' | 'email' | 'password'>;
 export type PasswordRequestInput = Pick<User, 'email'>;
 export interface IValidateToken extends PasswordRequestInput {
   token: string;

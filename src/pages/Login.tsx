@@ -115,13 +115,15 @@ export default function Login() {
             replace: true,
           });
         },
-        onError: (error) => {
+        onError: (error: Error & { code?: string }) => {
           const code = error.code;
-          if (code) {
-            setLoginError(t(`login.errors.${code}`));
+          if (code === 'INVALID_CREDENTIALS' || code === 'USER_NOT_FOUND') {
+            setLoginError(t(`auth.login.fields.errors.${code}`, error.message));
             return;
           }
-          toast.error(error.message ?? t('login.errors.UNEXPECTED_ERROR'));
+          toast.error(
+            error.message ?? t('auth.login.fields.errors.UNEXPECTED_ERROR')
+          );
         },
       }
     );
@@ -198,7 +200,7 @@ export default function Login() {
         }
       );
     },
-    [requestResetPasswordMutation]
+    [requestResetPasswordMutation, t]
   );
 
   const validateForgotPasswordToken = useCallback(
@@ -219,7 +221,7 @@ export default function Login() {
         }
       );
     },
-    [validateForgotPasswordTokenMutation, email]
+    [validateForgotPasswordTokenMutation, email, t]
   );
 
   const resetPassword = useCallback(
@@ -228,7 +230,7 @@ export default function Login() {
         { email, newPassword },
         {
           onSuccess: () => {
-            toast.success(t('auth.forgotPassword.success'));
+            toast.success(t('auth.forgot_password.success'));
             setForgotPasswordStep(null);
           },
           onError: (error) => {
@@ -237,7 +239,7 @@ export default function Login() {
         }
       );
     },
-    [resetPasswordMutation, email]
+    [resetPasswordMutation, email, t]
   );
 
   return (

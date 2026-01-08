@@ -26,7 +26,9 @@
       "month": "{{count}} month",
       "month_other": "{{count}} months"
     },
-    "request_failed": "Request failed"
+    "errors": {
+      "request_failed": "Request failed"
+    }
   },
   "errors": {
     "UNEXPECTED_ERROR": "Something went wrong"
@@ -78,7 +80,7 @@
         "privacy": "Privacy policy"
       },
       "errors": {
-        "AUTH_EMAIL_EXISTS": "An account with this email already exists"
+        "EMAIL_ALREADY_EXISTS": "An account with this email already exists"
       }
     },
     "login": {
@@ -97,9 +99,8 @@
           "min": "Password must be at least 8 characters"
         },
         "errors": {
-          "AUTH_INVALID_CREDENTIALS": "Invalid email or password",
-          "AUTH_USER_NOT_FOUND": "No account found with this email",
-          "AUTH_EMAIL_EXISTS": "An account with this email already exists",
+          "INVALID_CREDENTIALS": "Invalid email or password",
+          "USER_NOT_FOUND": "No account found with this email",
           "UNEXPECTED_ERROR": "Something went wrong"
         }
       },
@@ -424,6 +425,8 @@
     },
     "googleInfo": "You currently sign in with Google. To create a password for this app, we need to send a secure password setup email.",
     "errors": {
+      "INCORRECT_PASSWORD": "Old password is incorrect",
+      "USER_NOT_FOUND": "User not found",
       "generic": "Error changing password",
       "send_email": "Error sending password setup email"
     }

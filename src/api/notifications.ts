@@ -8,7 +8,8 @@ export const getAllNotifications = async () => {
     const response = await axiosClient.get(
       `${API_PATHS.NOTIFICATIONS.GET_ALL_NOTIFICATIONS}`
     );
-    return response.data;
+
+    return response.data.data;
   } catch (error) {
     processError(error);
   }
@@ -37,7 +38,7 @@ export const updateNotification = async (
       {}
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     return processError(err);
   }
@@ -54,7 +55,7 @@ export const deleteNotification = async (
       `${API_PATHS.NOTIFICATIONS.DELETE_NOTIFICATION(notificationRequest.ids, notificationRequest.all)}`
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     return processError(err);
   }

@@ -23,7 +23,7 @@ export const createUser = async (user: UserInput) => {
       ...user,
     });
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -37,8 +37,7 @@ export const loginUser = async (loginData: UserLoginInput) => {
         ...loginData,
       }
     );
-
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -50,7 +49,7 @@ export const getUserInfo = async () => {
       `${API_PATHS.USERS.GET_USER_INFO}`
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -62,7 +61,7 @@ export const getAllUsers = async () => {
       `${API_PATHS.USERS.GET_ALL_USERS}`
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -75,7 +74,7 @@ export const logoutUser = async (clientPushToken: string) => {
       message: string;
     }>(`${env.API_URL}${API_PATHS.USERS.LOGOUT}`, { clientPushToken });
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -89,8 +88,7 @@ export const updateUser = async (user: UserUpdateInput, id: number) => {
     }>(`${env.API_URL}${API_PATHS.USERS.UPDATE_USER(id)}`, {
       ...user,
     });
-
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -105,7 +103,7 @@ export const changeUserPassword = async (data: IEmailPasswordInput) => {
       ...data,
     });
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -120,7 +118,7 @@ export const sendSetPasswordEmail = async (data: {
       statusCode: number;
       message: string;
     }>(`${API_PATHS.USERS.SEND_SET_PASSWORD_EMAIL(data.email)}`, { ...data });
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -135,7 +133,7 @@ export const setPassword = async (data: ISetPasswordInput) => {
       ...data,
     });
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -147,7 +145,7 @@ export const requestPasswordRequest = async (data: PasswordRequestInput) => {
       `${API_PATHS.USERS.REQUEST_PASSWORD_RESET}`,
       data
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     return processError(error);
   }
@@ -159,7 +157,7 @@ export const validateForgotPasswordToken = async (data: IValidateToken) => {
       `${API_PATHS.USERS.VALIDATE_FORGOT_PASSWORD_OTP}`,
       data
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     return processError(error);
   }
@@ -171,7 +169,7 @@ export const resetPassword = async (data: IResetPassword) => {
       `${API_PATHS.USERS.RESET_PASSWORD(data.email)}`,
       { newPassword: data.newPassword }
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     return processError(error);
   }

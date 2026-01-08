@@ -26,7 +26,9 @@
       "month": "{{count}} mois",
       "month_other": "{{count}} mois"
     },
-    "request_failed": "Échec de la requête"
+    "errors": {
+      "request_failed": "Échec de la requête"
+    }
   },
   "errors": {
     "UNEXPECTED_ERROR": "Une erreur est survenue"
@@ -78,7 +80,7 @@
         "privacy": "Politique de confidentialité"
       },
       "errors": {
-        "AUTH_EMAIL_EXISTS": "Un compte avec cet email existe déjà"
+        "EMAIL_ALREADY_EXISTS": "Un compte avec cet email existe déjà"
       }
     },
     "login": {
@@ -97,9 +99,8 @@
           "min": "Le mot de passe doit contenir au moins 8 caractères"
         },
         "errors": {
-          "AUTH_INVALID_CREDENTIALS": "Email ou mot de passe incorrect",
-          "AUTH_USER_NOT_FOUND": "Aucun compte associé à cet email",
-          "AUTH_EMAIL_EXISTS": "Un compte avec cet email existe déjà"
+          "INVALID_CREDENTIALS": "Email ou mot de passe incorrect",
+          "USER_NOT_FOUND": "Aucun compte associé à cet email"
         }
       },
 
@@ -415,7 +416,8 @@
     "errors": {
       "generic": "Erreur lors du changement de mot de pass",
       "send_email": "Erreur lors de l'envoi de l'e-mail de configuration du mot de passe",
-      "OLD_PASSWORD_INCORRECT": "Old password incorrect"
+      "INCORRECT_PASSWORD": "L'ancien mot de passe est incorrect.",
+      "USER_NOT_FOUND": "Utilisateur introuvable"
     }
   },
   "notifications": {
