@@ -38,7 +38,7 @@ export const addSubscriptionToGoogleCalendar = async (
       ...data,
     });
 
-    return response.data;
+    return response.data.data;
   } catch (err: unknown) {
     return processError(err);
   }
@@ -55,7 +55,7 @@ export const removeSubscriptionFromGoogleCalendar = async (
       `${API_PATHS.SUBSCRIPTIONS.REMOVE_FROM_GOOGLE_CALENDAR(subscriptionId)}`
     );
 
-    return response.data;
+    return response.data / data;
   } catch (err: unknown) {
     return processError(err);
   }

@@ -47,14 +47,16 @@ export default function Register() {
     mutate(
       { name: data.name, email: data.email, password: data.password },
       {
-        onError: (error) => {
+        onError: (error: Error & { code?: string }) => {
           const code = error.code;
-          if (code) {
-            setEmailError(t(`register.errors.${code}`));
+          if (code === 'EMAIL_ALREADY_EXISTS') {
+            setEmailError(t(`auth.register.errors.${code}`));
             return;
           }
 
-          toast.error(error.message || t('register.errors.UNEXPECTED_ERROR'));
+          toast.error(
+            error.message || t('auth.register.errors.UNEXPECTED_ERROR')
+          );
         },
         onSuccess: () => {
           navigate('/login');

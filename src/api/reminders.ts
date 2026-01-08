@@ -13,7 +13,7 @@ export const addReminders = async (newReminder: IReminderRequest[]) => {
       `${API_PATHS.REMINDERS.ADD_REMINDER}`,
       newReminder
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     processError(error);
   }
@@ -24,7 +24,7 @@ export const getAllReminders = async () => {
     const response = await axiosClient.get(
       `${API_PATHS.REMINDERS.GET_ALL_REMINDERS}`
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     processError(error);
   }
@@ -62,7 +62,7 @@ export const updateReminder = async (reminderUpdate: IReminderUpdate) => {
       reminderUpdate
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     return processError(err);
   }
@@ -75,7 +75,7 @@ export const deleteReminder = async (reminderId: number) => {
       statusCode: number;
     }>(`${API_PATHS.REMINDERS.DELETE_REMINDER(reminderId)}`);
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     return processError(err);
   }
@@ -94,7 +94,7 @@ export const updateSubscriptionReminders = async ({
       updatedReminders
     );
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     return processError(err);
   }
@@ -107,7 +107,7 @@ export const deleteSubscriptionReminders = async (subscriptionId: number) => {
       statusCode: number;
     }>(`${API_PATHS.REMINDERS.DELETE_SUBSCRIPTION_REMINDERS(subscriptionId)}`);
 
-    return response.data;
+    return response.data.data;
   } catch (err) {
     return processError(err);
   }

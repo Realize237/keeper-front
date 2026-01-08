@@ -9,7 +9,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { SettingsSelect } from '../components/Settings/SettingsSelect';
-import { storage } from '../utils/storage';
 import type { IconType } from 'react-icons';
 import { ReactNode } from 'react';
 import { useUser } from '../context/UserContext';
@@ -67,7 +66,6 @@ export default function Settings() {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    storage.set('language', lng);
     updateLanguage(
       { user: { language: lng }, id: Number(user?.id) },
       {
