@@ -605,5 +605,11 @@
       "submit": "Send message"
     },
     "footer": "We usually respond within 24 hours"
+  },
+  "not_found": {
+    "title": "Page not found",
+    "description": "The page you’re looking for doesn’t exist or has been moved.",
+    "go_back": "Go back",
+    "contact_support": "Contact support"
   }
 }
