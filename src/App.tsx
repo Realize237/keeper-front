@@ -30,6 +30,7 @@ import { PlaidstartProvider } from './context/PlaidContext';
 import Plaid from './pages/Plaid';
 import Settings from './pages/Settings';
 import AccountDetails from './pages/profile/AccountDetails';
+import ContactUs from './pages/ContactUs';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
@@ -94,6 +95,7 @@ export default function App() {
                         />
                       </Route>
                       <Route path="/settings" element={<Settings />} />
+                      <Route path="/contact" element={<ContactUs />} />
                       <Route
                         path="/notifications"
                         element={<NotificationsPage />}

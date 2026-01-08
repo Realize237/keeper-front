@@ -90,15 +90,15 @@ export default function Settings() {
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
-        <h3 className="text-xl font-bold ml-4 capitalize">
-          {t('settings.title', 'Settings')}
-        </h3>
       </div>
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-2xl mx-auto  space-y-6 text-white"
       >
+        <h3 className="text-xl font-bold mb-8 capitalize">
+          {t('settings.title', 'Settings')}
+        </h3>
         <Section title={t('settings.language.title')}>
           <Row
             icon={FaGlobe}
