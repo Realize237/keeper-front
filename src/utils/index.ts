@@ -6,7 +6,6 @@ import type { Subscription } from '../interfaces/subscription';
 import { dateLocales } from './dateLocales';
 import i18n from './i18n';
 import { formatDistanceToNow } from 'date-fns';
-import { useTranslation } from 'react-i18next';
 
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
@@ -212,9 +211,8 @@ export const updateCurrentDateToSelectedDate = (
 
 // to format api error message
 export const processError = (err: unknown) => {
-  const { t } = useTranslation();
   throw new Error(
-    err?.response?.data?.message || err.message || t('common.request_failed')
+    err?.response?.data?.message || err.message || 'Request failed'
   );
 };
 
