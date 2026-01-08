@@ -12,6 +12,7 @@ import {
   useSendSetPasswordEmail,
 } from '../../hooks/useUsers';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 const ChangePassword = () => {
   const { t } = useTranslation();
@@ -72,10 +73,11 @@ const ChangePassword = () => {
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
-        <h3 className="text-xl font-bold ml-4 capitalize">
-          {t('change_password.title')}
-        </h3>
       </div>
+
+      <h3 className="text-xl text-center font-bold ml-4 capitalize">
+        {t('change_password.title')}
+      </h3>
 
       {user.authType === 'EmailAndPassword' && (
         <p className="max-w-md mx-auto text-gray-300 text-sm mb-6 text-center">
@@ -148,9 +150,17 @@ const ChangePassword = () => {
           </div>
         </form>
       ) : (
-        <div className="text-white w-11/12 mx-auto py-8">
-          <div className="max-w-md mx-auto space-y-10">
-            <p>{t('change_password.googleInfo')}</p>
+        <div className="text-white w-full px-6 py-12">
+          <motion.div
+            className="max-w-md mx-auto space-y-8"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          >
+            <p className="text-sm leading-relaxed text-white/70 text-center">
+              {t('change_password.googleInfo')}
+            </p>
+
             <FormButton
               onClick={() => {
                 sendSetPasswordEmail(
@@ -171,12 +181,17 @@ const ChangePassword = () => {
                 );
               }}
               disabled={isSendingEmail}
+              className="w-full"
             >
               {isSendingEmail
                 ? t('change_password.actions.sending')
                 : t('change_password.actions.send_email')}
             </FormButton>
-          </div>
+
+            <p className="text-xs text-white/40 text-center">
+              {t('change_password.helper')}
+            </p>
+          </motion.div>
         </div>
       )}
     </div>

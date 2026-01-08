@@ -105,7 +105,7 @@ const Header = () => {
                     <button className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors">
                       <GoListUnordered className="w-5 h-5 text-white/70" />
                       <span className="font-medium text-white">
-                        {t('header.visit_website')}
+                        {t('header.all_settings')}
                       </span>
                     </button>
                   </div>
