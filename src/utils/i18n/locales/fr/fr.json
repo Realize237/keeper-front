@@ -404,7 +404,7 @@
     "actions": {
       "update": "Mettre à jour ",
       "updating": "Mise à jour...",
-      "send_email": "Envoyer un e-mail de configuration du mot de passe",
+      "send_email": "Envoyer un e-mail de configuration",
       "sending": "Envoi..."
     },
     "success": {
@@ -416,7 +416,8 @@
       "generic": "Erreur lors du changement de mot de pass",
       "send_email": "Erreur lors de l'envoi de l'e-mail de configuration du mot de passe",
       "OLD_PASSWORD_INCORRECT": "Old password incorrect"
-    }
+    },
+    "helper": "Cela enverra un e-mail sécurisé dans votre boîte de réception."
   },
   "notifications": {
     "title": "Notifications",
@@ -573,5 +574,33 @@
     "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
     "go_back": "Retour",
     "contact_support": "Nous contacter"
+  },
+  "contact_us": {
+    "title": "Contactez-nous",
+    "description": "Vous avez une question ou un commentaire ? Envoyez-nous un message.",
+
+    "fields": {
+      "name": {
+        "placeholder": "Votre nom",
+        "required": "Votre nom est requis.",
+        "min": "Le nom doit comporter au moins 2 caractères.",
+        "pattern": "Le nom ne peut contenir que des lettres et des espaces."
+      },
+      "email": {
+        "placeholder": "Votre adresse e-mail",
+        "required": "Une adresse e-mail est requise.",
+        "invalid": "Veuillez saisir une adresse e-mail valide."
+      },
+      "message": {
+        "placeholder": "Votre message",
+        "required": "Un message est requis",
+        "min": "Le message doit comporter au moins 10 caractères."
+      }
+    },
+
+    "actions": {
+      "submit": "Envoyer le message"
+    },
+    "footer": "Nous répondons généralement dans les 24 heures."
   }
 }

@@ -135,13 +135,12 @@ const Profile = () => {
         >
           <FaChevronLeft className="w-5 h-5 text-white/80" />
         </button>
-        <h3 className="text-lg font-semibold ml-4 capitalize">
-          {' '}
-          {t('profile.title')}
-        </h3>
       </div>
 
       <div className="max-w-2xl mx-auto">
+        <h3 className="text-xl font-semibold mb-6 capitalize">
+          {t('profile.title')}
+        </h3>
         <div className="flex items-center p-4 rounded-2xl bg-white/5 backdrop-blur-xl">
           <Avatar size="xl" name={user?.name || ''} src={user?.photo || ''} />
 

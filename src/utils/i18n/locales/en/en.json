@@ -426,7 +426,8 @@
     "errors": {
       "generic": "Error changing password",
       "send_email": "Error sending password setup email"
-    }
+    },
+    "helper": "This will send a secure email to your inbox."
   },
   "notifications": {
     "title": "Notifications",
@@ -576,6 +577,34 @@
       "invalid_token": "Invalid or missing token",
       "failed": "Failed to set password"
     }
+  },
+  "contact_us": {
+    "title": "Contact Us",
+    "description": "Have a question or feedback? Send us a message.",
+
+    "fields": {
+      "name": {
+        "placeholder": "Your name",
+        "required": "Your name is required",
+        "min": "Name must be at least 2 characters",
+        "pattern": "Name can only contain letters and spaces"
+      },
+      "email": {
+        "placeholder": "Your email",
+        "required": "Email is required",
+        "invalid": "Please enter a valid email"
+      },
+      "message": {
+        "placeholder": "Your message",
+        "required": "Message is required",
+        "min": "Message must be at least 10 characters"
+      }
+    },
+
+    "actions": {
+      "submit": "Send message"
+    },
+    "footer": "We usually respond within 24 hours"
   },
   "not_found": {
     "title": "Page not found",
