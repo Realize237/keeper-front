@@ -6,10 +6,10 @@ import {
   CustomUnits,
   CustomUnitType,
   NotificationType,
-  NotifType,
 } from '../../interfaces/notifications';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import { Button } from './Button';
+import { useTranslation } from 'react-i18next';
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -25,11 +25,12 @@ const ReminderModal: React.FC<CustomModalProps> = ({
   const [custom, setCustom] = useState<ICustomReminder>(
     item as ICustomReminder
   );
+  const { t } = useTranslation();
   const reminderValueError = useMemo(() => {
     if (Number(custom.value) < 30 && custom.unit == CustomUnits.MINS)
-      return 'Reminder should be greater than 30 minutes';
+      return t('reminders.custom.errors.min_minutes');
     return null;
-  }, [custom.value, custom.unit]);
+  }, [custom.value, custom.unit, t]);
 
   return (
     <motion.div
@@ -44,20 +45,22 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         exit={{ scale: 0.9, opacity: 0 }}
         className="bg-white rounded-xl p-6 w-80 shadow-lg"
       >
-        <h3 className="text-lg font-semibold mb-4">Custom reminder</h3>
+        <h3 className="text-lg font-semibold mb-4">
+          {t('reminders.custom.title')}
+        </h3>
 
         <div className="space-y-3">
           <label className="text-xs text-gray-500 mb-1">
-            Notification type
+            {t('reminders.custom.title')}
           </label>
           <MultiSelectDropdown
             options={Object.values(NotificationType).map((type) => ({
               value: type,
-              label: type,
+              label: t(`reminders.types.${type}`),
             }))}
             selected={custom.type}
             onChange={(values) =>
-              setCustom({ ...custom, type: values as NotifType[] })
+              setCustom({ ...custom, type: values as NotificationType[] })
             }
           />
 
@@ -75,9 +78,10 @@ const ReminderModal: React.FC<CustomModalProps> = ({
           )}
 
           <Dropdown
-            label="Unit"
-            options={Object.values(CustomUnits).map((notification) => ({
-              value: notification,
+            label={t('reminders.custom.unit')}
+            options={Object.values(CustomUnits).map((unit) => ({
+              value: unit,
+              label: t(`reminders.units.${unit}`),
               subscriptionType: 'BOTH',
             }))}
             value={custom.unit}
@@ -89,7 +93,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
 
         <div className="flex justify-between mt-5">
           <Button className="bg-transparent" onClick={onClose}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -99,7 +103,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             }}
             className="px-5 py-2 text-neutral-800 hover:opacity-70 rounded-lg"
           >
-            Done
+            {t('common.done')}
           </Button>
         </div>
       </motion.div>

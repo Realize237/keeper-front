@@ -1,46 +1,45 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import FormInput from "../../components/ui/FormInput";
-import FormButton from "../../components/ui/FormButton";
-import { ISetPasswordInput } from "../../interfaces/users";
-import { useLocation } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import FormInput from '../../components/ui/FormInput';
+import FormButton from '../../components/ui/FormButton';
+import { ISetPasswordInput } from '../../interfaces/users';
+import { useLocation } from 'react-router-dom';
 
-import { useSetPassword } from "../../hooks/useUsers";
+import { useSetPassword } from '../../hooks/useUsers';
+import { useTranslation } from 'react-i18next';
 
 const SetPassword = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { mutate: setPassword, isPending } = useSetPassword();
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get("token") || "";
+  const token = queryParams.get('token') || '';
 
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     reset,
     formState: { errors },
   } = useForm<ISetPasswordInput>();
 
-  const newPassword = watch("newPassword");
-
   const onSubmit = (data: ISetPasswordInput) => {
     if (!token) {
-      toast.error("Invalid or missing token");
+      toast.error(t('set_password.errors.invalid_token'));
       return;
     }
     setPassword(
       { data: { ...data, token } },
       {
         onSuccess: () => {
-          toast.success("Password set successfully");
+          toast.success(t('set_password.success'));
           reset();
-          navigate("/login");
+          navigate('/login');
         },
         onError: (error: Error) => {
-          toast.error(error.message || "Failed to set password");
+          toast.error(error.message || t('set_password.errors.failed'));
         },
       }
     );
@@ -50,9 +49,9 @@ const SetPassword = () => {
     <div className="text-white w-11/12 mx-auto py-8">
       <div className="flex items-center mb-6"></div>
       <div className="max-w-md mx-auto text-center">
-        <h3 className="text-xl font-bold ml-4">Set Password</h3>
+        <h3 className="text-xl font-bold ml-4">{t('set_password.title')}</h3>
         <p className=" text-gray-300 text-sm my-6 text-center">
-          Set a password to sign in directly without using Google.
+          {t('set_password.subtitle')}
         </p>
       </div>
 
@@ -63,19 +62,18 @@ const SetPassword = () => {
         <FormInput
           name="newPassword"
           type="password"
-          placeholder="New Password"
+          placeholder={t('set_password.fields.new_password.placeholder')}
           register={register}
           passwordToggle={true}
           rules={{
-            required: "New password is required",
+            required: t('set_password.fields.new_password.required'),
             minLength: {
               value: 8,
-              message: "Password must be at least 8 characters",
+              message: t('set_password.fields.new_password.min_length'),
             },
             pattern: {
               value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-              message:
-                "Password must contain uppercase, lowercase, and numbers",
+              message: t('set_password.fields..new_password.pattern'),
             },
           }}
           error={errors.newPassword}
@@ -84,19 +82,22 @@ const SetPassword = () => {
         <FormInput
           name="confirmPassword"
           type="password"
-          placeholder="Confirm New Password"
+          placeholder={t('set_password.fields.confirm_password.placeholder')}
           register={register}
           passwordToggle={true}
           rules={{
-            required: "Please confirm your new password",
+            required: t('set_password.fields.confirm_password.required'),
             validate: (value) =>
-              value === newPassword || "Passwords do not match",
+              value === getValues('newPassword') ||
+              t('set_password.fields.confirm_password.mismatch'),
           }}
           error={errors.confirmPassword}
         />
 
         <FormButton type="submit" disabled={isPending}>
-          {isPending ? "Setting..." : "Set Password"}
+          {isPending
+            ? t('set_password.actions.setting')
+            : t('set_password.actions.submit')}
         </FormButton>
       </form>
     </div>

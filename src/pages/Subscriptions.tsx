@@ -2,7 +2,6 @@ import { useCallback, useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { IoIosTrendingUp } from 'react-icons/io';
 import { CiCreditCard1 } from 'react-icons/ci';
-import { daysOfWeek, monthsOfYear } from '../constants';
 import Calendar from '../components/calendar/Calendar';
 import SelectCalendarDate from '../components/ui/Calendar';
 import {
@@ -35,6 +34,8 @@ import SubscriptionFilterModal, {
   type FilterData,
 } from '../components/subscriptions/SubscriptionFilterModal';
 import { CiFilter } from 'react-icons/ci';
+import { useTranslation } from 'react-i18next';
+import { MONTH_KEYS } from '../constants/calendar';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -57,6 +58,7 @@ const itemVariants = {
 };
 
 const Subscriptions = () => {
+  const { t } = useTranslation();
   const [selectDay, setSelectDay] = useState<number | null>(null);
   const [currentDate, onChangeCalendarValue] = useState<Value>(new Date());
   const [selectedSubsciptionsByDay, setSelectedSubscriptionsByDay] =
@@ -78,11 +80,17 @@ const Subscriptions = () => {
   const closeBottomSheet = () => setBottomSheetOpen(false);
   const [openFilter, setOpenFilter] = useState(false);
 
+  const translatedDaysOfWeek = t('calendar.days_of_week', {
+    returnObjects: true,
+  }) as string[];
+
   const handleApplyFilters = (filters: FilterData) => {
     console.log('filters: ', filters);
   };
 
   const normalized = normalizedDate(currentDate);
+  const date = new Date(normalizedDate(currentDate));
+  const monthIndex = date.getMonth();
 
   useEffect(() => {
     if (!hasAskedBefore()) {
@@ -241,16 +249,14 @@ const Subscriptions = () => {
           <SubscriptionStatCard
             variant="stat"
             icon={<FaWallet size={20} />}
-            title="Monthly Total"
+            title={t('subscriptions.stat_cards.monthly_total')}
             value={`$${getTotalMonthlySubscriptions}`}
-            badge={
-              monthsOfYear[new Date(normalizedDate(currentDate)).getMonth() + 1]
-            }
+            badge={t(`calendar.months.${MONTH_KEYS[monthIndex]}`)}
           />
           <SubscriptionStatCard
             variant="progress"
             icon={<IoIosTrendingUp size={20} />}
-            title="Left to pay"
+            title={t('subscriptions.stat_cards.left_to_pay')}
             value={`$${getRemainingAmount}`}
             progress={getProgressPercentage}
             accent="orange"
@@ -258,7 +264,7 @@ const Subscriptions = () => {
           <SubscriptionStatCard
             variant="status"
             icon={<CiCreditCard1 size={20} />}
-            title="Next 7 days"
+            title={t('subscriptions.stat_cards.next_7_days')}
             secondaryText={`$${getNextBillingAmount.toFixed(2)}`}
             accent="indigo"
             customContent={
@@ -281,12 +287,8 @@ const Subscriptions = () => {
             >
               <div>
                 <span className="text-white text-2xl">
-                  {
-                    monthsOfYear[
-                      new Date(normalizedDate(currentDate)).getMonth() + 1
-                    ]
-                  }
-                  , {new Date(normalizedDate(currentDate)).getFullYear()}
+                  {t(`calendar.months.${MONTH_KEYS[monthIndex]}`)},{' '}
+                  {date.getFullYear()}
                 </span>
               </div>
             </motion.div>
@@ -295,9 +297,9 @@ const Subscriptions = () => {
               className="w-full h-auto p-2 my-2 grid grid-cols-7"
               variants={itemVariants}
             >
-              {daysOfWeek.map((day, index) => (
+              {translatedDaysOfWeek.map((day, index) => (
                 <motion.button
-                  key={day}
+                  key={index}
                   onClick={() => setSelectDay(index)}
                   className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
                     selectDay === index
@@ -330,7 +332,12 @@ const Subscriptions = () => {
             </motion.div>
             {isLoading ? (
               <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
-            ) : error ? null : (
+            ) : error ? (
+              <ErrorState
+                message={t('subscriptions.modals.failed_to_load')}
+                onRetry={() => refetch()}
+              />
+            ) : (
               <motion.div
                 className="w-full mt-4"
                 onClick={openBottomSheet}
@@ -338,14 +345,14 @@ const Subscriptions = () => {
                 transition={{ duration: 0.2 }}
               >
                 <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
-                  Select Date
+                  {t('common.select_date')}
                 </button>
               </motion.div>
             )}
           </div>
           <div className="md:sticky md:mt-4">
             <p className="text-xs uppercase tracking-wider text-white/40 mb-2">
-              Filter
+              {t('subscriptions.filter.title')}
             </p>
 
             <motion.button
@@ -372,7 +379,9 @@ const Subscriptions = () => {
     gap-1
   "
             >
-              <span>Filter </span>
+              <span className="capitalize">
+                {t('subscriptions.filter.title')}
+              </span>
 
               <motion.span
                 whileHover={{ x: 2 }}
@@ -384,12 +393,6 @@ const Subscriptions = () => {
             </motion.button>
           </div>
         </div>
-        {error && (
-          <ErrorState
-            message="Failed to load subscriptions."
-            onRetry={() => refetch()}
-          />
-        )}
       </motion.div>
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <motion.div variants={itemVariants}>
@@ -407,9 +410,7 @@ const Subscriptions = () => {
         }}
         onPermissionGranted={() => {
           handlePermissionGranted();
-          toast.success(
-            "Notifications enabled! You'll get reminders for your subscriptions."
-          );
+          toast.success(t('common.notifications_enabled'));
         }}
       />
       <SubscriptionFilterModal

@@ -9,6 +9,7 @@ import {
 } from '../../interfaces/subscription';
 
 import { formatToReadableDate } from '../../utils';
+import { useTranslation } from 'react-i18next';
 interface SelectedDaySubscriptionsListModalProps {
   selectedSubsciptionsByDay: Subscription[];
   closeSubscriptionModals: (type: SubscriptionModalType) => void;
@@ -23,6 +24,7 @@ export default function SelectedDaySubscriptionsListModal({
   selectedDay,
 }: SelectedDaySubscriptionsListModalProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const { t, i18n } = useTranslation();
 
   const getTotal = (selectedSubsciptionsByDay: Subscription[]) => {
     const sum = selectedSubsciptionsByDay.reduce((total, curr) => {
@@ -172,7 +174,9 @@ export default function SelectedDaySubscriptionsListModal({
               animate="visible"
               exit="exit"
             >
-              <span className="text-[#848484] text-sm">TOTAL:</span>
+              <span className="text-[#848484] text-sm uppercase">
+                {t('subscriptions.selected_day.total')}:
+              </span>
               <span className="text-white text-sm ml-2">
                 ${getTotal(selectedSubsciptionsByDay)}
               </span>
@@ -225,7 +229,7 @@ export default function SelectedDaySubscriptionsListModal({
                 className="text-[#848484] text-sm mt-6"
               >
                 {selectedDay &&
-                  formatToReadableDate(new Date(selectedDay).toDateString())}
+                  formatToReadableDate(selectedDay, i18n.language)}
               </motion.div>
             </motion.div>
           </motion.div>
