@@ -57,13 +57,12 @@ const AccountDetails = () => {
         >
           <FaChevronLeft className="w-5 h-5 text-white/80" />
         </button>
-
-        <h1 className="text-lg font-semibold text-white ml-4">
-          {t('profile.account_details.title')}
-        </h1>
       </div>
 
       <div className="max-w-2xl mx-auto">
+        <h1 className="text-xl font-semibold text-white mb-8">
+          {t('profile.account_details.title')}
+        </h1>
         <div className="flex items-center gap-4 mb-10">
           <Avatar size="xl" name={user?.name} src={user?.photo ?? ''} />
 

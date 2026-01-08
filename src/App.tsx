@@ -1,10 +1,5 @@
 import { CookiesProvider } from 'react-cookie';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Subscriptions from './pages/Subscriptions';
@@ -30,6 +25,8 @@ import { PlaidstartProvider } from './context/PlaidContext';
 import Plaid from './pages/Plaid';
 import Settings from './pages/Settings';
 import AccountDetails from './pages/profile/AccountDetails';
+import NotFound from './pages/NotFound';
+import ContactUs from './pages/ContactUs';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
@@ -39,7 +36,6 @@ function PushTokenHandler() {
     const getClientPushToken = async () => {
       if (Notification.permission === 'granted') {
         const fcmToken = await getFirebaseToken();
-        console.log('fcmToken: ', fcmToken);
         if (fcmToken) {
           saveWebPushToken(fcmToken);
         }
@@ -94,6 +90,7 @@ export default function App() {
                         />
                       </Route>
                       <Route path="/settings" element={<Settings />} />
+                      <Route path="/contact" element={<ContactUs />} />
                       <Route
                         path="/notifications"
                         element={<NotificationsPage />}
@@ -106,7 +103,7 @@ export default function App() {
                       <Route path="/settings" element={<Settings />} />
                     </Route>
                     <Route path="set-password" element={<SetPassword />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path="*" element={<NotFound />} />
                   </Route>
                 </Routes>
               </Router>
