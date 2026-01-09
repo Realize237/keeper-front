@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode } from 'react';
 import { useLogoutUser } from '../hooks/useUsers';
 import { getFirebaseToken } from '../config/firebase';
 import Modal from '../components/ui/Modal';
@@ -7,14 +7,14 @@ import { useDeviceType } from '../hooks/useDeviceType';
 import BottomSheet from '../components/ui/BottomSheet';
 import { useTranslation } from 'react-i18next';
 
-interface LogoutContextType {
+export interface LogoutContextType {
   requestLogout: () => void;
   isLoggingOut: boolean;
 }
 
 const LogoutContext = createContext<LogoutContextType | undefined>(undefined);
 
-export const LogoutProvider = ({ children }: { children: ReactNode }) => {
+const LogoutProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const { mutate: logout, isPending } = useLogoutUser();
@@ -113,9 +113,4 @@ export const LogoutProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useLogoutModal = () => {
-  const context = useContext(LogoutContext);
-  if (!context)
-    throw new Error('useLogoutModal must be used within LogoutProvider');
-  return context;
-};
+export { LogoutProvider, LogoutContext };

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUser } from '../context/UserContext';
+import { useUser } from './useUsers';
 import {
   IReminderRequest,
   IReminderResponse,
@@ -61,11 +61,7 @@ export const useUpdateReminder = () => {
   const queryClient = useQueryClient();
   const { user } = useUser();
 
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    IReminderUpdate
-  >({
+  return useMutation<unknown, Error, IReminderUpdate>({
     mutationFn: updateReminder,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -81,11 +77,7 @@ export const useUpdateSubscriptionReminders = () => {
   const queryClient = useQueryClient();
   const { user } = useUser();
 
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    ISubscriptionRemindersUpdate
-  >({
+  return useMutation<unknown, Error, ISubscriptionRemindersUpdate>({
     mutationFn: updateSubscriptionReminders,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -101,7 +93,7 @@ export const useDeleteReminder = () => {
   const queryClient = useQueryClient();
   const { user } = useUser();
 
-  return useMutation<{ statusCode: number; message: string }, Error, number>({
+  return useMutation<unknown, Error, number>({
     mutationFn: deleteReminder,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -117,7 +109,7 @@ export const useDeleteSubscriptionReminders = () => {
   const queryClient = useQueryClient();
   const { user } = useUser();
 
-  return useMutation<{ statusCode: number; message: string }, Error, number>({
+  return useMutation<unknown, Error, number>({
     mutationFn: deleteSubscriptionReminders,
     onSuccess: () => {
       queryClient.invalidateQueries({

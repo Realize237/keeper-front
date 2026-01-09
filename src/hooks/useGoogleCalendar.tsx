@@ -4,10 +4,10 @@ import {
   checkGoogleCalendarAccess,
   disconnectGoogleCalendar,
 } from '../services/googleCalendarService';
-import { useUser } from '../context/UserContext';
 import toast from 'react-hot-toast';
 import { googleCalendarKeys } from '../queryKeys/googleCalendarKeys';
 import { useTranslation } from 'react-i18next';
+import { useUser } from './useUsers';
 
 export const useGoogleCalendarAccess = () => {
   const { user } = useUser();

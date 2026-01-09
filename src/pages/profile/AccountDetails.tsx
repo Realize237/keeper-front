@@ -7,9 +7,9 @@ import {
   FaLock,
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
 import { Avatar } from '../../components/ui/Avatar';
 import { useTranslation } from 'react-i18next';
+import { useUser } from '../../hooks/useUsers';
 
 const InfoRow = ({
   icon: Icon,

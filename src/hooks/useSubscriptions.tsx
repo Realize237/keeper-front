@@ -13,8 +13,8 @@ import {
   subscriptionKeys,
   type SubscriptionFilters,
 } from '../queryKeys/subscriptionKeys';
-import { useUser } from '../context/UserContext';
 import { getMonthlySubscriptions } from '../services/subscriptionService';
+import { useUser } from './useUsers';
 
 export const useMonthlySubscriptions = (date: Date) => {
   const { user } = useUser();
@@ -39,7 +39,7 @@ export const useSubscriptionsDetails = (subscriptionId: number) => {
 
 export const useAddSubscriptionToGoogleCalendar = () => {
   return useMutation<
-    { statusCode: number; message: string },
+    unknown,
     Error,
     { data: IAddToCalendar; subscriptionId: number }
   >({
@@ -52,11 +52,7 @@ export const useAddSubscriptionToGoogleCalendar = () => {
 };
 
 export const useRemoveSubscriptionFromGoogleCalendar = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    { subscriptionId: number }
-  >({
+  return useMutation<unknown, Error, { subscriptionId: number }>({
     mutationFn: ({ subscriptionId }) =>
       removeSubscriptionFromGoogleCalendar(subscriptionId),
     meta: {

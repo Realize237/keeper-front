@@ -104,7 +104,7 @@ const NotificationsPage: React.FC = () => {
       });
     }
     setSelectedIds(new Set());
-  }, [deleteNotificationMutation, notifications]);
+  }, [deleteNotificationMutation, notifications, t]);
 
   const toggleSelect = useCallback((id: number) => {
     setSelectedIds((prev) => {
@@ -131,7 +131,7 @@ const NotificationsPage: React.FC = () => {
       deleteNotificationMutation.mutate({ ids: [...selectedIds], all: false });
     }
     setSelectedIds(new Set());
-  }, [selectedIds, deleteNotificationMutation]);
+  }, [selectedIds, deleteNotificationMutation, t]);
 
   const toggleSelectedStatus = useCallback(() => {
     if (selectedIds.size === 0) return;

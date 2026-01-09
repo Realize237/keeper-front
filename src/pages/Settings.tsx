@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { SettingsSelect } from '../components/Settings/SettingsSelect';
 import type { IconType } from 'react-icons';
 import { ReactNode } from 'react';
-import { useUser } from '../context/UserContext';
+import { useUser } from '../hooks/useUsers';
 import { useUpdateUser } from '../hooks/useUsers';
 import toast from 'react-hot-toast';
 

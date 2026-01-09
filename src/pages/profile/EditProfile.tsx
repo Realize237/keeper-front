@@ -1,14 +1,14 @@
 import { FaChevronLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { getAvatarInitials } from '../../utils';
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../../hooks/useUsers';
 import FormInput from '../../components/ui/FormInput';
 import { useForm } from 'react-hook-form';
 import { UserInput } from '../../interfaces/users';
 import FormButton from '../../components/ui/FormButton';
 import { useUpdateUser } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const EditProfile = () => {
@@ -16,13 +16,13 @@ const EditProfile = () => {
   const { user } = useUser();
   const { t } = useTranslation();
   const { mutate: updateUser } = useUpdateUser();
-  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [emailError] = useState<string | undefined>(undefined);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    watch,
+    formState: { errors, isDirty },
+    getValues,
   } = useForm<UserInput>({
     mode: 'onBlur',
     defaultValues: {
@@ -31,28 +31,16 @@ const EditProfile = () => {
     },
   });
 
-  const values = watch();
-  const changedFields = {
-    name: values.name !== user?.name ? values.name : undefined,
-    email: values.email !== user?.email ? values.email : undefined,
-  };
-
-  const filteredFields = Object.fromEntries(
-    Object.entries(changedFields).filter(([_, value]) => value !== undefined)
-  );
-
-  const isDisabled = Object.keys(filteredFields).length === 0;
-
-  useEffect(() => {
-    const subscription = watch((_, { name }) => {
-      if (emailError && name === 'email') {
-        setEmailError(undefined);
-      }
-      return () => subscription.unsubscribe();
-    });
-  }, [watch, emailError]);
-
   const onSubmit = () => {
+    const values = getValues();
+    const changedFields = {
+      name: values.name !== user?.name ? values.name : undefined,
+    };
+
+    const filteredFields = Object.fromEntries(
+      Object.entries(changedFields).filter(([, value]) => value !== undefined)
+    );
+
     if (Object.keys(filteredFields).length === 0) return;
 
     updateUser(
@@ -60,10 +48,6 @@ const EditProfile = () => {
       {
         onSuccess: () => toast.success(t('profile.edit.success')),
         onError: (error: Error) => {
-          const code = error.code;
-          if (code) {
-            setEmailError(error.message);
-          }
           toast.error(error.message || t('profile.edit.errors.generic'));
         },
       }
@@ -137,7 +121,7 @@ const EditProfile = () => {
             >
               {t('common.cancel')}
             </FormButton>
-            <FormButton disabled={isDisabled} type="submit">
+            <FormButton disabled={!isDirty} type="submit">
               {t('common.save')}
             </FormButton>
           </div>

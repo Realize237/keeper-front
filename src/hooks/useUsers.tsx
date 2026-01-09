@@ -26,6 +26,16 @@ import {
 } from '../api/users';
 import { env } from '../utils/env';
 import { userKeys } from '../queryKeys/userKeys';
+import { use } from 'react';
+import { UserContext, UserContextType } from '../context/UserContext';
+
+export const useUser = (): UserContextType => {
+  const ctx = use(UserContext);
+  if (!ctx) {
+    throw new Error('useUser must be used inside a <UserProvider>');
+  }
+  return ctx;
+};
 
 export const useUserList = () => {
   return useQuery<UserResponse[]>({
@@ -35,22 +45,16 @@ export const useUserList = () => {
 };
 
 export const useCreateUser = () => {
-  return useMutation<{ statusCode: number; message: string }, Error, UserInput>(
-    {
-      mutationFn: createUser,
-      meta: {
-        invalidate: [userKeys.lists()],
-      },
-    }
-  );
+  return useMutation<unknown, Error, UserInput>({
+    mutationFn: createUser,
+    meta: {
+      invalidate: [userKeys.lists()],
+    },
+  });
 };
 
 export const useUpdateUser = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    { user: UserUpdateInput; id: number }
-  >({
+  return useMutation<unknown, Error, { user: UserUpdateInput; id: number }>({
     mutationFn: ({ user, id }) => updateUser(user, id),
     meta: {
       invalidate: [userKeys.info],
@@ -59,11 +63,7 @@ export const useUpdateUser = () => {
 };
 
 export const useChangeUserPassword = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    { data: IEmailPasswordInput }
-  >({
+  return useMutation<unknown, Error, { data: IEmailPasswordInput }>({
     mutationFn: ({ data }) => changeUserPassword(data),
     meta: {
       invalidate: [userKeys.info],
@@ -72,51 +72,33 @@ export const useChangeUserPassword = () => {
 };
 
 export const useSendSetPasswordEmail = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    { data: { name: string; email: string } }
-  >({
-    mutationFn: ({ data }) => sendSetPasswordEmail(data),
-  });
+  return useMutation<unknown, Error, { data: { name: string; email: string } }>(
+    {
+      mutationFn: ({ data }) => sendSetPasswordEmail(data),
+    }
+  );
 };
 
 export const useRequestPasswordReset = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    PasswordRequestInput
-  >({
+  return useMutation<unknown, Error, PasswordRequestInput>({
     mutationFn: requestPasswordRequest,
   });
 };
 
 export const useValidateForgotPasswordToken = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    IValidateToken
-  >({
+  return useMutation<unknown, Error, IValidateToken>({
     mutationFn: validateForgotPasswordToken,
   });
 };
 
 export const useResetPassword = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    IResetPassword
-  >({
+  return useMutation<unknown, Error, IResetPassword>({
     mutationFn: resetPassword,
   });
 };
 
 export const useSetPassword = () => {
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    { data: ISetPasswordInput }
-  >({
+  return useMutation<unknown, Error, { data: ISetPasswordInput }>({
     mutationFn: ({ data }) => setPassword(data),
     meta: {
       invalidate: [userKeys.info],
@@ -125,7 +107,7 @@ export const useSetPassword = () => {
 };
 
 export const useLoginUser = () => {
-  return useMutation<{ message: string }, Error, UserLoginInput>({
+  return useMutation<unknown, Error, UserLoginInput>({
     mutationFn: loginUser,
     meta: {
       invalidate: [userKeys.info],

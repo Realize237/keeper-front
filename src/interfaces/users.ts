@@ -22,7 +22,9 @@ export type ISetPasswordInput = Pick<
   token: string;
 };
 
-export type UserInput = Pick<User, 'name' | 'email' | 'password'>;
+export type UserInput = Pick<User, 'name' | 'email' | 'password'> & {
+  language?: string;
+};
 export type PasswordRequestInput = Pick<User, 'email'>;
 export interface IValidateToken extends PasswordRequestInput {
   token: string;
@@ -32,7 +34,7 @@ export interface IResetPassword extends PasswordRequestInput {
   newPassword: string;
 }
 
-export type UserLoginInput = Omit<UserInput, 'name'>;
+export type UserLoginInput = Pick<User, 'email' | 'password'>;
 
 export type UserResponse = Omit<User, 'password'>;
 

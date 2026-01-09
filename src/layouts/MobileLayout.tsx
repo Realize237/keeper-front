@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import BottomNav from '../components/layout/bottomNav/BottomNav';
-import { useUser } from '../context/UserContext';
 import { useDeviceType } from '../hooks/useDeviceType';
 import Sidebar from '../components/layout/sidebar/Sidebar';
+import { useUser } from '../hooks/useUsers';
 
 export default function MobileLayout() {
   const { user } = useUser();

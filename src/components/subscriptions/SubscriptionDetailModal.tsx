@@ -5,7 +5,6 @@ import {
   formatToReadableDate,
   getNextBillingDate,
   getSubscriptionCardImage,
-  pluralize,
 } from '../../utils';
 import { MdOutlineClear } from 'react-icons/md';
 import SubscriptionTypeAndDot from '../ui/SubscriptionTypeAndDot';

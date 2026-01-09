@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../../hooks/useUsers';
 import FormInput from '../../components/ui/FormInput';
 import FormButton from '../../components/ui/FormButton';
 import { useForm } from 'react-hook-form';

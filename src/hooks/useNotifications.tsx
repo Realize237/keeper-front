@@ -10,7 +10,7 @@ import {
   updateNotification,
 } from '../api/notifications';
 import { notificationKeys } from '../queryKeys/notificationKeys';
-import { useUser } from '../context/UserContext';
+import { useUser } from './useUsers';
 
 export const useUserNotifications = () => {
   const { user } = useUser();
@@ -31,11 +31,7 @@ export const useAllNotifications = () => {
 export const useUpdateNotification = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    NotificationRequest
-  >({
+  return useMutation<unknown, Error, NotificationRequest>({
     mutationFn: updateNotification,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notificationKeys.user });
@@ -46,11 +42,7 @@ export const useUpdateNotification = () => {
 export const useDeleteNotifications = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    { statusCode: number; message: string },
-    Error,
-    NotificationRequest
-  >({
+  return useMutation<unknown, Error, NotificationRequest>({
     mutationFn: deleteNotification,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notificationKeys.user });
