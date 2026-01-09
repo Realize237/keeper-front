@@ -1,5 +1,4 @@
 import {
-  FaBell,
   FaChevronLeft,
   FaChevronRight,
   FaCog,
@@ -13,17 +12,13 @@ import {
   FaSignOutAlt,
 } from 'react-icons/fa';
 import { type IconType } from 'react-icons';
-
-import { useUser } from '../../context/UserContext';
-
+import { useUser } from '../../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
-
 import { motion } from 'framer-motion';
-
 import { HiOutlineUser } from 'react-icons/hi2';
-import { useLogoutModal } from '../../context/LogoutContext';
 import { Avatar } from '../../components/ui/Avatar';
 import { useTranslation } from 'react-i18next';
+import { useLogoutModal } from '../../hooks/useLogoutModal';
 
 interface MenuItem {
   icon: IconType;

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 interface SelectCalendarDateProps {
   currentDate: Value;
-  onChange: React.Dispatch<any>;
+  onChange: React.Dispatch<Value>;
   closeBottomSheet: () => void;
 }
 

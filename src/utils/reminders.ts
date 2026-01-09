@@ -1,7 +1,9 @@
+import { TFunction } from 'i18next';
 import {
   ICustomReminder,
   INotificationReminder,
   NotificationType,
+  CustomUnitType,
 } from '../interfaces/notifications';
 
 export function getReminderDate(
@@ -9,10 +11,7 @@ export function getReminderDate(
   isCustom = false,
   custom?: ICustomReminder
 ) {
-  const reminderMap: Record<
-    string,
-    [number, moment.unitOfTime.DurationConstructor]
-  > = {
+  const reminderMap: Record<string, [number, CustomUnitType]> = {
     MIN_5: [5, 'minutes'],
     MIN_10: [10, 'minutes'],
     MIN_30: [30, 'minutes'],
@@ -45,16 +44,17 @@ export function getReminderDate(
 
 export function getReminderString(
   value: number,
-  unit: moment.unitOfTime.DurationConstructor,
+  unit: CustomUnitType,
   notificationType?: NotificationType[]
 ): { combinedKeyValue: string; isCustom: boolean } {
   const types = (notificationType || ['EMAIL']).sort().join('_');
   const key = `CUSTOM_${value}_${unit}_${types}`;
   return { combinedKeyValue: key, isCustom: true };
 }
+
 export function getKeyFromValueUnit(
   value: number,
-  unit: moment.unitOfTime.DurationConstructor
+  unit: CustomUnitType
 ): string | null {
   const map: Record<string, string> = {
     '5-minutes': 'MIN_5',
@@ -78,7 +78,7 @@ export function getKeyFromValueUnit(
 
 export const formatReminderDisplay = (
   reminder: INotificationReminder,
-  t: (key: string, options?: any) => string
+  t: TFunction
 ) => {
   if (!reminder.custom) {
     return t(`reminders.options.${reminder.value}`);
@@ -86,10 +86,7 @@ export const formatReminderDisplay = (
 
   const { value, unit, type } = reminder.custom;
 
-  // Translate unit + value (handle plural!)
-  // You need proper plural handling for units
-  // Simple way:
-  const units = {
+  const units: Record<string, string> = {
     minutes: t('common.units.minute', { count: value }),
     hours: t('common.units.hour', { count: value }),
     days: t('common.units.day', { count: value }),

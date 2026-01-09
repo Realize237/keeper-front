@@ -17,21 +17,12 @@ const ContactUs = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<ContactFormValues>({
     mode: 'onBlur',
   });
   const { t } = useTranslation();
 
   const navigate = useNavigate();
-
-  const onSubmit = async (data: ContactFormValues) => {
-    try {
-      reset();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div className="min-h-[70vh]  px-6 mt-8">
@@ -57,7 +48,7 @@ const ContactUs = () => {
           <p className="text-sm text-white/50">{t('contact_us.description')}</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(() => {})} className="space-y-5">
           <FormInput<ContactFormValues>
             name="name"
             placeholder={t('contact_us.fields.name.placeholder')}

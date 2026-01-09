@@ -11,7 +11,7 @@ export const storage = {
     }
   },
 
-  get<T = any>(key: string, defaultValue: T | null = null): T | null {
+  get<T = unknown>(key: string, defaultValue: T | null = null): T | null {
     try {
       const item = localStorage.getItem(key);
       if (!item) return defaultValue;

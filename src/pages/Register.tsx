@@ -20,7 +20,7 @@ export default function Register() {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    getValues,
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -35,8 +35,6 @@ export default function Register() {
     setEmailError(null);
     return e.target.value;
   };
-
-  const password = watch('password');
 
   const onSubmit = (data: {
     name: string;
@@ -256,9 +254,13 @@ export default function Register() {
               placeholder={t('auth.register.fields.confirm_password.label')}
               {...register('confirmPassword', {
                 required: t('auth.register.fields.confirm_password.required'),
-                validate: (value) =>
-                  value === password ||
-                  t('auth.register.fields.confirm_password.match'),
+                validate: (value) => {
+                  const password = getValues('password');
+                  return (
+                    value === password ||
+                    t('auth.register.fields.confirm_password.match')
+                  );
+                },
               })}
               className={`${getInputClass('confirmPassword')} pr-12`}
             />

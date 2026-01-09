@@ -1,4 +1,4 @@
-import { useState, useRef, RefObject, useEffect } from 'react';
+import { useState, useRef, RefObject } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactCountryFlag from 'react-country-flag';
 import { FaChevronDown, FaCheck } from 'react-icons/fa';

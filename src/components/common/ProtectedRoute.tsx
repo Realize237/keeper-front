@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
-import { useUser } from '../../context/UserContext';
 import { Navigate, useLocation } from 'react-router-dom';
 import FullScreenLoader from './FullScreenLoader';
+import { useUser } from '../../hooks/useUsers';
 
 export const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
   const { user, isUserReady } = useUser();

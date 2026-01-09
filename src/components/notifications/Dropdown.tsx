@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import moment from 'moment';
 import {
   INotificationReminder,
   ReminderOptionType,
   NotificationType,
+  CustomUnitType,
 } from '../../interfaces/notifications';
 import { MdClose } from 'react-icons/md';
 import { groupClassNames } from '../../utils';
@@ -93,7 +93,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                               value: option.value,
                               custom: {
                                 value: parseInt(value),
-                                unit: unit as moment.unitOfTime.DurationConstructor,
+                                unit: unit as CustomUnitType,
                                 type: typeArray,
                               },
                             } as INotificationReminder,

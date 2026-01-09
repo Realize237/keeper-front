@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { env } from '../utils/env';
 import { SOCKET_OPTIONS } from '../constants';
-import { useUser } from './UserContext';
+import { useUser } from '../hooks/useUsers';
 
 type SocketContextType = {
   socket: Socket | null;

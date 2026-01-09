@@ -43,7 +43,13 @@ export const CustomUnits = {
   WEEKS: 'weeks',
 };
 
-export type CustomUnitType = moment.unitOfTime.DurationConstructor;
+export type CustomUnitType =
+  | 'minutes'
+  | 'hours'
+  | 'days'
+  | 'weeks'
+  | 'months'
+  | 'years';
 
 export interface ReminderOptionType {
   value: string;

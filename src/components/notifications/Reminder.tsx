@@ -1,9 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import moment from 'moment';
 import ReminderModal from '../ui/ReminderModal';
 import Dropdown from './Dropdown';
 import {
+  CustomUnitType,
   INotificationReminder,
   IReminderRequest,
   IReminderUpdate,
@@ -49,19 +49,18 @@ const NotificationReminder = ({
         subscription.reminders.map((reminder) => {
           const key = getKeyFromValueUnit(
             reminder.value,
-            reminder.unit as moment.unitOfTime.DurationConstructor
+            reminder.unit as CustomUnitType
           );
           const isCustom = !key; // if no predefined key found → custom
 
           const displayValue = isCustom
             ? getReminderString(
                 reminder.value,
-                reminder.unit as moment.unitOfTime.DurationConstructor,
+                reminder.unit as CustomUnitType,
                 reminder.notificationType
               ).combinedKeyValue
             : key;
 
-          // Add custom ones to dropdown if needed
           if (isCustom) {
             setReminderOptions((prev) => {
               if (prev.some((o) => o.value === displayValue)) return prev;
@@ -71,7 +70,7 @@ const NotificationReminder = ({
                   value: displayValue,
                   subscriptionType: 'BOTH' as const,
                   custom: {
-                    unit: reminder.unit as moment.unitOfTime.DurationConstructor,
+                    unit: reminder.unit as CustomUnitType,
                     value: reminder.value,
                     type: reminder.notificationType || ['EMAIL'],
                   },
@@ -85,7 +84,7 @@ const NotificationReminder = ({
             value: displayValue,
             custom: isCustom
               ? {
-                  unit: reminder.unit as moment.unitOfTime.DurationConstructor,
+                  unit: reminder.unit as CustomUnitType,
                   value: reminder.value,
                   type: reminder.notificationType || ['EMAIL'],
                 }
@@ -288,7 +287,7 @@ const NotificationReminder = ({
                                     value: reminder.value,
                                     custom: {
                                       value: parseInt(value),
-                                      unit: unit as moment.unitOfTime.DurationConstructor,
+                                      unit: unit as CustomUnitType,
                                       type: typeArray,
                                     },
                                   } as INotificationReminder,

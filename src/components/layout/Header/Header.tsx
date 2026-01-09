@@ -3,7 +3,6 @@ import NotificationBell from '../../notifications/NotificationBell';
 import { Avatar } from '../../ui/Avatar';
 import { CiLight } from 'react-icons/ci';
 import LanguageSwitcher from '../../LanguageSwitcher';
-import { useUser } from '../../../context/UserContext';
 import { useMemo, useRef, useState } from 'react';
 import { useUserNotifications } from '../../../hooks/useNotifications';
 import { NotificationStatus } from '../../../interfaces/notifications';
@@ -15,8 +14,9 @@ import { HiOutlineUser } from 'react-icons/hi2';
 import { IoIosLogOut } from 'react-icons/io';
 import { useCloseOnOutsideInteraction } from '../../../hooks/useCloseOnOutsideInteraction';
 import { env } from '../../../utils/env';
-import { useLogoutModal } from '../../../context/LogoutContext';
 import { useTranslation } from 'react-i18next';
+import { useLogoutModal } from '../../../hooks/useLogoutModal';
+import { useUser } from '../../../hooks/useUsers';
 
 const Header = () => {
   const { user } = useUser();

@@ -6,6 +6,7 @@ import type {
   IReminderUpdate,
   ISubscriptionRemindersUpdate,
 } from '../interfaces/notifications';
+import { ApiSuccessResponse } from '../interfaces/api';
 
 export const addReminders = async (newReminder: IReminderRequest[]) => {
   try {
@@ -54,10 +55,7 @@ export const getAllSubscriptionReminders = async (subscriptionId: number) => {
 
 export const updateReminder = async (reminderUpdate: IReminderUpdate) => {
   try {
-    const response = await axiosClient.patch<{
-      message: string;
-      statusCode: number;
-    }>(
+    const response = await axiosClient.patch<ApiSuccessResponse>(
       `${API_PATHS.REMINDERS.UPDATE_REMINDER(reminderUpdate.id)}`,
       reminderUpdate
     );
@@ -70,10 +68,9 @@ export const updateReminder = async (reminderUpdate: IReminderUpdate) => {
 
 export const deleteReminder = async (reminderId: number) => {
   try {
-    const response = await axiosClient.delete<{
-      message: string;
-      statusCode: number;
-    }>(`${API_PATHS.REMINDERS.DELETE_REMINDER(reminderId)}`);
+    const response = await axiosClient.delete<ApiSuccessResponse>(
+      `${API_PATHS.REMINDERS.DELETE_REMINDER(reminderId)}`
+    );
 
     return response.data.data;
   } catch (err) {
@@ -86,10 +83,7 @@ export const updateSubscriptionReminders = async ({
   updatedReminders,
 }: ISubscriptionRemindersUpdate) => {
   try {
-    const response = await axiosClient.patch<{
-      message: string;
-      statusCode: number;
-    }>(
+    const response = await axiosClient.patch<ApiSuccessResponse>(
       `${API_PATHS.REMINDERS.UPDATE_SUBSCRIPTION_REMINDER(subscriptionId)}`,
       updatedReminders
     );
@@ -102,10 +96,9 @@ export const updateSubscriptionReminders = async ({
 
 export const deleteSubscriptionReminders = async (subscriptionId: number) => {
   try {
-    const response = await axiosClient.delete<{
-      message: string;
-      statusCode: number;
-    }>(`${API_PATHS.REMINDERS.DELETE_SUBSCRIPTION_REMINDERS(subscriptionId)}`);
+    const response = await axiosClient.delete<ApiSuccessResponse>(
+      `${API_PATHS.REMINDERS.DELETE_SUBSCRIPTION_REMINDERS(subscriptionId)}`
+    );
 
     return response.data.data;
   } catch (err) {

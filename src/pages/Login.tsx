@@ -108,7 +108,10 @@ export default function Login() {
     }
 
     mutate(
-      { email: data.email, password: data.password },
+      {
+        email: data.email,
+        password: data.password,
+      },
       {
         onSuccess: () => {
           navigate('/subscriptions', {

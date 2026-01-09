@@ -2,7 +2,7 @@ import { axiosClient } from '../lib/axiosClient';
 import { API_PATHS } from '../api/api-paths';
 import { env } from '../utils/env';
 import { processError } from '../utils';
-import { useTranslation } from 'react-i18next';
+import i18n from '../utils/i18n';
 
 export interface GoogleCalendarAuthResponse {
   success: boolean;
@@ -13,7 +13,6 @@ export interface GoogleCalendarAuthResponse {
 export const initiateGoogleCalendarAuth = (
   userId: number
 ): Promise<boolean> => {
-  const { t } = useTranslation();
   return new Promise((resolve, reject) => {
     const popup = window.open(
       `${env.API_URL}${API_PATHS.GOOGLE.CALENDAR_AUTH}?userId=${userId}&popup=true`,
@@ -21,7 +20,7 @@ export const initiateGoogleCalendarAuth = (
       'width=500,height=600,scrollbars=yes,resizable=yes'
     );
     if (!popup) {
-      reject(new Error(t('google_calendar.auth.popup_blocked')));
+      reject(new Error(i18n.t('google_calendar.auth.popup_blocked')));
       return;
     }
 
@@ -36,7 +35,7 @@ export const initiateGoogleCalendarAuth = (
         popup.close();
         window.removeEventListener('message', messageListener);
         reject(
-          new Error(event.data.message || t('google_calendar.auth.failed'))
+          new Error(event.data.message || i18n.t('google_calendar.auth.failed'))
         );
       }
     };
@@ -47,7 +46,7 @@ export const initiateGoogleCalendarAuth = (
       if (popup.closed) {
         clearInterval(checkClosed);
         window.removeEventListener('message', messageListener);
-        reject(new Error(t('google_calendar.auth.failed')));
+        reject(new Error(i18n.t('google_calendar.auth.failed')));
       }
     }, 1000);
   });
@@ -65,7 +64,7 @@ export const checkGoogleCalendarAccess = async (
     });
 
     return response.data.hasAccess;
-  } catch (err: any) {
+  } catch (err: unknown) {
     processError(err);
     return false;
   }
@@ -84,7 +83,7 @@ export const disconnectGoogleCalendar = async (
     );
 
     return true;
-  } catch (err: any) {
+  } catch (err: unknown) {
     processError(err);
     return false;
   }

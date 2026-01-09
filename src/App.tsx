@@ -6,7 +6,7 @@ import Subscriptions from './pages/Subscriptions';
 import MainLayout from './layouts/MainLayout';
 import NotificationsPage from './pages/Notifications';
 import { Toaster } from 'react-hot-toast';
-import { UserProvider, useUser } from './context/UserContext';
+import { UserProvider } from './context/UserContext';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 import Cards from './pages/Cards';
 import SharedPlan from './pages/SharedPlan';
@@ -20,13 +20,14 @@ import { getFirebaseToken } from './config/firebase';
 import { useSaveWebPushToken } from './hooks/usePushToken';
 import { TOASTER_OPTIONS } from './constants';
 import { SocketProvider } from './context/SocketContext';
-import { LogoutProvider } from './context/LogoutContext';
 import { PlaidstartProvider } from './context/PlaidContext';
 import Plaid from './pages/Plaid';
 import Settings from './pages/Settings';
 import AccountDetails from './pages/profile/AccountDetails';
 import NotFound from './pages/NotFound';
 import ContactUs from './pages/ContactUs';
+import { LogoutProvider } from './context/LogoutContext';
+import { useUser } from './hooks/useUsers';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
