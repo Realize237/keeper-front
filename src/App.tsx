@@ -96,11 +96,6 @@ export default function App() {
                         path="/notifications"
                         element={<NotificationsPage />}
                       />
-
-                      <Route
-                        path="/notifications"
-                        element={<NotificationsPage />}
-                      />
                       <Route path="/settings" element={<Settings />} />
                     </Route>
                     <Route path="set-password" element={<SetPassword />} />
