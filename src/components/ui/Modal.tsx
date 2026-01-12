@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import React, { useEffect, type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { IoClose } from 'react-icons/io5';
+import { useLockBodyScroll } from '../../hooks/useLockBodyScroll';
 
 type ModalProps = {
   isOpen: boolean;
@@ -17,16 +18,7 @@ const Modal: React.FC<ModalProps> = ({
   children,
   width = 'max-w-xl',
 }) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useLockBodyScroll(isOpen, { restorePrevious: true });
 
   return (
     <AnimatePresence>

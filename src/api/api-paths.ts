@@ -13,6 +13,7 @@ export const API_PATHS = {
     REQUEST_PASSWORD_RESET: '/api/users/reset-password/request',
     VALIDATE_FORGOT_PASSWORD_OTP: '/api/users/reset-password/token/validate',
     RESET_PASSWORD: (email: string) => `/api/users/password/reset/${email}`,
+    DELETE_ACCOUNT: 'api/users/disable/user-account',
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: '/api/subscriptions',

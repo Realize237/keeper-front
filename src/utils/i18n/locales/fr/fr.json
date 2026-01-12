@@ -604,5 +604,10 @@
       "submit": "Envoyer le message"
     },
     "footer": "Nous répondons généralement dans les 24 heures."
+  },
+  "delete_account": {
+    "title": "Supprimer le compte",
+    "confirmation": "Êtes-vous sûr de vouloir supprimer définitivement votre compte ? Cette action ne peut pas être annulée.",
+    "confirm": "Oui, supprimer"
   }
 }
