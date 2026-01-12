@@ -13,7 +13,7 @@ function getEnv(key: string, defaultValue?: string): string {
 }
 
 export const env = {
-  NODE_ENV: (import.meta.env.MODE || 'development') as string,
+  APP_ENV: getEnv('VITE_APP_ENV', 'development'),
   API_URL: getEnv('API_URL', 'http://localhost:7000'),
   API_DOC_VERSION: getEnv('API_DOC_VERSION', '1.0'),
   FRONT_END_URL: getEnv('FRONT_END_URL', 'http://localhost:5173'),
