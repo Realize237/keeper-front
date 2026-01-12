@@ -144,7 +144,6 @@ export default function Login() {
       : baseClass;
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -303,10 +302,6 @@ export default function Login() {
                 placeholder={t('auth.login.fields.password.placeholder')}
                 {...register('password', {
                   required: t('auth.login.fields.password.required'),
-                  minLength: {
-                    value: 8,
-                    message: t('auth.login.fields.password.min'),
-                  },
                 })}
                 className={`${getInputClass('password')} pr-12`}
               />
