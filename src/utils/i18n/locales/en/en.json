@@ -614,5 +614,10 @@
     "description": "The page you’re looking for doesn’t exist or has been moved.",
     "go_back": "Go back",
     "contact_support": "Contact support"
+  },
+  "delete_account": {
+    "title": "Delete Account",
+    "confirmation": "Are you sure you want to permanently delete your account? This action cannot be undone.",
+    "confirm": "Yes, delete my account"
   }
 }

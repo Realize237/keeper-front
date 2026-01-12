@@ -39,6 +39,9 @@ export default function Login() {
   const [cookies, setCookies, removeCookie] = useCookies(['rememberMe']);
   const [forgotPasswordStep, setForgotPasswordStep] =
     useState<ForgotPasswordStepsType | null>(null);
+  const [accountDisabledError, setAccountDisableError] = useState<
+    string | null
+  >(null);
 
   const toastShownRef = useRef(false);
 
@@ -123,10 +126,13 @@ export default function Login() {
           if (code === 'INVALID_CREDENTIALS' || code === 'USER_NOT_FOUND') {
             setLoginError(t(`auth.login.fields.errors.${code}`, error.message));
             return;
+          } else if (code === 'ACCOUNT_DISABLED') {
+            setAccountDisableError(error.message);
+          } else {
+            toast.error(
+              error.message ?? t('auth.login.fields.errors.UNEXPECTED_ERROR')
+            );
           }
-          toast.error(
-            error.message ?? t('auth.login.fields.errors.UNEXPECTED_ERROR')
-          );
         },
       }
     );
@@ -253,7 +259,6 @@ export default function Login() {
         initial="hidden"
         animate="visible"
       >
-        {/* Header */}
         <motion.h1
           variants={itemVariants}
           className="text-2xl md:text-4xl font-normal text-white"
@@ -267,6 +272,18 @@ export default function Login() {
           {t('auth.login.subtitle')}
         </motion.span>
 
+        {accountDisabledError && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3"
+          >
+            <p className="text-sm text-red-300 leading-relaxed text-center">
+              {accountDisabledError}
+            </p>
+          </motion.div>
+        )}
         <motion.form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full"

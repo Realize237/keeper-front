@@ -13,6 +13,7 @@ import type {
 import {
   changeUserPassword,
   createUser,
+  deleteAccount,
   getAllUsers,
   getUserInfo,
   loginUser,
@@ -138,5 +139,18 @@ export const useUserInfo = () => {
     refetchOnMount: false,
     refetchOnReconnect: true,
     retry: false,
+  });
+};
+
+export const useDeleteUserAccount = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => deleteAccount(),
+    onSuccess: () => {
+      queryClient.setQueryData(userKeys.info, null);
+    },
+    meta: {
+      invalidate: [userKeys.info],
+    },
   });
 };
