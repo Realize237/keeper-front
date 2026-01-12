@@ -10,6 +10,7 @@ import { useUpdateUser } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EMAIL_REGEX, NAME_RULES } from '../../constants/validation/patterns';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -87,12 +88,14 @@ const EditProfile = () => {
             rules={{
               required: t('profile.edit.fields.name.required'),
               minLength: {
-                value: 2,
-                message: t('profile.edit.fields.name.min'),
+                value: NAME_RULES.MIN_LENGTH,
+                message: t('auth.validation.name.min', {
+                  count: NAME_RULES.MIN_LENGTH,
+                }),
               },
               pattern: {
-                value: /^[a-zA-Z\s]+$/,
-                message: t('profile.edit.fields.name.pattern'),
+                value: NAME_RULES.REGEX,
+                message: t('auth.validation.name.pattern'),
               },
             }}
             error={errors.name}
@@ -107,8 +110,8 @@ const EditProfile = () => {
             rules={{
               required: t('profile.edit.fields.email.required'),
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: t('profile.edit.fields.email.invalid'),
+                value: EMAIL_REGEX,
+                message: t('auth.validation.email'),
               },
             }}
           />

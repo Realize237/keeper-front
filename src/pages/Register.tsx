@@ -8,6 +8,11 @@ import { useCreateUser } from '../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import {
+  EMAIL_REGEX,
+  NAME_RULES,
+  PASSWORD_RULES,
+} from '../constants/validation/patterns';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -150,14 +155,18 @@ export default function Register() {
             type="text"
             placeholder={t('auth.register.fields.name.label')}
             {...register('name', {
-              required: t('auth.register.fields.name.required'),
+              required: t('auth.validation.required', {
+                field: t('auth.fields.name'),
+              }),
               minLength: {
-                value: 2,
-                message: t('auth.register.fields.name.min'),
+                value: NAME_RULES.MIN_LENGTH,
+                message: t('auth.validation.name.min', {
+                  count: NAME_RULES.MIN_LENGTH,
+                }),
               },
               pattern: {
-                value: /^[a-zA-Z\s]+$/,
-                message: t('auth.register.fields.name.pattern'),
+                value: NAME_RULES.REGEX,
+                message: t('auth.validation.name.pattern'),
               },
             })}
             className={getInputClass('name')}
@@ -178,10 +187,12 @@ export default function Register() {
             type="email"
             placeholder={t('auth.register.fields.email.label')}
             {...register('email', {
-              required: t('auth.register.fields.email.required'),
+              required: t('auth.validation.required', {
+                field: t('auth.fields.email'),
+              }),
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: t('auth.register.fields.email.pattern'),
+                value: EMAIL_REGEX,
+                message: t('auth.validation.email'),
               },
               onChange: handleEmailChange,
             })}
@@ -213,14 +224,18 @@ export default function Register() {
               type={showPassword ? 'text' : 'password'}
               placeholder={t('auth.register.fields.password.label')}
               {...register('password', {
-                required: t('auth.register.fields.password.required'),
+                required: t('auth.validation.required', {
+                  field: t('auth.fields.password'),
+                }),
                 minLength: {
-                  value: 8,
-                  message: t('auth.register.fields.password.min'),
+                  value: PASSWORD_RULES.MIN_LENGTH,
+                  message: t('auth.validation.password.min', {
+                    count: PASSWORD_RULES.MIN_LENGTH,
+                  }),
                 },
                 pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                  message: t('auth.register.fields.password.pattern'),
+                  value: PASSWORD_RULES.REGEX,
+                  message: t('auth.validation.password.pattern'),
                 },
               })}
               className={`${getInputClass('password')} pr-12`}
@@ -362,8 +377,8 @@ export default function Register() {
           className="text-[#CDFF00] transition duration-300 hover:opacity-80 underline"
         >
           {t('auth.register.legal.terms')}
-        </a>{' '}
-        {t('auth.register.legal.and')}{' '}
+        </a>
+        {t('auth.register.legal.and')}
         <a
           href="#"
           className="text-[#CDFF00] transition duration-300 hover:opacity-80 underline"
