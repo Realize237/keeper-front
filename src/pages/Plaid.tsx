@@ -10,7 +10,8 @@ export default function Plaid() {
 
   const generateLinkToken = useCallback(() => {
     createLinkToken(undefined, {
-      onSuccess: (data) => {
+      onSuccess: (response) => {
+        const data = response.data;
         localStorage.setItem('link_token', data.link_token);
 
         dispatch({
