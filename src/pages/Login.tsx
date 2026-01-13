@@ -23,6 +23,7 @@ import PasswordResetRequest from '../components/auth/PasswordResetRequest';
 import OTPVerification from '../components/auth/OTPVerification';
 import PasswordReset from '../components/auth/PasswordReset';
 import { useTranslation } from 'react-i18next';
+import { EMAIL_REGEX } from '../constants/validation/patterns';
 
 export default function Login() {
   const { t } = useTranslation();
@@ -295,7 +296,7 @@ export default function Login() {
               {...register('email', {
                 required: t('auth.login.fields.email.required'),
                 pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  value: EMAIL_REGEX,
                   message: t('auth.login.fields.email.invalid'),
                 },
               })}

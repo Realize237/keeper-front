@@ -50,7 +50,7 @@ export const exchangePublicToken = async (public_token: string) => {
 
 export const createLinkToken = async () => {
   try {
-    const response = await axiosClient.post<{ link_token: string }>(
+    const response = await axiosClient.post<{ data: { link_token: string } }>(
       `${API_PATHS.PLAID.CREATE_LINK_TOKEN}`,
       {}
     );

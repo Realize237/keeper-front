@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MdClose } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { PASSWORD_RULES } from '../../constants/validation/patterns';
 
 export default function PasswordReset({
   onSubmit,
@@ -24,7 +25,17 @@ export default function PasswordReset({
     .object({
       newPassword: z
         .string()
-        .min(6, t('auth.password_reset.validation.password_min')),
+        .min(
+          PASSWORD_RULES.MIN_LENGTH,
+          t('auth.validation.password.min', {
+            count: PASSWORD_RULES.MIN_LENGTH,
+          })
+        )
+        .regex(
+          PASSWORD_RULES.REGEX,
+          t('auth.password_reset.validation.password_pattern')
+        ),
+
       confirmPassword: z.string(),
     })
     .refine(
