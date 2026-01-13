@@ -13,6 +13,7 @@ import {
 } from '../../hooks/useUsers';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { PASSWORD_RULES } from '../../constants/validation/patterns';
 
 const ChangePassword = () => {
   const { t } = useTranslation();
@@ -110,12 +111,14 @@ const ChangePassword = () => {
             rules={{
               required: t('change_password.validation.new_required'),
               minLength: {
-                value: 8,
-                message: t('change_password.validation.min_length'),
+                value: PASSWORD_RULES.MIN_LENGTH,
+                message: t('auth.validation.password.min', {
+                  count: PASSWORD_RULES.MIN_LENGTH,
+                }),
               },
               pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                message: t('change_password.validation.pattern'),
+                value: PASSWORD_RULES.REGEX,
+                message: t('auth.validation.password.pattern'),
               },
             }}
             error={errors.newPassword}
