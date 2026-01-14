@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useLockBodyScroll } from '../../hooks/useLockBodyScroll';
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface BottomSheetProps {
 }
 
 const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
+  useLockBodyScroll(isOpen, { restorePrevious: true });
   return isOpen ? (
     <motion.div
       initial={{ opacity: 0 }}

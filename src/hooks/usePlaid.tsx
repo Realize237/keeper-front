@@ -9,7 +9,7 @@ import {
 import { plaidKeys } from '../queryKeys/plaidKeys';
 
 export const usePlaidCreateLinkToken = () => {
-  return useMutation<{ link_token: string }, Error>({
+  return useMutation<{ data: { link_token: string } }, Error>({
     mutationFn: () => createLinkToken(),
     meta: {
       invalidate: [plaidKeys.exchange_public_token],

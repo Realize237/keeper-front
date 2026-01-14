@@ -23,6 +23,7 @@ import PasswordResetRequest from '../components/auth/PasswordResetRequest';
 import OTPVerification from '../components/auth/OTPVerification';
 import PasswordReset from '../components/auth/PasswordReset';
 import { useTranslation } from 'react-i18next';
+import { EMAIL_REGEX } from '../constants/validation/patterns';
 
 export default function Login() {
   const { t } = useTranslation();
@@ -39,6 +40,9 @@ export default function Login() {
   const [cookies, setCookies, removeCookie] = useCookies(['rememberMe']);
   const [forgotPasswordStep, setForgotPasswordStep] =
     useState<ForgotPasswordStepsType | null>(null);
+  const [accountDisabledError, setAccountDisableError] = useState<
+    string | null
+  >(null);
 
   const toastShownRef = useRef(false);
 
@@ -123,10 +127,13 @@ export default function Login() {
           if (code === 'INVALID_CREDENTIALS' || code === 'USER_NOT_FOUND') {
             setLoginError(t(`auth.login.fields.errors.${code}`, error.message));
             return;
+          } else if (code === 'ACCOUNT_DISABLED') {
+            setAccountDisableError(error.message);
+          } else {
+            toast.error(
+              error.message ?? t('auth.login.fields.errors.UNEXPECTED_ERROR')
+            );
           }
-          toast.error(
-            error.message ?? t('auth.login.fields.errors.UNEXPECTED_ERROR')
-          );
         },
       }
     );
@@ -144,7 +151,6 @@ export default function Login() {
       : baseClass;
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -266,6 +272,18 @@ export default function Login() {
           {t('auth.login.subtitle')}
         </motion.span>
 
+        {accountDisabledError && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3"
+          >
+            <p className="text-sm text-red-300 leading-relaxed text-center">
+              {accountDisabledError}
+            </p>
+          </motion.div>
+        )}
         <motion.form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full"
@@ -278,7 +296,7 @@ export default function Login() {
               {...register('email', {
                 required: t('auth.login.fields.email.required'),
                 pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  value: EMAIL_REGEX,
                   message: t('auth.login.fields.email.invalid'),
                 },
               })}
@@ -302,10 +320,6 @@ export default function Login() {
                 placeholder={t('auth.login.fields.password.placeholder')}
                 {...register('password', {
                   required: t('auth.login.fields.password.required'),
-                  minLength: {
-                    value: 8,
-                    message: t('auth.login.fields.password.min'),
-                  },
                 })}
                 className={`${getInputClass('password')} pr-12`}
               />

@@ -175,3 +175,14 @@ export const resetPassword = async (data: IResetPassword) => {
     return processError(error);
   }
 };
+
+export const deleteAccount = async () => {
+  try {
+    const response = await axiosClient.patch<ApiSuccessResponse>(
+      `${API_PATHS.USERS.DELETE_ACCOUNT}`
+    );
+    return response.data.data;
+  } catch (error) {
+    return processError(error);
+  }
+};

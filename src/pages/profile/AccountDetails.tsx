@@ -9,7 +9,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../../components/ui/Avatar';
 import { useTranslation } from 'react-i18next';
-import { useUser } from '../../hooks/useUsers';
+import { useDeleteUserAccount, useUser } from '../../hooks/useUsers';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import ConfirmationDialog from '../../components/dialog/ConfirmationDialog';
 
 const InfoRow = ({
   icon: Icon,
@@ -47,6 +50,17 @@ const AccountDetails = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { t, i18n } = useTranslation();
+  const { mutate: deleteAccount } = useDeleteUserAccount();
+
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
+
+  const handleConfirmDeleteAccount = () => {
+    deleteAccount(undefined, {
+      onError: (error: Error) => {
+        toast.error(error.message || t('errors.UNEXPECTED_ERROR'));
+      },
+    });
+  };
 
   return (
     <div className=" px-4 py-6">
@@ -123,7 +137,7 @@ const AccountDetails = () => {
         </p>
         <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-2">
           <button
-            onClick={() => navigate('/account/delete')}
+            onClick={() => setShowDeleteConfirm(true)}
             className="
       w-full flex items-center justify-between
       px-4 py-3 rounded-xl
@@ -143,6 +157,17 @@ const AccountDetails = () => {
           </button>
         </div>
       </div>
+
+      <ConfirmationDialog
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={handleConfirmDeleteAccount}
+        title={t('delete_account.title')}
+        message={t('delete_account.confirmation')}
+        confirmText={t('delete_account.confirm')}
+        cancelText={t('common.cancel')}
+        isDestructive={true}
+      />
     </div>
   );
 };
