@@ -34,9 +34,7 @@ export default function MainLayout() {
     <div
       className={`${
         isChromeExtension ? 'rounded-2xl overflow-hidden' : ''
-      } ${getBrowserDimensions(
-        isChromeExtension
-      )} flex flex-col  bg-[#171717] `}
+      } ${getBrowserDimensions(isChromeExtension)} flex flex-col   `}
     >
       <Outlet />
     </div>

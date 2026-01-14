@@ -246,14 +246,13 @@ export default function Login() {
   );
 
   return (
-    <div className="flex flex-col  py-8 overflow-hidden">
+    <div className="flex bg-[#171717] flex-col  py-8 overflow-hidden">
       <motion.div
         className="w-11/12 max-w-md mx-auto flex flex-col items-center justify-center "
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Header */}
         <motion.h1
           variants={itemVariants}
           className="text-2xl md:text-4xl font-normal text-white"
@@ -525,7 +524,7 @@ export default function Login() {
         >
           {t('auth.login.footer.text')}{' '}
           <Link
-            to={'/'}
+            to={'/register'}
             className="text-[#CDFF00] transition duration-300 hover:opacity-80"
           >
             {t('auth.login.footer.signup')}
