@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { FaGlobe } from 'react-icons/fa6';
 import { FiFileText } from 'react-icons/fi';
 import { LuShield, LuCookie } from 'react-icons/lu';
@@ -14,7 +13,6 @@ type LegalSection = 'privacy' | 'terms' | 'cookies' | 'gdpr';
 
 export const LegalPage = () => {
   const [activeSection, setActiveSection] = useState<LegalSection>('privacy');
-  const { t } = useTranslation();
 
   const sections = [
     { id: 'privacy' as LegalSection, icon: LuShield, label: 'Privacy Policy' },
