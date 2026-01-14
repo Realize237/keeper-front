@@ -638,5 +638,235 @@
     "title": "Delete Account",
     "confirmation": "Are you sure you want to permanently delete your account? This action cannot be undone.",
     "confirm": "Yes, delete my account"
+  },
+
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "get_started": "Get Started"
+  },
+
+  "hero": {
+    "badge": "Web App & Chrome Extension",
+    "badge_new": "NEW",
+    "title_1": "Never Miss a",
+    "title_2": "Payment Again",
+    "description": "Track all your subscriptions effortlessly with smart notifications, visual calendar, and powerful spending insights. Take control of your recurring payments today.",
+    "sync_account": "Sync Your Account",
+    "try_web_app": "Try Web App",
+    "trusted_by": "Trusted by 10K+ users",
+    "tracked_saved": "Tracked & Saved",
+    "renewal_in": "Renews in 3 days",
+    "monthly_total": "Monthly Total",
+    "vs_last_month": "vs last month"
+  },
+
+  "features": {
+    "badge": "Features",
+    "title_1": "Everything You Need",
+    "title_2": "To Stay in Control",
+    "description": "Powerful features designed to help you track, manage, and optimize your subscription spending effortlessly",
+    "smart_notifications": "Smart Notifications",
+    "smart_notifications_desc": "Get timely reminders before your subscriptions renew, so you're never caught off guard.",
+    "calendar_view": "Calendar View",
+    "calendar_view_desc": "Visualize all your upcoming renewals in a clean calendar interface.",
+    "card_tracking": "Card Tracking",
+    "card_tracking_desc": "Track which debit or credit card is linked to each subscription.",
+    "spending_analytics": "Spending Analytics",
+    "spending_analytics_desc": "Understand your subscription spending patterns with detailed insights.",
+    "quick_setup": "Quick Setup",
+    "quick_setup_desc": "Add subscriptions in seconds with our intuitive interface.",
+    "secure_private": "Secure & Private",
+    "secure_private_desc": "Your financial data stays private and secure, always.",
+    "learn_more": "Learn more",
+    "join_users": "Join 10,000+ users who never miss a payment"
+  },
+
+  "how_it_works": {
+    "badge": "How It Works",
+    "title_1": "Get Started in",
+    "title_2": "3 Simple Steps",
+    "description": "Start tracking your subscriptions and never miss a payment in minutes",
+    "step_1_title": "Create an Account",
+    "step_1_desc": "Sign up with your email and set up your profile in seconds.",
+    "step_2_title": "Sync to Bank Account",
+    "step_2_desc": "Securely connect your bank account to automatically detect subscriptions.",
+    "step_3_title": "Get Notified",
+    "step_3_desc": "Receive timely reminders before each subscription renews.",
+    "ready_title": "Ready to get started?",
+    "start_now": "Start Tracking Now - It's Free"
+  },
+
+  "pricing": {
+    "badge": "Pricing",
+    "title1": "Simple, Transparent",
+    "title2": "Pricing Plans",
+    "description": "Start free and upgrade when you need more power. No hidden fees, cancel anytime.",
+    "free": "Free",
+    "pro": "Pro",
+    "premium_basic": "Premium Basic",
+    "premium_plus": "Premium Plus",
+    "lifetime": "Lifetime",
+    "forever": "forever",
+    "per_month": "per month",
+    "one_time": "one-time",
+    "most_popular": "Most Popular",
+    "free_desc": "Perfect for getting started with subscription tracking",
+    "premium_basic_desc": "For power users who want complete control and notifications",
+    "premium_plus_desc": "Advanced features with financial analysis and forecasting",
+    "pro_desc": "For power users who want complete control",
+    "lifetime_desc": "Pay once, use forever with all Pro features",
+    "get_started_free": "Get Started Free",
+    "start_free_trial": "Start Free Trial",
+    "buy_lifetime": "Buy Lifetime Access",
+    "buy_premium_plus": "Buy Premium Plus",
+    "back_to_home": "Back to Home"
+  },
+  "pricing_free_features": {
+    "feature1": "5-10 subscriptions",
+    "feature2": "Email notifications",
+    "feature3": "1 shared subscription"
+  },
+  "pricing_premium_basic_features": {
+    "unlimited_subs": "Unlimited subscriptions",
+    "email_notif": "Email notifications",
+    "whatsapp_notif": "WhatsApp notifications",
+    "sms_notif": "SMS notifications",
+    "post_notif": "Post notifications",
+    "unlimited_shared": "Unlimited shared subscriptions",
+    "unused_detection": "Detection of unused subscriptions"
+  },
+  "pricing_premium_plus_features": {
+    "all_basic_features": "All Premium Basic features",
+    "financial_analysis": "Comprehensive financial analysis",
+    "personalized_forecasts": "Personalized forecasts",
+    "auto_cost_allocation": "Automatic cost allocation"
+  },
+  "pricing_common_features": {
+    "up_to_5": "Up to 5 subscriptions",
+    "basic_notifications": "Basic notifications",
+    "calendar_view": "Calendar view",
+    "web_app_access": "Web app access",
+    "chrome_extension": "Chrome extension",
+    "no_analytics": "No spending analytics",
+    "no_multi_card": "No multi-card tracking",
+    "standard_support": "Standard support",
+    "unlimited": "Unlimited subscriptions",
+    "smart_notifications": "Smart notifications",
+    "advanced_calendar": "Advanced calendar view",
+    "spending_analytics": "Spending analytics",
+    "multi_card": "Multi-card tracking",
+    "export_data": "Export data",
+    "priority_support": "Priority support",
+    "custom_categories": "Custom categories",
+    "budget_alerts": "Budget alerts",
+    "all_pro_features": "All Pro features",
+    "lifetime_updates": "Lifetime updates",
+    "no_recurring": "No recurring fees",
+    "priority_support_forever": "Priority support forever",
+    "early_access": "Early access to new features",
+    "guarantee": "14-Day Money-Back Guarantee",
+    "guarantee_desc": "No questions asked. Try risk-free today."
+  },
+
+  "testimonials": {
+    "badge": "Testimonials",
+    "title_1": "Loved by Thousands",
+    "title_2": "of Users Worldwide",
+    "description": "See what our community has to say about Keepay",
+    "join_happy_users": "Join 10,000+ Happy Users",
+    "average_rating": "4.9/5 average rating"
+  },
+
+  "faq": {
+    "badge": "FAQ",
+    "title_1": "Frequently Asked",
+    "title_2": "Questions",
+    "description": "Everything you need to know about Keepay",
+    "still_questions": "Still have questions?",
+    "contact_us": "Contact Us"
+  },
+
+  "cta": {
+    "badge": "Start Your Free Trial Today",
+    "title": "Take Control of Your Subscriptions Today",
+    "description": "Join thousands of users who never miss a payment and save money by staying organized.",
+    "sync_account": "Sync Your Account - Free",
+    "open_web_app": "Open Web App",
+    "watch_demo": "Watch Demo Video",
+    "view_pricing": "View Pricing Plans",
+    "read_stories": "Read Success Stories",
+    "no_card": "No credit card required",
+    "free_plan": "Free forever plan",
+    "cancel_anytime": "Cancel anytime",
+    "trusted_by": "Trusted by 10,000+ users",
+    "rating": "Average rating: 4.9/5 ⭐"
+  },
+
+  "footer": {
+    "description": "Never miss a subscription payment again. Track, manage, and get notified about all your recurring payments.",
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "download": "Download",
+    "roadmap": "Roadmap",
+    "company": "Company",
+    "about": "About",
+    "blog": "Blog",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "legal": "Legal",
+    "contact": "Contact",
+    "cookies": "Cookie Policy",
+    "gdpr": "GDPR",
+    "copyright": "© {{year}} Keepay. All rights reserved."
+  },
+
+  "contact": {
+    "badge": "Contact Us",
+    "title": "Get in Touch",
+    "subtitle": "We're Here to Help",
+    "description": "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+
+    "cards": {
+      "email": {
+        "title": "Email Us",
+        "description": "Our friendly team is here to help",
+        "cta": "Send an email"
+      },
+      "chat": {
+        "title": "Live Chat",
+        "description": "Monday to Friday, 9am–5pm EST",
+        "cta": "Start a chat →"
+      },
+      "help": {
+        "title": "Help Center",
+        "description": "Browse our help articles",
+        "cta": "Visit Help Center →"
+      }
+    },
+
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+
+      "placeholders": {
+        "subject": "Select a subject",
+        "message": "Tell us how we can help..."
+      },
+
+      "subjects": {
+        "general": "General Inquiry",
+        "support": "Technical Support",
+        "billing": "Billing Question",
+        "feature": "Feature Request",
+        "partnership": "Partnership Opportunity"
+      },
+
+      "submit": "Send Message"
+    }
   }
 }

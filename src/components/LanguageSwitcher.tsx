@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ReactCountryFlag from 'react-country-flag';
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
 import { useCloseOnOutsideInteraction } from '../hooks/useCloseOnOutsideInteraction';
-import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../hooks/useLanguage';
 
 const languages = [
   { code: 'fr', label: 'Français', country: 'FR' },
@@ -11,16 +11,11 @@ const languages = [
 ];
 
 export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { currentLanguage, changeLanguage } = useLanguage();
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-    setOpen(false);
-  };
-
-  const current = languages.find((l) => l.code === i18n.language);
+  const current = languages.find((l) => l.code === currentLanguage);
 
   useCloseOnOutsideInteraction(
     ref as RefObject<HTMLElement>,
@@ -68,7 +63,10 @@ export default function LanguageSwitcher() {
               return (
                 <button
                   key={lang.code}
-                  onClick={() => changeLanguage(lang.code)}
+                  onClick={() => {
+                    changeLanguage(lang.code);
+                    setOpen(false);
+                  }}
                   className="
                     flex items-center justify-between gap-3 w-full px-4 py-2 text-sm
                     rounded-xl transition-colors
@@ -83,7 +81,7 @@ export default function LanguageSwitcher() {
                     />
                     <span className="font-medium">{lang.label}</span>
                   </div>
-                  {lang.code === i18n.language && (
+                  {lang.code === currentLanguage && (
                     <motion.span
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}

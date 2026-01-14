@@ -32,4 +32,5 @@ export const env = {
   SOCKET_URL: getEnv('SOCKET_URL', 'http://localhost:7000'),
   APP_LOGO_URL: getEnv('APP_LOGO_URL'),
   APP_WEBSITE_URL: getEnv('APP_WEBSITE_URL'),
+  APP_SUPPORT_EMAIL: getEnv('APP_SUPPORT_EMAIL'),
 };

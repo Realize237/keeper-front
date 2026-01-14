@@ -28,6 +28,10 @@ import NotFound from './pages/NotFound';
 import ContactUs from './pages/ContactUs';
 import { LogoutProvider } from './context/LogoutContext';
 import { useUser } from './hooks/useUsers';
+import HomePage from './pages/HomePage';
+import { LanguageProvider } from './context/LanguageContext';
+import { LegalPage } from './pages/LegalPage';
+import { PricingPage } from './pages/PricingPage';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
@@ -53,61 +57,66 @@ function PushTokenHandler() {
 
 export default function App() {
   return (
-    <CookiesProvider>
-      <UserProvider>
-        <PushTokenHandler />
-        <LogoutProvider>
-          <PlaidstartProvider>
-            <SocketProvider>
-              <Router basename="/">
-                <Routes>
-                  <Route element={<MainLayout />}>
-                    <Route path="/" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route
-                      element={
-                        <ProtectedRoute>
-                          <NavLayout />
-                        </ProtectedRoute>
-                      }
-                    >
-                      <Route path="/plaid" element={<Plaid />} />
+    <LanguageProvider>
+      <CookiesProvider>
+        <UserProvider>
+          <PushTokenHandler />
+          <LogoutProvider>
+            <PlaidstartProvider>
+              <SocketProvider>
+                <Router basename="/">
+                  <Routes>
+                    <Route element={<MainLayout />}>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/legal" element={<LegalPage />} />
+                      <Route path="/pricing" element={<PricingPage />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/login" element={<Login />} />
                       <Route
-                        path="/subscriptions"
-                        element={<Subscriptions />}
-                      />
-                      <Route path="/cards" element={<Cards />} />
-                      <Route path="/shared-plan" element={<SharedPlan />} />
-                      <Route path="/profile">
-                        <Route index element={<Profile />} />
-                        <Route path="edit" element={<EditProfile />} />
+                        element={
+                          <ProtectedRoute>
+                            <NavLayout />
+                          </ProtectedRoute>
+                        }
+                      >
+                        <Route path="/plaid" element={<Plaid />} />
                         <Route
-                          path="change-password"
-                          element={<ChangePassword />}
+                          path="/subscriptions"
+                          element={<Subscriptions />}
                         />
+                        <Route path="/cards" element={<Cards />} />
+                        <Route path="/shared-plan" element={<SharedPlan />} />
+                        <Route path="/profile">
+                          <Route index element={<Profile />} />
+                          <Route path="edit" element={<EditProfile />} />
+                          <Route
+                            path="change-password"
+                            element={<ChangePassword />}
+                          />
+                          <Route
+                            path="account-details"
+                            element={<AccountDetails />}
+                          />
+                        </Route>
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="/contact" element={<ContactUs />} />
                         <Route
-                          path="account-details"
-                          element={<AccountDetails />}
+                          path="/notifications"
+                          element={<NotificationsPage />}
                         />
+                        <Route path="/settings" element={<Settings />} />
                       </Route>
-                      <Route path="/settings" element={<Settings />} />
-                      <Route path="/contact" element={<ContactUs />} />
-                      <Route
-                        path="/notifications"
-                        element={<NotificationsPage />}
-                      />
-                      <Route path="/settings" element={<Settings />} />
+                      <Route path="set-password" element={<SetPassword />} />
+                      <Route path="*" element={<NotFound />} />
                     </Route>
-                    <Route path="set-password" element={<SetPassword />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Route>
-                </Routes>
-              </Router>
-              <Toaster toastOptions={{ ...TOASTER_OPTIONS }} />
-            </SocketProvider>
-          </PlaidstartProvider>
-        </LogoutProvider>
-      </UserProvider>
-    </CookiesProvider>
+                  </Routes>
+                </Router>
+                <Toaster toastOptions={{ ...TOASTER_OPTIONS }} />
+              </SocketProvider>
+            </PlaidstartProvider>
+          </LogoutProvider>
+        </UserProvider>
+      </CookiesProvider>
+    </LanguageProvider>
   );
 }

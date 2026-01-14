@@ -280,3 +280,5 @@ export function groupClassNames(
 ) {
   return classes.filter(Boolean).join(' ');
 }
+
+export const currentYear = new Date().getFullYear();
