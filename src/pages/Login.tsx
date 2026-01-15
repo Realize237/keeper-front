@@ -252,7 +252,7 @@ export default function Login() {
   );
 
   return (
-    <div className="flex bg-[#171717] flex-col  py-8 overflow-hidden">
+    <div className="flex h-screen bg-[#171717] flex-col  py-8 overflow-hidden">
       <motion.div
         className="w-11/12 max-w-md mx-auto flex flex-col items-center justify-center "
         variants={containerVariants}

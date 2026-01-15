@@ -5,17 +5,29 @@
     <link rel="icon" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Keepay Smart Subscription Manager</title>
-    <meta name="description" content="Keepay helps you track, manage, and share your subscriptions for different applications like Netflix, Spotify, and more. Know how much to pay exactly each month, Never miss a payment again! " />
-    
+    <meta
+      name="description"
+      content="Keepay helps you track, manage, and share your subscriptions for different applications like Netflix, Spotify, and more. Know how much to pay exactly each month, Never miss a payment again! "
+    />
+
     <!-- Keywords -->
-    <meta name="keywords" content="subscription manager, keepay, keepayapp, track subscriptions, recurrent subscription manager, smart subscription tracker, shared plan applications, shared payments, financial dashboard" />
-    
+    <meta
+      name="keywords"
+      content="subscription manager, keepay, keepayapp, track subscriptions, recurrent subscription manager, smart subscription tracker, shared plan applications, shared payments, financial dashboard"
+    />
+
     <meta name="author" content="Keepay Team (Realize-Tech)" />
     <meta name="robots" content="noindex, nofollow" />
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
-    <meta property="og:title" content="Keepay Your Smart Subscription Manager" />
-    <meta property="og:description" content="Manage your recurring expenses and subscriptions easily with Keepay. Stay in control. Never get surprised by unexpected charges." />
+    <meta
+      property="og:title"
+      content="Keepay Your Smart Subscription Manager"
+    />
+    <meta
+      property="og:description"
+      content="Manage your recurring expenses and subscriptions easily with Keepay. Stay in control. Never get surprised by unexpected charges."
+    />
     <meta property="og:image" content="/src/assets/keepay-banner.jpeg" />
     <meta property="og:url" content="https://www.keepayapp.com" />
     <meta property="og:type" content="website" />
@@ -23,13 +35,63 @@
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="/src/assets/keepay-summary.jpeg" />
     <meta name="twitter:title" content="Keepay Smart Subscription Tracker" />
-    <meta name="twitter:description" content="Track, share, and optimize your subscriptions with Keepay." />
+    <meta
+      name="twitter:description"
+      content="Track, share, and optimize your subscriptions with Keepay."
+    />
     <meta name="twitter:image" content="/src/assets/keepay-banner.jpeg" />
-
-
   </head>
+
+  <style>
+    .loader-wrapper {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+    }
+
+    .loader {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      border-top: 4px solid #008b82;
+      border-right: 4px solid transparent;
+      animation: rotation 1s linear infinite;
+    }
+
+    .loader::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border-left: 4px solid #ff3d00;
+      border-bottom: 4px solid transparent;
+      animation: rotation 0.5s linear infinite reverse;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loader-wrapper">
+        <span class="loader"></span>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

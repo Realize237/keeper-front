@@ -120,7 +120,7 @@ export default function Register() {
   };
 
   return (
-    <div className=" bg-[#171717] ">
+    <div className=" bg-[#171717] h-screen ">
       <motion.div
         className="  max-w-md mx-auto flex flex-col items-center justify-center py-8"
         variants={containerVariants}

@@ -21,7 +21,7 @@ const NotFound = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-6xl font-semibold text-white/20 tracking-tight"
+          className="text-6xl font-semibold text-black/80 tracking-tight"
         >
           404
         </motion.p>
@@ -32,10 +32,10 @@ const NotFound = () => {
           transition={{ delay: 0.2 }}
           className="space-y-2"
         >
-          <h1 className="text-2xl md:text-3xl font-semibold text-white">
+          <h1 className="text-2xl md:text-3xl font-semibold text-black">
             {t('not_found.title')}
           </h1>
-          <p className="text-sm text-white/50">{t('not_found.description')}</p>
+          <p className="text-sm text-black/50">{t('not_found.description')}</p>
         </motion.div>
 
         <motion.div
