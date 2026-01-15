@@ -9,6 +9,7 @@ import {
 import App from './App.tsx';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import '../src/utils/i18n';
+import { env } from './utils/env.ts';
 
 interface MutationMeta {
   invalidate?: unknown[][];
@@ -31,7 +32,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={env.APP_ENV === 'development'} />
     </QueryClientProvider>
   </StrictMode>
 );

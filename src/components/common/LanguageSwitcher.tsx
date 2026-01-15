@@ -2,8 +2,8 @@ import { useState, useRef, RefObject } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactCountryFlag from 'react-country-flag';
 import { FaChevronDown, FaCheck } from 'react-icons/fa';
-import { useCloseOnOutsideInteraction } from '../hooks/useCloseOnOutsideInteraction';
-import { useLanguage } from '../hooks/useLanguage';
+import { useCloseOnOutsideInteraction } from '../../hooks/useCloseOnOutsideInteraction';
+import { useLanguage } from '../../hooks/useLanguage';
 
 const languages = [
   { code: 'fr', label: 'Français', country: 'FR' },
