@@ -35,7 +35,7 @@ const BottomNav = () => {
               <motion.div
                 className="flex flex-col items-center justify-center gap-1"
                 initial={false}
-                animate={{ color: isActive ? '#CDFF00' : '#9CA3AF' }}
+                animate={{ color: isActive ? 'var(--color-white)' : '#9CA3AF' }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               >
                 <motion.div
@@ -68,7 +68,7 @@ const BottomNav = () => {
         <motion.div
           layout
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-          className="absolute top-0 h-1 bg-[#CDFF00] rounded-full"
+          className="absolute top-0 h-1 bg-primary rounded-full"
           style={{
             width: `${100 / length}%`,
             left: `${(100 / length) * activeIndex}%`,

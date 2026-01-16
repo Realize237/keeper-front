@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { MdClose } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { PASSWORD_RULES } from '../../constants/validation/patterns';
+import FormButton from '../ui/FormButton';
 
 export default function PasswordReset({
   onSubmit,
@@ -99,9 +100,9 @@ export default function PasswordReset({
             error={errors.confirmPassword?.message}
           />
 
-          <Button loading={isSubmitting} className="w-full">
+          <FormButton isLoading={isSubmitting} className="w-full">
             {t('auth.password_reset.actions.submit')}
-          </Button>
+          </FormButton>
         </form>
       </motion.div>
     </div>

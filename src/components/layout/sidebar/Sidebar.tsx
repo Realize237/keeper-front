@@ -51,7 +51,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                 transition={{ duration: 0.2 }}
                 className="text-white text-2xl font-bold whitespace-nowrap"
               >
-                <span className="text-[#CDFF00]">K</span>eepay
+                <span className="text-primary">K</span>eepay
               </motion.h1>
             )}
           </AnimatePresence>
@@ -79,13 +79,13 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
               {isActive && (
                 <motion.div
                   layoutId="active-bar"
-                  className="absolute left-0 top-0 h-full w-0.5 bg-[#CDFF00] rounded-r-full"
+                  className="absolute left-0 top-0 h-full w-0.5 bg-primary rounded-r-full"
                 />
               )}
 
               <motion.div
                 animate={{
-                  color: isActive ? '#CDFF00' : '#9CA3AF',
+                  color: isActive ? 'var(--color-primary)' : '#9CA3AF',
                   scale: isActive ? 1.2 : 1,
                 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
@@ -101,7 +101,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                     animate={{
                       opacity: 1,
                       x: 0,
-                      color: isActive ? '#CDFF00' : '#9CA3AF',
+                      color: isActive ? 'var(--color-primary)' : '#9CA3AF',
                     }}
                     exit={{ opacity: 0, x: -10 }}
                     transition={{ duration: 0.2 }}
