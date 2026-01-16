@@ -7,6 +7,7 @@ export interface User {
   photo: string | null;
   created_at: Date | string;
   language: string;
+  acceptedPrivacyPolicy?: boolean;
 }
 
 export interface IEmailPasswordInput {
@@ -22,7 +23,10 @@ export type ISetPasswordInput = Pick<
   token: string;
 };
 
-export type UserInput = Pick<User, 'name' | 'email' | 'password'> & {
+export type UserInput = Pick<
+  User,
+  'name' | 'email' | 'password' | 'acceptedPrivacyPolicy'
+> & {
   language?: string;
 };
 export type PasswordRequestInput = Pick<User, 'email'>;
