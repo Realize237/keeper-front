@@ -39,10 +39,10 @@ export const FormButton = ({
   const variantClasses = (() => {
     switch (variant) {
       case 'primary':
-        return `text-black ${
+        return `text-white ${
           isLoading || disabled
-            ? 'bg-[#8fb103] cursor-not-allowed'
-            : 'bg-[#CDFF00] cursor-pointer'
+            ? 'bg-primary/50 cursor-not-allowed'
+            : 'bg-primary cursor-pointer'
         }`;
       case 'secondary':
         return 'text-white border border-white disabled:opacity-50 disabled:cursor-not-allowed';
@@ -54,7 +54,7 @@ export const FormButton = ({
   const shadowColor = (() => {
     switch (variant) {
       case 'primary':
-        return 'rgba(205, 255, 0, 0.4)';
+        return 'rgba(153, 8, 0, 0.35)';
       case 'secondary':
         return 'rgba(255, 255, 255, 0.2)';
       case 'destructive':

@@ -23,7 +23,7 @@ export default function NavLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[#171717] flex-col">
+    <div className="min-h-screen bg-app flex-col">
       <main className={getMainClasses()}>
         <Header />
         <Outlet />

@@ -13,6 +13,7 @@ import {
   NAME_RULES,
   PASSWORD_RULES,
 } from '../constants/validation/patterns';
+import FormButton from '../components/ui/FormButton';
 
 const PRIVACY_POLICY_URL = '/legal/privacy-policy';
 const TERMS_OF_SERVICE_URL = '/legal/terms-of-service';
@@ -97,13 +98,13 @@ export default function Register() {
 
         privacyCheckboxRef.current.classList.add(
           'ring-2',
-          'ring-[#CDFF00]',
+          'ring-white',
           'ring-opacity-70'
         );
         setTimeout(() => {
           privacyCheckboxRef.current?.classList.remove(
             'ring-2',
-            'ring-[#CDFF00]',
+            'ring-white',
             'ring-opacity-70'
           );
         }, 2200);
@@ -112,7 +113,6 @@ export default function Register() {
           block: 'center',
         });
 
-        // Focus the checkbox
         const input = privacyCheckboxRef.current.querySelector(
           'input[type="checkbox"]'
         );
@@ -127,7 +127,7 @@ export default function Register() {
 
   const getInputClass = (fieldName: string) => {
     const baseClass =
-      'w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition';
+      'w-full bg-surface text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary transition';
     return errors[fieldName as keyof typeof errors]
       ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
       : baseClass;
@@ -152,28 +152,21 @@ export default function Register() {
       transition: { duration: 0.6 },
     },
   };
-
-  const buttonVariants = {
-    hover: { scale: 1.02, boxShadow: '0 8px 25px rgba(205, 255, 0, 0.4)' },
-    tap: { scale: 0.98 },
-  };
-
   const socialButtonVariants = {
     hover: {
       y: -4,
-      borderColor: '#CDFF00',
-      boxShadow: '0 8px 20px rgba(205, 255, 0, 0.2)',
+      borderColor: '#990800',
+      boxShadow: '0 8px 20px rgba(153, 8, 0, 0.35)',
     },
     tap: { y: -2 },
   };
-
   const eyeIconVariants = {
     hover: { scale: 1.2 },
     tap: { scale: 0.95 },
   };
 
   return (
-    <div className=" bg-[#171717] min-h-screen ">
+    <div className=" bg-app min-h-screen ">
       <motion.div
         className="px-4  max-w-md mx-auto flex flex-col items-center justify-center py-8"
         variants={containerVariants}
@@ -193,7 +186,7 @@ export default function Register() {
           {t('auth.register.subtitle')}{' '}
           <Link
             to={'/login'}
-            className="text-[#CDFF00] hover:opacity-80 transition duration-300 hover:underline"
+            className="text-white hover:opacity-80 transition duration-300 hover:underline"
           >
             {t('auth.register.login')}
           </Link>
@@ -296,7 +289,7 @@ export default function Register() {
               />
               <motion.button
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#CDFF00]"
+                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                 type="button"
                 variants={eyeIconVariants}
                 whileHover="hover"
@@ -335,7 +328,7 @@ export default function Register() {
               />
               <motion.button
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#CDFF00]"
+                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                 type="button"
                 variants={eyeIconVariants}
                 whileHover="hover"
@@ -382,12 +375,12 @@ export default function Register() {
             ? 'border-red-500 bg-red-950/30'
             : 'border-gray-600 bg-[#2a2a2a]'
         }
-        peer-checked:bg-[#CDFF00] peer-checked:border-[#CDFF00]
+        peer-checked:bg-primary peer-checked:border-white]
         peer-checked:[&>svg]:opacity-100 peer-checked:[&>svg]:scale-100
       `}
                 >
                   <svg
-                    className="w-4 h-4 text-black opacity-0 scale-75 transition-all duration-200"
+                    className="w-4 h-4 text-white opacity-0 scale-75 transition-all duration-200"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="3.5"
@@ -407,7 +400,7 @@ export default function Register() {
                   to={PRIVACY_POLICY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#CDFF00] hover:underline transition"
+                  className="text-white hover:underline transition"
                 >
                   {t('auth.register.legal.privacy')}
                 </Link>{' '}
@@ -416,7 +409,7 @@ export default function Register() {
                   to={TERMS_OF_SERVICE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#CDFF00] hover:underline transition"
+                  className="text-white hover:underline transition"
                 >
                   {t('auth.register.legal.terms')}
                 </Link>
@@ -434,22 +427,17 @@ export default function Register() {
             )}
           </motion.div>
 
-          <motion.button
+          <FormButton
             type="submit"
-            className={`w-full ${
-              isPending
-                ? 'bg-[#8fb103] cursor-not-allowed'
-                : 'bg-[#CDFF00] cursor-pointer'
-            } text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
+            isLoading={isPending}
+            size="lg"
+            className="mb-4"
             disabled={isPending}
           >
             {isPending
               ? t('auth.register.actions.loading')
               : t('auth.register.actions.submit')}
-          </motion.button>
+          </FormButton>
         </motion.form>
 
         <motion.div

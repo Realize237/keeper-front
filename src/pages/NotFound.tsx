@@ -48,7 +48,7 @@ const NotFound = () => {
             {t('not_found.go_back')}
           </FormButton>
 
-          <FormButton variant="secondary" onClick={() => navigate('/support')}>
+          <FormButton onClick={() => navigate('/support')}>
             {t('not_found.contact_support')}
           </FormButton>
         </motion.div>

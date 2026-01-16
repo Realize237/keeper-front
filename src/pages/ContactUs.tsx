@@ -96,7 +96,7 @@ const ContactUs = () => {
               })}
               rows={5}
               placeholder={t('contact_us.fields.message.placeholder')}
-              className={`w-full resize-none bg-[#2a2a2a] text-white placeholder-gray-500 rounded-2xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] ${
+              className={`w-full resize-none bg-[#2a2a2a] text-white placeholder-gray-500 rounded-2xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary ${
                 errors.message ? 'border border-red-500' : ''
               }`}
             />

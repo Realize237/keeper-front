@@ -83,7 +83,7 @@ const PriceRangeSlider = ({
 
       <div ref={containerRef} className="relative h-2 bg-white/50 rounded-full">
         <motion.div
-          className="absolute h-full bg-[#CDFF00] rounded-full"
+          className="absolute h-full bg-primary rounded-full"
           style={{
             left: springLeftX,
             width: useTransform(
@@ -104,7 +104,7 @@ const PriceRangeSlider = ({
           onDrag={handleLeftDrag}
           onDragEnd={handleLeftDrag}
           style={{ x: leftX }}
-          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-[#CDFF00] rounded-full cursor-grab active:cursor-grabbing z-20 shadow-md"
+          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-primary rounded-full cursor-grab active:cursor-grabbing z-20 shadow-md"
         />
 
         <motion.div
@@ -118,7 +118,7 @@ const PriceRangeSlider = ({
           onDrag={handleRightDrag}
           onDragEnd={handleRightDrag}
           style={{ x: rightX }}
-          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-[#CDFF00] rounded-full cursor-grab active:cursor-grabbing z-10 shadow-md"
+          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-primary rounded-full cursor-grab active:cursor-grabbing z-10 shadow-md"
         />
       </div>
     </div>

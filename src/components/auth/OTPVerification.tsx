@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import FormButton from '../ui/FormButton';
 
 interface OtpProps {
   onSubmit: (code: string) => void;
@@ -143,9 +143,14 @@ export default function OTPVerification({
             ))}
           </div>
 
-          <Button type="submit" loading={isSubmitting} className="w-full mt-7">
+          <FormButton
+            type="submit"
+            isLoading={isSubmitting}
+            className="w-full mt-7"
+            size="lg"
+          >
             {t('auth.otp.actions.submit')}
-          </Button>
+          </FormButton>
         </form>
 
         <div className="flex justify-between items-center mt-4 text-sm text-gray-400">

@@ -1,4 +1,3 @@
-import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -6,6 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MdClose } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import FormButton from '../ui/FormButton';
 
 interface PasswordResetRequestProps {
   onSubmit: (email: string) => void;
@@ -22,7 +22,7 @@ export default function PasswordResetRequest({
 }: PasswordResetRequestProps) {
   const { t } = useTranslation();
   const passwordResetRequestSchema = z.object({
-    email: z.string().email(t('auth.passwordResetRequest.validation.email')),
+    email: z.string().email(t('auth.password_reset_request.validation.email')),
   });
 
   const {
@@ -73,9 +73,14 @@ export default function PasswordResetRequest({
             error={errors.email?.message?.toString()}
           />
 
-          <Button loading={isSubmitting} className="w-full">
+          <FormButton
+            size="lg"
+            isLoading={isSubmitting}
+            disabled={isSubmitting}
+            className="w-full"
+          >
             {t('auth.password_reset_request.send_code')}
-          </Button>
+          </FormButton>
         </form>
       </motion.div>
     </div>

@@ -25,7 +25,7 @@ export const FilterOption = ({
         transition-colors
         ${
           selected
-            ? 'border-[#CDFF00] text-white'
+            ? 'border-primary text-white'
             : 'border-white/20 text-white/60 hover:border-white/40'
         }
       `}
@@ -35,7 +35,7 @@ export const FilterOption = ({
         className={`
           flex items-center justify-center
           w-4 h-4 rounded-full border
-          ${selected ? 'bg-[#CDFF00] border-[#CDFF00]' : 'border-white/30'}
+          ${selected ? 'bg-primary border-primary' : 'border-white/30'}
         `}
       >
         <AnimatePresence>
