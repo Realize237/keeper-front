@@ -30,8 +30,12 @@ import { LogoutProvider } from './context/LogoutContext';
 import { useUser } from './hooks/useUsers';
 import HomePage from './pages/HomePage';
 import { LanguageProvider } from './context/LanguageContext';
-import { LegalPage } from './pages/LegalPage';
 import { PricingPage } from './pages/PricingPage';
+import { TermsConditions } from './pages/Legal/TermsConditions';
+import { PrivacyPolicy } from './pages/Legal/PrivacyPolicy';
+import { CookiePolicy } from './pages/Legal/CookiePolicy';
+import { GDPRCompliance } from './pages/Legal/GDPRCompliance';
+import { LegalLayout } from './layouts/LegalLayout';
 
 function PushTokenHandler() {
   const { isUserReady, user } = useUser();
@@ -68,7 +72,20 @@ export default function App() {
                   <Routes>
                     <Route element={<MainLayout />}>
                       <Route path="/" element={<HomePage />} />
-                      <Route path="/legal" element={<LegalPage />} />
+                      <Route path="/legal" element={<LegalLayout />}>
+                        <Route index element={<PrivacyPolicy />} />{' '}
+                        <Route
+                          path="privacy-policy"
+                          element={<PrivacyPolicy />}
+                        />
+                        <Route
+                          path="terms-of-service"
+                          element={<TermsConditions />}
+                        />
+                        <Route path="cookies" element={<CookiePolicy />} />
+                        <Route path="gdpr" element={<GDPRCompliance />} />
+                      </Route>
+
                       <Route path="/pricing" element={<PricingPage />} />
                       <Route path="/register" element={<Register />} />
                       <Route path="/login" element={<Login />} />
