@@ -1,7 +1,80 @@
-import { FaCheck } from 'react-icons/fa';
+import { useTranslation, Trans } from 'react-i18next';
 import { FaGlobe } from 'react-icons/fa6';
+import { useTranslatedArray } from '../../hooks/useLanguage';
+import { FaCheck } from 'react-icons/fa';
+import { env } from '../../utils/env';
+
+type Block =
+  | { type: 'text'; content: string[] }
+  | { type: 'list'; items: string[] }
+  | {
+      type: 'contact';
+      contact: { controller?: string; email: string; website: string };
+    };
+
+type Section = {
+  heading: string;
+  blocks: Block[];
+};
 
 export const GDPRCompliance = () => {
+  const { t } = useTranslation('gdpr');
+  const sections = useTranslatedArray<Section>('sections', [], 'gdpr');
+
+  const renderBlock = (block: Block, key: number) => {
+    switch (block.type) {
+      case 'text':
+        return block.content.map((p, i) => (
+          <p key={i} className="mb-2">
+            <Trans i18nKey={p} />
+          </p>
+        ));
+      case 'list':
+        return (
+          <ul key={key} className=" mb-2">
+            {block.items.map((item, i) => (
+              <li className="flex gap-2" key={i}>
+                <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                <Trans i18nKey={item} />
+              </li>
+            ))}
+          </ul>
+        );
+      case 'contact':
+        return (
+          <div key={key} className="space-y-1">
+            <p>{block.contact.controller}</p>
+            {block.contact.email && (
+              <p>
+                {block.contact.email}{' '}
+                <a
+                  href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
+                  className="text-blue-600 underline"
+                >
+                  {env.APP_PRIVACY_POLICY_EMAIL}
+                </a>
+              </p>
+            )}
+            {block.contact.website && (
+              <p>
+                {block.contact.website}{' '}
+                <a
+                  href={env.APP_WEBSITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  {env.APP_WEBSITE_URL}
+                </a>
+              </p>
+            )}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="prose prose-gray max-w-none">
       <div className="flex items-center gap-3 mb-6">
@@ -9,146 +82,20 @@ export const GDPRCompliance = () => {
           <FaGlobe className="w-6 h-6 text-white" />
         </div>
         <h2 className="text-3xl font-extrabold text-gray-900 m-0">
-          GDPR Compliance
+          {t('title')}
         </h2>
       </div>
 
-      <p className="text-gray-600 leading-relaxed">
-        Keepay is committed to protecting the privacy and personal data of all
-        users, especially those in the European Union. We comply with the
-        General Data Protection Regulation (GDPR) requirements.
+      <p className="text-lg leading-relaxed text-gray-700 mb-6">
+        <Trans i18nKey={t('intro')} />
       </p>
 
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Your GDPR Rights
-      </h3>
-      <p className="text-gray-600 leading-relaxed mb-4">
-        Under GDPR, you have the following rights:
-      </p>
-
-      <div className="space-y-4">
-        <div className="bg-linear-to-r from-gray-50 to-red-50 rounded-2xl p-6 border-2 border-gray-100">
-          <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82]" />
-            Right to Access
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            You have the right to request copies of your personal data. We may
-            charge a small fee for this service.
-          </p>
-        </div>
-
-        <div className="bg-linear-to-r from-gray-50 to-red-50 rounded-2xl p-6 border-2 border-gray-100">
-          <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82]" />
-            Right to Rectification
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            You have the right to request that we correct any information you
-            believe is inaccurate or complete information you believe is
-            incomplete.
-          </p>
-        </div>
-
-        <div className="bg-linear-to-r from-gray-50 to-red-50 rounded-2xl p-6 border-2 border-gray-100">
-          <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82]" />
-            Right to Erasure
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            You have the right to request that we erase your personal data,
-            under certain conditions.
-          </p>
-        </div>
-
-        <div className="bg-linear-to-r from-gray-50 to-red-50 rounded-2xl p-6 border-2 border-gray-100">
-          <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82]" />
-            Right to Restrict Processing
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            You have the right to request that we restrict the processing of
-            your personal data, under certain conditions.
-          </p>
-        </div>
-
-        <div className="bg-linear-to-r from-gray-50 to-red-50 rounded-2xl p-6 border-2 border-gray-100">
-          <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82]" />
-            Right to Data Portability
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            You have the right to request that we transfer the data we have
-            collected to another organization, or directly to you, under certain
-            conditions.
-          </p>
-        </div>
-
-        <div className="bg-linear-to-r from-gray-50 to-red-50 rounded-2xl p-6 border-2 border-gray-100">
-          <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82]" />
-            Right to Object
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            You have the right to object to our processing of your personal
-            data, under certain conditions.
-          </p>
-        </div>
-      </div>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Data Protection Measures
-      </h3>
-      <p className="text-gray-600 leading-relaxed mb-4">
-        We implement the following measures to protect your data:
-      </p>
-      <ul className="space-y-2 text-gray-600">
-        <li className="flex items-start gap-2">
-          <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-          <span>Data encryption both in transit and at rest</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-          <span>Regular security audits and penetration testing</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-          <span>Access controls and authentication mechanisms</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-          <span>Data minimization - we only collect what's necessary</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-          <span>Staff training on data protection</span>
-        </li>
-      </ul>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Data Processing Agreement
-      </h3>
-      <p className="text-gray-600 leading-relaxed">
-        We only work with third-party processors who provide sufficient
-        guarantees to implement appropriate technical and organizational
-        measures to ensure GDPR compliance.
-      </p>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Exercising Your Rights
-      </h3>
-      <p className="text-gray-600 leading-relaxed">
-        If you wish to exercise any of your GDPR rights, please contact us at
-        privacy@keepay.com. We will respond to your request within 30 days.
-      </p>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Data Protection Officer
-      </h3>
-      <p className="text-gray-600 leading-relaxed">
-        For any questions regarding data protection, you can contact our Data
-        Protection Officer at dpo@keepay.com.
-      </p>
+      {sections.map((section, idx) => (
+        <section key={idx} className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">{section.heading}</h2>
+          {section.blocks.map((block, i) => renderBlock(block, i))}
+        </section>
+      ))}
     </div>
   );
 };

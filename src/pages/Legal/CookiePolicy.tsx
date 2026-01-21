@@ -1,7 +1,104 @@
-import { FaCheck } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 import { LuCookie } from 'react-icons/lu';
+import { useTranslatedArray } from '../../hooks/useLanguage';
+import { FaCheck } from 'react-icons/fa6';
+import { env } from '../../utils/env';
+
+type Block =
+  | { type: 'text'; content: string[] }
+  | { type: 'list'; items: string[] }
+  | { type: 'subsection'; subheading: string; blocks: Block[] }
+  | { type: 'note'; content: string; items: string[] }
+  | {
+      type: 'contact';
+      contact: {
+        email: string;
+        website: string;
+        intro: string;
+      };
+    };
+
+type Section = {
+  heading: string;
+  blocks: Block[];
+};
 
 export const CookiePolicy = () => {
+  const { t } = useTranslation('cookies');
+  const sections = useTranslatedArray<Section>('sections', [], 'cookies');
+
+  const renderBlock = (block: Block, key: number) => {
+    switch (block.type) {
+      case 'text':
+        return block.content.map((p, i) => (
+          <p key={i} className="mb-2">
+            {p}
+          </p>
+        ));
+      case 'list':
+        return (
+          <ul key={key} className=" mb-2">
+            {block.items.map((item, i) => (
+              <li className="flex gap-2" key={i}>
+                <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        );
+      case 'subsection':
+        return (
+          <div key={key} className="pl-4 mb-4">
+            <h3 className="text-xl font-medium mb-2">{block.subheading}</h3>
+            {block.blocks.map((b, i) => renderBlock(b, i))}
+          </div>
+        );
+      case 'note':
+        return (
+          <div key={key} className="mb-4 p-4  rounded-xl">
+            <p className="font-semibold mb-2">{block.content}</p>
+            <ul className="">
+              {block.items.map((item, i) => (
+                <li className="flex gap-2" key={i}>
+                  <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+
+      case 'contact':
+        return (
+          <div className="space-y-1">
+            <p>{block.contact.intro}</p>
+            <p>
+              {block.contact.email}:{' '}
+              <a
+                href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
+                className="text-blue-600 underline"
+              >
+                {env.APP_PRIVACY_POLICY_EMAIL}
+              </a>
+            </p>
+            <p>
+              {block.contact.website}:{' '}
+              <a
+                href={env.APP_WEBSITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {env.APP_WEBSITE_URL}
+              </a>
+            </p>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="prose prose-gray max-w-none">
       <div className="flex items-center gap-3 mb-6">
@@ -9,112 +106,18 @@ export const CookiePolicy = () => {
           <LuCookie className="w-6 h-6 text-white" />
         </div>
         <h2 className="text-3xl font-extrabold text-gray-900 m-0">
-          Cookie Policy
+          {t('title')}
         </h2>
       </div>
 
-      <p className="text-gray-600 leading-relaxed">
-        This Cookie Policy explains how Keepay uses cookies and similar
-        technologies to recognize you when you visit our application.
-      </p>
+      <p className="text-lg leading-relaxed text-gray-700 mb-6">{t('intro')}</p>
 
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        What Are Cookies?
-      </h3>
-      <p className="text-gray-600 leading-relaxed">
-        Cookies are small data files that are placed on your computer or mobile
-        device when you visit a website or use an application. Cookies are
-        widely used to make applications work more efficiently and provide
-        information to the owners of the application.
-      </p>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        How We Use Cookies
-      </h3>
-      <p className="text-gray-600 leading-relaxed mb-4">
-        We use cookies for the following purposes:
-      </p>
-
-      <div className="bg-gray-50 rounded-2xl p-6 mb-6">
-        <h4 className="text-lg font-bold text-gray-900 mb-3">
-          Essential Cookies
-        </h4>
-        <p className="text-gray-600 leading-relaxed mb-3">
-          These cookies are necessary for the application to function and cannot
-          be switched off. They include:
-        </p>
-        <ul className="space-y-2 text-gray-600">
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>Authentication cookies to keep you logged in</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>Security cookies to protect against fraud</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>Session cookies to remember your preferences</span>
-          </li>
-        </ul>
-      </div>
-
-      <div className="bg-gray-50 rounded-2xl p-6 mb-6">
-        <h4 className="text-lg font-bold text-gray-900 mb-3">
-          Analytics Cookies
-        </h4>
-        <p className="text-gray-600 leading-relaxed mb-3">
-          These cookies help us understand how visitors interact with our
-          application:
-        </p>
-        <ul className="space-y-2 text-gray-600">
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>Google Analytics to measure application traffic</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>Performance cookies to identify technical issues</span>
-          </li>
-        </ul>
-      </div>
-
-      <div className="bg-gray-50 rounded-2xl p-6 mb-6">
-        <h4 className="text-lg font-bold text-gray-900 mb-3">
-          Functional Cookies
-        </h4>
-        <p className="text-gray-600 leading-relaxed mb-3">
-          These cookies enable enhanced functionality:
-        </p>
-        <ul className="space-y-2 text-gray-600">
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>Language preference cookies</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
-            <span>User interface customization cookies</span>
-          </li>
-        </ul>
-      </div>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Managing Cookies
-      </h3>
-      <p className="text-gray-600 leading-relaxed">
-        You can control and manage cookies through your browser settings. Please
-        note that removing or blocking cookies may impact your user experience
-        and some features may no longer function properly.
-      </p>
-
-      <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-        Third-Party Cookies
-      </h3>
-      <p className="text-gray-600 leading-relaxed">
-        We may also use third-party cookies from trusted partners for analytics
-        and advertising purposes. These cookies are subject to the respective
-        privacy policies of these external services.
-      </p>
+      {sections.map((section, idx) => (
+        <div key={idx} className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">{section.heading}</h2>
+          {section.blocks.map((block, i) => renderBlock(block, i))}
+        </div>
+      ))}
     </div>
   );
 };

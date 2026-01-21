@@ -1,0 +1,284 @@
+{
+  "title": "Déclaration de conformité au RGPD",
+  "lastUpdated": "January 16, 2026",
+  "intro": "Keepay (« Keepay », « nous », « notre » ou « nos ») s'engage à se conformer au règlement général sur la protection des données (UE) 2016/679 (« RGPD »), au RGPD britannique et aux lois applicables en matière de protection des données. La présente déclaration explique comment Keepay remplit ses obligations en tant que responsable du traitement des données et assure la protection des données personnelles des utilisateurs situés dans l'Union européenne, au Royaume-Uni et dans d'autres juridictions applicables.",
+  "sections": [
+    {
+      "heading": "1. Responsable du traitement",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Aux fins du RGPD, Keepay agit en tant que responsable du traitement des données, ce qui signifie que nous déterminons comment et pourquoi les données à caractère personnel sont traitées."
+          ]
+        },
+        {
+          "type": "contact",
+          "contact": {
+            "controller": "Responsable du traitement : Keepay",
+            "email": "Email",
+            "website": "Site web"
+          }
+        }
+      ]
+    },
+    {
+      "heading": "2. Base juridique du traitement",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay traite les données à caractère personnel uniquement lorsqu'il existe une base juridique au titre de l'article 6 du RGPD, notamment:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Consentement : lorsque vous acceptez explicitement le traitement des données (par exemple, en connectant un compte bancaire)",
+            "Nécessité contractuelle – pour fournir nos services",
+            "Obligation légale – pour se conformer aux exigences réglementaires",
+            "Intérêt légitime – limité à la sécurité, à la prévention de la fraude et à l'amélioration des services"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Le consentement peut être retiré à tout moment sans affecter la licéité du traitement antérieur."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "3. Minimisation des données et limitation de la finalité",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Nous adhérons strictement aux principes suivants :"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Minimisation des données – collecte uniquement des données strictement nécessaires",
+            "Limitation des finalités – utilisation des données uniquement à des fins clairement définies"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Les données financières accessibles via des fournisseurs tiers (par exemple Plaid) sont utilisées exclusivement pour fournir les fonctionnalités de gestion des abonnements de Keepay."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "4. Transparence et traitement équitable",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Nous fournissons aux utilisateurs :"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Des informations claires sur les données collectées",
+            "Comment les données sont utilisées et conservées",
+            "Avec qui les données sont partagées",
+            "Comment exercer leurs droits"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Ces informations sont disponibles dans notre politique de confidentialité, notre politique en matière de cookies et la présente déclaration relative au RGPD."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "5. Droits des utilisateurs en vertu du RGPD",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Les utilisateurs situés dans l'UE et au Royaume-Uni ont le droit :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Droit d'accès : obtenir une copie de leurs données personnelles",
+            "Droit de rectification – corriger les données inexactes ou incomplètes",
+            "Droit à l'effacement (« droit à l'oubli »)",
+            "Droit à la limitation du traitement",
+            "Droit à la portabilité des données",
+            "Droit d'opposition au traitement",
+            "Droit de retirer son consentement à tout moment"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Les demandes peuvent être adressées à privacy@keepayapp.com",
+            "Nous répondons dans un délai de 30 jours, conformément au RGPD"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6. Conservation et suppression des données",
+
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay ne conserve les données personnelles que pendant la durée nécessaire à la réalisation de ses objectifs."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Les données du compte sont conservées tant que le compte est actif.",
+            "Les données financières sont supprimées lorsque les comptes sont déconnectés ou fermés.",
+            "Une fois le compte supprimé, les données relatives à l'utilisateur sont conservées pendant 30 à 90 jours avant d'être définitivement supprimées.",
+            "Les comptes non activés sont conservés pendant 15 jours avant d'être définitivement supprimés.",
+            "Les données de sauvegarde sont supprimées dans un délai de 30 à 90 jours.",
+            "La conservation légale ne s'applique que lorsque la loi l'exige"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Une fois supprimées, les données sont définitivement effacées ou anonymisées."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7. Mesures de sécurité des données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées, notamment :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Cryptage HTTPS / TLS",
+            "Le chiffrement au repos",
+            "Contrôle d'accès basé sur les rôles",
+            "Authentification OAuth sécurisée",
+            "Surveillance régulière et détection des incidents"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Ces mesures sont conçues pour empêcher tout accès non autorisé, toute perte ou toute divulgation."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "8. Sous-traitants tiers",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay travaille uniquement avec des sous-traitants conformes au RGPD, notamment :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Agrégateurs de données financières (par exemple, Plaid)",
+            "Fournisseurs d'hébergement et d'infrastructures sécurisés",
+            "Services de surveillance et de sécurité"
+          ]
+        },
+        {
+          "type": "text",
+          "content": ["Tous les sous-traitants sont liés par :"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Accords de traitement des données (DPA)",
+            "Obligations de confidentialité",
+            "Principes de minimisation des données"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "9. Transferts internationaux de données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Lorsque des données à caractère personnel sont transférées en dehors de l'UE ou du Royaume-Uni, Keepay veille à mettre en place des garanties appropriées, notamment :"
+          ]
+        },
+
+        {
+          "type": "list",
+          "items": [
+            "Clauses contractuelles types (SCC)",
+            "AdDécisions d'adéquation, le cas échéant",
+            "Contrôles de sécurité et d'accès"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "10. Gestion des violations de données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["En cas de violation des données à caractère personnel :"]
+        },
+
+        {
+          "type": "list",
+          "items": [
+            "Nous évaluerons rapidement le risque",
+            "Nous informerons l'autorité de contrôle compétente dans les 72 heures, si nécessaire",
+            "Nous informerons les utilisateurs concernés sans délai si leurs droits sont exposés à un risque élevé"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "11. Autorité de contrôle et réclamations",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Les utilisateurs ont le droit de déposer une plainte auprès de leur autorité locale de protection des données.",
+            "Les utilisateurs de l'UE peuvent contacter leur autorité nationale.",
+            "Les utilisateurs britanniques peuvent contacter le Bureau du commissaire à l'information (ICO)."
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Nous encourageons les utilisateurs à nous contacter en premier lieu afin de résoudre les problèmes à l'amiable."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "12. Updates to This Statement",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "La présente déclaration de conformité au RGPD peut être mise à jour afin de refléter des changements juridiques, techniques ou organisationnels.",
+            "La dernière version sera toujours disponible sur notre site web."
+          ]
+        }
+      ]
+    }
+  ]
+}

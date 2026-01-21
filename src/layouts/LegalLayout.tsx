@@ -3,35 +3,38 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { LuShield, LuCookie } from 'react-icons/lu';
 import { FiFileText } from 'react-icons/fi';
 import { FaGlobe } from 'react-icons/fa6';
-
-const legalSections = [
-  {
-    id: 'privacy-policy',
-    path: '/legal/privacy-policy',
-    label: 'Privacy Policy',
-    icon: LuShield,
-  },
-  {
-    id: 'terms-of-service',
-    path: '/legal/terms-of-service',
-    label: 'Terms & Conditions',
-    icon: FiFileText,
-  },
-  {
-    id: 'cookies',
-    path: '/legal/cookies',
-    label: 'Cookie Policy',
-    icon: LuCookie,
-  },
-  {
-    id: 'gdpr',
-    path: '/legal/gdpr',
-    label: 'GDPR Compliance',
-    icon: FaGlobe,
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export const LegalLayout = () => {
+  const { t } = useTranslation();
+
+  const legalSections = [
+    {
+      id: 'privacy-policy',
+      path: '/legal/privacy-policy',
+      label: t('legal.sections.privacy'),
+      icon: LuShield,
+    },
+    {
+      id: 'terms-of-service',
+      path: '/legal/terms-of-service',
+      label: t('legal.sections.terms'),
+      icon: FiFileText,
+    },
+    {
+      id: 'cookies',
+      path: '/legal/cookies',
+      label: t('legal.sections.cookies'),
+      icon: LuCookie,
+    },
+    {
+      id: 'gdpr',
+      path: '/legal/gdpr',
+      label: t('legal.sections.gdpr'),
+      icon: FaGlobe,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       <div className="bg-white border-b border-gray-200">
@@ -41,12 +44,16 @@ export const LegalLayout = () => {
             className="inline-flex items-center gap-2 text-gray-600 hover:text-[#990800] transition-colors font-medium mb-4"
           >
             <FaArrowLeft className="w-5 h-5" />
-            Back to Home
+            {t('legal.back')}
           </Link>
+
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-            Legal Information
+            {t('legal.title')}
           </h1>
-          <p className="text-gray-600 mt-2">Last updated: January 9, 2026</p>
+
+          <p className="text-gray-600 mt-2">
+            {t('legal.last_updated', { date: 'January 9, 2026' })}
+          </p>
         </div>
       </div>
 
@@ -55,8 +62,9 @@ export const LegalLayout = () => {
           <aside className="lg:col-span-1">
             <div className="bg-white rounded-3xl border-2 border-gray-200 p-6 sticky top-6">
               <h2 className="text-lg font-bold text-gray-900 mb-4">
-                Legal Sections
+                {t('legal.sections_title')}
               </h2>
+
               <nav className="space-y-2">
                 {legalSections.map((section) => (
                   <NavLink

@@ -17,9 +17,10 @@ export const useLanguage = (): LanguageContextType => {
 
 export function useTranslatedArray<T = string>(
   key: string,
-  fallback: T[] = [] as T[]
+  fallback: T[] = [] as T[],
+  ns?: string
 ): T[] {
-  const { t } = useTranslation();
+  const { t } = useTranslation(ns);
 
   return useMemo(() => {
     const result = t(key, {
