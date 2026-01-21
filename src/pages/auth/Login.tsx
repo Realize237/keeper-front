@@ -4,27 +4,27 @@ import { motion } from 'framer-motion';
 
 import { Link, useSearchParams } from 'react-router-dom';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
-import { IMAGES } from '../assets';
+import { IMAGES } from '../../assets';
 import {
   useLoginUser,
   useRequestPasswordReset,
   useResetPassword,
   useValidateForgotPasswordToken,
-} from '../hooks/useUsers';
+} from '../../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
-import { env } from '../utils/env';
+import { env } from '../../utils/env';
 import toast from 'react-hot-toast';
 import { useCookies } from 'react-cookie';
 import {
   FORGOT_PASSWORD_STEPS,
   ForgotPasswordStepsType,
-} from '../interfaces/auth';
-import PasswordResetRequest from '../components/auth/PasswordResetRequest';
-import OTPVerification from '../components/auth/OTPVerification';
-import PasswordReset from '../components/auth/PasswordReset';
+} from '../../interfaces/auth';
+import PasswordResetRequest from '../../components/auth/PasswordResetRequest';
+import OTPVerification from '../../components/auth/OTPVerification';
+import PasswordReset from '../../components/auth/PasswordReset';
 import { useTranslation } from 'react-i18next';
-import { EMAIL_REGEX } from '../constants/validation/patterns';
-import FormButton from '../components/ui/FormButton';
+import { EMAIL_REGEX } from '../../constants/validation/patterns';
+import FormButton from '../../components/ui/FormButton';
 
 export default function Login() {
   const { t } = useTranslation();

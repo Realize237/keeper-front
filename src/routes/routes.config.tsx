@@ -5,8 +5,8 @@ import { lazyImport } from './lazyImport';
 
 // Public pages
 const HomePage = lazyImport(() => import('../pages/HomePage'));
-const Login = lazyImport(() => import('../pages/Login'));
-const Register = lazyImport(() => import('../pages/Register'));
+const Login = lazyImport(() => import('../pages/auth/Login'));
+const Register = lazyImport(() => import('../pages/auth/Register'));
 const LegalPage = lazyImport(() =>
   import('../pages/LegalPage').then((module) => ({
     default: module.LegalPage,
@@ -19,6 +19,8 @@ const PricingPage = lazyImport(() =>
 );
 const NotFound = lazyImport(() => import('../pages/NotFound'));
 const SetPassword = lazyImport(() => import('../pages/profile/SetPassword'));
+const CheckYourEmail = lazyImport(() => import('../pages/auth/CheckYourEmail'));
+const VerifyEmail = lazyImport(() => import('../pages/auth/VerifyEmail'));
 
 // Protected pages
 const Plaid = lazyImport(() => import('../pages/Plaid'));
@@ -59,6 +61,8 @@ export const routes: AppRoute[] = [
       { path: '/pricing', element: <PricingPage /> },
       { path: '/register', element: <Register /> },
       { path: '/login', element: <Login /> },
+      { path: '/check-your-email', element: <CheckYourEmail /> },
+      { path: '/verify-email', element: <VerifyEmail /> },
       { path: '/set-password', element: <SetPassword /> },
 
       {

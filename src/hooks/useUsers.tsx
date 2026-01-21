@@ -19,11 +19,13 @@ import {
   loginUser,
   logoutUser,
   requestPasswordRequest,
+  resendEmailVerification,
   resetPassword,
   sendSetPasswordEmail,
   setPassword,
   updateUser,
   validateForgotPasswordToken,
+  verifyEmail,
 } from '../api/users';
 import { env } from '../utils/env';
 import { userKeys } from '../queryKeys/userKeys';
@@ -152,5 +154,17 @@ export const useDeleteUserAccount = () => {
     meta: {
       invalidate: [userKeys.info],
     },
+  });
+};
+
+export const useVerifyEmail = () => {
+  return useMutation({
+    mutationFn: (token: string) => verifyEmail(token),
+  });
+};
+
+export const useResendEmailVerification = () => {
+  return useMutation({
+    mutationFn: (email: string) => resendEmailVerification(email),
   });
 };

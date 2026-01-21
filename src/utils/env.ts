@@ -33,4 +33,5 @@ export const env = {
   APP_LOGO_URL: getEnv('APP_LOGO_URL'),
   APP_WEBSITE_URL: getEnv('APP_WEBSITE_URL'),
   APP_SUPPORT_EMAIL: getEnv('APP_SUPPORT_EMAIL'),
+  VERIFY_EMAIL_TIMER: getEnv('VERIFY_EMAIL_TIMER', '60'),
 };
