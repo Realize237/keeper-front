@@ -510,7 +510,7 @@ export default function SubscriptionDetailModal({
                           isConnecting ||
                           nextBillingResult?.status === 'EXPIRED'
                         }
-                        className={`flex items-center gap-1 px-3 py-1 text-xs bg-[#CDFF00] rounded transition ${
+                        className={`flex items-center gap-1 px-3 py-1 text-xs bg-primary text-white rounded transition ${
                           isAddingPending ||
                           isConnecting ||
                           nextBillingResult?.status === 'EXPIRED'

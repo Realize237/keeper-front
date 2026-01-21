@@ -24,6 +24,7 @@ import OTPVerification from '../components/auth/OTPVerification';
 import PasswordReset from '../components/auth/PasswordReset';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX } from '../constants/validation/patterns';
+import FormButton from '../components/ui/FormButton';
 
 export default function Login() {
   const { t } = useTranslation();
@@ -145,7 +146,7 @@ export default function Login() {
 
   const getInputClass = (fieldName: string) => {
     const baseClass =
-      'w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition';
+      'w-full bg-surface text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary transition';
     return errors[fieldName as keyof typeof errors]
       ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
       : baseClass;
@@ -171,16 +172,11 @@ export default function Login() {
     },
   };
 
-  const buttonVariants = {
-    hover: { scale: 1.02, boxShadow: '0 8px 25px rgba(205, 255, 0, 0.4)' },
-    tap: { scale: 0.98 },
-  };
-
   const socialButtonVariants = {
     hover: {
       y: -4,
-      borderColor: '#CDFF00',
-      boxShadow: '0 8px 20px rgba(205, 255, 0, 0.2)',
+      borderColor: '#990800',
+      boxShadow: '0 8px 20px rgba(153, 8, 0, 0.35)',
     },
     tap: { y: -2 },
   };
@@ -252,7 +248,7 @@ export default function Login() {
   );
 
   return (
-    <div className="flex bg-[#171717] flex-col  py-8 overflow-hidden">
+    <div className="flex min-h-screen bg-app flex-col  py-8 overflow-hidden">
       <motion.div
         className="w-11/12 max-w-md mx-auto flex flex-col items-center justify-center "
         variants={containerVariants}
@@ -325,7 +321,7 @@ export default function Login() {
               />
               <motion.button
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#CDFF00]"
+                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                 type="button"
                 variants={eyeIconVariants}
                 whileHover="hover"
@@ -358,48 +354,61 @@ export default function Login() {
             variants={itemVariants}
             className="flex items-center justify-between w-full mb-6"
           >
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                {...register('rememberMe')}
-                className="w-4 h-4 bg-[#2a2a2a] border border-gray-500 rounded cursor-pointer accent-[#CDFF00]"
-              />
-              <label
-                htmlFor="rememberMe"
-                className="ml-2 text-gray-400 text-sm cursor-pointer"
-              >
+            <label className="flex items-center gap-2.5 cursor-pointer group">
+              <div className="relative flex items-center justify-center">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                  {...register('rememberMe')}
+                  className="peer sr-only"
+                />
+                <div
+                  className={`
+          w-5 h-5 rounded border transition-all duration-200 flex items-center justify-center
+          border-gray-600 bg-surface
+          peer-checked:bg-primary peer-checked:border-white
+          peer-focus:ring-2 peer-focus:ring-white/30
+          peer-checked:[&>svg]:opacity-100 peer-checked:[&>svg]:scale-100
+        `}
+                >
+                  <svg
+                    className="w-3.5 h-3.5 text-white opacity-0 scale-75 transition-all duration-200"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <span className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">
                 {t('auth.login.rememberMe')}
-              </label>
-            </div>
+              </span>
+            </label>
+
             <button
+              type="button"
               onClick={() =>
                 setForgotPasswordStep(
                   FORGOT_PASSWORD_STEPS.PASSWORD_REQUEST as ForgotPasswordStepsType
                 )
               }
-              className="text-[#CDFF00] text-sm hover:opacity-80 transition duration-300"
+              className="text-white text-sm hover:opacity-80 transition duration-300"
             >
               {t('auth.login.forgot_password')}
             </button>
           </motion.div>
-
-          <motion.button
-            type="submit"
-            className={`w-full ${
-              isPending
-                ? 'bg-[#8fb103] cursor-not-allowed'
-                : 'bg-[#CDFF00] cursor-pointer'
-            } text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            disabled={isPending}
-          >
+          <FormButton size="lg" isLoading={isPending} disabled={isPending}>
             {isPending
               ? t('auth.login.actions.loading')
               : t('auth.login.actions.submit')}
-          </motion.button>
+          </FormButton>
         </motion.form>
 
         <motion.div
@@ -539,7 +548,7 @@ export default function Login() {
           {t('auth.login.footer.text')}{' '}
           <Link
             to={'/register'}
-            className="text-[#CDFF00] transition duration-300 hover:opacity-80"
+            className="text-white transition duration-300 hover:opacity-80"
           >
             {t('auth.login.footer.signup')}
           </Link>

@@ -16,7 +16,7 @@ import {
 import NotificationSkeletonLoader from '../components/notifications/SkeletonLoader';
 import { useTranslation } from 'react-i18next';
 
-const NotificationsPage: React.FC = () => {
+const NotificationsPage: React.FC<unknown> = () => {
   const { data: notifications, isLoading } = useUserNotifications();
   const { t } = useTranslation();
 

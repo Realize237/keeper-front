@@ -1,11 +1,11 @@
-import { Contact } from '../components/HomePage/Contact';
-import { CTA } from '../components/HomePage/CTA';
-import { FAQ } from '../components/HomePage/FAQ';
-import { Features } from '../components/HomePage/Features';
-import { Footer } from '../components/HomePage/Footer';
-import Hero from '../components/HomePage/Hero';
-import { HowItWorks } from '../components/HomePage/HowItWorks';
-import { Testimonials } from '../components/HomePage/Testimonials';
+import { Contact } from '../components/homepage/Contact';
+import { CTA } from '../components/homepage/CTA';
+import { FAQ } from '../components/homepage/FAQ';
+import { Features } from '../components/homepage/Features';
+import { Footer } from '../components/homepage/Footer';
+import Hero from '../components/homepage/Hero';
+import { HowItWorks } from '../components/homepage/HowItWorks';
+import { Testimonials } from '../components/homepage/Testimonials';
 
 const HomePage = () => {
   return (

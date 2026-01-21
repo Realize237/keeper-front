@@ -2,7 +2,7 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 import NotificationBell from '../../notifications/NotificationBell';
 import { Avatar } from '../../ui/Avatar';
 import { CiLight } from 'react-icons/ci';
-import LanguageSwitcher from '../../LanguageSwitcher';
+import LanguageSwitcher from '../../common/LanguageSwitcher';
 import { useMemo, useRef, useState } from 'react';
 import { useUserNotifications } from '../../../hooks/useNotifications';
 import { NotificationStatus } from '../../../interfaces/notifications';

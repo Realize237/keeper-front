@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaStar } from 'react-icons/fa6';
 import { AiOutlineThunderbolt } from 'react-icons/ai';
-import HomeNavbar from '../components/HomePage/HomeNavbar';
+import HomeNavbar from '../components/homepage/HomeNavbar';
 
 const plans = [
   {

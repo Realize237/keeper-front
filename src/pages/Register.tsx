@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,10 @@ import {
   NAME_RULES,
   PASSWORD_RULES,
 } from '../constants/validation/patterns';
+import FormButton from '../components/ui/FormButton';
+
+const PRIVACY_POLICY_URL = '/legal/privacy-policy';
+const TERMS_OF_SERVICE_URL = '/legal/terms-of-service';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,6 +24,7 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const { mutate, isPending } = useCreateUser();
+  const privacyCheckboxRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const {
     register,
@@ -28,11 +33,13 @@ export default function Register() {
     getValues,
   } = useForm({
     mode: 'onBlur',
+
     defaultValues: {
       name: '',
       email: '',
       password: '',
       confirmPassword: '',
+      acceptedPrivacyPolicy: false,
     },
   });
 
@@ -46,9 +53,20 @@ export default function Register() {
     email: string;
     password: string;
     confirmPassword: string;
+    acceptedPrivacyPolicy: boolean;
   }) => {
+    if (!data.acceptedPrivacyPolicy) {
+      toast.error(t('auth.register.errors.accept_privacy_required'));
+      return;
+    }
+
     mutate(
-      { name: data.name, email: data.email, password: data.password },
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        acceptedPrivacyPolicy: data.acceptedPrivacyPolicy,
+      },
       {
         onError: (error: Error & { code?: string }) => {
           const code = error.code;
@@ -69,12 +87,47 @@ export default function Register() {
   };
 
   const handleGoogleSignup = () => {
+    if (!getValues('acceptedPrivacyPolicy')) {
+      toast.error(t('auth.register.errors.accept_privacy_required'));
+
+      if (privacyCheckboxRef.current) {
+        privacyCheckboxRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+
+        privacyCheckboxRef.current.classList.add(
+          'ring-2',
+          'ring-white',
+          'ring-opacity-70'
+        );
+        setTimeout(() => {
+          privacyCheckboxRef.current?.classList.remove(
+            'ring-2',
+            'ring-white',
+            'ring-opacity-70'
+          );
+        }, 2200);
+        privacyCheckboxRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+
+        const input = privacyCheckboxRef.current.querySelector(
+          'input[type="checkbox"]'
+        );
+        if (input instanceof HTMLInputElement) {
+          input.focus();
+        }
+      }
+      return;
+    }
     window.location.href = env.GOOGLE_CALLBACK_URL;
   };
 
   const getInputClass = (fieldName: string) => {
     const baseClass =
-      'w-full bg-[#2a2a2a] text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[#CDFF00] transition';
+      'w-full bg-surface text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary transition';
     return errors[fieldName as keyof typeof errors]
       ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
       : baseClass;
@@ -99,30 +152,23 @@ export default function Register() {
       transition: { duration: 0.6 },
     },
   };
-
-  const buttonVariants = {
-    hover: { scale: 1.02, boxShadow: '0 8px 25px rgba(205, 255, 0, 0.4)' },
-    tap: { scale: 0.98 },
-  };
-
   const socialButtonVariants = {
     hover: {
       y: -4,
-      borderColor: '#CDFF00',
-      boxShadow: '0 8px 20px rgba(205, 255, 0, 0.2)',
+      borderColor: '#990800',
+      boxShadow: '0 8px 20px rgba(153, 8, 0, 0.35)',
     },
     tap: { y: -2 },
   };
-
   const eyeIconVariants = {
     hover: { scale: 1.2 },
     tap: { scale: 0.95 },
   };
 
   return (
-    <div className=" bg-[#171717] ">
+    <div className=" bg-app min-h-screen ">
       <motion.div
-        className="  max-w-md mx-auto flex flex-col items-center justify-center py-8"
+        className="px-4  max-w-md mx-auto flex flex-col items-center justify-center py-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -140,7 +186,7 @@ export default function Register() {
           {t('auth.register.subtitle')}{' '}
           <Link
             to={'/login'}
-            className="text-[#CDFF00] hover:opacity-80 transition duration-300 hover:underline"
+            className="text-white hover:opacity-80 transition duration-300 hover:underline"
           >
             {t('auth.register.login')}
           </Link>
@@ -243,7 +289,7 @@ export default function Register() {
               />
               <motion.button
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#CDFF00]"
+                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                 type="button"
                 variants={eyeIconVariants}
                 whileHover="hover"
@@ -282,7 +328,7 @@ export default function Register() {
               />
               <motion.button
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#CDFF00]"
+                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
                 type="button"
                 variants={eyeIconVariants}
                 whileHover="hover"
@@ -306,22 +352,92 @@ export default function Register() {
             )}
           </motion.div>
 
-          <motion.button
+          <motion.div
+            ref={privacyCheckboxRef}
+            className="mb-6 w-full px-1"
+            variants={itemVariants}
+          >
+            <label className="flex items-start gap-3 cursor-pointer">
+              <div className="relative flex items-center justify-center">
+                <input
+                  type="checkbox"
+                  id="acceptPrivacy"
+                  {...register('acceptedPrivacyPolicy', {
+                    required: t('auth.register.errors.accept_privacy_required'),
+                  })}
+                  className="peer sr-only"
+                />
+                <div
+                  className={`
+        w-6 h-6 rounded-md border transition-all duration-200 flex items-center justify-center
+        ${
+          errors.acceptedPrivacyPolicy
+            ? 'border-red-500 bg-red-950/30'
+            : 'border-gray-600 bg-[#2a2a2a]'
+        }
+        peer-checked:bg-primary peer-checked:border-white]
+        peer-checked:[&>svg]:opacity-100 peer-checked:[&>svg]:scale-100
+      `}
+                >
+                  <svg
+                    className="w-4 h-4 text-white opacity-0 scale-75 transition-all duration-200"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <span className="text-gray-400 text-sm">
+                {t('auth.register.legal.iAccept')}{' '}
+                <Link
+                  to={PRIVACY_POLICY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:underline transition"
+                >
+                  {t('auth.register.legal.privacy')}
+                </Link>{' '}
+                {t('auth.register.legal.and')}{' '}
+                <Link
+                  to={TERMS_OF_SERVICE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:underline transition"
+                >
+                  {t('auth.register.legal.terms')}
+                </Link>
+              </span>
+            </label>
+
+            {errors.acceptedPrivacyPolicy && (
+              <motion.p
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-500 text-xs mt-2 ml-8"
+              >
+                {errors.acceptedPrivacyPolicy.message}
+              </motion.p>
+            )}
+          </motion.div>
+
+          <FormButton
             type="submit"
-            className={`w-full ${
-              isPending
-                ? 'bg-[#8fb103] cursor-not-allowed'
-                : 'bg-[#CDFF00] cursor-pointer'
-            } text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer`}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
+            isLoading={isPending}
+            size="lg"
+            className="mb-4"
             disabled={isPending}
           >
             {isPending
               ? t('auth.register.actions.loading')
               : t('auth.register.actions.submit')}
-          </motion.button>
+          </FormButton>
         </motion.form>
 
         <motion.div
@@ -366,27 +482,6 @@ export default function Register() {
             </svg>
           </motion.button>
         </motion.div>
-
-        <motion.p
-          variants={itemVariants}
-          className="text-gray-500 text-xs text-center"
-        >
-          {t('auth.register.legal.text')}
-          <br />
-          <a
-            href="#"
-            className="text-[#CDFF00] transition duration-300 hover:opacity-80 underline"
-          >
-            {t('auth.register.legal.terms')}
-          </a>{' '}
-          {t('auth.register.legal.and')}{' '}
-          <a
-            href="#"
-            className="text-[#CDFF00] transition duration-300 hover:opacity-80 underline"
-          >
-            {t('auth.register.legal.privacy')}
-          </a>
-        </motion.p>
       </motion.div>
     </div>
   );
