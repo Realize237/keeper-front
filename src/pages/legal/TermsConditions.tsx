@@ -27,27 +27,33 @@ export const TermsConditions = () => {
   const { t } = useTranslation('terms');
   const sections = useTranslatedArray<Section>('sections', [], 'terms');
 
-  const renderBlock = (block: Block, i: number) => {
+  const renderBlock = (block: Block, sectionIndex: number) => {
     switch (block.type) {
       case 'subheading':
         return (
-          <h3 key={i} className="text-xl font-medium mt-6 mb-3">
+          <h3
+            key={`subheading-${sectionIndex}`}
+            className="text-xl font-medium mt-6 mb-3"
+          >
             {block.title}
           </h3>
         );
 
       case 'text':
-        return block.content.map((p, j) => (
-          <p key={`${i}-${j}`} className="mb-3">
+        return block.content.map((p, paragraphIndex) => (
+          <p key={`text-${sectionIndex}-${paragraphIndex}`} className="mb-3">
             <Trans i18nKey={p} />
           </p>
         ));
 
       case 'list':
         return (
-          <ul key={i} className="">
-            {block.items.map((item, j) => (
-              <li className="flex gap-2" key={j}>
+          <ul key={`list-${sectionIndex}`} className="">
+            {block.items.map((item, itemIndex) => (
+              <li
+                className="flex gap-2"
+                key={`item-${sectionIndex}-${itemIndex}`}
+              >
                 <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
                 <Trans i18nKey={item} />
               </li>
@@ -56,15 +62,18 @@ export const TermsConditions = () => {
         );
 
       case 'note':
-        return block.content.map((p, j) => (
-          <p key={`${i}-${j}`} className="font-semibold mt-4">
+        return block.content.map((p, paragraphIndex) => (
+          <p
+            key={`note-${sectionIndex}-${paragraphIndex}`}
+            className="font-semibold mt-4"
+          >
             <Trans i18nKey={p} />
           </p>
         ));
 
       case 'contact':
         return (
-          <div key={i} className="space-y-1">
+          <div key={`contact-${sectionIndex}`} className="space-y-1">
             <p>{block.contact.intro}</p>
             <p>
               {block.contact.email}:{' '}

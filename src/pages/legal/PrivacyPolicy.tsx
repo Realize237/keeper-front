@@ -20,18 +20,18 @@ export const PrivacyPolicy = () => {
         </h1>
       </div>
 
-      {intro.map((block, i) => (
-        <BlockRenderer key={i} block={block} />
+      {intro.map((block, index) => (
+        <BlockRenderer key={index} block={block} />
       ))}
 
-      {sections.map((section, i) => (
-        <section key={i} className="mt-8">
+      {sections.map((section, index) => (
+        <section key={index} className="mt-8">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">
             {section.heading}
           </h2>
 
-          {section.blocks.map((block: Block, j: number) => (
-            <BlockRenderer key={j} block={block} />
+          {section.blocks.map((block: Block, blockIndex: number) => (
+            <BlockRenderer key={blockIndex} block={block} />
           ))}
         </section>
       ))}
@@ -68,8 +68,8 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
     case 'text':
       return (
         <>
-          {block.content.map((text, i) => (
-            <p key={i} className="mb-2 text-gray-700">
+          {block.content.map((text, index) => (
+            <p key={index} className="mb-2 text-gray-700">
               <Trans
                 components={{
                   strong: <strong className="font-semibold text-gray-900" />,
@@ -123,8 +123,8 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
     case 'note':
       return (
         <>
-          {block.content.map((text, i) => (
-            <p key={i} className="mb-2 text-gray-700">
+          {block.content.map((text, index) => (
+            <p key={index} className="mb-2 text-gray-700">
               <Trans
                 components={{
                   strong: <strong className="font-semibold text-gray-900" />,
@@ -148,7 +148,7 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
           {block.contact.text && <p>{block.contact.text}</p>}
           {block.contact.email && (
             <p>
-              {block.contact.email}{' '}
+              {block.contact.email}:{' '}
               <a
                 href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
                 className="text-blue-600 underline"
@@ -159,7 +159,7 @@ export const BlockRenderer = ({ block }: { block: Block }) => {
           )}
           {block.contact.website && (
             <p>
-              {block.contact.website}{' '}
+              {block.contact.website}:{' '}
               <a
                 href={env.APP_WEBSITE_URL}
                 target="_blank"

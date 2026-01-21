@@ -24,16 +24,16 @@ export const GDPRCompliance = () => {
   const renderBlock = (block: Block, key: number) => {
     switch (block.type) {
       case 'text':
-        return block.content.map((p, i) => (
-          <p key={i} className="mb-2">
+        return block.content.map((p, index) => (
+          <p key={index} className="mb-2">
             <Trans i18nKey={p} />
           </p>
         ));
       case 'list':
         return (
           <ul key={key} className=" mb-2">
-            {block.items.map((item, i) => (
-              <li className="flex gap-2" key={i}>
+            {block.items.map((item, index) => (
+              <li className="flex gap-2" key={index}>
                 <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
                 <Trans i18nKey={item} />
               </li>
@@ -46,7 +46,7 @@ export const GDPRCompliance = () => {
             <p>{block.contact.controller}</p>
             {block.contact.email && (
               <p>
-                {block.contact.email}{' '}
+                {block.contact.email}:{' '}
                 <a
                   href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
                   className="text-blue-600 underline"
@@ -57,7 +57,7 @@ export const GDPRCompliance = () => {
             )}
             {block.contact.website && (
               <p>
-                {block.contact.website}{' '}
+                {block.contact.website}:{' '}
                 <a
                   href={env.APP_WEBSITE_URL}
                   target="_blank"
@@ -93,7 +93,7 @@ export const GDPRCompliance = () => {
       {sections.map((section, idx) => (
         <section key={idx} className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">{section.heading}</h2>
-          {section.blocks.map((block, i) => renderBlock(block, i))}
+          {section.blocks.map((block, index) => renderBlock(block, index))}
         </section>
       ))}
     </div>

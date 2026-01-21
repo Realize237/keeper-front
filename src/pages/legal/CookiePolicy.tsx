@@ -30,16 +30,16 @@ export const CookiePolicy = () => {
   const renderBlock = (block: Block, key: number) => {
     switch (block.type) {
       case 'text':
-        return block.content.map((p, i) => (
-          <p key={i} className="mb-2">
+        return block.content.map((p, index) => (
+          <p key={index} className="mb-2">
             {p}
           </p>
         ));
       case 'list':
         return (
           <ul key={key} className=" mb-2">
-            {block.items.map((item, i) => (
-              <li className="flex gap-2" key={i}>
+            {block.items.map((item, index) => (
+              <li className="flex gap-2" key={index}>
                 <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
                 {item}
               </li>
@@ -50,7 +50,7 @@ export const CookiePolicy = () => {
         return (
           <div key={key} className="pl-4 mb-4">
             <h3 className="text-xl font-medium mb-2">{block.subheading}</h3>
-            {block.blocks.map((b, i) => renderBlock(b, i))}
+            {block.blocks.map((block, index) => renderBlock(block, index))}
           </div>
         );
       case 'note':
@@ -58,8 +58,8 @@ export const CookiePolicy = () => {
           <div key={key} className="mb-4 p-4  rounded-xl">
             <p className="font-semibold mb-2">{block.content}</p>
             <ul className="">
-              {block.items.map((item, i) => (
-                <li className="flex gap-2" key={i}>
+              {block.items.map((item, index) => (
+                <li className="flex gap-2" key={index}>
                   <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
                   {item}
                 </li>
@@ -115,7 +115,7 @@ export const CookiePolicy = () => {
       {sections.map((section, idx) => (
         <div key={idx} className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">{section.heading}</h2>
-          {section.blocks.map((block, i) => renderBlock(block, i))}
+          {section.blocks.map((block, index) => renderBlock(block, index))}
         </div>
       ))}
     </div>

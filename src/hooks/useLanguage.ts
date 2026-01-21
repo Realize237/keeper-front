@@ -32,9 +32,6 @@ export function useTranslatedArray<T = string>(
       return result as T[];
     }
 
-    console.warn(
-      `Translation key "${key}" did not return an array. Using fallback.`
-    );
     return fallback;
   }, [t, key, fallback]);
 }
