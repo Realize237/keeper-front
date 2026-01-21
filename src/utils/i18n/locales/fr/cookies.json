@@ -1,0 +1,230 @@
+{
+  "title": "Politique de cookies",
+  "lastUpdated": "Dernière mise à jour : 16 janvier 2026",
+  "intro": "La présente politique en matière de cookies explique comment Keepay (« nous », « notre », « nos ») utilise les cookies et les technologies similaires lorsque vous accédez à notre site Web et à notre application (collectivement, les « Services »). Cette politique doit être lue conjointement avec notre politique de confidentialité.",
+  "sections": [
+    {
+      "heading": "1. Que sont les cookies ?",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Les cookies sont de petits fichiers texte stockés sur votre appareil (ordinateur, smartphone, tablette) lorsque vous visitez un site web ou utilisez une application.",
+            "Ils permettent au site de reconnaître votre appareil et de mémoriser certaines informations afin d’améliorer votre expérience."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Cookies de session (supprimés lorsque vous fermez votre navigateur)",
+            "Cookies persistants (stockés pendant une période définie)"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "2. Types de cookies que nous utilisons",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay utilise uniquement des cookies strictement nécessaires et fonctionnels."
+          ]
+        },
+        {
+          "type": "subsection",
+          "subheading": "2.1 Cookies strictement nécessaires",
+          "blocks": [
+            {
+              "type": "text",
+              "content": [
+                "Ces cookies sont essentiels au fonctionnement des Services et ne peuvent être désactivés.",
+                "Ils sont utilisés pour :"
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "Maintenir des sessions utilisateur sécurisées",
+                "Permettre l’authentification et la connexion OAuth",
+                "Prévenir les activités frauduleuses",
+                "Garantir un accès sécurisé à votre compte"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "subsection",
+          "subheading": "2.2 Cookies fonctionnels",
+          "blocks": [
+            {
+              "type": "text",
+              "content": [
+                "Ces cookies améliorent l’ergonomie et les performances, tels que :"
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "Mémorisation des préférences utilisateur",
+                "Maintien des paramètres de langue ou de région",
+                "Assurer un comportement cohérent de l’application"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "content": "Nous n’utilisons PAS :",
+          "items": [
+            "Cookies publicitaires",
+            "Cookies de suivi comportemental",
+            "Cookies marketing tiers",
+            "Suivi inter-sites à des fins publicitaires"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "3. Cookies tiers",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous pouvons utiliser des cookies tiers limités strictement nécessaires au fonctionnement des Services, tels que :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Fournisseurs d’authentification sécurisée (ex. services OAuth)",
+            "Outils d’infrastructure et de surveillance de la sécurité"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Ces fournisseurs sont contractuellement tenus de respecter :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "RGPD",
+            "RGPD du Royaume-Uni",
+            "Lois américaines applicables en matière de confidentialité"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "4. Consentement et base légale",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Utilisateurs de l’UE et du Royaume-Uni :",
+            "Conformément au RGPD et au RGPD du Royaume-Uni :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Les cookies strictement nécessaires ne nécessitent pas de consentement",
+            "Aucun cookie marketing ou analytique n’est utilisé"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Par conséquent, aucune bannière de consentement aux cookies n’est requise à ce stade.",
+            "Si nous introduisons des cookies non essentiels à l’avenir, nous ferons :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Demander le consentement explicite des utilisateurs",
+            "Mettre à jour cette Politique de cookies en conséquence"
+          ]
+        },
+        {
+          "type": "text",
+          "content": ["Utilisateurs américains"]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Les cookies sont utilisés uniquement pour la fonctionnalité et la sécurité du service.",
+            "Nous ne vendons ni ne partageons les données des cookies à des fins publicitaires."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "5. Gestion des cookies",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Vous pouvez gérer ou désactiver les cookies via les paramètres de votre navigateur.",
+            "Veuillez noter que la désactivation des cookies essentiels peut affecter le fonctionnement des Services.",
+            "Les navigateurs courants permettent de :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Supprimer les cookies existants",
+            "Bloquer les cookies futurs",
+            "Recevoir des alertes avant l’enregistrement des cookies"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6. Conservation des données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Les cookies utilisés par Keepay sont conservés uniquement aussi longtemps que nécessaire :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Les cookies de session expirent lorsque vous fermez votre navigateur",
+            "Les cookies fonctionnels expirent automatiquement après des périodes définies",
+            "Aucun cookie de suivi à long terme n’est utilisé"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7. Mises à jour de la présente politique",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous pouvons mettre à jour la présente politique en matière de cookies afin de refléter les changements juridiques ou techniques.",
+            "La version mise à jour sera publiée sur cette page avec la date de révision."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "8. Informations de contact",
+      "blocks": [
+        {
+          "type": "contact",
+          "intro": "Keepay",
+          "contact": {
+            "email": "Email",
+            "website": "Website"
+          }
+        }
+      ]
+    }
+  ]
+}
