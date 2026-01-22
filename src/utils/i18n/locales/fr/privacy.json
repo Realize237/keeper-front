@@ -1,0 +1,356 @@
+{
+  "title": "Politique de confidentialité",
+  "last_updated": "Dernière mise à jour : {{date}}",
+
+  "intro": [
+    {
+      "type": "text",
+      "content": [
+        "Keepay (« <strong>Keepay</strong> », « <strong>nous</strong> », « <strong>notre</strong> » ou « <strong>nos</strong> ») s’engage à protéger votre vie privée et vos données personnelles. La présente politique de confidentialité explique comment nous collectons, utilisons, stockons, partageons et protégeons vos informations lorsque vous utilisez notre application, notre site web et les services connexes (collectivement, les « <strong>Services</strong> »)."
+      ]
+    },
+    {
+      "type": "text",
+      "content": ["Cette politique est conçue pour se conformer à :"]
+    },
+    {
+      "type": "list",
+      "items": [
+        "Règlement général sur la protection des données (RGPD) de l’UE",
+        "RGPD britannique et loi sur la protection des données de 2018",
+        "Lois américaines sur la confidentialité (y compris la CCPA, le cas échéant)",
+        "Exigences de l’API Plaid",
+        "Exigences de vérification OAuth de Google"
+      ]
+    }
+  ],
+
+  "sections": [
+    {
+      "heading": "1. Informations que nous collectons",
+
+      "blocks": [
+        {
+          "type": "subheading",
+          "title": "1.1 Informations que vous fournissez"
+        },
+        {
+          "type": "text",
+          "content": ["Nous pouvons collecter :"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Nom complet",
+            "Adresse e-mail",
+            "Identifiants de compte (hachés et chiffrés)",
+            "Pays de résidence",
+            "Préférences relatives aux abonnements et aux notifications"
+          ]
+        },
+        {
+          "type": "subheading",
+          "title": "1.2 Données financières via Plaid"
+        },
+        {
+          "type": "text",
+          "content": [
+            "Lorsque vous connectez un compte financier via Plaid, nous pouvons accéder aux informations suivantes:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Métadonnées du compte (nom de l’établissement, type de compte)",
+            "Données de transaction (montant, date, commerçant, description)",
+            "Indicateurs de transactions récurrentes"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Nous ne collectons ni ne stockons les identifiants bancaires.",
+            "Toute l’authentification est gérée directement par Plaid."
+          ]
+        },
+        {
+          "type": "subheading",
+          "title": "1.3 Données collectées automatiquement"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Adresse IP",
+            "Informations sur l’appareil et le navigateur",
+            "Données de connexion et horodatages",
+            "Cookies et technologies similaires"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "2. Comment nous utilisons vos données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous utilisons vos données <strong>uniquement</strong> pour :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Fournir et exploiter les fonctionnalités principales de Keepay",
+            "Détecter et gérer les abonnements et les paiements récurrents",
+            "Vous présenter des informations et des analyses",
+            "Améliorer la sécurité et prévenir la fraude",
+            "Nous conformer aux obligations légales et réglementaires"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Nous ne vendons pas vos données personnelles.",
+            "Nous n’utilisons pas vos données à des fins publicitaires ou de profilage externe."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "3. Base juridique du traitement (RGPD / RGPD britannique)",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "Votre consentement explicite",
+            "L’exécution d’un contrat (fourniture du service)",
+            "Les obligations légales",
+            "Les intérêts légitimes strictement liés à la sécurité et à l’amélioration du service"
+          ]
+        },
+        {
+          "type": "note",
+          "content": ["Vous pouvez retirer votre consentement à tout moment."]
+        }
+      ]
+    },
+
+    {
+      "heading": "4. Politique de conservation des données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous conservons les données à caractère personnel uniquement pendant la durée nécessaire.",
+            "Périodes de conservation"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Données relatives au compte : conservées tant que votre compte est actif",
+            {
+              "text": "Données financières et transactionnelles : conservées jusqu'à ce que:",
+              "items": [
+                "Vous déconnectiez votre compte financier, ou",
+                "Vous supprimez votre compte Keepay"
+              ]
+            },
+            "Données de connexion et de sécurité : jusqu'à 12 mois",
+            "Données de sauvegarde : automatiquement supprimées dans un délai de 30 à 90 jours"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Lors de la suppression de votre compte, vos données sont:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Anonymisées ou",
+            "Supprimées définitivement, sauf si la conservation légale est requise"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "5. Partage des données et tiers",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "Plaid Inc. (agrégation de données financières)",
+            "Fournisseurs d’infrastructure cloud (hébergement sécurisé)",
+            "Outils d’analyse et de surveillance (non financiers)"
+          ]
+        },
+        {
+          "type": "note",
+          "content": ["Tous les partenaires sont"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Contraints par contrat à la confidentialité",
+            "Conformes au RGPD / RGPD britannique",
+            "Limités à l'accès minimum nécessaire"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "6. Transferts internationaux de données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Vos données peuvent être traitées dans :"]
+        },
+        {
+          "type": "list",
+          "items": ["Union européenne", "Royaume-Uni", "États-Unis"]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Lorsque les données sont transférées à l'international, nous appliquons :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Clauses contractuelles types (SCC)",
+            "Les garanties adéquates requises par le RGPD et le RGPD britannique"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "7. Vos droits",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "En fonction de votre lieu de résidence, vous avez le droit:"
+          ]
+        },
+
+        {
+          "type": "list",
+          "items": [
+            "Accéder à vos données personnelles",
+            "Corriger des données inexactes",
+            "Demander leur suppression (« droit à l'oubli »)",
+            "Limiter ou vous opposer au traitement",
+            "Portabilité des données",
+            "Retirer votre consentement à tout moment"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Les demandes peuvent être envoyées à <strong>{{privacy_email}}</strong>",
+            "Nous répondons dans un délai de <strong>30 jours</strong>"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "8. Mesures de sécurité",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous mettons en œuvre des pratiques de sécurité conformes aux normes de l'industrie, notamment :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Cryptage HTTPS / TLS",
+            "Authentification OAuth sécurisée",
+            "Stockage crypté au repos",
+            "Contrôle d'accès basé sur les rôles",
+            "Surveillance et audits réguliers"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Malgré tous nos efforts, aucun système n'est sûr à 100 %. Nous améliorons continuellement nos protections."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "9. Cookies et suivi",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Nous utilisons les cookies uniquement pour:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Maintenir les sessions utilisateur",
+            "Améliorer les performances et la fiabilité"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Nous n’utilisons <strong>pas</strong> de cookies publicitaires ou de suivi tiers."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "10. Confidentialité des enfants",
+      "blocks": [
+        {
+          "type": "note",
+          "content": [
+            "Keepay n'est pas destiné aux personnes âgées de moins de 18 ans.",
+            "Nous ne collectons pas sciemment de données auprès de mineurs."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "11. Modifications apportées à la présente politique",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous pouvons mettre à jour la présente politique de confidentialité de temps à autre.",
+            "Toute modification sera reflétée sur cette page avec une date de mise à jour."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "12. Coordonnées",
+      "blocks": [
+        {
+          "type": "contact",
+          "contact": {
+            "text": "Keepay",
+            "email": "Email",
+            "website": "Site web"
+          }
+        }
+      ]
+    }
+  ]
+}

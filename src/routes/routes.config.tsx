@@ -7,9 +7,29 @@ import { lazyImport } from './lazyImport';
 const HomePage = lazyImport(() => import('../pages/HomePage'));
 const Login = lazyImport(() => import('../pages/auth/Login'));
 const Register = lazyImport(() => import('../pages/auth/Register'));
-const LegalPage = lazyImport(() =>
-  import('../pages/LegalPage').then((module) => ({
-    default: module.LegalPage,
+const LegalLayout = lazyImport(() =>
+  import('../layouts/LegalLayout').then((module) => ({
+    default: module.LegalLayout,
+  }))
+);
+const PrivacyPolicy = lazyImport(() =>
+  import('../pages/legal/PrivacyPolicy').then((module) => ({
+    default: module.PrivacyPolicy,
+  }))
+);
+const TermsConditions = lazyImport(() =>
+  import('../pages/legal/TermsConditions').then((module) => ({
+    default: module.TermsConditions,
+  }))
+);
+const CookiePolicy = lazyImport(() =>
+  import('../pages/legal/CookiePolicy').then((module) => ({
+    default: module.CookiePolicy,
+  }))
+);
+const GDPRCompliance = lazyImport(() =>
+  import('../pages/legal/GDPRCompliance').then((module) => ({
+    default: module.GDPRCompliance,
   }))
 );
 const PricingPage = lazyImport(() =>
@@ -57,7 +77,16 @@ export const routes: AppRoute[] = [
     layout: <MainLayout />,
     children: [
       { path: '/', element: <HomePage /> },
-      { path: '/legal', element: <LegalPage /> },
+      {
+        path: '/legal',
+        element: <LegalLayout />,
+        children: [
+          { path: 'privacy-policy', element: <PrivacyPolicy /> },
+          { path: 'terms-of-service', element: <TermsConditions /> },
+          { path: 'cookies', element: <CookiePolicy /> },
+          { path: 'gdpr', element: <GDPRCompliance /> },
+        ],
+      },
       { path: '/pricing', element: <PricingPage /> },
       { path: '/register', element: <Register /> },
       { path: '/login', element: <Login /> },

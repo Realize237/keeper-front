@@ -897,5 +897,17 @@
 
       "submit": "Send Message"
     }
+  },
+  "legal": {
+    "back": "Back to Home",
+    "title": "Legal Information",
+    "last_updated": "Last updated: {{date}}",
+    "sections_title": "Legal Sections",
+    "sections": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions",
+      "cookies": "Cookie Policy",
+      "gdpr": "GDPR Compliance"
+    }
   }
 }

@@ -879,5 +879,17 @@
 
       "submit": "Envoyer un message"
     }
+  },
+  "legal": {
+    "back": "Retour à l’accueil",
+    "title": "Informations légales",
+    "last_updated": "Dernière mise à jour : {{date}}",
+    "sections_title": "Sections légales",
+    "sections": {
+      "privacy": "Confidentialité",
+      "terms": "Conditions générales",
+      "cookies": "Politique de cookies",
+      "gdpr": "Conformité RGPD"
+    }
   }
 }

@@ -1,0 +1,220 @@
+{
+  "title": "Cookies Policy",
+  "lastUpdated": "Last updated: January 16, 2026",
+  "intro": "This Cookies Policy explains how Keepay (“we”, “us”, “our”) uses cookies and similar technologies when you access our website and application (collectively, the “Services”). This policy should be read together with our Privacy Policy.",
+  "sections": [
+    {
+      "heading": "1. What Are Cookies?",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Cookies are small text files stored on your device (computer, smartphone, tablet) when you visit a website or use an application.",
+            "They allow the website to recognize your device and remember certain information to improve your experience."
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Session cookies (deleted when you close your browser)",
+            "Persistent cookies (stored for a defined period)"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "2. Types of Cookies We Use",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay uses only strictly necessary and functional cookies."
+          ]
+        },
+        {
+          "type": "subsection",
+          "subheading": "2.1 Strictly Necessary Cookies",
+          "blocks": [
+            {
+              "type": "text",
+              "content": [
+                "These cookies are essential for the operation of the Services and cannot be disabled. They are used to:"
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "Maintain secure user sessions",
+                "Enable authentication and OAuth login",
+                "Prevent fraudulent activity",
+                "Ensure secure access to your account"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "subsection",
+          "subheading": "2.2 Functional Cookies",
+          "blocks": [
+            {
+              "type": "text",
+              "content": [
+                "These cookies improve usability and performance, such as:"
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                "Remembering user preferences",
+                "Maintaining language or region settings",
+                "Ensuring consistent application behavior"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "content": "We do NOT use:",
+          "items": [
+            "Advertising cookies",
+            "Behavioral tracking cookies",
+            "Third-party marketing cookies",
+            "Cross-site tracking for ads"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "3. Third-Party Cookies",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "We may use limited third-party cookies strictly required to operate the Services, such as:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Secure authentication providers (e.g. OAuth services)",
+            "Infrastructure and security monitoring tools"
+          ]
+        },
+        {
+          "type": "text",
+          "content": ["These providers are contractually bound to comply with:"]
+        },
+        {
+          "type": "list",
+          "items": ["GDPR", "UK GDPR", "Applicable US privacy laws"]
+        }
+      ]
+    },
+    {
+      "heading": "4. Consent & Legal Basis",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["EU & UK Users:", "Under GDPR and UK GDPR:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Strictly necessary cookies do not require consent",
+            "No marketing or analytics cookies are used"
+          ]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Therefore, no cookie consent banner is required at this time.",
+            "If we introduce non-essential cookies in the future, we will:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Request explicit user consent",
+            "Update this Cookies Policy accordingly"
+          ]
+        },
+        {
+          "type": "text",
+          "content": ["US Users"]
+        },
+        {
+          "type": "text",
+          "content": [
+            "Cookies are used only for service functionality and security.",
+            "We do not sell or share cookie data for advertising purposes."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "5. Managing Cookies",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "You can manage or disable cookies via your browser settings.",
+            "Please note that disabling essential cookies may affect the functionality of the Services.",
+            "Common browsers allow you to:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Delete existing cookies",
+            "Block future cookies",
+            "Receive alerts before cookies are stored"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "6. Data Retention",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Cookies used by Keepay are retained only for as long as necessary:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Session cookies expire when you close your browser",
+            "Functional cookies expire automatically within defined periods",
+            "No long-term tracking cookies are used"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "7. Updates to This Policy",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "We may update this Cookies Policy to reflect legal or technical changes. ",
+            "The updated version will be published on this page with a revised date."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "8. Contact Information",
+      "blocks": [
+        {
+          "type": "contact",
+          "intro": "Keepay",
+          "contact": {
+            "email": "Email",
+            "website": "Website"
+          }
+        }
+      ]
+    }
+  ]
+}
