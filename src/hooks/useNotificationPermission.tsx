@@ -59,8 +59,7 @@ export const useNotificationPermission = () => {
   };
 
   const hasAskedBefore = () => {
-    const asked = storage.get<string>(NOTIFICATION_PERMISSION_KEY) === 'true';
-    return asked;
+    return storage.get<boolean>(NOTIFICATION_PERMISSION_KEY) === true;
   };
 
   const hasUserConsentBeenAsked = () => {
