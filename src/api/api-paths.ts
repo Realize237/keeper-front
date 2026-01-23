@@ -14,6 +14,8 @@ export const API_PATHS = {
     VALIDATE_FORGOT_PASSWORD_OTP: '/api/users/reset-password/token/validate',
     RESET_PASSWORD: (email: string) => `/api/users/password/reset/${email}`,
     DELETE_ACCOUNT: 'api/users/disable/user-account',
+    VERIFY_EMAIL: 'api/users/verify-email',
+    RESEND_EMAIL: 'api/users/resend-email-verification',
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: '/api/subscriptions',

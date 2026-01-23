@@ -186,3 +186,26 @@ export const deleteAccount = async () => {
     return processError(error);
   }
 };
+
+export const verifyEmail = async (token: string) => {
+  try {
+    const response = await axiosClient.patch<ApiSuccessResponse>(
+      `${API_PATHS.USERS.VERIFY_EMAIL}?token=${token}`
+    );
+    return response.data.data;
+  } catch (error) {
+    return processError(error);
+  }
+};
+
+export const resendEmailVerification = async (email: string) => {
+  try {
+    const response = await axiosClient.post<ApiSuccessResponse>(
+      `${API_PATHS.USERS.RESEND_EMAIL}`,
+      { email }
+    );
+    return response.data.data;
+  } catch (error) {
+    return processError(error);
+  }
+};
