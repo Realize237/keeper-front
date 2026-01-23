@@ -1,0 +1,379 @@
+{
+  "title": "Conditions d'utilisation",
+  "intro": "Les présentes conditions d'utilisation (les « <strong>Conditions</strong> ») régissent votre accès à <strong>Keepay</strong> et votre utilisation de Keepay, y compris notre site Web, nos applications mobiles ou Web, nos API et les services connexes (collectivement, les « Services »).",
+  "intro2": "En accédant à Keepay ou en l'utilisant, vous acceptez d'être lié par les présentes Conditions.",
+  "intro3": "Si vous n'acceptez pas ces Conditions, vous ne devez pas utiliser les Services.",
+
+  "sections": [
+    {
+      "heading": "1. À propos de Keepay",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay est une application de gestion financière qui aide les utilisateurs à identifier, suivre et gérer leurs abonnements et transactions récurrentes en se connectant de manière sécurisée à des institutions financières par l'intermédiaire de fournisseurs tiers agréés tels que Plaid."
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Keepay <strong>ne fournit pas de services bancaires, de conseil financier ou d'investissement.</strong>"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "2. Admissibilité",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Pour utiliser Keepay, vous devez:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Être <strong>âgé d'au moins 18 ans</strong>",
+            "Avoir la capacité juridique de conclure un accord contraignant",
+            "Utiliser les Services conformément aux lois applicables"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Vous êtes tenu de vous assurer que votre utilisation de Keepay est légale dans votre juridiction."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "3. Création d'un compte",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Pour accéder à certaines fonctionnalités, vous devez créer un compte.",
+            "Vous acceptez:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Fournir des informations exactes et à jour",
+            "De protéger vos identifiants de connexion",
+            "Nous informer immédiatement de tout accès non autorisé"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Vous êtes seul responsable de toutes les activités effectuées sous votre compte."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "4. Données financières et intégration Plaid",
+      "blocks": [
+        {
+          "type": "subheading",
+          "title": "4.1 Utilisation de Plaid"
+        },
+        {
+          "type": "text",
+          "content": [
+            "En connectant un compte financier, vous autorisez Keepay à accéder aux données financières via <strong>Plaid</strong>, conformément à :"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Les présentes Conditions",
+            "Notre politique de confidentialité",
+            "La politique de confidentialité de Plaid pour les utilisateurs finaux"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Keepay <strong>ne reçoit ni ne stocke jamais vos identifiants bancaires.</strong>"
+          ]
+        },
+        {
+          "type": "subheading",
+          "title": "4.2 Étendue de l'accès"
+        },
+        {
+          "type": "text",
+          "content": ["Keepay accède uniquement aux données nécessaires pour:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identifier les abonnements et les paiements récurrents",
+            "Vous présenter des informations financières",
+            "Améliorer la précision de nos services"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "5. Utilisation acceptable",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Vous acceptez de <strong>ne</strong> pas:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Utiliser les Services à des fins illégales ou frauduleuses",
+            "Tenter de procéder à une ingénierie inverse ou d'exploiter la plateforme",
+            "Interférer avec la sécurité ou l'intégrité du système",
+            "Utiliser de manière abusive les API ou les méthodes d'accès automatisées"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Nous nous réservons le droit de suspendre ou de résilier l'accès en cas de violation."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "6. Clause de non-responsabilité relative aux conseils financiers",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Keepay fournit <strong>uniquement des outils d'information.</strong>"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Nous <strong>ne</strong> fournissons aucun conseil financier, juridique ou fiscal",
+            "Les informations ou recommandations fournies ne sont pas <strong>contraignantes</strong>",
+            "Vous restez seul responsable de vos décisions financières"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Vous devez consulter des professionnels qualifiés si nécessaire."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "7. Confidentialité des données",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Votre utilisation de Keepay est régie par notre <strong>politique de confidentialité</strong>, qui explique:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Quelles données nous collectons",
+            "Comment nous les utilisons et les conservons",
+            "Vos droits en vertu du RGPD, du RGPD britannique et des lois américaines applicables"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "En utilisant Keepay, vous reconnaissez avoir lu et compris la politique de confidentialité."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "8. Disponibilité du service",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous nous efforçons de fournir un accès fiable, mais <strong>ne garantissons pas un service ininterrompu.</strong>",
+            "Keepay peut être indisponible pour les raisons suivantes:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Maintenance",
+            "Mises à jour",
+            "Pannes du réseau ou de tiers"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Nous pouvons modifier ou supprimer des fonctionnalités à tout moment."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "9. Résiliation",
+      "blocks": [
+        {
+          "type": "subheading",
+          "title": "9.1 Par vous"
+        },
+        {
+          "type": "text",
+          "content": [
+            "Vous pouvez résilier votre compte à tout moment via l'application ou en contactant le service d'assistance."
+          ]
+        },
+        {
+          "type": "subheading",
+          "title": "9.2 Par nous"
+        },
+        {
+          "type": "text",
+          "content": ["Nous pouvons suspendre ou résilier votre accès si:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Vous enfreignez les présentes Conditions",
+            "La loi ou les autorités réglementaires l'exigent",
+            "Cela est nécessaire pour protéger les utilisateurs ou la sécurité du système"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "En cas de résiliation, le traitement des données est conforme à notre politique de confidentialité."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "10. Propriété intellectuelle",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Tout le contenu, les logiciels, les marques commerciales et les designs liés à Keepay sont la propriété de Keepay ou font l'objet d'une licence accordée à Keepay.",
+            "Vous n'êtes pas autorisé à:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Copier, distribuer ou modifier notre contenu",
+            "Utiliser notre marque sans autorisation écrite"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "11. Limitation de responsabilité",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Dans la mesure maximale permise par la loi:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Keepay est fourni “<strong>tel quel</strong>”",
+            "Nous ne sommes pas responsables des dommages indirects, accessoires ou consécutifs",
+            "Notre responsabilité totale ne saurait excéder le montant versé (le cas échéant) pour l'utilisation des Services au cours des 12 derniers mois"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "12. Indemnisation",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Vous acceptez d'indemniser et de dégager Keepay de toute responsabilité en cas de réclamations, dommages ou dépenses résultant de:"
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            "Votre utilisation abusive des Services",
+            "Votre violation des présentes Conditions",
+            "Votre violation des lois applicables"
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "13. Loi applicable et juridiction compétente",
+      "blocks": [
+        {
+          "type": "text",
+          "content": ["Les présentes Conditions sont régies par:"]
+        },
+        {
+          "type": "list",
+          "items": [
+            "La législation de l'UE et du Royaume-Uni pour les utilisateurs situés en Europe ou au Royaume-Uni",
+            "La législation américaine applicable pour les utilisateurs situés aux États-Unis"
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "Les litiges seront résolus conformément aux lois applicables dans votre pays de résidence, sauf si les lois obligatoires en matière de protection des consommateurs en disposent autrement."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "14. Modifications des présentes Conditions",
+      "blocks": [
+        {
+          "type": "text",
+          "content": [
+            "Nous pouvons mettre à jour les présentes Conditions de temps à autre.",
+            "Les modifications entreront en vigueur dès leur publication, la date de mise à jour étant indiquée en haut de la page."
+          ]
+        },
+        {
+          "type": "note",
+          "content": [
+            "La poursuite de l'utilisation de Keepay vaut acceptation des Conditions mises à jour."
+          ]
+        }
+      ]
+    },
+
+    {
+      "heading": "15. Coordonnées",
+      "blocks": [
+        {
+          "type": "contact",
+          "intro": "Keepay",
+          "contact": {
+            "email": "Email",
+            "website": "Site web"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import {
   LanguageContext,
   LanguageContextType,
 } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
@@ -13,3 +14,24 @@ export const useLanguage = (): LanguageContextType => {
 
   return context;
 };
+
+export function useTranslatedArray<T = string>(
+  key: string,
+  fallback: T[] = [] as T[],
+  ns?: string
+): T[] {
+  const { t } = useTranslation(ns);
+
+  return useMemo(() => {
+    const result = t(key, {
+      returnObjects: true,
+      defaultValue: fallback,
+    });
+
+    if (Array.isArray(result)) {
+      return result as T[];
+    }
+
+    return fallback;
+  }, [t, key, fallback]);
+}

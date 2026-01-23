@@ -63,12 +63,12 @@ const secondaryItems: MenuItem[] = [
   {
     icon: FaFileAlt,
     label: 'profile.menu.terms',
-    path: '/terms',
+    path: '/legal/terms-of-service',
   },
   {
     icon: FaShieldAlt,
     label: 'profile.menu.privacy',
-    path: '/privacy',
+    path: '/legal/privacy-policy',
   },
   {
     icon: FaQuestionCircle,
