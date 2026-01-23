@@ -38,6 +38,7 @@ import { useTranslation } from 'react-i18next';
 import { MONTH_KEYS } from '../constants/calendar';
 import UserConsentDialog from '../components/dialog/UserConsentDialog';
 import { useUserConsent } from '../hooks/useUserConsent';
+import AccountSyncBanner from '../components/subscriptions/AccountSyncBanner ';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -84,6 +85,7 @@ const Subscriptions = () => {
     handleConsentAccepted,
     handleConsentDeclined,
     isPending: isAcceptUserConsentPending,
+    handleShowModal,
   } = useUserConsent();
 
   const openBottomSheet = () => setBottomSheetOpen(true);
@@ -253,138 +255,140 @@ const Subscriptions = () => {
           closeSubscriptionModals={closeSubscriptionModals}
         />
       )}
-      <motion.div
-        className="w-11/12 h-11/12 mx-auto border-gray-700"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-          <SubscriptionStatCard
-            variant="stat"
-            icon={<FaWallet size={20} />}
-            title={t('subscriptions.stat_cards.monthly_total')}
-            value={`$${getTotalMonthlySubscriptions}`}
-            badge={t(`calendar.months.${MONTH_KEYS[monthIndex]}`)}
-          />
-          <SubscriptionStatCard
-            variant="progress"
-            icon={<IoIosTrendingUp size={20} />}
-            title={t('subscriptions.stat_cards.left_to_pay')}
-            value={`$${getRemainingAmount}`}
-            progress={getProgressPercentage}
-            accent="orange"
-          />
-          <SubscriptionStatCard
-            variant="status"
-            icon={<CiCreditCard1 size={20} />}
-            title={t('subscriptions.stat_cards.next_7_days')}
-            secondaryText={`$${getNextBillingAmount.toFixed(2)}`}
-            accent="indigo"
-            customContent={
-              <div className="mt-2">
-                <SubscriptionIconGroup
-                  subscriptions={getNextBillingSubscriptions}
-                  maxVisible={3}
-                  size="sm"
-                />
-              </div>
-            }
-          />
-        </div>
-
-        <div className="flex flex-col-reverse md:flex-row  mt-6 gap-6">
-          <div className="grow">
-            <motion.div
-              className="w-full h-auto  flex justify-between items-center"
-              variants={itemVariants}
-            >
-              <div>
-                <span className="text-white text-2xl">
-                  {t(`calendar.months.${MONTH_KEYS[monthIndex]}`)},{' '}
-                  {date.getFullYear()}
-                </span>
-              </div>
-            </motion.div>
-            {/* days of the week */}
-            <motion.div
-              className="w-full h-auto p-2 my-2 grid grid-cols-7"
-              variants={itemVariants}
-            >
-              {translatedDaysOfWeek.map((day, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => setSelectDay(index)}
-                  className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
-                    selectDay === index
-                      ? 'border border-[#303031]'
-                      : 'bg-[#464646]'
-                  } cursor-pointer h-auto flex justify-center items-center`}
-                  whileHover={{ scale: 1.05, backgroundColor: '#3f3f3f' }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="text-gray-400 text-sm">{day}</span>
-                </motion.button>
-              ))}
-            </motion.div>
-
-            {/* day of the month */}
-            <motion.div variants={itemVariants}>
-              {isLoading && (
-                <>
-                  <MonthlyHeaderSkeleton />
-                  <CalendarSkeleton />
-                </>
-              )}
-              {!isLoading && !error && (
-                <Calendar
-                  date={currentDate}
-                  getDaySubscriptions={getDaySubscriptions}
-                  groupedMonthlySubscriptions={groupedMonthlySubscriptions}
-                />
-              )}
-            </motion.div>
-            {isLoading ? (
-              <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
-            ) : error ? (
-              <ErrorState
-                message={t('subscriptions.modals.failed_to_load')}
-                onRetry={() => refetch()}
-              />
-            ) : (
-              <motion.div
-                className="w-full mt-4"
-                onClick={openBottomSheet}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-              >
-                <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
-                  {t('common.select_date')}
-                </button>
-              </motion.div>
-            )}
+      <div className="flex flex-col w-11/12 h-11/12 mx-auto">
+        <AccountSyncBanner onSync={() => handleShowModal()} />
+        <motion.div
+          className="  border-gray-700"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+            <SubscriptionStatCard
+              variant="stat"
+              icon={<FaWallet size={20} />}
+              title={t('subscriptions.stat_cards.monthly_total')}
+              value={`$${getTotalMonthlySubscriptions}`}
+              badge={t(`calendar.months.${MONTH_KEYS[monthIndex]}`)}
+            />
+            <SubscriptionStatCard
+              variant="progress"
+              icon={<IoIosTrendingUp size={20} />}
+              title={t('subscriptions.stat_cards.left_to_pay')}
+              value={`$${getRemainingAmount}`}
+              progress={getProgressPercentage}
+              accent="orange"
+            />
+            <SubscriptionStatCard
+              variant="status"
+              icon={<CiCreditCard1 size={20} />}
+              title={t('subscriptions.stat_cards.next_7_days')}
+              secondaryText={`$${getNextBillingAmount.toFixed(2)}`}
+              accent="indigo"
+              customContent={
+                <div className="mt-2">
+                  <SubscriptionIconGroup
+                    subscriptions={getNextBillingSubscriptions}
+                    maxVisible={3}
+                    size="sm"
+                  />
+                </div>
+              }
+            />
           </div>
-          <div className="md:sticky md:mt-4">
-            <p className="text-xs uppercase tracking-wider text-white/40 mb-2">
-              {t('subscriptions.filter.title')}
-            </p>
 
-            <motion.button
-              onClick={() => setOpenFilter(true)}
-              whileHover={{
-                y: -1,
-                backgroundColor: 'rgba(255,255,255,0.08)',
-              }}
-              whileTap={{
-                scale: 0.98,
-                y: 0,
-              }}
-              transition={{
-                type: 'spring',
-                stiffness: 400,
-                damping: 30,
-              }}
-              className="
+          <div className="flex flex-col-reverse md:flex-row  mt-6 gap-6">
+            <div className="grow">
+              <motion.div
+                className="w-full h-auto  flex justify-between items-center"
+                variants={itemVariants}
+              >
+                <div>
+                  <span className="text-white text-2xl">
+                    {t(`calendar.months.${MONTH_KEYS[monthIndex]}`)},{' '}
+                    {date.getFullYear()}
+                  </span>
+                </div>
+              </motion.div>
+              {/* days of the week */}
+              <motion.div
+                className="w-full h-auto p-2 my-2 grid grid-cols-7"
+                variants={itemVariants}
+              >
+                {translatedDaysOfWeek.map((day, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => setSelectDay(index)}
+                    className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
+                      selectDay === index
+                        ? 'border border-[#303031]'
+                        : 'bg-[#464646]'
+                    } cursor-pointer h-auto flex justify-center items-center`}
+                    whileHover={{ scale: 1.05, backgroundColor: '#3f3f3f' }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="text-gray-400 text-sm">{day}</span>
+                  </motion.button>
+                ))}
+              </motion.div>
+
+              {/* day of the month */}
+              <motion.div variants={itemVariants}>
+                {isLoading && (
+                  <>
+                    <MonthlyHeaderSkeleton />
+                    <CalendarSkeleton />
+                  </>
+                )}
+                {!isLoading && !error && (
+                  <Calendar
+                    date={currentDate}
+                    getDaySubscriptions={getDaySubscriptions}
+                    groupedMonthlySubscriptions={groupedMonthlySubscriptions}
+                  />
+                )}
+              </motion.div>
+              {isLoading ? (
+                <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
+              ) : error ? (
+                <ErrorState
+                  message={t('subscriptions.modals.failed_to_load')}
+                  onRetry={() => refetch()}
+                />
+              ) : (
+                <motion.div
+                  className="w-full mt-4"
+                  onClick={openBottomSheet}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
+                    {t('common.select_date')}
+                  </button>
+                </motion.div>
+              )}
+            </div>
+            <div className="md:sticky md:mt-4">
+              <p className="text-xs uppercase tracking-wider text-white/40 mb-2">
+                {t('subscriptions.filter.title')}
+              </p>
+
+              <motion.button
+                onClick={() => setOpenFilter(true)}
+                whileHover={{
+                  y: -1,
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                }}
+                whileTap={{
+                  scale: 0.98,
+                  y: 0,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 400,
+                  damping: 30,
+                }}
+                className="
     w-full flex items-center justify-between
     rounded-2xl px-4 py-3
     bg-white/5 backdrop-blur-xl
@@ -392,22 +396,23 @@ const Subscriptions = () => {
     text-sm text-white
     gap-1
   "
-            >
-              <span className="capitalize">
-                {t('subscriptions.filter.title')}
-              </span>
-
-              <motion.span
-                whileHover={{ x: 2 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="text-white/50"
               >
-                <CiFilter />
-              </motion.span>
-            </motion.button>
+                <span className="capitalize">
+                  {t('subscriptions.filter.title')}
+                </span>
+
+                <motion.span
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  className="text-white/50"
+                >
+                  <CiFilter />
+                </motion.span>
+              </motion.button>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <motion.div variants={itemVariants}>
           <SelectCalendarDate
