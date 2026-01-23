@@ -105,12 +105,18 @@ const Subscriptions = () => {
   const monthIndex = date.getMonth();
 
   useEffect(() => {
-    if (!hasAskedBefore()) {
-      const timer = setTimeout(() => {
-        checkAndShowModal();
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
+    if (hasAskedBefore()) return;
+
+    const onFirstInteraction = () => {
+      checkAndShowModal();
+      window.removeEventListener('click', onFirstInteraction);
+    };
+
+    window.addEventListener('click', onFirstInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener('click', onFirstInteraction);
+    };
   }, [hasAskedBefore, checkAndShowModal]);
 
   useEffect(() => {
