@@ -15,7 +15,7 @@ html {
   --color-oxblood: #990800;
   --color-black: #0f0f0f;
   --color-charcoal: #1f1f1f;
-
+  --color-teal: #008b82;
   --color-white: #ffffff;
 }
 
@@ -23,6 +23,7 @@ html {
   --color-primary: var(--color-oxblood);
   --color-app: var(--color-black);
   --color-surface: var(--color-charcoal);
+  --color-deep-teal: var(--color-teal);
 }
 
 @keyframes shimmer {

@@ -36,6 +36,8 @@ import SubscriptionFilterModal, {
 import { CiFilter } from 'react-icons/ci';
 import { useTranslation } from 'react-i18next';
 import { MONTH_KEYS } from '../constants/calendar';
+import UserConsentDialog from '../components/dialog/UserConsentDialog';
+import { useUserConsent } from '../hooks/useUserConsent';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -76,6 +78,14 @@ const Subscriptions = () => {
     hasAskedBefore,
   } = useNotificationPermission();
 
+  const {
+    showModal: showUserConsent,
+    checkAndShowModal: checkAndShowUserConsent,
+    handleConsentAccepted,
+    handleConsentDeclined,
+    isPending: isAcceptUserConsentPending,
+  } = useUserConsent();
+
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
   const [openFilter, setOpenFilter] = useState(false);
@@ -100,6 +110,10 @@ const Subscriptions = () => {
       return () => clearTimeout(timer);
     }
   }, [hasAskedBefore, checkAndShowModal]);
+
+  useEffect(() => {
+    checkAndShowUserConsent();
+  }, []);
 
   const {
     data: groupedMonthlySubscriptions = {},
@@ -417,6 +431,12 @@ const Subscriptions = () => {
         isOpen={openFilter}
         onClose={() => setOpenFilter(false)}
         onApplyFilters={handleApplyFilters}
+      />
+      <UserConsentDialog
+        isOpen={showUserConsent}
+        isPending={isAcceptUserConsentPending}
+        onAccept={handleConsentAccepted}
+        onDecline={handleConsentDeclined}
       />
     </div>
   );

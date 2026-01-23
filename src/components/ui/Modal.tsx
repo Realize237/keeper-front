@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import React, { type ReactNode } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useLockBodyScroll } from '../../hooks/useLockBodyScroll';
@@ -9,6 +9,28 @@ type ModalProps = {
   children: ReactNode;
   title?: string;
   width?: string;
+};
+
+const backdropVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+const modalVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95, y: 24 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 280, damping: 26 },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: 24,
+    transition: { duration: 0.18, ease: 'easeInOut' },
+  },
 };
 
 const Modal: React.FC<ModalProps> = ({
@@ -24,29 +46,34 @@ const Modal: React.FC<ModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="fixed inset-0 bg-black/50 z-999 backdrop-blur-sm flex items-center justify-center h-dvh"
+          className="fixed inset-0 z-999 bg-black/50 backdrop-blur-sm flex items-center justify-center h-dvh"
+          variants={backdropVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           onClick={onClose}
         >
           <motion.div
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: '0%' }}
-            exit={{ opacity: 0, y: '-100%' }}
-            transition={{ duration: 0.4 }}
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className={`relative bg-[#171717] text-gray-100 w-full mx-4 ${width} rounded-2xl p-6 shadow-xl z-50`}
+            className={`relative bg-app text-gray-100 w-full mx-4 ${width}
+              max-h-[90dvh] rounded-2xl shadow-xl
+              flex flex-col overflow-hidden`}
           >
-            <button
-              onClick={onClose}
-              className="absolute cursor-pointer top-4 right-4 text-gray-400 hover:text-red-600"
-            >
-              <IoClose size={20} />
-            </button>
-            {title && <h2 className="text-xl font-bold mb-4">{title}</h2>}
-            {children}
+            <div className="flex items-center justify-between px-6 pt-6 pb-4">
+              {title && <h2 className="text-xl font-semibold">{title}</h2>}
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-red-500 transition-colors"
+              >
+                <IoClose size={20} />
+              </button>
+            </div>
+
+            <div className="px-6 pb-6 overflow-y-auto">{children}</div>
           </motion.div>
         </motion.div>
       )}

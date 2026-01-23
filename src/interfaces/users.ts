@@ -8,6 +8,7 @@ export interface User {
   created_at: Date | string;
   language: string;
   acceptedPrivacyPolicy?: boolean;
+  userConsentAccepted?: boolean;
 }
 
 export interface IEmailPasswordInput {
@@ -25,7 +26,11 @@ export type ISetPasswordInput = Pick<
 
 export type UserInput = Pick<
   User,
-  'name' | 'email' | 'password' | 'acceptedPrivacyPolicy'
+  | 'name'
+  | 'email'
+  | 'password'
+  | 'acceptedPrivacyPolicy'
+  | 'userConsentAccepted'
 > & {
   language?: string;
 };

@@ -4,6 +4,10 @@ import { useSaveWebPushToken } from './usePushToken';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { storage } from '../utils/storage';
+import {
+  CONSENT_KEY,
+  NOTIFICATION_PERMISSION_KEY,
+} from '../constants/storageKeys';
 
 export const useNotificationPermission = () => {
   const { t } = useTranslation();
@@ -14,7 +18,12 @@ export const useNotificationPermission = () => {
   const { mutate: saveWebPushToken } = useSaveWebPushToken();
 
   const checkAndShowModal = () => {
-    if ('Notification' in window && Notification.permission === 'default') {
+    if (
+      'Notification' in window &&
+      Notification.permission === 'default' &&
+      hasUserConsentBeenAsked() &&
+      !hasAskedBefore()
+    ) {
       setShowModal(true);
     }
   };
@@ -37,21 +46,25 @@ export const useNotificationPermission = () => {
         toast.error(t('notifications.get_token_error'));
       }
 
-      storage.set('notificationPermissionAsked', 'true');
+      storage.set(NOTIFICATION_PERMISSION_KEY, 'true');
     } catch {
       toast.error(t('notifications.get_token_error'));
-      storage.set('notificationPermissionAsked', 'true');
+      storage.set(NOTIFICATION_PERMISSION_KEY, 'true');
     }
   };
 
   const handleModalClose = () => {
     setShowModal(false);
-    storage.set('notificationPermissionAsked', 'true');
+    storage.set(NOTIFICATION_PERMISSION_KEY, 'true');
   };
 
   const hasAskedBefore = () => {
-    const asked = storage.get<string>('notificationPermissionAsked') === 'true';
+    const asked = storage.get<string>(NOTIFICATION_PERMISSION_KEY) === 'true';
     return asked;
+  };
+
+  const hasUserConsentBeenAsked = () => {
+    return storage.get<boolean>(CONSENT_KEY) === true;
   };
 
   return {

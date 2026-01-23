@@ -909,5 +909,42 @@
       "cookies": "Cookie Policy",
       "gdpr": "GDPR Compliance"
     }
+  },
+
+  "consent": {
+    "title": "Before you continue",
+    "subtitle": "Your subscription management companion",
+    "authorize": "Authorize",
+    "request_access": "Keepay is requesting access to:",
+    "read_only_title": "Read-only access:",
+    "read_only_text": "We can only view your transactions, never initiate payments. Your banking credentials are never stored.",
+
+    "access_items": {
+      "bank_transactions": "Bank transaction data",
+      "bank_transactions_details": [
+        "Recurring payment patterns",
+        "Merchant names and amounts",
+        "Transaction dates"
+      ],
+      "notifications": "Notification permissions",
+      "notifications_details": ["Send renewal reminders", "Payment alerts"],
+      "personal_info": "Personal information",
+      "personal_info_details": ["Your email address", "Account preferences"]
+    },
+
+    "checkbox": {
+      "text": "By authorizing access, I agree to Keepay's",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "and": "and"
+    },
+
+    "actions": {
+      "accept": "I Agree",
+      "decline": "Decline",
+      "saving": "Saving…"
+    },
+    "accepted": "Consent saved successfully",
+    "error": "Failed to save consent. Please try again."
   }
 }

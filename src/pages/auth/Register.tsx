@@ -15,9 +15,7 @@ import {
 } from '../../constants/validation/patterns';
 import FormButton from '../../components/ui/FormButton';
 import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
-
-const PRIVACY_POLICY_URL = '/legal/privacy-policy';
-const TERMS_OF_SERVICE_URL = '/legal/terms-of-service';
+import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../../constants';
 
 export default function Register() {
   const navigate = useNavigate();
