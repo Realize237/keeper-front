@@ -938,7 +938,8 @@
       "terms": "Terms of Service",
       "and": "and"
     },
-
+    "sync_message": "Your account is not connected. Please sync/connect your account to Keepay.",
+    "connect_now": "Connect Now",
     "actions": {
       "accept": "I Agree",
       "decline": "Decline",

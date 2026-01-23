@@ -20,6 +20,10 @@ export const useUserConsent = () => {
     }
   };
 
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
   const handleConsentAccepted = () => {
     saveConsent(
       { user: { userConsentAccepted: true }, id: Number(user?.id) },
@@ -43,7 +47,9 @@ export const useUserConsent = () => {
   };
 
   const hasAskedBefore = () => {
-    return storage.get<boolean>(CONSENT_KEY) === true;
+    return (
+      storage.get<boolean>(CONSENT_KEY) === true || user?.userConsentAccepted
+    );
   };
 
   return {
@@ -53,5 +59,6 @@ export const useUserConsent = () => {
     handleConsentDeclined,
     hasAskedBefore,
     isPending,
+    handleShowModal,
   };
 };
