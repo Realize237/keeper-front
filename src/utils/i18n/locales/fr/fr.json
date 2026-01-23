@@ -478,7 +478,7 @@
       "title": "Restez informé",
       "description": "Recevez des notifications concernant vos prochains paiements d'abonnement et ne manquez plus jamais une date de facturation.",
       "notNow": "Pas maintenant",
-      "allow": "Autoriser les notifications",
+      "allow": "Autoriser",
       "requesting": "Demande en cours..."
     }
   },
@@ -853,5 +853,46 @@
 
       "submit": "Envoyer un message"
     }
+  },
+
+  "consent": {
+    "title": "Avant de continuer",
+    "subtitle": "Votre assistant pour gérer vos abonnements",
+    "authorize": "Autoriser",
+    "request_access": "Keepay demande l'accès à :",
+    "read_only_title": "Accès en lecture seule :",
+    "read_only_text": "Nous pouvons uniquement consulter vos transactions, sans jamais initier de paiements. Vos identifiants bancaires ne sont jamais stockés.",
+
+    "access_items": {
+      "bank_transactions": "Données de transactions bancaires",
+      "bank_transactions_details": [
+        "Modèles de paiements récurrents",
+        "Noms des commerçants et montants",
+        "Dates des transactions"
+      ],
+      "notifications": "Permissions de notification",
+      "notifications_details": [
+        "Envoyer des rappels de renouvellement",
+        "Alertes de paiement"
+      ],
+      "personal_info": "Informations personnelles",
+      "personal_info_details": ["Votre adresse e-mail", "Préférences de compte"]
+    },
+
+    "checkbox": {
+      "text": "En autorisant l'accès, j'accepte la",
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions d'utilisation",
+      "and": "et"
+    },
+
+    "actions": {
+      "accept": "J'accepte",
+      "decline": "Refuser",
+      "saving": "Enregistrement…"
+    },
+
+    "accepted": "Consentement enregistré avec succès",
+    "error": "Impossible d’enregistrer le consentement"
   }
 }
