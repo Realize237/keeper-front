@@ -168,6 +168,32 @@
         "passwords_match": "Les mots de passe ne correspondent pas"
       }
     },
+    "check_email": {
+      "title": "Vérifiez votre boîte mail.",
+      "verify_title": "Vérifiez votre adresse e-mail",
+      "description": "Nous vous avons envoyé un lien de vérification. Veuillez vérifier votre boîte de réception.",
+      "description_with_email": "Nous avons envoyé un lien de vérification à {{email}}. Veuillez vérifier votre boîte de réception.",
+      "spam_hint": "Si vous ne le voyez pas, vérifiez votre dossier spam ou courrier indésirable.",
+      "link_expired": "Lien expiré.",
+      "link_expires_in": "Le lien expire dans",
+      "seconds": "{{count}}s",
+      "resend": "Renvoyer l'e-mail",
+      "sending": "Envoi...",
+      "resend_success": "Un nouvel e-mail de vérification vous a été envoyé."
+    },
+    "verify_email": {
+      "checking_email": "Vérifiez votre boîte mail.",
+      "email_verified": "Adresse e-mail vérifiée",
+      "verification_failed": "Échec de la vérification",
+      "verifying": "Vérification de votre adresse e-mail…",
+      "link_expires_in": "Le lien expire dans",
+      "resend_email": "Renvoyer l'e-mail de vérification",
+      "sending": "Envoi en cours...",
+      "invalid_link": "Lien de vérification invalide.",
+      "resend_success": "Un nouvel e-mail de vérification vous a été envoyé.",
+      "redirecting_login": "Votre adresse e-mail a été vérifiée. Redirection vers la page de connexion..."
+    },
+
     "otp": {
       "title": "Saisir le code OTP",
       "description": "Entrez le code à 5 chiffres envoyé à votre email.",

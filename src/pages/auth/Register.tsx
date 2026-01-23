@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
-import { env } from '../utils/env';
-import { useCreateUser } from '../hooks/useUsers';
+import { env } from '../../utils/env';
+import { useCreateUser } from '../../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +12,10 @@ import {
   EMAIL_REGEX,
   NAME_RULES,
   PASSWORD_RULES,
-} from '../constants/validation/patterns';
-import FormButton from '../components/ui/FormButton';
-import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../constants';
+} from '../../constants/validation/patterns';
+import FormButton from '../../components/ui/FormButton';
+import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
+import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../../constants';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -40,6 +41,12 @@ export default function Register() {
       acceptedPrivacyPolicy: false,
     },
   });
+
+  const countdownSeconds = Number(env.VERIFY_EMAIL_TIMER);
+  const { reset: resetCountDown } = usePersistentCountdown(
+    'verify_email_timer',
+    countdownSeconds
+  );
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailError(null);
@@ -72,13 +79,26 @@ export default function Register() {
             setEmailError(t(`auth.register.errors.${code}`));
             return;
           }
-
+          if (code === 'EXISTING_UNVERIFIED_USER') {
+            resetCountDown();
+            navigate('/check-your-email', {
+              state: {
+                email: data.email,
+                reason: 'existing-unverified',
+                message: error.message,
+              },
+            });
+            return;
+          }
           toast.error(
             error.message || t('auth.register.errors.UNEXPECTED_ERROR')
           );
         },
         onSuccess: () => {
-          navigate('/login');
+          resetCountDown();
+          navigate('/check-your-email', {
+            state: { email: data.email, reason: 'new-signup' },
+          });
         },
       }
     );
