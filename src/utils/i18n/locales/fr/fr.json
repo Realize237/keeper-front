@@ -924,8 +924,8 @@
       "and": "et"
     },
 
-    "sync_message": "Votre compte n'est pas connecté. Veuillez synchroniser/connecter votre compte à Keepay.",
-    "connect_now": "Se connecter maintenant",
+    "sync_message": "Aucun compte bancaire ou carte n’est connecté à votre compte. Veuillez synchroniser ou connecter votre compte à Keepay",
+    "connect_now": "Connecter mon compte maintenant",
 
     "actions": {
       "accept": "J'accepte",

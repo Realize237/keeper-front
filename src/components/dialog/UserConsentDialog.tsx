@@ -39,6 +39,13 @@ const UserConsentDialog = ({
     returnObjects: true,
   }) as string[];
 
+  const getAvatarInitials = (name: string | undefined) => {
+    if (!name) return 'U';
+    const names = name.split(' ');
+    const initials = names.map((n) => n.charAt(0).toUpperCase());
+    return initials.slice(0, 2).join('');
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -71,7 +78,7 @@ const UserConsentDialog = ({
 
         <div className="bg-gray-800/50 rounded-xl p-4 mb-6 flex items-center gap-3 border border-gray-700">
           <div className="w-12 h-12 rounded-full bg-linear-to-br from-[#C41E14] to-[#FF6B5B] flex items-center justify-center text-white shadow-lg">
-            <span className="text-lg">U</span>
+            <span className="text-lg">{getAvatarInitials(user?.name)}</span>
           </div>
           <div>
             <p className="text-sm text-white">{user?.name}</p>

@@ -938,7 +938,7 @@
       "terms": "Terms of Service",
       "and": "and"
     },
-    "sync_message": "Your account is not connected. Please sync/connect your account to Keepay.",
+    "sync_message": "You haven’t connected any bank account or card yet. Connect one to Keepay to get started",
     "connect_now": "Connect Now",
     "actions": {
       "accept": "I Agree",
