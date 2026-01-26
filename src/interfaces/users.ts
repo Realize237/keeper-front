@@ -48,3 +48,5 @@ export type UserLoginInput = Pick<User, 'email' | 'password'>;
 export type UserResponse = Omit<User, 'password'>;
 
 export type UserUpdateInput = Partial<UserInput>;
+
+export type ResendVerificationPayload = { email: string } | { token: string };

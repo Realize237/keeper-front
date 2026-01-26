@@ -5,7 +5,7 @@ import FormButton from '../../components/ui/FormButton';
 import { useLocation } from 'react-router-dom';
 import { useResendEmailVerification } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type LocationState = {
   email?: string;
@@ -16,7 +16,7 @@ type LocationState = {
 const CheckYourEmail = () => {
   const { t } = useTranslation();
 
-  const countdownSeconds = Number(env.VERIFY_EMAIL_TIMER);
+  const countdownMinutes = Number(env.VERIFY_EMAIL_TIMER);
   const location = useLocation();
   const state = location.state as LocationState | null;
 
@@ -24,25 +24,28 @@ const CheckYourEmail = () => {
   const backendMessage = state?.message;
   const reason = state?.reason;
 
-  const { secondsLeft, reset, expired } = usePersistentCountdown(
-    'verify_email_timer',
-    countdownSeconds
-  );
+  const { minutesLeft, remainingSeconds, reset, expired } =
+    usePersistentCountdown('verify_email_timer', {
+      minutes: countdownMinutes,
+    });
 
   const { mutate: resendEmail, isPending } = useResendEmailVerification();
 
   const handleResend = () => {
     if (!email) return;
 
-    resendEmail(email, {
-      onSuccess: () => {
-        reset();
-        toast.success(t('auth.check_email.resend_success'));
-      },
-      onError: (error: Error) => {
-        toast.error(error.message);
-      },
-    });
+    resendEmail(
+      { email },
+      {
+        onSuccess: () => {
+          reset();
+          toast.success(t('auth.check_email.resend_success'));
+        },
+        onError: (error: Error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   };
 
   const title =
@@ -52,9 +55,15 @@ const CheckYourEmail = () => {
 
   const description =
     backendMessage ??
-    (email
-      ? t('auth.check_email.description_with_email', { email })
-      : t('auth.check_email.description'));
+    (email ? (
+      <Trans
+        i18nKey={t('auth.check_email.description_with_email')}
+        components={{ bold: <strong /> }}
+        values={{ email }}
+      />
+    ) : (
+      t('auth.check_email.description')
+    ));
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-app px-4">
@@ -97,14 +106,16 @@ const CheckYourEmail = () => {
           </p>
 
           <motion.span
-            key={secondsLeft}
+            key={`${minutesLeft}:${remainingSeconds}`}
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 0.25 }}
             className="text-white text-xl font-semibold"
           >
             {expired
               ? '—'
-              : t('auth.check_email.seconds', { count: secondsLeft })}
+              : `${minutesLeft}:${remainingSeconds
+                  .toString()
+                  .padStart(2, '0')}`}
           </motion.span>
         </motion.div>
 

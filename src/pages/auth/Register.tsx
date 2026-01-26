@@ -42,10 +42,13 @@ export default function Register() {
     },
   });
 
-  const countdownSeconds = Number(env.VERIFY_EMAIL_TIMER);
+  const countdownMinutes = Number(env.VERIFY_EMAIL_TIMER);
+
   const { reset: resetCountDown } = usePersistentCountdown(
     'verify_email_timer',
-    countdownSeconds
+    {
+      minutes: countdownMinutes,
+    }
   );
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
