@@ -12,37 +12,55 @@ import { useTranslation } from 'react-i18next';
 
 const VerifyEmail = () => {
   const { t } = useTranslation();
+  const [uiState, setUiState] = useState<{
+    status: 'loading' | 'success' | 'error' | 'idle';
+    message: string;
+    isEmailVerified: boolean;
+  }>({
+    status: 'loading',
+    message: '',
+    isEmailVerified: false,
+  });
 
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
-    'loading'
-  );
-  const [message, setMessage] = useState('');
+  const updateUi = (newValues: Partial<typeof uiState>) => {
+    setUiState((prev) => ({ ...prev, ...newValues }));
+  };
+  const { status, message, isEmailVerified } = uiState;
 
-  const countdownSeconds = Number(env.VERIFY_EMAIL_TIMER);
+  const countdownMinutes = Number(env.VERIFY_EMAIL_TIMER);
 
-  const { secondsLeft, reset, expired } = usePersistentCountdown(
-    'verify_email_timer',
-    countdownSeconds
-  );
+  const { minutesLeft, remainingSeconds, reset, expired } =
+    usePersistentCountdown('verify_email_timer', { minutes: countdownMinutes });
 
   const navigate = useNavigate();
   const { mutate: verifyEmail, isPending: isVerifying } = useVerifyEmail();
   const { mutate: resendEmail, isPending: isResending } =
     useResendEmailVerification();
-  const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
 
   const token = new URLSearchParams(window.location.search).get('token') ?? '';
-  const email = new URLSearchParams(window.location.search).get('email') ?? '';
 
   useEffect(() => {
     verifyEmail(token, {
       onSuccess: () => {
-        setStatus('success');
-        setMessage(t('auth.verify_email.redirecting_login'));
+        updateUi({
+          status: 'success',
+          message: t('auth.verify_email.redirecting_login'),
+        });
       },
-      onError: (error) => {
-        setStatus('error');
-        setMessage(error.message);
+      onError: (error: Error & { code?: string }) => {
+        if (error.code === 'EMAIL_ALREADY_VERIFIED') {
+          updateUi({
+            isEmailVerified: true,
+            status: 'success',
+            message: error.message,
+          });
+        } else {
+          updateUi({
+            status: 'error',
+            message:
+              error.message || t('auth.verify_email.verification_failed'),
+          });
+        }
       },
     });
   }, [token, verifyEmail, t]);
@@ -52,34 +70,46 @@ const VerifyEmail = () => {
 
     const timeout = setTimeout(() => {
       navigate('/login', { replace: true });
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [status, navigate]);
 
   const handleResend = () => {
-    if (!email) return;
+    if (!token) return;
 
-    resendEmail(email, {
-      onSuccess: () => {
-        reset();
-        setStatus('loading');
-        setMessage(t('auth.verify_email.resend_success'));
-      },
-      onError: (error: Error & { code?: string }) => {
-        const code = error.code;
-        if (code === 'EMAIL_ALREADY_VERIFIED') {
-          setIsEmailVerified(true);
-        }
-        setStatus('error');
-        setMessage(error.message);
-      },
-    });
+    resendEmail(
+      { token },
+      {
+        onSuccess: () => {
+          reset();
+          updateUi({
+            status: 'loading',
+            message: t('auth.verify_email.resend_success'),
+          });
+        },
+        onError: (error: Error & { code?: string }) => {
+          const code = error.code;
+          if (code === 'EMAIL_ALREADY_VERIFIED') {
+            updateUi({
+              isEmailVerified: true,
+            });
+          }
+
+          updateUi({
+            status: 'error',
+            message: error.message,
+          });
+        },
+      }
+    );
   };
 
   if (!token) {
-    setStatus('error');
-    setMessage(t('auth.verify_email.invalid_link'));
+    updateUi({
+      status: 'error',
+      message: t('auth.verify_email.invalid_link'),
+    });
     return;
   }
   return (
@@ -125,18 +155,19 @@ const VerifyEmail = () => {
                   <p className="text-gray-400 mb-2">
                     {t('auth.verify_email.link_expires_in')}
                   </p>
+
                   <motion.span
-                    key={secondsLeft}
+                    key={`${minutesLeft}:${remainingSeconds}`}
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.25 }}
                     className="text-white text-xl font-semibold"
                   >
-                    {secondsLeft}s
+                    {minutesLeft}:{remainingSeconds.toString().padStart(2, '0')}
                   </motion.span>
                 </div>
               )}
 
-              {(status === 'error' || expired) && !isEmailVerified && (
+              {!isEmailVerified && (status === 'error' || expired) && (
                 <FormButton
                   size="md"
                   onClick={handleResend}

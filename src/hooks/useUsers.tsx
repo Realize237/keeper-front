@@ -5,6 +5,7 @@ import type {
   ISetPasswordInput,
   IValidateToken,
   PasswordRequestInput,
+  ResendVerificationPayload,
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -165,6 +166,7 @@ export const useVerifyEmail = () => {
 
 export const useResendEmailVerification = () => {
   return useMutation({
-    mutationFn: (email: string) => resendEmailVerification(email),
+    mutationFn: (payload: ResendVerificationPayload) =>
+      resendEmailVerification(payload),
   });
 };

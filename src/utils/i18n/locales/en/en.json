@@ -179,7 +179,7 @@
       "title": "Check your email",
       "verify_title": "Verify your email",
       "description": "We’ve sent you a verification link. Please check your inbox.",
-      "description_with_email": "We’ve sent a verification link to {{email}}. Please check your inbox.",
+      "description_with_email": "We’ve sent a verification link to <strong>{{email}}</strong>. Please check your inbox.",
       "spam_hint": "If you don’t see it, check your spam or junk folder.",
       "link_expired": "Link expired",
       "link_expires_in": "Link expires in",

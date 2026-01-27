@@ -7,6 +7,7 @@ import {
   ISetPasswordInput,
   IValidateToken,
   PasswordRequestInput,
+  ResendVerificationPayload,
   UserInput,
   UserLoginInput,
   UserResponse,
@@ -198,11 +199,13 @@ export const verifyEmail = async (token: string) => {
   }
 };
 
-export const resendEmailVerification = async (email: string) => {
+export const resendEmailVerification = async (
+  payload: ResendVerificationPayload
+) => {
   try {
     const response = await axiosClient.post<ApiSuccessResponse>(
       `${API_PATHS.USERS.RESEND_EMAIL}`,
-      { email }
+      payload
     );
     return response.data.data;
   } catch (error) {

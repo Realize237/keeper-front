@@ -172,7 +172,7 @@
       "title": "Vérifiez votre boîte mail.",
       "verify_title": "Vérifiez votre adresse e-mail",
       "description": "Nous vous avons envoyé un lien de vérification. Veuillez vérifier votre boîte de réception.",
-      "description_with_email": "Nous avons envoyé un lien de vérification à {{email}}. Veuillez vérifier votre boîte de réception.",
+      "description_with_email": "Nous avons envoyé un lien de vérification à <strong>{{email}}</strong>. Veuillez vérifier votre boîte de réception.",
       "spam_hint": "Si vous ne le voyez pas, vérifiez votre dossier spam ou courrier indésirable.",
       "link_expired": "Lien expiré.",
       "link_expires_in": "Le lien expire dans",
