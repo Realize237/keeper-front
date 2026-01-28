@@ -5,6 +5,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../hooks/useLanguage';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { homeAnchor } from '../../utils';
 
 type NavItem = {
   labelKey: string;
@@ -13,9 +14,9 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { labelKey: 'nav.features', href: '#features', type: 'section' },
+  { labelKey: 'nav.features', href: 'features', type: 'section' },
   { labelKey: 'nav.pricing', href: '/pricing', type: 'route' },
-  { labelKey: 'nav.contact', href: '#contact', type: 'section' },
+  { labelKey: 'nav.contact', href: 'contact', type: 'section' },
 ];
 
 const overlayVariants = {
@@ -63,8 +64,12 @@ const HomeNavbar = () => {
 
           if (id === 'hero') {
             setActiveSection(null);
-          } else {
-            setActiveSection(`#${id}`);
+            history.replaceState(null, '', '/');
+          }
+          if (id !== 'hero') {
+            const hash = `#${id}`;
+            setActiveSection(hash);
+            history.replaceState(null, '', hash);
           }
         });
       },
@@ -102,7 +107,7 @@ const HomeNavbar = () => {
             const isActive =
               item.type === 'route'
                 ? location.pathname === item.href
-                : activeSection === item.href;
+                : activeSection === `#${item.href}`;
 
             const className = `
       px-5 py-2.5 rounded-xl font-medium transition-all
@@ -118,9 +123,13 @@ const HomeNavbar = () => {
                 {t(item.labelKey)}
               </NavLink>
             ) : (
-              <a key={item.href} href={item.href} className={className}>
+              <Link
+                key={item.href}
+                to={homeAnchor(item.href)}
+                className={className}
+              >
                 {t(item.labelKey)}
-              </a>
+              </Link>
             );
           })}
           <div className="w-px h-6 bg-gray-200 mx-2"></div>
@@ -232,12 +241,12 @@ const HomeNavbar = () => {
                           {t(item.labelKey)}
                         </Link>
                       ) : (
-                        <a
-                          href={item.href}
+                        <Link
+                          to={homeAnchor(item.href)}
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {t(item.labelKey)}
-                        </a>
+                        </Link>
                       )}
                     </motion.div>
                   );
