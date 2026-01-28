@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import {
-  formatToReadableDate,
-  getNextBillingDate,
-  getSubscriptionCardImage,
-} from '../../utils';
+import { formatToReadableDate, getNextBillingDate } from '../../utils';
 import { MdOutlineClear } from 'react-icons/md';
 import SubscriptionTypeAndDot from '../ui/SubscriptionTypeAndDot';
 import {
@@ -397,7 +393,7 @@ export default function SubscriptionDetailModal({
                   </span>
                 </motion.div>
 
-                <motion.div
+                {/* <motion.div
                   className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
                   variants={itemVariants}
                   custom={4}
@@ -416,7 +412,7 @@ export default function SubscriptionDetailModal({
                     />
                     <span className="text-white">5064</span>
                   </div>
-                </motion.div>
+                </motion.div> */}
 
                 {nextBillingResult?.daysRemaining && (
                   <motion.div
