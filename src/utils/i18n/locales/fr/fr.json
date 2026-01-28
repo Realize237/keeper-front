@@ -54,8 +54,8 @@
       }
     },
     "register": {
-      "title": "Créer un compte",
-      "subtitle": "Vous avez déjà un compte ?",
+      "title": "Créez un compte dès maintenant",
+      "subtitle": "et mettez Fin aux abonnements oubliés et aux frais imprévus.",
       "login": "Se connecter",
 
       "fields": {
@@ -97,11 +97,15 @@
       "errors": {
         "EMAIL_ALREADY_EXISTS": "Un compte avec cet email existe déjà",
         "accept_privacy_required": "Vous devez accepter la Politique de confidentialité et les Conditions d’utilisation pour continuer"
+      },
+      "footer": {
+        "text": "Vous avez déjà un compte?",
+        "login": "Se connecter"
       }
     },
     "login": {
-      "title": "Bon retour",
-      "subtitle": "sur Keepay",
+      "title": "Connexion à votre compte",
+      "subtitle": "Gardez une vue d’ensemble sur vos abonnements",
 
       "fields": {
         "email": {

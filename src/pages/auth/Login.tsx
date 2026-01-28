@@ -257,13 +257,13 @@ export default function Login() {
       >
         <motion.h1
           variants={itemVariants}
-          className="text-2xl md:text-4xl font-normal text-white"
+          className="text-xl md:text-2xl font-normal text-white"
         >
           {t('auth.login.title')}
         </motion.h1>
         <motion.span
           variants={itemVariants}
-          className="text-xl font-normal text-white mb-8"
+          className="text-xs md:text-sm font-normal text-center text-gray-400 mt-2 mb-8"
         >
           {t('auth.login.subtitle')}
         </motion.span>
