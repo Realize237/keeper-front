@@ -196,21 +196,15 @@ export default function Register() {
       >
         <motion.h1
           variants={itemVariants}
-          className="text-2xl md:text-4xl font-normal text-white mb-2"
+          className="text-xl md:text-2xl font-normal text-white mb-2"
         >
           {t('auth.register.title')}
         </motion.h1>
         <motion.p
           variants={itemVariants}
-          className="text-gray-400 text-xs md:text-sm mb-8"
+          className="text-gray-400 text-center text-xs md:text-sm mb-8"
         >
-          {t('auth.register.subtitle')}{' '}
-          <Link
-            to={'/login'}
-            className="text-white hover:opacity-80 transition duration-300 hover:underline"
-          >
-            {t('auth.register.login')}
-          </Link>
+          {t('auth.register.subtitle')}
         </motion.p>
 
         <motion.form
@@ -421,7 +415,7 @@ export default function Register() {
                   to={PRIVACY_POLICY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:underline transition"
+                  className="text-deep-teal underline transition"
                 >
                   {t('auth.register.legal.privacy')}
                 </Link>{' '}
@@ -430,7 +424,7 @@ export default function Register() {
                   to={TERMS_OF_SERVICE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:underline transition"
+                  className="text-deep-teal underline transition"
                 >
                   {t('auth.register.legal.terms')}
                 </Link>
@@ -503,6 +497,19 @@ export default function Register() {
             </svg>
           </motion.button>
         </motion.div>
+
+        <motion.p
+          variants={itemVariants}
+          className="text-gray-400 text-xs text-center"
+        >
+          {t('auth.register.footer.text')}{' '}
+          <Link
+            to={'/login'}
+            className="text-white transition duration-300 hover:opacity-80"
+          >
+            {t('auth.register.footer.login')}
+          </Link>
+        </motion.p>
       </motion.div>
     </div>
   );

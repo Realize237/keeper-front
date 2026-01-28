@@ -78,10 +78,10 @@ export const TermsConditions = () => {
             <p>
               {block.contact.email}:{' '}
               <a
-                href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
+                href={`mailto:${env.APP_SUPPORT_EMAIL}`}
                 className="text-blue-600 underline"
               >
-                {env.APP_PRIVACY_POLICY_EMAIL}
+                {env.APP_SUPPORT_EMAIL}
               </a>
             </p>
             <p>
