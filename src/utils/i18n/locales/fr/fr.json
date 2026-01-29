@@ -28,7 +28,8 @@
     },
     "errors": {
       "request_failed": "Échec de la requête"
-    }
+    },
+    "home": "accueil"
   },
   "errors": {
     "UNEXPECTED_ERROR": "Une erreur est survenue"
