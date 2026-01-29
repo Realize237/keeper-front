@@ -16,6 +16,7 @@ import {
 import FormButton from '../../components/ui/FormButton';
 import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
 import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../../constants';
+import AuthHeader from '../../components/auth/AuthHeader';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -188,8 +189,9 @@ export default function Register() {
 
   return (
     <div className=" bg-app min-h-screen ">
+      <AuthHeader />
       <motion.div
-        className="px-4  max-w-md mx-auto flex flex-col items-center justify-center py-8"
+        className="px-4 mt-16 max-w-md mx-auto flex flex-col items-center justify-center py-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

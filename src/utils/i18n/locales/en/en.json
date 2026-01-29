@@ -28,7 +28,8 @@
     },
     "errors": {
       "request_failed": "Request failed"
-    }
+    },
+    "home": "home"
   },
   "errors": {
     "UNEXPECTED_ERROR": "Something went wrong"

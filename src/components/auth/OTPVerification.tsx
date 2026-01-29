@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { Input } from '../ui/Input';
-import { motion } from 'framer-motion';
-import { MdClose } from 'react-icons/md';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import FormButton from '../ui/FormButton';
+import Modal from '../ui/Modal';
 
 interface OtpProps {
   onSubmit: (code: string) => void;
@@ -21,13 +20,12 @@ export default function OTPVerification({
   isOpen,
   isSubmitting = false,
 }: OtpProps) {
-  const [otp, setOtp] = useState<string[]>(
-    Array.from<string>({ length: 5 }).fill('')
-  );
+  const [otp, setOtp] = useState<string[]>(Array(5).fill(''));
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const [secondsLeft, setSecondsLeft] = useState<number>(120);
   const [isResendAvailable, setIsResendAvailable] = useState(false);
   const { t } = useTranslation();
+
   useEffect(() => {
     if (isOpen) {
       setSecondsLeft(120);
@@ -100,78 +98,63 @@ export default function OTPVerification({
     return `${minutes}:${seconds}`;
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="relative bg-[#171717] p-6 rounded-xl shadow-xl w-4/12 space-y-4"
-      >
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-300 hover:text-white"
-          aria-label={t('common.close')}
-        >
-          <MdClose size={22} />
-        </button>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t('auth.otp.title')}
+      width="max-w-sm"
+    >
+      <p className="text-gray-400 text-sm mb-4">{t('auth.otp.description')}</p>
 
-        <h2 className="text-white text-xl font-semibold">
-          {t('auth.otp.title')}
-        </h2>
-        <p className="text-gray-400 text-sm">{t('auth.otp.description')}</p>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex justify-between space-x-3">
-            {otp.map((value, i) => (
-              <Input
-                key={i}
-                type="text"
-                inputMode="numeric"
-                pattern="\d*"
-                maxLength={5}
-                value={value}
-                ref={(el) => {
-                  inputsRef.current[i] = el;
-                }}
-                onChange={(e) => handleChange(i, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(i, e)}
-                className="text-white w-full text-center rounded-lg"
-              />
-            ))}
-          </div>
-
-          <FormButton
-            type="submit"
-            isLoading={isSubmitting}
-            className="w-full mt-7"
-            size="lg"
-          >
-            {t('auth.otp.actions.submit')}
-          </FormButton>
-        </form>
-
-        <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
-          <span>
-            {isResendAvailable
-              ? t('auth.otp.resend.available')
-              : t('auth.otp.resend.wait', { time: formatTime(secondsLeft) })}
-          </span>
-          <button
-            onClick={handleResend}
-            disabled={!isResendAvailable}
-            className={`text-sm font-semibold ${
-              isResendAvailable
-                ? 'text-blue-500 hover:underline'
-                : 'text-gray-500 cursor-not-allowed'
-            }`}
-          >
-            {t('auth.otp.resend.button')}
-          </button>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex justify-between space-x-3">
+          {otp.map((value, i) => (
+            <Input
+              key={i}
+              type="text"
+              inputMode="numeric"
+              pattern="\d*"
+              maxLength={5}
+              value={value}
+              ref={(el) => {
+                inputsRef.current[i] = el;
+              }}
+              onChange={(e) => handleChange(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(i, e)}
+              className="text-white w-full text-center rounded-lg"
+            />
+          ))}
         </div>
-      </motion.div>
-    </div>
+
+        <FormButton
+          type="submit"
+          isLoading={isSubmitting}
+          className="w-full mt-7"
+          size="lg"
+        >
+          {t('auth.otp.actions.submit')}
+        </FormButton>
+      </form>
+
+      <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
+        <span>
+          {isResendAvailable
+            ? t('auth.otp.resend.available')
+            : t('auth.otp.resend.wait', { time: formatTime(secondsLeft) })}
+        </span>
+        <button
+          onClick={handleResend}
+          disabled={!isResendAvailable}
+          className={`text-sm font-semibold ${
+            isResendAvailable
+              ? 'text-blue-500 hover:underline'
+              : 'text-gray-500 cursor-not-allowed'
+          }`}
+        >
+          {t('auth.otp.resend.button')}
+        </button>
+      </div>
+    </Modal>
   );
 }
