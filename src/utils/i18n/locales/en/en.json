@@ -347,8 +347,8 @@
     "actions": {
       "save": "Save",
       "update": "Update",
-      "edit": "Edit options",
-      "hide": "Hide options",
+      "edit": "Set reminders",
+      "hide": "Hide reminders",
       "delete": "Delete reminders"
     },
     "messages": {

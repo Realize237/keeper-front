@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  formatToReadableDate,
-  getNextBillingDate,
-  getSubscriptionCardImage,
-} from '../../utils';
+import { formatToReadableDate, getNextBillingDate } from '../../utils';
 import SubscriptionTypeAndDot from '../ui/SubscriptionTypeAndDot';
 import {
   SubscriptionModalTypes,
@@ -30,6 +26,7 @@ import ErrorState from '../common/ErrorState';
 import { useTranslation } from 'react-i18next';
 import Modal from '../ui/Modal';
 import { billingStatusTextClass } from '../../constants/subscription.constants';
+import { IMAGES } from '../../assets';
 
 interface SubscriptionDetailModalProps {
   selectedSubscriptionDetails: Subscription;
@@ -256,7 +253,7 @@ export default function SubscriptionDetailModal({
             {t('subscription_details.billing')}
           </p>
 
-          <div className="divide-y divide-white/10 mb-6">
+          <div className="divide-y divide-white/10 ">
             <Row
               label={t('subscription_details.next_bill')}
               value={getFormattedNextBillingDate()}
@@ -286,16 +283,7 @@ export default function SubscriptionDetailModal({
                 />
               }
             />
-
-            <Row
-              label={t('subscription_details.plan')}
-              value={t(`billing.plan.${subscriptionDetails?.plan}`)}
-            />
           </div>
-
-          <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
-            {t('subscription_details.payment_method')}
-          </p>
 
           <div className="flex justify-between items-center py-4 mb-6">
             <span className="text-gray-400">
@@ -303,11 +291,7 @@ export default function SubscriptionDetailModal({
             </span>
 
             <div className="flex items-center gap-2">
-              <img
-                src={getSubscriptionCardImage(subscriptionDetails)}
-                className="w-8 h-5 rounded"
-              />
-              <span className="text-white font-medium">•••• 5064</span>
+              <img src={IMAGES.CreditCard} className="w-12 h-12 rounded" />
             </div>
           </div>
 
@@ -316,7 +300,7 @@ export default function SubscriptionDetailModal({
           </p>
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
+            <div className="relative flex justify-between items-center ">
               <span className="text-gray-400">
                 {t('subscription_details.remind_me')}
               </span>
@@ -339,12 +323,12 @@ export default function SubscriptionDetailModal({
                       isConnecting ||
                       nextBillingResult?.status === 'EXPIRED'
                     }
-                    className={`px-3 py-1.5 text-sm rounded-lg bg-primary text-white transition ${
+                    className={`px-3 py-1.5 text-sm rounded-lg bg-deep-teal text-white transition ${
                       isAddingPending ||
                       isConnecting ||
                       nextBillingResult?.status === 'EXPIRED'
                         ? 'opacity-50 cursor-not-allowed'
-                        : 'hover:bg-primary/90'
+                        : 'hover:bg-deep-teal/90'
                     }`}
                   >
                     {isAddingPending || isConnecting ? (

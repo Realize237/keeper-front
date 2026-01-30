@@ -8,8 +8,8 @@ import {
   NotificationType,
 } from '../../interfaces/notifications';
 import MultiSelectDropdown from './MultiSelectDropdown';
-import { Button } from './Button';
 import { useTranslation } from 'react-i18next';
+import FormButton from './FormButton';
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -43,7 +43,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-white rounded-xl p-6 w-80 shadow-lg"
+        className="bg-app border border-amber-50 rounded-xl p-6 w-80 shadow-lg"
       >
         <h3 className="text-lg font-semibold mb-4">
           {t('reminders.custom.title')}
@@ -91,20 +91,20 @@ const ReminderModal: React.FC<CustomModalProps> = ({
           />
         </div>
 
-        <div className="flex justify-between mt-5">
-          <Button className="bg-transparent" onClick={onClose}>
+        <div className="flex justify-between gap-4 mt-5">
+          <FormButton variant="secondary" onClick={onClose}>
             {t('common.cancel')}
-          </Button>
-          <Button
+          </FormButton>
+          <FormButton
+            size="sm"
             onClick={() => {
               if (!reminderValueError) {
                 onSave(custom);
               }
             }}
-            className="px-5 py-2 text-neutral-800 hover:opacity-70 rounded-lg"
           >
             {t('common.done')}
-          </Button>
+          </FormButton>
         </div>
       </motion.div>
     </motion.div>

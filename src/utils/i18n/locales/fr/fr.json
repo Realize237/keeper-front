@@ -334,8 +334,8 @@
     "actions": {
       "save": "Enregistrer",
       "update": "Mise à jour",
-      "edit": "Options d'édition",
-      "hide": "Masquer les options",
+      "edit": "Définir des rappels",
+      "hide": "Masquer les rappels",
       "delete": "Supprimer les rappels"
     },
     "messages": {
