@@ -9,6 +9,7 @@ type ModalProps = {
   children: ReactNode;
   title?: string;
   width?: string;
+  height?: string;
 };
 
 const backdropVariants: Variants = {
@@ -39,6 +40,7 @@ const Modal: React.FC<ModalProps> = ({
   title,
   children,
   width = 'max-w-xl',
+  height = 'max-h-[90dvh]',
 }) => {
   useLockBodyScroll(isOpen, { restorePrevious: true });
 
@@ -60,14 +62,17 @@ const Modal: React.FC<ModalProps> = ({
             exit="exit"
             onClick={(e) => e.stopPropagation()}
             className={`relative bg-app text-gray-100 w-full mx-4 ${width}
-              max-h-[90dvh] rounded-2xl shadow-xl
+              ${height} rounded-2xl shadow-xl
               flex flex-col overflow-hidden`}
           >
             <div className="flex items-center justify-between px-6 pt-6 pb-4">
-              {title && <h2 className="text-xl font-semibold">{title}</h2>}
+              <div className="min-w-0 flex-1">
+                {title && <h2 className="text-xl font-semibold">{title}</h2>}
+              </div>
+
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-red-500 transition-colors"
+                className="text-gray-400 hover:text-red-500 transition-colors shrink-0"
               >
                 <IoClose size={20} />
               </button>

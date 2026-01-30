@@ -263,6 +263,8 @@
   "subscription_details": {
     "loading": "Loading...",
     "updating": "Updating...",
+    "billing": "Billing",
+    "actions": "Actions",
 
     "next_bill": "Next bill",
     "payment_method": "Payment method",

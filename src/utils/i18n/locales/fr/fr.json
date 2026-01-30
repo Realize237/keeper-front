@@ -249,6 +249,8 @@
   "subscription_details": {
     "loading": "Chargement…",
     "updating": "Mise à jour…",
+    "billing": "Facturation",
+    "actions": "Actions",
 
     "next_bill": "Prochaine facture",
     "payment_method": "Moyen de paiement",
