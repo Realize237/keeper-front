@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import NavLayout from '../layouts/NavLayout';
 import { lazyImport } from './lazyImport';
+import { PublicRoute } from '../components/common/PublicRoute';
 
 // Public pages
 const HomePage = lazyImport(() => import('../pages/HomePage'));
@@ -88,8 +89,22 @@ export const routes: AppRoute[] = [
         ],
       },
       { path: '/pricing', element: <PricingPage /> },
-      { path: '/register', element: <Register /> },
-      { path: '/login', element: <Login /> },
+      {
+        path: '/register',
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
+      },
+      {
+        path: '/login',
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
+      },
       { path: '/check-your-email', element: <CheckYourEmail /> },
       { path: '/verify-email', element: <VerifyEmail /> },
       { path: '/set-password', element: <SetPassword /> },

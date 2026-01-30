@@ -54,8 +54,8 @@ export const Contact = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-          <div className="space-y-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 align-items: stretch">
+          <div className="flex flex-col gap-6">
             <div className="bg-linear-to-br from-[#990800]/5 to-[#C41E14]/5 p-7 rounded-3xl border-2 border-[#990800]/10 hover:border-[#990800]/30 transition-all group">
               <div className="w-14 h-14 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-red-900/30 group-hover:scale-110 transition-transform">
                 <MdOutlineMailOutline className="w-7 h-7 text-white" />
@@ -105,10 +105,10 @@ export const Contact = () => {
             </div>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex flex-col">
             <form
               onSubmit={handleSubmit}
-              className="bg-white border-2 border-gray-200 p-10 rounded-3xl space-y-6 shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-white border-2 border-gray-200 p-10 rounded-3xl space-y-6 shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full"
             >
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -199,7 +199,7 @@ export const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full px-5 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#990800] focus:border-transparent resize-none transition-all font-medium"
+                  className="w-full px-5 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#990800] focus:border-transparent resize-none transition-all font-medium flex-1 min-h-37.5 md:min-h-67.5"
                   placeholder="Tell us how we can help..."
                   required
                 />

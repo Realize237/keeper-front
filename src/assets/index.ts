@@ -13,6 +13,7 @@ import Login3 from './login3.jpg';
 import Login4 from './login4.jpg';
 import Login5 from './login5.jpg';
 import KeepayNoBg from './keepay-banner-no-bg.png';
+import CreditCard from './credit-card.png';
 
 export const IMAGES = {
   Netflix,
@@ -30,4 +31,5 @@ export const IMAGES = {
   Login4,
   Login5,
   KeepayNoBg,
+  CreditCard,
 };

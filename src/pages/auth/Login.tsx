@@ -25,6 +25,7 @@ import PasswordReset from '../../components/auth/PasswordReset';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX } from '../../constants/validation/patterns';
 import FormButton from '../../components/ui/FormButton';
+import AuthHeader from '../../components/auth/AuthHeader';
 
 export default function Login() {
   const { t } = useTranslation();
@@ -248,22 +249,23 @@ export default function Login() {
   );
 
   return (
-    <div className="flex min-h-screen bg-app flex-col  py-8 overflow-hidden">
+    <div className="flex min-h-screen bg-app flex-col  py-8 overflow-x-hidden overflow-y-auto">
+      <AuthHeader />
       <motion.div
-        className="w-11/12 max-w-md mx-auto flex flex-col items-center justify-center "
+        className="w-11/12 mt-16 max-w-md mx-auto flex flex-col items-center justify-center "
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <motion.h1
           variants={itemVariants}
-          className="text-2xl md:text-4xl font-normal text-white"
+          className="text-xl md:text-2xl font-normal text-white"
         >
           {t('auth.login.title')}
         </motion.h1>
         <motion.span
           variants={itemVariants}
-          className="text-xl font-normal text-white mb-8"
+          className="text-xs md:text-sm font-normal text-center text-gray-400 mt-2 mb-8"
         >
           {t('auth.login.subtitle')}
         </motion.span>

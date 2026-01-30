@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReminderModal from '../ui/ReminderModal';
 import Dropdown from './Dropdown';
@@ -23,10 +23,10 @@ import {
   useUpdateSubscriptionReminders,
 } from '../../hooks/useReminders';
 import toast from 'react-hot-toast';
-import { Button } from '../ui/Button';
 import { ReminderOptions } from '../../constants';
 import { useTranslation } from 'react-i18next';
 import { getKeyFromValueUnit } from '../../utils/reminders';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const NotificationReminder = ({
   subscription,
@@ -237,105 +237,127 @@ const NotificationReminder = ({
   );
 
   return (
-    <div className="w">
+    <div className=" flex flex-col ">
       <button
         onClick={() => setExpanded((x) => !x)}
-        className="w-full flex text-sm items-center text-[#838383] justify-between hover:bg-neutral-700 transition"
+        className="
+text-right
+     p-1
+      absolute
+      right-0 
+      top-0
+      rounded-full
+      bg-deep-teal hover:bg-deep-teal/90
+      text-sm text-white
+      transition
+    "
       >
-        {expanded ? t('reminders.actions.hide') : t('reminders.actions.edit')}
+        {expanded ? <FaChevronUp /> : <FaChevronDown />}
       </button>
 
       {expanded && (
-        <div
-          className="mt-4 space-y-4 animate-fadeIn"
-          style={{ animation: 'fadeIn .25s ease' }}
+        <motion.div
+          className="mt-4 space-y-4"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
         >
           {subscription.reminders.length > 0 && (
-            <Button
-              className="bg-red-500 text-xs text-white"
+            <button
               onClick={deleteSubscriptionReminders}
+              className="
+            w-full py-2
+            bg-red-500/20 text-red-500
+            rounded-lg
+            text-xs font-medium
+            hover:bg-red-500/30
+            transition
+          "
             >
               {t('reminders.actions.delete')}
-            </Button>
+            </button>
           )}
+
           <div className="space-y-3">
             {reminders.map((reminder, index) => (
               <div
                 key={reminder.id}
-                className="flex items-center justify-between w-full"
+                className="flex items-center justify-between w-full bg-gray-900/20 px-4 py-2 rounded-xl shadow-sm"
               >
-                <div className="flex-1">
-                  <Dropdown
-                    label={`${t('reminders.text.reminder')} ${index + 1}`}
-                    options={filteredReminderOptions}
-                    value={reminder.value}
-                    currentLabel={
-                      reminder.custom
-                        ? formatReminderDisplay(reminder, t)
-                        : reminder.value.startsWith('CUSTOM_')
-                          ? (() => {
-                              const match = reminder.value.match(
-                                /CUSTOM_(\d+)_(\w+)_(.+)/
+                <Dropdown
+                  label={`${t('reminders.text.reminder')} ${index + 1}`}
+                  options={filteredReminderOptions}
+                  value={reminder.value}
+                  currentLabel={
+                    reminder.custom
+                      ? formatReminderDisplay(reminder, t)
+                      : reminder.value.startsWith('CUSTOM_')
+                        ? (() => {
+                            const match = reminder.value.match(
+                              /CUSTOM_(\d+)_(\w+)_(.+)/
+                            );
+                            if (match) {
+                              const [, value, unit, types] = match;
+                              const typeArray = types.split(
+                                '_'
+                              ) as NotificationType[];
+                              return formatReminderDisplay(
+                                {
+                                  value: reminder.value,
+                                  custom: {
+                                    value: parseInt(value),
+                                    unit: unit as CustomUnitType,
+                                    type: typeArray,
+                                  },
+                                } as INotificationReminder,
+                                t
                               );
-                              if (match) {
-                                const [, value, unit, types] = match;
-                                const typeArray = types.split(
-                                  '_'
-                                ) as NotificationType[];
-                                return formatReminderDisplay(
-                                  {
-                                    value: reminder.value,
-                                    custom: {
-                                      value: parseInt(value),
-                                      unit: unit as CustomUnitType,
-                                      type: typeArray,
-                                    },
-                                  } as INotificationReminder,
-                                  t
-                                );
-                              }
-                              return reminder.value;
-                            })()
-                          : t(`reminders.options.${reminder.value}`)
+                            }
+                            return reminder.value;
+                          })()
+                        : t(`reminders.options.${reminder.value}`)
+                  }
+                  onDelete={() => handleDeleteReminder(reminder.id)}
+                  onChange={(value) => {
+                    if (value === 'CUSTOM') {
+                      setNewReminder({
+                        id: reminder.id,
+                        value: reminder.value,
+                        custom: { value: 30, unit: 'minutes', type: ['EMAIL'] },
+                      });
+                    } else {
+                      updateReminder(reminder.id, { id: reminder.id, value });
                     }
-                    onDelete={() => handleDeleteReminder(reminder.id)}
-                    onChange={(value) => {
-                      if (value === 'CUSTOM') {
-                        setNewReminder({
-                          id: reminder.id,
-                          value: reminder.value,
-                          custom: {
-                            value: 30,
-                            unit: 'minutes',
-                            type: ['EMAIL'],
-                          },
-                        });
-                      } else {
-                        updateReminder(reminder.id, {
-                          id: reminder.id,
-                          value,
-                        });
-                      }
-                    }}
-                  />
-                </div>
+                  }}
+                />
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-between mt-4">
+          <div className="flex justify-between mt-4">
             <button
               onClick={handleAddReminder}
-              className="text-blue-400 capitalize flex items-center space-x-4 hover:underline text-sm"
+              className="
+            flex items-center gap-2 px-3 py-1
+            text-deep-teal text-sm
+            rounded-lg hover:bg-gray-800/40
+            transition
+          "
             >
               {t('common.add')} <FiPlus />
             </button>
+
             {reminders.length > 0 && (
               <button
                 onClick={
                   isReminderUpdated ? updateSubscriptionReminders : setReminder
                 }
-                className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs"
+                className="
+              px-4 py-2 rounded-lg
+              bg-deep-teal hover:bg-deep-teal/90
+              text-white text-sm font-medium
+              transition
+            "
               >
                 {!isReminderUpdated
                   ? t('reminders.actions.save')
@@ -343,8 +365,9 @@ const NotificationReminder = ({
               </button>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
+
       <AnimatePresence>
         {newReminder?.custom && (
           <ReminderModal
@@ -368,6 +391,7 @@ const NotificationReminder = ({
                   },
                 ];
               });
+
               updateReminder(newReminder.id, {
                 ...newReminder,
                 value: combinedKeyValue,

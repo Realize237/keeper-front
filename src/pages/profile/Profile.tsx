@@ -73,7 +73,7 @@ const secondaryItems: MenuItem[] = [
   {
     icon: FaQuestionCircle,
     label: 'profile.menu.help',
-    path: '/help',
+    path: '/#faq',
   },
   {
     icon: FaSignOutAlt,

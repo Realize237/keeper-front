@@ -1,12 +1,11 @@
 import { Input } from '../ui/Input';
-import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MdClose } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { PASSWORD_RULES } from '../../constants/validation/patterns';
 import FormButton from '../ui/FormButton';
+import Modal from '../ui/Modal';
 
 export default function PasswordReset({
   onSubmit,
@@ -35,16 +34,12 @@ export default function PasswordReset({
           PASSWORD_RULES.REGEX,
           t('auth.password_reset.validation.password_pattern')
         ),
-
       confirmPassword: z.string(),
     })
-    .refine(
-      (formValues) => formValues.newPassword === formValues.confirmPassword,
-      {
-        path: ['confirmPassword'],
-        message: t('auth.password_reset.validation.passwords_match'),
-      }
-    );
+    .refine((values) => values.newPassword === values.confirmPassword, {
+      path: ['confirmPassword'],
+      message: t('auth.password_reset.validation.passwords_match'),
+    });
 
   const {
     register,
@@ -54,56 +49,39 @@ export default function PasswordReset({
     resolver: zodResolver(resetSchema),
   });
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="relative bg-[#171717] p-6 rounded-xl shadow-xl w-4/12 space-y-4"
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={t('auth.password_reset.title')}
+      width="max-w-md"
+    >
+      <p className="text-gray-400 text-sm mb-4">
+        {t('auth.password_reset.description')}
+      </p>
+
+      <form
+        onSubmit={handleSubmit((d) => onSubmit(d.newPassword))}
+        className="space-y-4"
       >
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-300 hover:text-white"
-          aria-label={t('common.close')}
-        >
-          <MdClose size={22} />
-        </button>
+        <Input
+          type="password"
+          placeholder={t('auth.password_reset.fields.new_password')}
+          {...register('newPassword')}
+          error={errors.newPassword?.message}
+        />
 
-        <h2 className="text-white text-xl font-semibold">
-          {t('auth.password_reset.title')}
-        </h2>
-        <p className="text-gray-400 text-sm">
-          {t('auth.password_reset.description')}
-        </p>
+        <Input
+          type="password"
+          placeholder={t('auth.password_reset.fields.confirm_password')}
+          {...register('confirmPassword')}
+          error={errors.confirmPassword?.message}
+        />
 
-        <form
-          onSubmit={handleSubmit((d) => onSubmit(d.newPassword))}
-          className="space-y-4"
-        >
-          <Input
-            type="password"
-            placeholder={t('auth.password_reset.fields.new_password')}
-            className="pr-4"
-            {...register('newPassword')}
-            error={errors.newPassword?.message}
-          />
-
-          <Input
-            type="password"
-            placeholder={t('auth.password_reset.fields.confirm_password')}
-            className="pr-4"
-            {...register('confirmPassword')}
-            error={errors.confirmPassword?.message}
-          />
-
-          <FormButton isLoading={isSubmitting} className="w-full">
-            {t('auth.password_reset.actions.submit')}
-          </FormButton>
-        </form>
-      </motion.div>
-    </div>
+        <FormButton isLoading={isSubmitting} disabled={isSubmitting} size="lg">
+          {t('auth.password_reset.actions.submit')}
+        </FormButton>
+      </form>
+    </Modal>
   );
 }

@@ -39,7 +39,7 @@ const ChangePassword = () => {
       { data },
       {
         onSuccess: () => {
-          toast.success(t('change_password.success.changePassword'));
+          toast.success(t('change_password.success.change_password'));
           reset();
         },
         onError: (error: Error & { code?: string }) => {

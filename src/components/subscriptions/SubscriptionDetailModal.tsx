@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { Variants } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { formatToReadableDate, getNextBillingDate } from '../../utils';
-import { MdOutlineClear } from 'react-icons/md';
 import SubscriptionTypeAndDot from '../ui/SubscriptionTypeAndDot';
 import {
   SubscriptionModalTypes,
@@ -26,6 +24,9 @@ import Spinner from '../ui/Spinner';
 import SubscriptionDetailSkeleton from './SubscriptionDetailSkeleton';
 import ErrorState from '../common/ErrorState';
 import { useTranslation } from 'react-i18next';
+import Modal from '../ui/Modal';
+import { billingStatusTextClass } from '../../constants/subscription.constants';
+import { IMAGES } from '../../assets';
 
 interface SubscriptionDetailModalProps {
   selectedSubscriptionDetails: Subscription;
@@ -122,90 +123,6 @@ export default function SubscriptionDetailModal({
     ),
   });
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
-  const modalVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: 50,
-      scale: 0.95,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
-    visible: (custom: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.1,
-        duration: 0.5,
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 12,
-      },
-    }),
-    exit: {
-      opacity: 0,
-      y: -30,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
   const addSubscriptionToCalendar = () => {
     addToGoogleCalendar(
       {
@@ -269,291 +186,203 @@ export default function SubscriptionDetailModal({
     : '';
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className={` z-20 flex flex-col justify-center items-center absolute bg-[#000000e0]`}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={handleClose}
-        >
-          <motion.div
-            className="min-w-sm px-4 h-dvh overflow-y-auto flex flex-col items-center"
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {isLoading ? (
-              <SubscriptionDetailSkeleton
-                onClose={() => {
-                  setIsOpen(false);
-                  closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
-                }}
-              />
-            ) : error ? (
-              <div className="w-full h-full flex flex-col">
-                <motion.div
-                  onClick={() => {
-                    setIsOpen(false);
-                    closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
-                  }}
-                  className="w-10 h-10 my-2 bg-[#2f2f2f] rounded-full flex justify-center items-center self-end float-right cursor-pointer"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <MdOutlineClear className="text-md text-white" />
-                </motion.div>
-                <div className="flex-1 flex items-center justify-center">
-                  <ErrorState
-                    message={t('subscription_details.errors.load_failed')}
-                    onRetry={() => refetch()}
-                  />
-                </div>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        setIsOpen(false);
+        closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
+      }}
+      width="max-w-md"
+    >
+      {isLoading ? (
+        <SubscriptionDetailSkeleton
+          onClose={() => {
+            setIsOpen(false);
+            closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
+          }}
+        />
+      ) : error ? (
+        <div className="flex flex-col items-center justify-center py-16">
+          <ErrorState
+            message={t('subscription_details.errors.load_failed')}
+            onRetry={refetch}
+          />
+        </div>
+      ) : (
+        <>
+          {isFetching && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="w-full flex justify-center mb-4"
+            >
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5">
+                <Spinner />
+                <span className="text-sm text-gray-300">
+                  {t('subscription_details.updating')}
+                </span>
               </div>
-            ) : (
-              <>
-                {isFetching && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="w-full flex justify-center mb-2"
-                  >
-                    <div className="flex items-center gap-2 px-4 py-2 bg-[#2f2f2f] rounded-full">
-                      <Spinner />
-                      <span className="text-white text-sm">
-                        {t('subscription_details.updating')}
-                      </span>
-                    </div>
-                  </motion.div>
-                )}
+            </motion.div>
+          )}
 
-                <motion.div
-                  onClick={() => {
-                    setIsOpen(false);
-                    closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
-                  }}
-                  className="w-10 h-10 my-2 bg-[#2f2f2f] rounded-full flex justify-center items-center self-end float-right cursor-pointer"
-                  variants={itemVariants}
-                  custom={0}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <MdOutlineClear className="text-md text-white" />
-                </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex justify-center mb-4"
+          >
+            <img
+              src={subscriptionDetails?.details?.iconUrl}
+              className="w-20 h-20 rounded-2xl object-cover"
+            />
+          </motion.div>
 
-                <motion.img
-                  src={subscriptionDetails?.details?.iconUrl}
-                  className="w-18 h-18 my-2 mb-8 rounded-full object-cover"
-                  variants={itemVariants}
-                  custom={1}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
+          <div className="flex flex-col items-center text-center mb-8">
+            <p
+              className="text-white text-xl font-semibold truncate max-w-65"
+              title={subscriptionDetails?.details?.name}
+            >
+              {subscriptionDetails?.details?.name}
+            </p>
+
+            <span className="mt-1 text-3xl font-semibold text-green-400">
+              ${subscriptionDetails?.price}
+            </span>
+          </div>
+
+          <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+            {t('subscription_details.billing')}
+          </p>
+
+          <div className="divide-y divide-white/10 ">
+            <Row
+              label={t('subscription_details.next_bill')}
+              value={getFormattedNextBillingDate()}
+              valueClassName={`font-medium ${
+                nextBillingResult
+                  ? billingStatusTextClass[nextBillingResult.status]
+                  : 'text-gray-400'
+              }`}
+            />
+
+            {nextBillingResult?.daysRemaining && (
+              <div className="flex justify-between items-center py-3">
+                <span className="text-gray-400">
+                  {t('subscription_details.remaining')}
+                </span>
+                <span className="px-2 py-0.5 text-sm rounded-full bg-red-500/15 text-red-400">
+                  {daysRemainingText}
+                </span>
+              </div>
+            )}
+
+            <Row
+              label={t('subscription_details.period')}
+              value={
+                <SubscriptionTypeAndDot
+                  value={subscriptionDetails?.type || 'MONTHLY'}
                 />
+              }
+            />
+          </div>
 
-                <motion.div
-                  className="flex my-2"
-                  variants={itemVariants}
-                  custom={2}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <p className="text-white text-3xl">
-                    {subscriptionDetails?.details?.name}
-                  </p>
-                  <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#bbcdcc]">
-                    <span className="text-green-800 text-lg]">
-                      ${subscriptionDetails?.price}
-                    </span>
-                  </div>
-                </motion.div>
+          <div className="flex justify-between items-center py-4 mb-6">
+            <span className="text-gray-400">
+              {t('subscription_details.payment_method')}
+            </span>
 
-                <motion.div
-                  className="flex justify-center items-center mb-4 text-lg"
-                  variants={itemVariants}
-                  custom={3}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <span className="mr-2 text-[#838383] font-bold">
-                    {t('subscription_details.next_bill')}:{' '}
-                  </span>
-                  <span className="text-white">
-                    {getFormattedNextBillingDate()}
-                  </span>
-                </motion.div>
+            <div className="flex items-center gap-2">
+              <img src={IMAGES.CreditCard} className="w-12 h-12 rounded" />
+            </div>
+          </div>
 
-                {/* <motion.div
-                  className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
-                  variants={itemVariants}
-                  custom={4}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  whileHover={{ backgroundColor: '#3d3d3d' }}
-                >
-                  <span className="text-[#838383] font-bold">
-                    {t('subscription_details.payment_method')}{' '}
-                  </span>
-                  <div className="flex justify-center items-center">
-                    <img
-                      src={getSubscriptionCardImage(subscriptionDetails)}
-                      className="w-10 h-6 rounded-md object-cover mr-2"
-                    />
-                    <span className="text-white">5064</span>
-                  </div>
-                </motion.div> */}
+          <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+            {t('subscription_details.actions')}
+          </p>
 
-                {nextBillingResult?.daysRemaining && (
-                  <motion.div
-                    className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
-                    variants={itemVariants}
-                    custom={5}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    whileHover={{ backgroundColor: '#3d3d3d' }}
+          <div className="space-y-4">
+            <div className="relative flex justify-between items-center ">
+              <span className="text-gray-400">
+                {t('subscription_details.remind_me')}
+              </span>
+              <NotificationReminder
+                subscription={selectedSubscriptionDetails}
+              />
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-gray-400">
+                {t('subscription_details.sync_calendar')}
+              </span>
+
+              <div className="flex gap-2">
+                {!subscriptionDetails?.calendarLink ? (
+                  <button
+                    onClick={onAddToGoogleCalendar}
+                    disabled={
+                      isAddingPending ||
+                      isConnecting ||
+                      nextBillingResult?.status === 'EXPIRED'
+                    }
+                    className={`px-3 py-1.5 text-sm rounded-lg bg-deep-teal text-white transition ${
+                      isAddingPending ||
+                      isConnecting ||
+                      nextBillingResult?.status === 'EXPIRED'
+                        ? 'opacity-50 cursor-not-allowed'
+                        : 'hover:bg-deep-teal/90'
+                    }`}
                   >
-                    <span className="text-[#838383] font-bold">
-                      {t('subscription_details.remaining')}
-                    </span>
-                    <div className="p-1 px-2 ml-2 flex rounded-lg justify-center items-centers bg-[#cdbbbb]">
-                      <span className="text-red-800 text-lg]">
-                        {daysRemainingText}
-                      </span>
-                    </div>
-                  </motion.div>
-                )}
-
-                <motion.div
-                  className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
-                  variants={itemVariants}
-                  custom={6}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  whileHover={{ backgroundColor: '#3d3d3d' }}
-                >
-                  <span className="text-[#838383] font-bold">
-                    {t('subscription_details.period')}{' '}
-                  </span>
-                  <SubscriptionTypeAndDot
-                    value={subscriptionDetails?.type || 'MONTHLY'}
-                  />
-                </motion.div>
-
-                <motion.div
-                  className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center"
-                  variants={itemVariants}
-                  custom={7}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  whileHover={{ backgroundColor: '#3d3d3d' }}
-                >
-                  <span className="text-[#838383] font-bold">
-                    {t('subscription_details.plan')}{' '}
-                  </span>
-                  <span className="text-white">
-                    {t(`billing.plan.${subscriptionDetails?.plan}`)}
-                  </span>
-                </motion.div>
-
-                <motion.div
-                  className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-start items-center"
-                  variants={itemVariants}
-                  custom={8}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  whileHover={{ backgroundColor: '#3d3d3d' }}
-                >
-                  <span className="text-[#838383] font-bold">
-                    {t('subscription_details.remind_me')}{' '}
-                  </span>
-                  <NotificationReminder
-                    subscription={selectedSubscriptionDetails}
-                  />
-                </motion.div>
-                <motion.div
-                  className="w-full h-auto p-4 my-1 flex rounded-lg text-lg bg-[#333232] justify-between items-center gap-4"
-                  variants={itemVariants}
-                  custom={9}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  whileHover={{ backgroundColor: '#3d3d3d' }}
-                >
-                  <span className="text-[#838383] font-bold">
-                    {t('subscription_details.sync_calendar')}
-                  </span>
-                  <div className="flex gap-2">
-                    {!subscriptionDetails?.calendarLink ? (
-                      <button
-                        onClick={onAddToGoogleCalendar}
-                        disabled={
-                          isAddingPending ||
-                          isConnecting ||
-                          nextBillingResult?.status === 'EXPIRED'
-                        }
-                        className={`flex items-center gap-1 px-3 py-1 text-xs bg-primary text-white rounded transition ${
-                          isAddingPending ||
-                          isConnecting ||
-                          nextBillingResult?.status === 'EXPIRED'
-                            ? 'cursor-not-allowed opacity-50'
-                            : 'cursor-pointer'
-                        }`}
-                      >
-                        {isAddingPending || isConnecting ? (
-                          <Spinner />
-                        ) : (
-                          <>
-                            <FaCalendarPlus /> {t('common.add')}
-                          </>
-                        )}
-                      </button>
+                    {isAddingPending || isConnecting ? (
+                      <Spinner />
                     ) : (
                       <>
-                        <a
-                          href={subscriptionDetails?.calendarLink}
-                          target="_blank"
-                          className="flex items-center gap-1 px-3 py-1 text-xs bg-[#CDFF00] rounded  transition"
-                        >
-                          <FaEye />
-                        </a>
-                        <button
-                          onClick={onRemoveFromGoogleCalendar}
-                          className={`flex items-center gap-1 px-3 py-1 text-xs bg-red-600 rounded hover:bg-red-700 transition ${
-                            isRemoving
-                              ? 'cursor-not-allowed opacity-50'
-                              : 'cursor-pointer'
-                          }`}
-                        >
-                          {isRemoving ? (
-                            <Spinner />
-                          ) : (
-                            <FaTrash className="text-white" />
-                          )}
-                        </button>
+                        <FaCalendarPlus className="inline mr-1" />
+                        {t('common.add')}
                       </>
                     )}
-                  </div>
-                </motion.div>
-              </>
-            )}
-          </motion.div>
-        </motion.div>
+                  </button>
+                ) : (
+                  <>
+                    <a
+                      href={subscriptionDetails.calendarLink}
+                      target="_blank"
+                      className="px-3 py-1.5 text-sm rounded-lg bg-white/10 text-white hover:bg-white/15"
+                    >
+                      <FaEye />
+                    </a>
+
+                    <button
+                      onClick={onRemoveFromGoogleCalendar}
+                      disabled={isRemoving}
+                      className={`px-3 py-1.5 text-sm rounded-lg bg-red-500/15 text-red-400 transition ${
+                        isRemoving
+                          ? 'opacity-50 cursor-not-allowed'
+                          : 'hover:bg-red-500/25'
+                      }`}
+                    >
+                      {isRemoving ? <Spinner /> : <FaTrash />}
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
       )}
-    </AnimatePresence>
+    </Modal>
   );
 }
+
+const Row = ({
+  label,
+  value,
+  valueClassName = 'text-white font-medium',
+}: {
+  label: string;
+  value: React.ReactNode;
+  valueClassName?: string;
+}) => (
+  <div className="flex justify-between items-center py-3">
+    <span className="text-gray-400">{label}</span>
+    <span className={valueClassName}>{value}</span>
+  </div>
+);

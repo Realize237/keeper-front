@@ -28,7 +28,8 @@
     },
     "errors": {
       "request_failed": "Request failed"
-    }
+    },
+    "home": "home"
   },
   "errors": {
     "UNEXPECTED_ERROR": "Something went wrong"
@@ -54,8 +55,8 @@
       }
     },
     "register": {
-      "title": "Create an account",
-      "subtitle": "Already have an account?",
+      "title": "Create an account now",
+      "subtitle": "and End forgotten subscriptions and unexpected charges",
       "login": "Login",
 
       "fields": {
@@ -102,11 +103,15 @@
       "errors": {
         "EMAIL_ALREADY_EXISTS": "An account with this email already exists",
         "accept_privacy_required": "You must accept the Privacy Policy and Terms to continue"
+      },
+      "footer": {
+        "text": "Already have an account?",
+        "login": "Login"
       }
     },
     "login": {
-      "title": "Welcome Back",
-      "subtitle": "to Keepay",
+      "title": "Sign into your account",
+      "subtitle": "Your subscriptions, clearly under control",
 
       "fields": {
         "email": {
@@ -258,6 +263,8 @@
   "subscription_details": {
     "loading": "Loading...",
     "updating": "Updating...",
+    "billing": "Billing",
+    "actions": "Actions",
 
     "next_bill": "Next bill",
     "payment_method": "Payment method",
@@ -340,8 +347,8 @@
     "actions": {
       "save": "Save",
       "update": "Update",
-      "edit": "Edit options",
-      "hide": "Hide options",
+      "edit": "Set reminders",
+      "hide": "Hide reminders",
       "delete": "Delete reminders"
     },
     "messages": {
@@ -560,7 +567,7 @@
     "account": "Account",
     "profile": "Profile",
     "all_settings": "All Settings",
-    "visit_website": "Visit keepay.com",
+    "visit_website": "Visit keepayapp.com",
     "logout": "Logout"
   },
   "logout": {

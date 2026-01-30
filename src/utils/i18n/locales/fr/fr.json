@@ -28,7 +28,8 @@
     },
     "errors": {
       "request_failed": "Échec de la requête"
-    }
+    },
+    "home": "accueil"
   },
   "errors": {
     "UNEXPECTED_ERROR": "Une erreur est survenue"
@@ -54,8 +55,8 @@
       }
     },
     "register": {
-      "title": "Créer un compte",
-      "subtitle": "Vous avez déjà un compte ?",
+      "title": "Créez un compte dès maintenant",
+      "subtitle": "et mettez Fin aux abonnements oubliés et aux frais imprévus.",
       "login": "Se connecter",
 
       "fields": {
@@ -97,11 +98,15 @@
       "errors": {
         "EMAIL_ALREADY_EXISTS": "Un compte avec cet email existe déjà",
         "accept_privacy_required": "Vous devez accepter la Politique de confidentialité et les Conditions d’utilisation pour continuer"
+      },
+      "footer": {
+        "text": "Vous avez déjà un compte?",
+        "login": "Se connecter"
       }
     },
     "login": {
-      "title": "Bon retour",
-      "subtitle": "sur Keepay",
+      "title": "Connexion à votre compte",
+      "subtitle": "Gardez une vue d’ensemble sur vos abonnements",
 
       "fields": {
         "email": {
@@ -244,6 +249,8 @@
   "subscription_details": {
     "loading": "Chargement…",
     "updating": "Mise à jour…",
+    "billing": "Facturation",
+    "actions": "Actions",
 
     "next_bill": "Prochaine facture",
     "payment_method": "Moyen de paiement",
@@ -327,8 +334,8 @@
     "actions": {
       "save": "Enregistrer",
       "update": "Mise à jour",
-      "edit": "Options d'édition",
-      "hide": "Masquer les options",
+      "edit": "Définir des rappels",
+      "hide": "Masquer les rappels",
       "delete": "Supprimer les rappels"
     },
     "messages": {
@@ -544,7 +551,7 @@
     "account": "Compte",
     "profile": "Profil",
     "all_settings": "Tous les paramètres",
-    "visit_website": "Visiter keepay.com",
+    "visit_website": "Visiter keepayapp.com",
     "logout": "Déconnexion"
   },
   "logout": {

@@ -282,3 +282,5 @@ export function groupClassNames(
 }
 
 export const currentYear = new Date().getFullYear();
+
+export const homeAnchor = (id: string) => `/#${id}`;
