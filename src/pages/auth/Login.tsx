@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-
 import { Link, useSearchParams } from 'react-router-dom';
-import { GoEye, GoEyeClosed } from 'react-icons/go';
 import { IMAGES } from '../../assets';
 import {
   useLoginUser,
@@ -24,13 +22,13 @@ import OTPVerification from '../../components/auth/OTPVerification';
 import PasswordReset from '../../components/auth/PasswordReset';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX } from '../../constants/validation/patterns';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import AuthHeader from '../../components/auth/AuthHeader';
+import FormInput from '../../components/ui/FormInput';
 
 export default function Login() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const { mutate, isPending } = useLoginUser();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
@@ -145,14 +143,6 @@ export default function Login() {
     window.location.href = env.GOOGLE_CALLBACK_URL;
   };
 
-  const getInputClass = (fieldName: string) => {
-    const baseClass =
-      'w-full bg-surface text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary transition';
-    return errors[fieldName as keyof typeof errors]
-      ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
-      : baseClass;
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -180,11 +170,6 @@ export default function Login() {
       boxShadow: '0 8px 20px rgba(153, 8, 0, 0.35)',
     },
     tap: { y: -2 },
-  };
-
-  const eyeIconVariants = {
-    hover: { scale: 1.2 },
-    tap: { scale: 0.95 },
   };
 
   const requestPasswordRequest = useCallback(
@@ -288,59 +273,34 @@ export default function Login() {
           variants={itemVariants}
         >
           <motion.div className="mb-4" variants={itemVariants}>
-            <input
-              type="email"
+            <FormInput
+              name="email"
               placeholder={t('auth.login.fields.email.placeholder')}
-              {...register('email', {
+              register={register}
+              error={errors.email}
+              rules={{
                 required: t('auth.login.fields.email.required'),
                 pattern: {
                   value: EMAIL_REGEX,
                   message: t('auth.login.fields.email.invalid'),
                 },
-              })}
-              className={getInputClass('email')}
+              }}
             />
-            {errors.email && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.email.message}
-              </motion.p>
-            )}
           </motion.div>
 
           <motion.div className="mb-4" variants={itemVariants}>
-            <div className="relative w-full">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                placeholder={t('auth.login.fields.password.placeholder')}
-                {...register('password', {
-                  required: t('auth.login.fields.password.required'),
-                })}
-                className={`${getInputClass('password')} pr-12`}
-              />
-              <motion.button
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                type="button"
-                variants={eyeIconVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                {showPassword ? <GoEye size={20} /> : <GoEyeClosed size={20} />}
-              </motion.button>
-            </div>
-            {errors.password && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.password.message}
-              </motion.p>
-            )}
+            <FormInput
+              name="password"
+              type="password"
+              passwordToggle={true}
+              placeholder={t('auth.login.fields.password.placeholder')}
+              register={register}
+              rules={{
+                required: t('auth.login.fields.password.required'),
+              }}
+              error={errors.password}
+            />
+
             {loginError && (
               <motion.p
                 initial={{ opacity: 0 }}

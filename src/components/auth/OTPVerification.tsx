@@ -2,8 +2,8 @@
 import { Input } from '../ui/Input';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import FormButton from '../ui/FormButton';
 import Modal from '../ui/Modal';
+import Button from '../ui/Button';
 
 interface OtpProps {
   onSubmit: (code: string) => void;
@@ -127,14 +127,14 @@ export default function OTPVerification({
           ))}
         </div>
 
-        <FormButton
+        <Button
           type="submit"
           isLoading={isSubmitting}
           className="w-full mt-7"
           size="lg"
         >
           {t('auth.otp.actions.submit')}
-        </FormButton>
+        </Button>
       </form>
 
       <div className="flex justify-between items-center mt-4 text-sm text-gray-400">

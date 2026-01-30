@@ -51,9 +51,9 @@ export default function FormInput<FormValues extends FieldValues>({
           type={inputType}
           placeholder={placeholder}
           disabled={disabled}
-          className={`w-full bg-surface text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary pr-12 ${
+          className={`w-full bg-surface text-white placeholder-gray-500 rounded-xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary pr-12 ${
             error ? 'border border-red-500' : ''
-          } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`} // <-- styling for disabled
+          } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         />
 
         {passwordToggle && !disabled && (

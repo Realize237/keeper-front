@@ -166,7 +166,6 @@ const AccountDetails = () => {
         message={t('delete_account.confirmation')}
         confirmText={t('delete_account.confirm')}
         cancelText={t('common.cancel')}
-        isDestructive={true}
       />
     </div>
   );

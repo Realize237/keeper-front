@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import FormInput from '../../components/ui/FormInput';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { ISetPasswordInput } from '../../interfaces/users';
 import { useLocation } from 'react-router-dom';
 
