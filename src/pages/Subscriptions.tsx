@@ -152,6 +152,7 @@ const Subscriptions = () => {
         break;
       case SubscriptionModalTypes.LIST:
         setSelectedSubscriptionsByDay({});
+        setSelectDay(null);
         break;
     }
   };

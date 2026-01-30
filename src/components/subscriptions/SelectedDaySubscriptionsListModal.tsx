@@ -1,5 +1,3 @@
-import { CiCircleRemove } from 'react-icons/ci';
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import {
@@ -7,13 +5,14 @@ import {
   type Subscription,
   type SubscriptionModalType,
 } from '../../interfaces/subscription';
-
 import { formatToReadableDate } from '../../utils';
 import { useTranslation } from 'react-i18next';
+import Modal from '../ui/Modal';
+
 interface SelectedDaySubscriptionsListModalProps {
   selectedSubsciptionsByDay: Subscription[];
   closeSubscriptionModals: (type: SubscriptionModalType) => void;
-  setSelectSubscriptionDetails: (Subscription: Subscription) => void;
+  setSelectSubscriptionDetails: (subscription: Subscription) => void;
   selectedDay: Date | null;
 }
 
@@ -23,218 +22,149 @@ export default function SelectedDaySubscriptionsListModal({
   setSelectSubscriptionDetails,
   selectedDay,
 }: SelectedDaySubscriptionsListModalProps) {
-  const [isOpen, setIsOpen] = useState(true);
   const { t, i18n } = useTranslation();
 
-  const getTotal = (selectedSubsciptionsByDay: Subscription[]) => {
-    const sum = selectedSubsciptionsByDay.reduce((total, curr) => {
-      return total + curr.price;
-    }, 0);
-
-    return sum;
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
-  const modalVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 15,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: 50,
-      scale: 0.95,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  const getTotal = (subscriptions: Subscription[]) =>
+    subscriptions.reduce((total, curr) => total + curr.price, 0);
 
   const itemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
+    hidden: { opacity: 0, y: 16 },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: custom * 0.1,
-        duration: 0.5,
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 12,
+        delay: custom * 0.08,
+        duration: 0.35,
+        type: 'spring',
+        stiffness: 180,
+        damping: 22,
       },
     }),
-    exit: {
-      opacity: 0,
-      y: -30,
-      transition: {
-        duration: 0.2,
-      },
-    },
+    exit: { opacity: 0, y: -12, transition: { duration: 0.2 } },
   };
 
   const subscriptionItemVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      x: -20,
-    },
+    hidden: { opacity: 0, x: -12 },
     visible: (custom: number) => ({
       opacity: 1,
       x: 0,
       transition: {
-        delay: 0.3 + custom * 0.08,
-        duration: 0.5,
-        type: 'spring' as const,
-        stiffness: 100,
-        damping: 12,
+        delay: 0.15 + custom * 0.06,
+        duration: 0.35,
+        type: 'spring',
+        stiffness: 180,
+        damping: 22,
       },
     }),
-    exit: {
-      opacity: 0,
-      x: 20,
-      transition: {
-        duration: 0.2,
-      },
-    },
+    exit: { opacity: 0, x: 12, transition: { duration: 0.2 } },
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
+    <Modal
+      isOpen={Boolean(selectedDay)}
+      onClose={() => closeSubscriptionModals(SubscriptionModalTypes.LIST)}
+      width="max-w-2xl"
+      height="min-h-[90dvh]"
+    >
+      <AnimatePresence>
         <motion.div
-          className={`h-screen z-20 flex flex-col justify-center items-center absolute bg-[#000000e0]`}
-          variants={containerVariants}
+          className="flex flex-col items-center px-4"
           initial="hidden"
           animate="visible"
           exit="exit"
-          onClick={handleClose}
         >
-          <motion.div
-            className="min-w-sm h-11/12 flex flex-1 flex-col justify-center items-center"
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <motion.button
-              onClick={() =>
-                closeSubscriptionModals(SubscriptionModalTypes.LIST)
-              }
-              className="w-8 h-8 mb-2 rounded-full flex justify-center items-center cursor-pointer"
-              variants={itemVariants}
-              custom={0}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <CiCircleRemove className="text-red-500 shadow-lg" size={28} />
-            </motion.button>
+          <div className="w-full flex flex-col  items-center justify-center min-h-[70dvh] sm:min-h-0">
+            {selectedDay && (
+              <motion.div
+                variants={itemVariants}
+                custom={1}
+                className="text-gray-400 text-sm mb-6"
+              >
+                {formatToReadableDate(selectedDay, i18n.language)}
+              </motion.div>
+            )}
 
             <motion.div
-              className="w-auto h-auto bg-[#2f2f2f] p-2 rounded-full flex mb-2"
               variants={itemVariants}
-              custom={1}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              custom={2}
+              className="
+              flex items-center gap-2
+              px-5 py-2.5 mb-8
+              rounded-full
+              bg-white/10
+              backdrop-blur
+              border border-white/10
+              text-sm
+            "
             >
-              <span className="text-[#848484] text-sm uppercase">
-                {t('subscriptions.selected_day.total')}:
+              <span className="text-gray-400 uppercase tracking-wide">
+                {t('subscriptions.selected_day.total')}
               </span>
-              <span className="text-white text-sm ml-2">
+              <span className="text-white font-semibold">
                 ${getTotal(selectedSubsciptionsByDay)}
               </span>
             </motion.div>
 
             <motion.div
-              className="w-3/4 h-auto p-2 py-8 bg-[#2f2f2f] rounded-[45px] flex flex-col justify-center items-center"
               variants={itemVariants}
-              custom={2}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              custom={3}
+              className="
+      w-full
+      max-w-md
+      bg-white/5
+      backdrop-blur-xl
+      border border-white/10
+      rounded-3xl
+      py-6
+      flex flex-col items-center
+    "
             >
               {selectedSubsciptionsByDay?.length &&
                 selectedSubsciptionsByDay.map((subscription, index) => (
                   <motion.div
-                    key={index}
-                    className="w-[85%] px-2 h-16 bg-[#1c1b1be0] my-1 rounded-full flex items-center justify-around"
+                    key={subscription.id ?? index}
                     variants={subscriptionItemVariants}
                     custom={index}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    whileHover={{ scale: 1.02, backgroundColor: '#2a2a2ae0' }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                     onClick={() => {
                       setSelectSubscriptionDetails(subscription);
                       closeSubscriptionModals(SubscriptionModalTypes.LIST);
                     }}
+                    className="
+                  w-[90%]
+                  h-14
+                  px-5
+                  my-1.5
+                  rounded-2xl
+                  bg-white/5
+                  border border-white/10
+                  flex items-center justify-between
+                  cursor-pointer
+                  transition-transform
+                "
                   >
-                    <img
-                      src={subscription.details.iconUrl}
-                      className="w-8 h-8 rounded-md"
-                    />
-                    <p className="text-white text-xl font-bold">
-                      {subscription.details.name}
-                    </p>
-                    <span className="text-[#848484] text-xl font-bold">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <img
+                        src={subscription.details.iconUrl}
+                        className="w-8 h-8 rounded-md shrink-0"
+                        alt=""
+                      />
+
+                      <p className="text-white text-base font-medium truncate">
+                        {subscription.details.name}
+                      </p>
+                    </div>
+
+                    <span className="text-gray-400 text-sm font-medium pl-4">
                       ${subscription.price}
                     </span>
                   </motion.div>
                 ))}
-
-              <motion.div
-                variants={itemVariants}
-                custom={2 + selectedSubsciptionsByDay?.length}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-[#848484] text-sm mt-6"
-              >
-                {selectedDay &&
-                  formatToReadableDate(selectedDay, i18n.language)}
-              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
-      )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </Modal>
   );
 }
