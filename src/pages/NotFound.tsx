@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/ui/Button';
+import { PATHS } from '../routes/paths';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const NotFound = () => {
 
           <Button
             variant="secondary-light"
-            onClick={() => navigate('/support')}
+            onClick={() => navigate(PATHS.SUPPORT)}
           >
             {t('not_found.contact_support')}
           </Button>

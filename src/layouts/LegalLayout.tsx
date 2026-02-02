@@ -4,6 +4,7 @@ import { LuShield, LuCookie } from 'react-icons/lu';
 import { FiFileText } from 'react-icons/fi';
 import { FaGlobe } from 'react-icons/fa6';
 import { useTranslation } from 'react-i18next';
+import { PATHS } from '../routes/paths';
 
 export const LegalLayout = () => {
   const { t } = useTranslation();
@@ -11,25 +12,25 @@ export const LegalLayout = () => {
   const legalSections = [
     {
       id: 'privacy-policy',
-      path: '/legal/privacy-policy',
+      path: PATHS.LEGAL.PRIVACY.full,
       label: t('legal.sections.privacy'),
       icon: LuShield,
     },
     {
       id: 'terms-of-service',
-      path: '/legal/terms-of-service',
+      path: PATHS.LEGAL.TERMS.full,
       label: t('legal.sections.terms'),
       icon: FiFileText,
     },
     {
       id: 'cookies',
-      path: '/legal/cookies',
+      path: PATHS.LEGAL.COOKIES.full,
       label: t('legal.sections.cookies'),
       icon: LuCookie,
     },
     {
       id: 'gdpr',
-      path: '/legal/gdpr',
+      path: PATHS.LEGAL.GDPR.full,
       label: t('legal.sections.gdpr'),
       icon: FaGlobe,
     },

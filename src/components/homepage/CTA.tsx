@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { FaArrowRight } from 'react-icons/fa';
 import { FaCheck, FaGlobe } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
+import { PATHS } from '../../routes/paths';
 
 export const CTA = () => {
   const { t } = useTranslation();
@@ -47,7 +48,7 @@ export const CTA = () => {
 
           <div className="flex flex-col sm:flex-row gap-5 justify-center pt-6">
             <button
-              onClick={() => navigate('/subscriptions')}
+              onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
               className="group px-10 py-5 bg-white text-[#990800] rounded-2xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 font-bold text-lg"
             >
               <FaGlobe className="w-6 h-6" />
@@ -55,7 +56,7 @@ export const CTA = () => {
               <FaArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => navigate('/subscriptions')}
+              onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
               className="px-10 py-5 border-3 border-white text-white rounded-2xl hover:bg-white hover:text-[#990800] transition-all transform hover:-translate-y-1 font-bold text-lg"
             >
               {t('cta.open_web_app')}

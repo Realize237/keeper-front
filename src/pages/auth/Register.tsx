@@ -14,13 +14,13 @@ import {
 } from '../../constants/validation/patterns';
 import FormButton from '../../components/ui/Button';
 import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
-import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../../constants';
 import AuthHeader from '../../components/auth/AuthHeader';
 import FormInput from '../../components/ui/FormInput';
+import { PATHS } from '../../routes/paths';
 
 export default function Register() {
   const navigate = useNavigate();
-  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const { mutate, isPending } = useCreateUser();
   const privacyCheckboxRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
@@ -54,7 +54,7 @@ export default function Register() {
   useEffect(() => {
     const subscription = watch((_, { name }) => {
       if (emailError && name === 'email') {
-        setEmailError(undefined);
+        setEmailError(null);
       }
       return () => subscription.unsubscribe();
     });
@@ -88,7 +88,7 @@ export default function Register() {
           }
           if (code === 'EXISTING_UNVERIFIED_USER') {
             resetCountDown();
-            navigate('/check-your-email', {
+            navigate(PATHS.AUTH.CHECK_EMAIL, {
               state: {
                 email: data.email,
                 reason: 'existing-unverified',
@@ -103,7 +103,7 @@ export default function Register() {
         },
         onSuccess: () => {
           resetCountDown();
-          navigate('/check-your-email', {
+          navigate(PATHS.AUTH.CHECK_EMAIL, {
             state: { email: data.email, reason: 'new-signup' },
           });
         },
@@ -339,7 +339,7 @@ export default function Register() {
               <span className="text-gray-400 text-sm">
                 {t('auth.register.legal.iAccept')}{' '}
                 <Link
-                  to={PRIVACY_POLICY_URL}
+                  to={PATHS.LEGAL.PRIVACY.full}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-deep-teal underline transition"
@@ -348,7 +348,7 @@ export default function Register() {
                 </Link>{' '}
                 {t('auth.register.legal.and')}{' '}
                 <Link
-                  to={TERMS_OF_SERVICE_URL}
+                  to={PATHS.LEGAL.TERMS.full}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-deep-teal underline transition"
@@ -431,7 +431,7 @@ export default function Register() {
         >
           {t('auth.register.footer.text')}{' '}
           <Link
-            to={'/login'}
+            to={PATHS.AUTH.LOGIN}
             className="text-white transition duration-300 hover:opacity-80"
           >
             {t('auth.register.footer.login')}

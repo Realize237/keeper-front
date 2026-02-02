@@ -19,6 +19,7 @@ import { HiOutlineUser } from 'react-icons/hi2';
 import { Avatar } from '../../components/ui/Avatar';
 import { useTranslation } from 'react-i18next';
 import { useLogoutModal } from '../../hooks/useLogoutModal';
+import { PATHS } from '../../routes/paths';
 
 interface MenuItem {
   icon: IconType;
@@ -33,24 +34,24 @@ const menuItems: MenuItem[] = [
     icon: HiOutlineUser,
     label: 'profile.menu.account.title',
     subtitle: 'profile.menu.account.subtitle',
-    path: '/profile/account-details',
+    path: PATHS.APP.PROFILE.ACCOUNT_DETAILS.full,
   },
   {
     icon: FaCreditCard,
     label: 'profile.menu.payment.title',
     subtitle: 'profile.menu.payment.subtitle',
-    path: '/cards',
+    path: PATHS.APP.CARDS,
   },
   {
     icon: FaCog,
     label: 'profile.menu.settings.title',
-    path: '/settings',
+    path: PATHS.APP.SETTINGS,
   },
   {
     icon: FaLock,
     label: 'profile.menu.password.title',
     subtitle: 'profile.menu.password.subtitle',
-    path: '/profile/change-password',
+    path: PATHS.APP.PROFILE.CHANGE_PASSWORD.full,
   },
 ];
 
@@ -58,17 +59,17 @@ const secondaryItems: MenuItem[] = [
   {
     icon: FaComments,
     label: 'profile.menu.contact',
-    path: '/contact',
+    path: PATHS.APP.CONTACT,
   },
   {
     icon: FaFileAlt,
     label: 'profile.menu.terms',
-    path: '/legal/terms-of-service',
+    path: PATHS.LEGAL.TERMS.full,
   },
   {
     icon: FaShieldAlt,
     label: 'profile.menu.privacy',
-    path: '/legal/privacy-policy',
+    path: PATHS.LEGAL.PRIVACY.full,
   },
   {
     icon: FaQuestionCircle,

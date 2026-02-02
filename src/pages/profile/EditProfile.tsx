@@ -8,7 +8,6 @@ import { UserInput } from '../../interfaces/users';
 import FormButton from '../../components/ui/Button';
 import { useUpdateUser } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX, NAME_RULES } from '../../constants/validation/patterns';
 
@@ -17,7 +16,6 @@ const EditProfile = () => {
   const { user } = useUser();
   const { t } = useTranslation();
   const { mutate: updateUser } = useUpdateUser();
-  const [emailError] = useState<string | undefined>(undefined);
 
   const {
     register,
@@ -106,7 +104,7 @@ const EditProfile = () => {
             placeholder={t('profile.edit.fields.email.placeholder')}
             register={register}
             disabled={true}
-            error={errors.email || emailError}
+            error={errors.email}
             rules={{
               required: t('profile.edit.fields.email.required'),
               pattern: {

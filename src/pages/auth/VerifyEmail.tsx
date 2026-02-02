@@ -9,6 +9,7 @@ import {
 import FormButton from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { PATHS } from '../../routes/paths';
 
 const VerifyEmail = () => {
   const { t } = useTranslation();
@@ -69,7 +70,7 @@ const VerifyEmail = () => {
     if (status !== 'success') return;
 
     const timeout = setTimeout(() => {
-      navigate('/login', { replace: true });
+      navigate(PATHS.AUTH.LOGIN, { replace: true });
     }, 5000);
 
     return () => clearTimeout(timeout);

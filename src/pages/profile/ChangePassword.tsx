@@ -19,7 +19,7 @@ const ChangePassword = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useUser();
-  const [formError, setFormError] = useState<string | undefined>(undefined);
+  const [formError, setFormError] = useState<string | null>(null);
   const { mutate: changePassword, isPending: isChangingPassword } =
     useChangeUserPassword();
   const { mutate: sendSetPasswordEmail, isPending: isSendingEmail } =
@@ -57,7 +57,7 @@ const ChangePassword = () => {
   useEffect(() => {
     const subscription = watch((_, { name }) => {
       if (formError && name === 'oldPassword') {
-        setFormError(undefined);
+        setFormError(null);
       }
       return () => subscription.unsubscribe();
     });

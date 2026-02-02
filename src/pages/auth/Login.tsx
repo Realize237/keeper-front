@@ -25,6 +25,7 @@ import { EMAIL_REGEX } from '../../constants/validation/patterns';
 import FormButton from '../../components/ui/Button';
 import AuthHeader from '../../components/auth/AuthHeader';
 import FormInput from '../../components/ui/FormInput';
+import { PATHS } from '../../routes/paths';
 
 export default function Login() {
   const { t } = useTranslation();
@@ -105,7 +106,10 @@ export default function Login() {
 
           rememberMe: data.rememberMe,
         },
-        { path: '/login', maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION) }
+        {
+          path: PATHS.AUTH.LOGIN,
+          maxAge: Number(env.REMEMBER_ME_COOKIE_EXPIRATION),
+        }
       );
     } else {
       removeCookie('rememberMe');
@@ -118,7 +122,7 @@ export default function Login() {
       },
       {
         onSuccess: () => {
-          navigate('/subscriptions', {
+          navigate(PATHS.APP.SUBSCRIPTIONS, {
             replace: true,
           });
         },
@@ -509,7 +513,7 @@ export default function Login() {
         >
           {t('auth.login.footer.text')}{' '}
           <Link
-            to={'/register'}
+            to={PATHS.AUTH.REGISTER}
             className="text-white transition duration-300 hover:opacity-80"
           >
             {t('auth.login.footer.signup')}

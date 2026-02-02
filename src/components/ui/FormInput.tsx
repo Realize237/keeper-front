@@ -12,7 +12,7 @@ import {
 type FormInputProps<FormValues extends FieldValues> = {
   type?: string;
   placeholder: string;
-  error?: FieldError | string;
+  error?: FieldError | string | null;
   register: UseFormRegister<FormValues>;
   name: Path<FormValues>;
   rules?: RegisterOptions<FormValues>;

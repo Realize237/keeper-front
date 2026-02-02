@@ -4,6 +4,7 @@ import { LuSparkles } from 'react-icons/lu';
 import { IMAGES } from '../../assets';
 import HomeNavbar from './HomeNavbar';
 import { useNavigate } from 'react-router-dom';
+import { PATHS } from '../../routes/paths';
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -46,7 +47,7 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
-                onClick={() => navigate('/subscriptions')}
+                onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
                 className="group px-8 py-4 bg-linear-to-r from-[#990800] to-[#C41E14] text-white rounded-2xl hover:shadow-2xl hover:shadow-red-900/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 font-bold"
               >
                 <FaGlobe className="w-5 h-5" />
@@ -54,7 +55,7 @@ const Hero = () => {
                 <FaArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
-                onClick={() => navigate('/subscriptions')}
+                onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
                 className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-900 rounded-2xl hover:border-[#990800] hover:bg-red-50 transition-all font-bold shadow-sm"
               >
                 {t('hero.try_web_app')}
