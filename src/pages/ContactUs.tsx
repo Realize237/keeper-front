@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import FormInput from '../components/ui/FormInput';
-import FormButton from '../components/ui/FormButton';
+import FormButton from '../components/ui/Button';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

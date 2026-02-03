@@ -1,10 +1,11 @@
-import { Input } from '../ui/Input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
-import FormButton from '../ui/FormButton';
+import FormButton from '../ui/Button';
 import Modal from '../ui/Modal';
+import FormInput from '../ui/FormInput';
+import { EMAIL_REGEX } from '../../constants/validation/patterns';
 
 interface PasswordResetRequestProps {
   onSubmit: (email: string) => void;
@@ -48,11 +49,18 @@ export default function PasswordResetRequest({
         onSubmit={handleSubmit((values) => onSubmit(values.email))}
         className="space-y-4"
       >
-        <Input
-          type="email"
+        <FormInput
+          name="email"
           placeholder={t('auth.password_reset_request.email_placeholder')}
-          {...register('email')}
-          error={errors.email?.message?.toString()}
+          register={register}
+          error={errors.email}
+          rules={{
+            required: t('profile.edit.fields.email.required'),
+            pattern: {
+              value: EMAIL_REGEX,
+              message: t('auth.validation.email'),
+            },
+          }}
         />
 
         <FormButton

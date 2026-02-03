@@ -17,6 +17,7 @@ import { env } from '../../../utils/env';
 import { useTranslation } from 'react-i18next';
 import { useLogoutModal } from '../../../hooks/useLogoutModal';
 import { useUser } from '../../../hooks/useUsers';
+import { PATHS } from '../../../routes/paths';
 
 const Header = () => {
   const { user } = useUser();
@@ -48,7 +49,7 @@ const Header = () => {
         <div className="p-3 hover:bg-white/5 rounded-full">
           <CiLight className="inline-block  text-white text-2xl cursor-pointer" />
         </div>
-        <div onClick={() => navigate('/notifications')}>
+        <div onClick={() => navigate(PATHS.APP.NOTIFICATIONS)}>
           <NotificationBell count={unReadCount} />
         </div>
         <div className="relative" ref={ref}>
@@ -92,7 +93,7 @@ const Header = () => {
                   <div className="flex flex-col">
                     <button
                       onClick={() => {
-                        navigate('/profile');
+                        navigate(PATHS.APP.PROFILE.ROOT);
                         setOpen(false);
                       }}
                       className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"

@@ -3,6 +3,7 @@ import MainLayout from '../layouts/MainLayout';
 import NavLayout from '../layouts/NavLayout';
 import { lazyImport } from './lazyImport';
 import { PublicRoute } from '../components/common/PublicRoute';
+import { PATHS } from './paths';
 
 // Public pages
 const HomePage = lazyImport(() => import('../pages/HomePage'));
@@ -77,20 +78,20 @@ export const routes: AppRoute[] = [
   {
     layout: <MainLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
+      { path: PATHS.HOME, element: <HomePage /> },
       {
-        path: '/legal',
+        path: PATHS.LEGAL.ROOT,
         element: <LegalLayout />,
         children: [
-          { path: 'privacy-policy', element: <PrivacyPolicy /> },
-          { path: 'terms-of-service', element: <TermsConditions /> },
-          { path: 'cookies', element: <CookiePolicy /> },
-          { path: 'gdpr', element: <GDPRCompliance /> },
+          { path: PATHS.LEGAL.PRIVACY.route, element: <PrivacyPolicy /> },
+          { path: PATHS.LEGAL.TERMS.route, element: <TermsConditions /> },
+          { path: PATHS.LEGAL.COOKIES.route, element: <CookiePolicy /> },
+          { path: PATHS.LEGAL.GDPR.route, element: <GDPRCompliance /> },
         ],
       },
-      { path: '/pricing', element: <PricingPage /> },
+      { path: PATHS.PRICING, element: <PricingPage /> },
       {
-        path: '/register',
+        path: PATHS.AUTH.REGISTER,
         element: (
           <PublicRoute>
             <Register />
@@ -98,47 +99,47 @@ export const routes: AppRoute[] = [
         ),
       },
       {
-        path: '/login',
+        path: PATHS.AUTH.LOGIN,
         element: (
           <PublicRoute>
             <Login />
           </PublicRoute>
         ),
       },
-      { path: '/check-your-email', element: <CheckYourEmail /> },
-      { path: '/verify-email', element: <VerifyEmail /> },
-      { path: '/set-password', element: <SetPassword /> },
+      { path: PATHS.AUTH.CHECK_EMAIL, element: <CheckYourEmail /> },
+      { path: PATHS.AUTH.VERIFY_EMAIL, element: <VerifyEmail /> },
+      { path: PATHS.AUTH.SET_PASSWORD, element: <SetPassword /> },
 
       {
         protected: true,
         layout: <NavLayout />,
         children: [
-          { path: '/plaid', element: <Plaid /> },
-          { path: '/subscriptions', element: <Subscriptions /> },
-          { path: '/cards', element: <Cards /> },
-          { path: '/shared-plan', element: <SharedPlan /> },
+          { path: PATHS.APP.PLAID, element: <Plaid /> },
+          { path: PATHS.APP.SUBSCRIPTIONS, element: <Subscriptions /> },
+          { path: PATHS.APP.CARDS, element: <Cards /> },
+          { path: PATHS.APP.SHARED_PLAN, element: <SharedPlan /> },
 
           {
-            path: '/profile',
+            path: PATHS.APP.PROFILE.ROOT,
             element: <ProfileLayout />,
             children: [
               { index: true, element: <Profile /> },
-              { path: 'edit', element: <EditProfile /> },
+              { path: PATHS.APP.PROFILE.EDIT.route, element: <EditProfile /> },
               {
-                path: 'change-password',
+                path: PATHS.APP.PROFILE.CHANGE_PASSWORD.route,
                 element: <ChangePassword />,
               },
               {
-                path: 'account-details',
+                path: PATHS.APP.PROFILE.ACCOUNT_DETAILS.route,
                 element: <AccountDetails />,
               },
             ],
           },
 
-          { path: '/settings', element: <Settings /> },
-          { path: '/contact', element: <ContactUs /> },
+          { path: PATHS.APP.SETTINGS, element: <Settings /> },
+          { path: PATHS.APP.CONTACT, element: <ContactUs /> },
           {
-            path: '/notifications',
+            path: PATHS.APP.NOTIFICATIONS,
             element: <NotificationsPage />,
           },
         ],

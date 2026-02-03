@@ -210,7 +210,8 @@
       "sending": "Sending…",
       "invalid_link": "Invalid verification link.",
       "resend_success": "A new verification email has been sent.",
-      "redirecting_login": "Your email has been verified. Redirecting to login…"
+      "redirecting_login": "Your email has been verified. Redirecting to login…",
+      "already_verified": "Your email is already verified. Redirecting to login…"
     },
 
     "otp": {

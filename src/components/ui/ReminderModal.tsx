@@ -9,7 +9,7 @@ import {
 } from '../../interfaces/notifications';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import { useTranslation } from 'react-i18next';
-import FormButton from './FormButton';
+import Button from './Button';
 
 interface CustomModalProps {
   item: ICustomReminder;
@@ -92,10 +92,10 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         </div>
 
         <div className="flex justify-between gap-4 mt-5">
-          <FormButton variant="secondary" onClick={onClose}>
+          <Button variant="secondary-dark" onClick={onClose}>
             {t('common.cancel')}
-          </FormButton>
-          <FormButton
+          </Button>
+          <Button
             size="sm"
             onClick={() => {
               if (!reminderValueError) {
@@ -104,7 +104,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
             }}
           >
             {t('common.done')}
-          </FormButton>
+          </Button>
         </div>
       </motion.div>
     </motion.div>

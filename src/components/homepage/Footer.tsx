@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { FaBell } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { currentYear } from '../../utils';
+import { PATHS } from '../../routes/paths';
 
 type FooterLink = {
   labelKey: string;
@@ -33,16 +34,24 @@ const footerSections = [
     links: [
       {
         labelKey: 'footer.privacy',
-        href: '/legal/privacy-policy',
+        href: PATHS.LEGAL.PRIVACY.full,
         Component: Link,
       },
       {
         labelKey: 'footer.terms',
-        href: '/legal/terms-of-service',
+        href: PATHS.LEGAL.TERMS.full,
         Component: Link,
       },
-      { labelKey: 'footer.cookies', href: '/legal/cookies', Component: Link },
-      { labelKey: 'footer.gdpr', href: '/legal/gdpr', Component: Link },
+      {
+        labelKey: 'footer.cookies',
+        href: PATHS.LEGAL.COOKIES.full,
+        Component: Link,
+      },
+      {
+        labelKey: 'footer.gdpr',
+        href: PATHS.LEGAL.GDPR.full,
+        Component: Link,
+      },
     ] as FooterLink[],
   },
 ];

@@ -14,6 +14,7 @@ import { useDeleteUserAccount, useUser } from '../../hooks/useUsers';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import ConfirmationDialog from '../../components/dialog/ConfirmationDialog';
+import { PATHS } from '../../routes/paths';
 
 const InfoRow = ({
   icon: Icon,
@@ -96,7 +97,7 @@ const AccountDetails = () => {
             icon={FaUser}
             label={t('profile.account_details.fields.full_name')}
             value={user?.name ?? ''}
-            onClick={() => navigate('/profile/edit')}
+            onClick={() => navigate(PATHS.APP.PROFILE.EDIT.full)}
           />
 
           <InfoRow
@@ -139,7 +140,7 @@ const AccountDetails = () => {
             icon={FaLock}
             label={t('profile.account_details.fields.password')}
             value="••••••••"
-            onClick={() => navigate('/profile/change-password')}
+            onClick={() => navigate(PATHS.APP.PROFILE.CHANGE_PASSWORD.full)}
           />
         </div>
         <p className="text-xs uppercase tracking-wider text-red-500/60 mt-10 mb-3">
@@ -176,7 +177,6 @@ const AccountDetails = () => {
         message={t('delete_account.confirmation')}
         confirmText={t('delete_account.confirm')}
         cancelText={t('common.cancel')}
-        isDestructive={true}
       />
     </div>
   );

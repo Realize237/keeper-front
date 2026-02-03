@@ -4,10 +4,9 @@ import { useUser } from '../../hooks/useUsers';
 import FormInput from '../../components/ui/FormInput';
 import { useForm, Controller } from 'react-hook-form';
 import { UserInput } from '../../interfaces/users';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { useUpdateUser } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX, NAME_RULES } from '../../constants/validation/patterns';
 import { PhoneInput } from '../../components/auth/PhoneInput';
@@ -18,13 +17,13 @@ import {
   parsePhoneNumberFromString,
 } from 'libphonenumber-js';
 import { Avatar } from '../../components/ui/Avatar';
+import { useState } from 'react';
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { t } = useTranslation();
   const { mutate: updateUser, isPending } = useUpdateUser();
-  const [emailError] = useState<string | undefined>(undefined);
 
   const getInitialPhoneData = () => {
     if (!user?.phone) {
@@ -146,7 +145,7 @@ const EditProfile = () => {
             placeholder={t('profile.edit.fields.email.placeholder')}
             register={register}
             disabled={true}
-            error={errors.email || emailError}
+            error={errors.email}
             rules={{
               required: t('profile.edit.fields.email.required'),
               pattern: {
@@ -191,7 +190,7 @@ const EditProfile = () => {
           <div className="flex gap-10">
             <FormButton
               type="button"
-              variant="secondary"
+              variant="secondary-dark"
               onClick={() => navigate(-1)}
             >
               {t('common.cancel')}

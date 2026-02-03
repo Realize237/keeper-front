@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { GoEye, GoEyeClosed } from 'react-icons/go';
 import { env } from '../../utils/env';
 import { useCreateUser } from '../../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
@@ -14,18 +13,17 @@ import {
   NAME_RULES,
   PASSWORD_RULES,
 } from '../../constants/validation/patterns';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
-import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../../constants';
 import AuthHeader from '../../components/auth/AuthHeader';
+import FormInput from '../../components/ui/FormInput';
+import { PATHS } from '../../routes/paths';
 import { PhoneInput } from '../../components/auth/PhoneInput';
 import { countries } from '../../constants/countries';
 import { Country } from '../../interfaces';
 
 export default function Register() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<Country>(
     countries.find((c) => c.code === 'FR') || countries[0]
@@ -36,6 +34,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     getValues,
     control,
@@ -61,10 +60,14 @@ export default function Register() {
     }
   );
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailError(null);
-    return e.target.value;
-  };
+  useEffect(() => {
+    const subscription = watch((_, { name }) => {
+      if (emailError && name === 'email') {
+        setEmailError(null);
+      }
+      return () => subscription.unsubscribe();
+    });
+  }, [watch, emailError]);
 
   const handleCountryChange = (country: Country) => {
     setSelectedCountry(country);
@@ -102,7 +105,7 @@ export default function Register() {
           }
           if (code === 'EXISTING_UNVERIFIED_USER') {
             resetCountDown();
-            navigate('/check-your-email', {
+            navigate(PATHS.AUTH.CHECK_EMAIL, {
               state: {
                 email: data.email,
                 reason: 'existing-unverified',
@@ -117,7 +120,7 @@ export default function Register() {
         },
         onSuccess: () => {
           resetCountDown();
-          navigate('/check-your-email', {
+          navigate(PATHS.AUTH.CHECK_EMAIL, {
             state: { email: data.email, reason: 'new-signup' },
           });
         },
@@ -164,14 +167,6 @@ export default function Register() {
     window.location.href = env.GOOGLE_CALLBACK_URL;
   };
 
-  const getInputClass = (fieldName: string) => {
-    const baseClass =
-      'w-full bg-surface text-white placeholder-gray-500 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary transition';
-    return errors[fieldName as keyof typeof errors]
-      ? `${baseClass} border-2 border-red-500 shadow-lg shadow-red-500/30`
-      : baseClass;
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -198,10 +193,6 @@ export default function Register() {
       boxShadow: '0 8px 20px rgba(153, 8, 0, 0.35)',
     },
     tap: { y: -2 },
-  };
-  const eyeIconVariants = {
-    hover: { scale: 1.2 },
-    tap: { scale: 0.95 },
   };
 
   return (
@@ -232,10 +223,11 @@ export default function Register() {
           variants={itemVariants}
         >
           <motion.div className="mb-4" variants={itemVariants}>
-            <input
-              type="text"
+            <FormInput
+              name="name"
               placeholder={t('auth.register.fields.name.label')}
-              {...register('name', {
+              register={register}
+              rules={{
                 required: t('auth.validation.required', {
                   field: t('auth.fields.name'),
                 }),
@@ -249,25 +241,18 @@ export default function Register() {
                   value: NAME_RULES.REGEX,
                   message: t('auth.validation.name.pattern'),
                 },
-              })}
-              className={getInputClass('name')}
+              }}
+              error={errors.name}
             />
-            {errors.name && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.name.message}
-              </motion.p>
-            )}
           </motion.div>
 
           <motion.div className="mb-4" variants={itemVariants}>
-            <input
-              type="email"
+            <FormInput
+              name="email"
               placeholder={t('auth.register.fields.email.label')}
-              {...register('email', {
+              register={register}
+              error={errors.email || emailError}
+              rules={{
                 required: t('auth.validation.required', {
                   field: t('auth.fields.email'),
                 }),
@@ -275,9 +260,7 @@ export default function Register() {
                   value: EMAIL_REGEX,
                   message: t('auth.validation.email'),
                 },
-                onChange: handleEmailChange,
-              })}
-              className={getInputClass('email')}
+              }}
             />
             {errors.email && (
               <motion.p
@@ -335,90 +318,50 @@ export default function Register() {
           </motion.div>
 
           <motion.div className="mb-4" variants={itemVariants}>
-            <div className="relative w-full">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                placeholder={t('auth.register.fields.password.label')}
-                {...register('password', {
-                  required: t('auth.validation.required', {
-                    field: t('auth.fields.password'),
+            <FormInput
+              name="password"
+              type="password"
+              passwordToggle={true}
+              placeholder={t('auth.register.fields.password.label')}
+              register={register}
+              rules={{
+                required: t('auth.validation.required', {
+                  field: t('auth.fields.password'),
+                }),
+                minLength: {
+                  value: PASSWORD_RULES.MIN_LENGTH,
+                  message: t('auth.validation.password.min', {
+                    count: PASSWORD_RULES.MIN_LENGTH,
                   }),
-                  minLength: {
-                    value: PASSWORD_RULES.MIN_LENGTH,
-                    message: t('auth.validation.password.min', {
-                      count: PASSWORD_RULES.MIN_LENGTH,
-                    }),
-                  },
-                  pattern: {
-                    value: PASSWORD_RULES.REGEX,
-                    message: t('auth.validation.password.pattern'),
-                  },
-                })}
-                className={`${getInputClass('password')} pr-12`}
-              />
-              <motion.button
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                type="button"
-                variants={eyeIconVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                {showPassword ? <GoEye size={20} /> : <GoEyeClosed size={20} />}
-              </motion.button>
-            </div>
-            {errors.password && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.password.message}
-              </motion.p>
-            )}
+                },
+                pattern: {
+                  value: PASSWORD_RULES.REGEX,
+                  message: t('auth.validation.password.pattern'),
+                },
+              }}
+              error={errors.password}
+            />
           </motion.div>
 
           <motion.div className="mb-6" variants={itemVariants}>
-            <div className="relative w-full">
-              <input
-                type={showConfirmPassword ? 'text' : 'password'}
-                placeholder={t('auth.register.fields.confirm_password.label')}
-                {...register('confirmPassword', {
-                  required: t('auth.register.fields.confirm_password.required'),
-                  validate: (value) => {
-                    const password = getValues('password');
-                    return (
-                      value === password ||
-                      t('auth.register.fields.confirm_password.match')
-                    );
-                  },
-                })}
-                className={`${getInputClass('confirmPassword')} pr-12`}
-              />
-              <motion.button
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                type="button"
-                variants={eyeIconVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                {showConfirmPassword ? (
-                  <GoEye size={20} />
-                ) : (
-                  <GoEyeClosed size={20} />
-                )}
-              </motion.button>
-            </div>
-            {errors.confirmPassword && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.confirmPassword.message}
-              </motion.p>
-            )}
+            <FormInput
+              name="confirmPassword"
+              type="password"
+              placeholder={t('change_password.fields.confirm_password')}
+              register={register}
+              passwordToggle={true}
+              rules={{
+                required: t('auth.register.fields.confirm_password.required'),
+                validate: (value) => {
+                  const password = getValues('password');
+                  return (
+                    value === password ||
+                    t('auth.register.fields.confirm_password.match')
+                  );
+                },
+              }}
+              error={errors.confirmPassword}
+            />
           </motion.div>
 
           <motion.div
@@ -466,7 +409,7 @@ export default function Register() {
               <span className="text-gray-400 text-sm">
                 {t('auth.register.legal.iAccept')}{' '}
                 <Link
-                  to={PRIVACY_POLICY_URL}
+                  to={PATHS.LEGAL.PRIVACY.full}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-deep-teal underline transition"
@@ -475,7 +418,7 @@ export default function Register() {
                 </Link>{' '}
                 {t('auth.register.legal.and')}{' '}
                 <Link
-                  to={TERMS_OF_SERVICE_URL}
+                  to={PATHS.LEGAL.TERMS.full}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-deep-teal underline transition"
@@ -558,7 +501,7 @@ export default function Register() {
         >
           {t('auth.register.footer.text')}{' '}
           <Link
-            to={'/login'}
+            to={PATHS.AUTH.LOGIN}
             className="text-white transition duration-300 hover:opacity-80"
           >
             {t('auth.register.footer.login')}
