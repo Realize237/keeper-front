@@ -27,6 +27,7 @@ import { ReminderOptions } from '../../constants';
 import { useTranslation } from 'react-i18next';
 import { getKeyFromValueUnit } from '../../utils/reminders';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import Spinner from '../ui/Spinner';
 
 const NotificationReminder = ({
   subscription,
@@ -103,6 +104,12 @@ const NotificationReminder = ({
   const updateSubscriptionRemindersMutation = useUpdateSubscriptionReminders();
   const deleteSubscriptionRemindersMutation = useDeleteSubscriptionReminders();
   const deleteReminderMutation = useDeleteReminder();
+
+  const isAnyMutationLoading =
+    addReminderMutation.isPending ||
+    updateSubscriptionRemindersMutation.isPending ||
+    deleteSubscriptionRemindersMutation.isPending ||
+    deleteReminderMutation.isPending;
 
   const handleAddReminder = () => {
     const newItem: INotificationReminder = {
@@ -189,6 +196,7 @@ const NotificationReminder = ({
   const deleteSubscriptionReminders = useCallback(() => {
     deleteSubscriptionRemindersMutation.mutate(subscription.id, {
       onSuccess: () => {
+        setReminders([]);
         toast.success(t('reminders.messages.deleted'));
       },
       onError: (error) => {
@@ -257,24 +265,34 @@ text-right
 
       {expanded && (
         <motion.div
-          className="mt-4 space-y-4"
+          className="mt-10 space-y-4"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
         >
-          {subscription.reminders.length > 0 && (
+          {reminders.length > 0 && (
             <button
               onClick={deleteSubscriptionReminders}
-              className="
-            w-full py-2
-            bg-red-500/20 text-red-500
-            rounded-lg
-            text-xs font-medium
-            hover:bg-red-500/30
-            transition
-          "
+              disabled={isAnyMutationLoading}
+              className={`
+                w-full py-2 px-2
+                bg-red-500/20 text-red-500
+                rounded-lg
+                text-xs font-medium
+                hover:bg-red-500/30
+                transition
+                flex items-center justify-center gap-2
+                ${isAnyMutationLoading ? 'opacity-50 cursor-not-allowed' : ''}
+              `}
             >
-              {t('reminders.actions.delete')}
+              {deleteSubscriptionRemindersMutation.isPending ? (
+                <>
+                  <Spinner />
+                  {t('common.loading')}
+                </>
+              ) : (
+                t('reminders.actions.delete')
+              )}
             </button>
           )}
 
@@ -352,16 +370,27 @@ text-right
                 onClick={
                   isReminderUpdated ? updateSubscriptionReminders : setReminder
                 }
-                className="
-              px-4 py-2 rounded-lg
-              bg-deep-teal hover:bg-deep-teal/90
-              text-white text-sm font-medium
-              transition
-            "
+                disabled={isAnyMutationLoading}
+                className={`
+                  px-4 py-2 rounded-lg
+                  bg-deep-teal hover:bg-deep-teal/90
+                  text-white text-sm font-medium
+                  transition
+                  flex items-center justify-center gap-2
+                  ${isAnyMutationLoading ? 'opacity-50 cursor-not-allowed' : ''}
+                `}
               >
-                {!isReminderUpdated
-                  ? t('reminders.actions.save')
-                  : t('reminders.actions.update')}
+                {addReminderMutation.isPending ||
+                updateSubscriptionRemindersMutation.isPending ? (
+                  <>
+                    <Spinner />
+                    {t('common.loading')}
+                  </>
+                ) : !isReminderUpdated ? (
+                  t('reminders.actions.save')
+                ) : (
+                  t('reminders.actions.update')
+                )}
               </button>
             )}
           </div>

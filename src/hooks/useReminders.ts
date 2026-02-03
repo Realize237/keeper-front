@@ -46,6 +46,9 @@ export const useAddReminder = () => {
           userId: user?.id,
         } as SubscriptionFilters),
       });
+      queryClient.invalidateQueries({
+        queryKey: subscriptionKeys.details(),
+      });
     },
   });
 };
@@ -85,6 +88,9 @@ export const useUpdateSubscriptionReminders = () => {
           userId: user?.id,
         } as SubscriptionFilters),
       });
+      queryClient.invalidateQueries({
+        queryKey: subscriptionKeys.details(),
+      });
     },
   });
 };
@@ -101,6 +107,9 @@ export const useDeleteReminder = () => {
           userId: user?.id,
         } as SubscriptionFilters),
       });
+      queryClient.invalidateQueries({
+        queryKey: subscriptionKeys.details(),
+      });
     },
   });
 };
@@ -116,6 +125,9 @@ export const useDeleteSubscriptionReminders = () => {
         queryKey: subscriptionKeys.list({
           userId: user?.id,
         } as SubscriptionFilters),
+      });
+      queryClient.invalidateQueries({
+        queryKey: subscriptionKeys.details(),
       });
     },
   });
