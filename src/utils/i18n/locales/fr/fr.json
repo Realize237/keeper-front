@@ -196,7 +196,8 @@
       "sending": "Envoi en cours...",
       "invalid_link": "Lien de vérification invalide.",
       "resend_success": "Un nouvel e-mail de vérification vous a été envoyé.",
-      "redirecting_login": "Votre adresse e-mail a été vérifiée. Redirection vers la page de connexion..."
+      "redirecting_login": "Votre adresse e-mail a été vérifiée. Redirection vers la page de connexion...",
+      "already_verified": "Votre adresse e-mail est déjà vérifiée. Redirection vers la page de connexion..."
     },
 
     "otp": {

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
 import { env } from '../../utils/env';
 import {
@@ -10,6 +10,12 @@ import FormButton from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PATHS } from '../../routes/paths';
+
+interface VerificationResponse {
+  message: string;
+  code: string;
+  email?: string;
+}
 
 const VerifyEmail = () => {
   const { t } = useTranslation();
@@ -23,9 +29,9 @@ const VerifyEmail = () => {
     isEmailVerified: false,
   });
 
-  const updateUi = (newValues: Partial<typeof uiState>) => {
+  const updateUi = useCallback((newValues: Partial<typeof uiState>) => {
     setUiState((prev) => ({ ...prev, ...newValues }));
-  };
+  }, []);
   const { status, message, isEmailVerified } = uiState;
 
   const countdownMinutes = Number(env.VERIFY_EMAIL_TIMER);
@@ -41,12 +47,25 @@ const VerifyEmail = () => {
   const token = new URLSearchParams(window.location.search).get('token') ?? '';
 
   useEffect(() => {
+    if (!token) return;
+
     verifyEmail(token, {
-      onSuccess: () => {
-        updateUi({
-          status: 'success',
-          message: t('auth.verify_email.redirecting_login'),
-        });
+      onSuccess: (data: unknown) => {
+        const response = data as VerificationResponse;
+        if (response.code === 'EMAIL_VERIFIED_SUCCESSFULLY') {
+          updateUi({
+            status: 'success',
+            message: response.message,
+            isEmailVerified: true,
+          });
+        }
+        if (response.code === 'EMAIL_ALREADY_VERIFIED') {
+          updateUi({
+            status: 'success',
+            message: response.message,
+            isEmailVerified: true,
+          });
+        }
       },
       onError: (error: Error & { code?: string }) => {
         if (error.code === 'EMAIL_ALREADY_VERIFIED') {
@@ -64,17 +83,17 @@ const VerifyEmail = () => {
         }
       },
     });
-  }, [token, verifyEmail, t]);
+  }, [token, verifyEmail, t, updateUi]);
 
   useEffect(() => {
-    if (status !== 'success') return;
+    if (status === 'success' && isEmailVerified) {
+      const timeout = setTimeout(() => {
+        navigate('/login', { replace: true });
+      }, 3000);
 
-    const timeout = setTimeout(() => {
-      navigate(PATHS.AUTH.LOGIN, { replace: true });
-    }, 5000);
-
-    return () => clearTimeout(timeout);
-  }, [status, navigate]);
+      return () => clearTimeout(timeout);
+    }
+  }, [status, isEmailVerified, navigate]);
 
   const handleResend = () => {
     if (!token) return;
@@ -94,24 +113,37 @@ const VerifyEmail = () => {
           if (code === 'EMAIL_ALREADY_VERIFIED') {
             updateUi({
               isEmailVerified: true,
+              status: 'success',
+              message: error.message,
+            });
+          } else {
+            updateUi({
+              status: 'error',
+              message: error.message,
             });
           }
-
-          updateUi({
-            status: 'error',
-            message: error.message,
-          });
         },
       }
     );
   };
 
   if (!token) {
-    updateUi({
-      status: 'error',
-      message: t('auth.verify_email.invalid_link'),
-    });
-    return;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-app px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full bg-surface rounded-2xl p-10 text-center shadow-xl"
+        >
+          <h1 className="text-white text-3xl font-semibold mb-4">
+            {t('auth.verify_email.verification_failed')}
+          </h1>
+          <p className="text-red-500 mb-6">
+            {t('auth.verify_email.invalid_link')}
+          </p>
+        </motion.div>
+      </div>
+    );
   }
   return (
     <div className="flex min-h-screen items-center justify-center bg-app px-4">
@@ -146,12 +178,18 @@ const VerifyEmail = () => {
               </h1>
 
               <p
-                className={`mb-6 ${status === 'error' ? 'text-red-500' : 'text-gray-300'}`}
+                className={`mb-6 ${
+                  status === 'error'
+                    ? 'text-red-500'
+                    : status === 'success' && isEmailVerified
+                      ? 'text-green-400'
+                      : 'text-gray-300'
+                }`}
               >
                 {message}
               </p>
 
-              {status === 'loading' && !expired && (
+              {status === 'loading' && !expired && !isEmailVerified && (
                 <div className="mb-6">
                   <p className="text-gray-400 mb-2">
                     {t('auth.verify_email.link_expires_in')}
@@ -168,7 +206,7 @@ const VerifyEmail = () => {
                 </div>
               )}
 
-              {!isEmailVerified && (status === 'error' || expired) && (
+              {status === 'error' && !isEmailVerified && expired && (
                 <FormButton
                   size="md"
                   onClick={handleResend}
