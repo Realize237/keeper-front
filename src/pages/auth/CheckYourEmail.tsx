@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
 import { env } from '../../utils/env';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { useLocation } from 'react-router-dom';
 import { useResendEmailVerification } from '../../hooks/useUsers';
 import toast from 'react-hot-toast';

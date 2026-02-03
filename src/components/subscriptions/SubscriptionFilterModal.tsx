@@ -1,7 +1,7 @@
 import Modal from '../ui/Modal';
 import { useState } from 'react';
 
-import FormButton from '../ui/FormButton';
+import FormButton from '../ui/Button';
 import PriceRangeSlider from './PriceRangeSlider';
 import { FilterOption } from './FilterOption';
 import { useTranslation } from 'react-i18next';
@@ -88,7 +88,7 @@ const SubscriptionFilterModal = ({
         <hr className="text-white/50" />
 
         <div className="flex justify-between gap-2 mt-4">
-          <FormButton type="button" onClick={onClose} variant="secondary">
+          <FormButton type="button" onClick={onClose} variant="secondary-dark">
             {t('common.cancel')}
           </FormButton>
           <FormButton type="button" onClick={handleApplyFilters}>

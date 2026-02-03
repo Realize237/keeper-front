@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { IoNotifications } from 'react-icons/io5';
-import FormButton from './FormButton';
 import { useTranslation } from 'react-i18next';
 import Modal from './Modal';
+import { Button } from './Button';
 
 interface NotificationPermissionModalProps {
   isOpen: boolean;
@@ -55,15 +55,15 @@ export default function NotificationPermissionModal({
         </p>
       </div>
       <div className="flex gap-3">
-        <FormButton
-          variant="secondary"
+        <Button
+          variant="secondary-dark"
           onClick={onClose}
           className="flex-1"
           size="sm"
         >
           {t('notifications.permission_modal.notNow')}
-        </FormButton>
-        <FormButton
+        </Button>
+        <Button
           onClick={handleRequestPermission}
           isLoading={isRequesting}
           className="flex-1"
@@ -72,7 +72,7 @@ export default function NotificationPermissionModal({
           {isRequesting
             ? t('notifications.permission_modal.requesting')
             : t('notifications.permission_modal.allow')}
-        </FormButton>
+        </Button>
       </div>
     </Modal>
   );

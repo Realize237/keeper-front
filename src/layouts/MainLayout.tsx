@@ -4,6 +4,7 @@ import { getBrowserDimensions } from '../utils/environment';
 import { useSocket } from '../hooks/useSocket';
 import { useCallback, useEffect } from 'react';
 import { showNotification } from '../components/ui/NotificationToast';
+import { PATHS } from '../routes/paths';
 
 export default function MainLayout() {
   const isChromeExtension = useIsChromeExtension();
@@ -18,7 +19,7 @@ export default function MainLayout() {
         type: data.type ?? 'info',
         actionLabel: 'View',
         onAction: () => {
-          navigate('/notifications');
+          navigate(PATHS.APP.NOTIFICATIONS);
         },
       });
     });

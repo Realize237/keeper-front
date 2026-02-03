@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '../../hooks/useUsers';
 import FormInput from '../../components/ui/FormInput';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { FaChevronLeft } from 'react-icons/fa';
@@ -19,7 +19,7 @@ const ChangePassword = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useUser();
-  const [formError, setFormError] = useState<string | undefined>(undefined);
+  const [formError, setFormError] = useState<string | null>(null);
   const { mutate: changePassword, isPending: isChangingPassword } =
     useChangeUserPassword();
   const { mutate: sendSetPasswordEmail, isPending: isSendingEmail } =
@@ -57,7 +57,7 @@ const ChangePassword = () => {
   useEffect(() => {
     const subscription = watch((_, { name }) => {
       if (formError && name === 'oldPassword') {
-        setFormError(undefined);
+        setFormError(null);
       }
       return () => subscription.unsubscribe();
     });
@@ -140,7 +140,7 @@ const ChangePassword = () => {
           <div className="flex gap-10">
             <FormButton
               type="button"
-              variant="secondary"
+              variant="secondary-dark"
               onClick={() => navigate(-1)}
             >
               {t('common.cancel')}

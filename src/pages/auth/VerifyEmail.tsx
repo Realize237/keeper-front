@@ -6,9 +6,10 @@ import {
   useResendEmailVerification,
   useVerifyEmail,
 } from '../../hooks/useUsers';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { PATHS } from '../../routes/paths';
 
 interface VerificationResponse {
   message: string;

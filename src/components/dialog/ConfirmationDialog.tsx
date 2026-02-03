@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Modal from '../ui/Modal';
 import BottomSheet from '../ui/BottomSheet';
 import { useDeviceType } from '../../hooks/useDeviceType';
+import Button from '../ui/Button';
 
 interface ConfirmationDialogProps {
   isOpen: boolean;
@@ -13,10 +14,6 @@ interface ConfirmationDialogProps {
 
   confirmText?: string;
   cancelText?: string;
-
-  confirmButtonClass?: string;
-  confirmButtonHoverClass?: string;
-  isDestructive?: boolean;
 }
 
 export default function ConfirmationDialog({
@@ -27,17 +24,8 @@ export default function ConfirmationDialog({
   message,
   confirmText = 'Confirm',
   cancelText = 'Cancel',
-  confirmButtonClass = 'bg-blue-600',
-  confirmButtonHoverClass = 'shadow-lg shadow-blue-500/40',
-  isDestructive = true,
 }: ConfirmationDialogProps) {
   const { isMobile } = useDeviceType();
-
-  const finalConfirmClass = isDestructive ? 'bg-red-500' : confirmButtonClass;
-
-  const finalHoverClass = isDestructive
-    ? 'shadow-lg shadow-red-500/40'
-    : confirmButtonHoverClass;
 
   const content = (
     <motion.div>
@@ -49,28 +37,13 @@ export default function ConfirmationDialog({
         <p className="text-center mt-8 text-white/70">{message}</p>
 
         <div className="flex justify-center gap-10">
-          <motion.button
-            onClick={onClose}
-            className="rounded-full text-white cursor-pointer border p-4 border-white"
-            whileHover={{ scale: 1.05, backgroundColor: '#ffffff10' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          >
+          <Button variant="secondary-dark" onClick={onClose}>
             {cancelText}
-          </motion.button>
+          </Button>
 
-          <motion.button
-            onClick={onConfirm}
-            className={`rounded-full cursor-pointer p-4 text-white ${finalConfirmClass}`}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: `0 8px 20px ${finalHoverClass.includes('shadow-') ? finalHoverClass : 'rgba(0,0,0,0.3)'}`,
-            }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          >
+          <Button variant="destructive" onClick={onConfirm}>
             {confirmText}
-          </motion.button>
+          </Button>
         </div>
       </div>
     </motion.div>

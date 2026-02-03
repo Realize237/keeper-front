@@ -46,6 +46,3 @@ export const TOASTER_OPTIONS: ToastOptions = {
   duration: 5000,
   position: 'top-right',
 };
-
-export const PRIVACY_POLICY_URL = '/legal/privacy-policy';
-export const TERMS_OF_SERVICE_URL = '/legal/terms-of-service';

@@ -1,13 +1,13 @@
 import Modal from '../ui/Modal';
-import FormButton from '../ui/FormButton';
+import Button from '../ui/Button';
 import { FaCheck, FaCreditCard, FaLock, FaShield } from 'react-icons/fa6';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '../../hooks/useUsers';
-import { PRIVACY_POLICY_URL, TERMS_OF_SERVICE_URL } from '../../constants';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { PATHS } from '../../routes/paths';
 
 type UserConsentDialogProps = {
   isOpen: boolean;
@@ -206,7 +206,7 @@ const UserConsentDialog = ({
             <span className="text-gray-400 text-sm">
               {t('consent.checkbox.text')}{' '}
               <Link
-                to={PRIVACY_POLICY_URL}
+                to={PATHS.LEGAL.PRIVACY.full}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#FF6B5B] hover:underline transition"
@@ -215,7 +215,7 @@ const UserConsentDialog = ({
               </Link>{' '}
               {t('auth.register.legal.and')}{' '}
               <Link
-                to={TERMS_OF_SERVICE_URL}
+                to={PATHS.LEGAL.TERMS.full}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#FF6B5B] hover:underline transition"
@@ -227,14 +227,14 @@ const UserConsentDialog = ({
         </motion.div>
       </div>
       <div className="mt-6 flex gap-3 justify-end">
-        <FormButton variant="secondary" onClick={onDecline}>
+        <Button variant="secondary-dark" onClick={onDecline}>
           {t('consent.actions.decline')}
-        </FormButton>
-        <FormButton onClick={onAccept} disabled={!accepted || isPending}>
+        </Button>
+        <Button onClick={onAccept} disabled={!accepted || isPending}>
           {isPending
             ? t('consent.actions.saving')
             : t('consent.actions.accept')}
-        </FormButton>
+        </Button>
       </div>
     </Modal>
   );

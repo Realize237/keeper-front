@@ -1,11 +1,11 @@
-import { Input } from '../ui/Input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
 import { PASSWORD_RULES } from '../../constants/validation/patterns';
-import FormButton from '../ui/FormButton';
+import FormButton from '../ui/Button';
 import Modal from '../ui/Modal';
+import FormInput from '../ui/FormInput';
 
 export default function PasswordReset({
   onSubmit,
@@ -30,10 +30,7 @@ export default function PasswordReset({
             count: PASSWORD_RULES.MIN_LENGTH,
           })
         )
-        .regex(
-          PASSWORD_RULES.REGEX,
-          t('auth.password_reset.validation.password_pattern')
-        ),
+        .regex(PASSWORD_RULES.REGEX, t('auth.validation.password.pattern')),
       confirmPassword: z.string(),
     })
     .refine((values) => values.newPassword === values.confirmPassword, {
@@ -64,18 +61,21 @@ export default function PasswordReset({
         onSubmit={handleSubmit((d) => onSubmit(d.newPassword))}
         className="space-y-4"
       >
-        <Input
-          type="password"
+        <FormInput
+          name="newPassword"
           placeholder={t('auth.password_reset.fields.new_password')}
-          {...register('newPassword')}
+          register={register}
+          passwordToggle={true}
           error={errors.newPassword?.message}
         />
 
-        <Input
+        <FormInput
+          name="confirmPassword"
           type="password"
-          placeholder={t('auth.password_reset.fields.confirm_password')}
-          {...register('confirmPassword')}
-          error={errors.confirmPassword?.message}
+          placeholder={t('change_password.fields.confirm_password')}
+          register={register}
+          passwordToggle={true}
+          error={errors.confirmPassword}
         />
 
         <FormButton isLoading={isSubmitting} disabled={isSubmitting} size="lg">
