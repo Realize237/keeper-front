@@ -14,6 +14,10 @@
     "back": "Back",
     "select": "Select",
     "delete": "Delete",
+    "continents": {
+      "europe": "Europe",
+      "americas": "Americas"
+    },
     "units": {
       "minute": "{{count}} minute",
       "minute_other": "{{count}} minutes",
@@ -35,15 +39,18 @@
     "UNEXPECTED_ERROR": "Something went wrong"
   },
   "auth": {
+    "phone_number": "Phone number",
     "fields": {
       "email": "Email",
       "password": "Password",
       "name": "Name",
+      "phone": "Phone number",
       "confirmPassword": "Confirm password"
     },
     "validation": {
       "required": "{{field}} is required",
       "email": "Enter a valid email address",
+      "phone": "Please enter a valid phone number",
       "name": {
         "min": "Name must be at least {{count}} characters",
         "pattern": "Name can only contain letters and spaces"
@@ -422,6 +429,8 @@
       "fields": {
         "full_name": "Full name",
         "email": "Email",
+        "phone": "Phone number",
+        "phone_not_set": "Not set",
         "password": "Password",
         "member_since": "Member since"
       },
@@ -448,6 +457,9 @@
           "placeholder": "Email address",
           "required": "Email is required",
           "invalid": "Please enter a valid email"
+        },
+        "phone": {
+          "optional": "Optional - Leave empty to remove phone number"
         }
       }
     }
