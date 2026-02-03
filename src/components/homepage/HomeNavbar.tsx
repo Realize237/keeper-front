@@ -6,6 +6,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { homeAnchor } from '../../utils';
+import { PATHS } from '../../routes/paths';
 
 type NavItem = {
   labelKey: string;
@@ -169,7 +170,7 @@ const HomeNavbar = () => {
           </div>
 
           <button
-            onClick={() => navigate('/subscriptions')}
+            onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
             className="px-6 py-2.5 bg-linear-to-r from-[#990800] to-[#C41E14] text-white rounded-xl hover:shadow-xl hover:shadow-red-900/30 transition-all transform hover:-translate-y-0.5 font-semibold"
           >
             {t('nav.get_started')}
@@ -282,7 +283,7 @@ const HomeNavbar = () => {
 
               <motion.button
                 variants={itemVariants}
-                onClick={() => navigate('/login')}
+                onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
                 className="mt-8 w-full py-4 bg-linear-to-r from-[#990800] to-[#C41E14] text-white rounded-2xl font-semibold shadow-lg shadow-red-900/30"
               >
                 {t('nav.get_started')}

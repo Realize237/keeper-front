@@ -2,12 +2,13 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import FormInput from '../../components/ui/FormInput';
-import FormButton from '../../components/ui/FormButton';
+import FormButton from '../../components/ui/Button';
 import { ISetPasswordInput } from '../../interfaces/users';
 import { useLocation } from 'react-router-dom';
 
 import { useSetPassword } from '../../hooks/useUsers';
 import { useTranslation } from 'react-i18next';
+import { PATHS } from '../../routes/paths';
 
 const SetPassword = () => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const SetPassword = () => {
         onSuccess: () => {
           toast.success(t('set_password.success'));
           reset();
-          navigate('/login');
+          navigate(PATHS.AUTH.LOGIN);
         },
         onError: (error: Error) => {
           toast.error(error.message || t('set_password.errors.failed'));

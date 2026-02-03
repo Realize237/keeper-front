@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useUpdateUser, useUser } from './useUsers';
 import { useNavigate } from 'react-router-dom';
 import { CONSENT_KEY } from '../constants/storageKeys';
+import { PATHS } from '../routes/paths';
 
 export const useUserConsent = () => {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ export const useUserConsent = () => {
           storage.set(CONSENT_KEY, 'true');
           toast.success(t('consent.accepted'));
           setShowModal(false);
-          navigate('/plaid');
+          navigate(PATHS.APP.PLAID);
         },
         onError: () => {
           toast.error(t('consent.error'));

@@ -1,49 +1,95 @@
-import { groupClassNames } from '../../utils';
+import { HTMLMotionProps, motion, type Variants } from 'framer-motion';
+import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  loading?: boolean;
+type ButtonVariant =
+  | 'primary'
+  | 'secondary-dark'
+  | 'secondary-light'
+  | 'destructive';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
+interface ButtonProps extends HTMLMotionProps<'button'> {
+  isLoading?: boolean;
+  children: ReactNode;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  loading,
-  className,
+export const Button = ({
+  isLoading = false,
   children,
+  className = '',
+  disabled = false,
+  variant = 'primary',
+  size = 'md',
   ...props
-}) => {
-  const isButtonInActive = loading || props.disabled;
+}: ButtonProps) => {
+  const baseClasses = 'w-full font-medium rounded-xl transition';
+  const { t } = useTranslation();
+
+  const sizeClasses = (() => {
+    switch (size) {
+      case 'sm':
+        return 'py-1.5 px-3 text-xs sm:text-sm';
+      case 'lg':
+        return 'py-3 px-5 text-base sm:text-lg';
+      case 'md':
+      default:
+        return 'py-2 px-4 text-sm sm:text-base';
+    }
+  })();
+
+  const variantClasses = (() => {
+    switch (variant) {
+      case 'primary':
+        return `text-white ${
+          isLoading || disabled
+            ? 'bg-primary/50 cursor-not-allowed'
+            : 'bg-primary cursor-pointer'
+        }`;
+      case 'secondary-dark':
+        return 'text-white border border-white disabled:opacity-50 disabled:cursor-not-allowed';
+      case 'secondary-light':
+        return 'text-white bg-app disabled:opacity-50 disabled:cursor-not-allowed';
+      case 'destructive':
+        return 'text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed';
+    }
+  })();
+
+  const shadowColor = (() => {
+    switch (variant) {
+      case 'primary':
+        return 'rgba(153, 8, 0, 0.35)';
+      case 'secondary-dark':
+        return 'rgba(255, 255, 255, 0.2)';
+      case 'secondary-light':
+        return 'rgba(0, 0, 0, 0.2)';
+      case 'destructive':
+        return 'rgba(255, 0, 0, 0.4)';
+    }
+  })();
+
+  const buttonVariants: Variants = {
+    hover: { scale: 1.02, boxShadow: `0 8px 25px ${shadowColor}` },
+    tap: { scale: 0.98 },
+  };
+
+  const isDisabled = disabled || isLoading;
+
   return (
-    <button
+    <motion.button
+      variants={buttonVariants}
+      whileHover={!isDisabled ? 'hover' : undefined}
+      whileTap={!isDisabled ? 'tap' : undefined}
+      disabled={isDisabled}
+      className={`${baseClasses} ${sizeClasses} ${variantClasses} ${className}`}
+      style={{ cursor: isDisabled ? 'not-allowed' : 'pointer' }}
       {...props}
-      disabled={isButtonInActive}
-      className={groupClassNames(
-        `w-ful text-black font-semibold rounded-full py-3 px-5 mb-6 text-lg hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center space-x-2`,
-        className,
-        isButtonInActive ? 'bg-neutral-500 cursor-not-allowed' : 'bg-[#CDFF00]'
-      )}
     >
-      {loading && (
-        <svg
-          className="w-5 h-5 text-black animate-spin"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-          ></path>
-        </svg>
-      )}
-      <span>{loading ? 'Please wait...' : children}</span>
-    </button>
+      {isLoading && variant === 'primary' ? t('common.loading') : children}
+    </motion.button>
   );
 };
+
+export default Button;

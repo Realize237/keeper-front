@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import FormButton from '../components/ui/FormButton';
+
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Button from '../components/ui/Button';
+import { PATHS } from '../routes/paths';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -44,13 +46,14 @@ const NotFound = () => {
           transition={{ delay: 0.3 }}
           className="flex justify-center gap-4 pt-4"
         >
-          <FormButton onClick={() => navigate(-1)}>
-            {t('not_found.go_back')}
-          </FormButton>
+          <Button onClick={() => navigate(-1)}>{t('not_found.go_back')}</Button>
 
-          <FormButton onClick={() => navigate('/support')}>
+          <Button
+            variant="secondary-light"
+            onClick={() => navigate(PATHS.SUPPORT)}
+          >
             {t('not_found.contact_support')}
-          </FormButton>
+          </Button>
         </motion.div>
       </motion.div>
     </div>

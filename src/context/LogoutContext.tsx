@@ -21,11 +21,17 @@ const LogoutProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleConfirm = async () => {
-    const fcmToken = await getFirebaseToken();
-    logout(fcmToken ?? '');
+    if (Notification.permission === 'granted') {
+      const fcmToken = await getFirebaseToken();
+
+      logout(fcmToken ?? '');
+      setOpen(false);
+      return;
+    }
+    logout('');
+
     setOpen(false);
   };
-
   return (
     <LogoutContext.Provider value={{ requestLogout, isLoggingOut: isPending }}>
       {children}
@@ -38,7 +44,6 @@ const LogoutProvider = ({ children }: { children: ReactNode }) => {
         message={t('logout.confirmation')}
         confirmText={t('logout.confirm')}
         cancelText={t('common.cancel')}
-        isDestructive={true}
       />
     </LogoutContext.Provider>
   );
