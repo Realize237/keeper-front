@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { formatToReadableDate, getNextBillingDate } from '../../utils';
 import SubscriptionTypeAndDot from '../ui/SubscriptionTypeAndDot';
+import { Tooltip } from '../ui/Tooltip';
 import {
   SubscriptionModalTypes,
   type Subscription,
@@ -316,51 +317,74 @@ export default function SubscriptionDetailModal({
 
               <div className="flex gap-2">
                 {!subscriptionDetails?.calendarLink ? (
-                  <button
-                    onClick={onAddToGoogleCalendar}
-                    disabled={
-                      isAddingPending ||
-                      isConnecting ||
+                  <Tooltip
+                    content={
                       nextBillingResult?.status === 'EXPIRED'
+                        ? t('subscription_details.calendar.tooltips.expired')
+                        : t('subscription_details.calendar.tooltips.add')
                     }
-                    className={`px-3 py-1.5 text-sm rounded-lg bg-deep-teal text-white transition ${
-                      isAddingPending ||
-                      isConnecting ||
-                      nextBillingResult?.status === 'EXPIRED'
-                        ? 'opacity-50 cursor-not-allowed'
-                        : 'hover:bg-deep-teal/90'
-                    }`}
+                    disabled={
+                      nextBillingResult?.status !== 'EXPIRED' &&
+                      (isAddingPending || isConnecting)
+                    }
                   >
-                    {isAddingPending || isConnecting ? (
-                      <Spinner />
-                    ) : (
-                      <>
-                        <FaCalendarPlus className="inline mr-1" />
-                        {t('common.add')}
-                      </>
-                    )}
-                  </button>
-                ) : (
-                  <>
-                    <a
-                      href={subscriptionDetails.calendarLink}
-                      target="_blank"
-                      className="px-3 py-1.5 text-sm rounded-lg bg-white/10 text-white hover:bg-white/15"
-                    >
-                      <FaEye />
-                    </a>
-
                     <button
-                      onClick={onRemoveFromGoogleCalendar}
-                      disabled={isRemoving}
-                      className={`px-3 py-1.5 text-sm rounded-lg bg-red-500/15 text-red-400 transition ${
-                        isRemoving
+                      onClick={onAddToGoogleCalendar}
+                      disabled={
+                        isAddingPending ||
+                        isConnecting ||
+                        nextBillingResult?.status === 'EXPIRED'
+                      }
+                      className={`px-3 py-1.5 text-sm rounded-lg bg-deep-teal text-white transition ${
+                        isAddingPending ||
+                        isConnecting ||
+                        nextBillingResult?.status === 'EXPIRED'
                           ? 'opacity-50 cursor-not-allowed'
-                          : 'hover:bg-red-500/25'
+                          : 'hover:bg-deep-teal/90'
                       }`}
                     >
-                      {isRemoving ? <Spinner /> : <FaTrash />}
+                      {isAddingPending || isConnecting ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <FaCalendarPlus className="inline mr-1" />
+                          {t('common.add')}
+                        </>
+                      )}
                     </button>
+                  </Tooltip>
+                ) : (
+                  <>
+                    <Tooltip
+                      content={t('subscription_details.calendar.tooltips.view')}
+                    >
+                      <a
+                        href={subscriptionDetails.calendarLink}
+                        target="_blank"
+                        className="px-3 py-1.5 text-sm rounded-lg bg-white/10 text-white hover:bg-white/15"
+                      >
+                        <FaEye />
+                      </a>
+                    </Tooltip>
+
+                    <Tooltip
+                      content={t(
+                        'subscription_details.calendar.tooltips.remove'
+                      )}
+                      disabled={isRemoving}
+                    >
+                      <button
+                        onClick={onRemoveFromGoogleCalendar}
+                        disabled={isRemoving}
+                        className={`px-3 py-1.5 text-sm rounded-lg bg-red-500/15 text-red-400 transition ${
+                          isRemoving
+                            ? 'opacity-50 cursor-not-allowed'
+                            : 'hover:bg-red-500/25'
+                        }`}
+                      >
+                        {isRemoving ? <Spinner /> : <FaTrash />}
+                      </button>
+                    </Tooltip>
                   </>
                 )}
               </div>

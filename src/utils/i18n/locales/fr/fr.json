@@ -282,7 +282,13 @@
       "add_failed": "Échec de l’ajout à Google Calendar.",
       "remove_failed": "Échec de la suppression de Google Calendar.",
       "connected": "Google Calendar connecté",
-      "connect_failed": "Échec de la connexion à Google Calendar"
+      "connect_failed": "Échec de la connexion à Google Calendar",
+      "tooltips": {
+        "add": "Ajouter cet abonnement à votre Google Calendar pour recevoir des rappels",
+        "view": "Voir cet abonnement dans Google Calendar",
+        "remove": "Supprimer cet abonnement de Google Calendar",
+        "expired": "Impossible de synchroniser les abonnements expirés avec le calendrier"
+      }
     }
   },
   "billing": {
