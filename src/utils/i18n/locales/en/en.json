@@ -288,7 +288,13 @@
       "add_failed": "Failed to add subscription to Google Calendar.",
       "remove_failed": "Failed to remove subscription from Google Calendar.",
       "connected": "Google Calendar connected",
-      "connect_failed": "Failed to connect to Google Calendar"
+      "connect_failed": "Failed to connect to Google Calendar",
+      "tooltips": {
+        "add": "Add this subscription to your Google Calendar to get reminders",
+        "view": "View this subscription in Google Calendar",
+        "remove": "Remove this subscription from Google Calendar",
+        "expired": "Cannot sync expired subscriptions to calendar"
+      }
     }
   },
   "billing": {
