@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { env } from '../../utils/env';
@@ -7,6 +7,7 @@ import { useCreateUser } from '../../hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 import {
   EMAIL_REGEX,
   NAME_RULES,
@@ -17,10 +18,16 @@ import { usePersistentCountdown } from '../../hooks/usePersistentCountDown';
 import AuthHeader from '../../components/auth/AuthHeader';
 import FormInput from '../../components/ui/FormInput';
 import { PATHS } from '../../routes/paths';
+import { PhoneInput } from '../../components/auth/PhoneInput';
+import { countries } from '../../constants/countries';
+import { Country } from '../../interfaces';
 
 export default function Register() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<Country>(
+    countries.find((c) => c.code === 'FR') || countries[0]
+  );
   const { mutate, isPending } = useCreateUser();
   const privacyCheckboxRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
@@ -30,12 +37,14 @@ export default function Register() {
     watch,
     formState: { errors },
     getValues,
+    control,
   } = useForm({
     mode: 'onBlur',
 
     defaultValues: {
       name: '',
       email: '',
+      phone: '',
       password: '',
       confirmPassword: '',
       acceptedPrivacyPolicy: false,
@@ -60,13 +69,20 @@ export default function Register() {
     });
   }, [watch, emailError]);
 
+  const handleCountryChange = (country: Country) => {
+    setSelectedCountry(country);
+  };
+
   const onSubmit = (data: {
     name: string;
     email: string;
+    phone: string;
     password: string;
     confirmPassword: string;
     acceptedPrivacyPolicy: boolean;
   }) => {
+    const fullPhoneNumber = selectedCountry.dialCode + data.phone;
+
     if (!data.acceptedPrivacyPolicy) {
       toast.error(t('auth.register.errors.accept_privacy_required'));
       return;
@@ -76,6 +92,7 @@ export default function Register() {
       {
         name: data.name,
         email: data.email,
+        phone: fullPhoneNumber,
         password: data.password,
         acceptedPrivacyPolicy: data.acceptedPrivacyPolicy,
       },
@@ -244,6 +261,59 @@ export default function Register() {
                   message: t('auth.validation.email'),
                 },
               }}
+            />
+            {errors.email && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-500 text-xs mt-1"
+              >
+                {errors.email.message}
+              </motion.p>
+            )}
+            {emailError && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-500 text-xs mt-1"
+              >
+                {emailError}
+              </motion.p>
+            )}
+          </motion.div>
+
+          <motion.div className="mb-4" variants={itemVariants}>
+            <Controller
+              name="phone"
+              control={control}
+              rules={{
+                required: t('auth.validation.required', {
+                  field: t('auth.fields.phone'),
+                }),
+                validate: (value) => {
+                  if (!value)
+                    return t('auth.validation.required', {
+                      field: t('auth.fields.phone'),
+                    });
+                  const fullPhoneNumber = selectedCountry.dialCode + value;
+                  return (
+                    isValidPhoneNumber(fullPhoneNumber) ||
+                    t('auth.validation.phone')
+                  );
+                },
+              }}
+              render={({ field, fieldState }) => (
+                <PhoneInput
+                  value={field.value || ''}
+                  onChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  selectedCountry={selectedCountry}
+                  onCountryChange={handleCountryChange}
+                  error={fieldState.error?.message}
+                  required={true}
+                />
+              )}
             />
           </motion.div>
 

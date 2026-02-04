@@ -5,6 +5,7 @@ import {
   FaUser,
   FaEnvelope,
   FaLock,
+  FaPhone,
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../../components/ui/Avatar';
@@ -103,6 +104,15 @@ const AccountDetails = () => {
             icon={FaEnvelope}
             label={t('profile.account_details.fields.email')}
             value={user?.email ?? ''}
+          />
+
+          <InfoRow
+            icon={FaPhone}
+            label={t('profile.account_details.fields.phone')}
+            value={
+              user?.phone ?? t('profile.account_details.fields.phone_not_set')
+            }
+            onClick={() => navigate('/profile/edit')}
           />
         </div>
         <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-3 mt-4">

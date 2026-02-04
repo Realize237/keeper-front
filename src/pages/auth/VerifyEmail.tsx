@@ -88,7 +88,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     if (status === 'success' && isEmailVerified) {
       const timeout = setTimeout(() => {
-        navigate('/login', { replace: true });
+        navigate(PATHS.AUTH.LOGIN, { replace: true });
       }, 3000);
 
       return () => clearTimeout(timeout);

@@ -2,6 +2,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
+  phone: string;
   password: string;
   authType: string;
   photo: string | null;
@@ -28,6 +29,7 @@ export type UserInput = Pick<
   User,
   | 'name'
   | 'email'
+  | 'phone'
   | 'password'
   | 'acceptedPrivacyPolicy'
   | 'userConsentAccepted'
