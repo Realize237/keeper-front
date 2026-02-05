@@ -1,6 +1,7 @@
 import { HTMLMotionProps, motion, type Variants } from 'framer-motion';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import Spinner from './Spinner';
 
 type ButtonVariant =
   | 'primary'
@@ -87,7 +88,14 @@ export const Button = ({
       style={{ cursor: isDisabled ? 'not-allowed' : 'pointer' }}
       {...props}
     >
-      {isLoading && variant === 'primary' ? t('common.loading') : children}
+      {isLoading ? (
+        <div className="flex items-center justify-center gap-2">
+          <Spinner />
+          <span>{t('common.loading')}</span>
+        </div>
+      ) : (
+        children
+      )}
     </motion.button>
   );
 };

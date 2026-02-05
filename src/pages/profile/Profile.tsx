@@ -10,6 +10,7 @@ import {
   FaQuestionCircle,
   FaShieldAlt,
   FaSignOutAlt,
+  FaStar,
 } from 'react-icons/fa';
 import { type IconType } from 'react-icons';
 import { useUser } from '../../hooks/useUsers';
@@ -20,6 +21,8 @@ import { Avatar } from '../../components/ui/Avatar';
 import { useTranslation } from 'react-i18next';
 import { useLogoutModal } from '../../hooks/useLogoutModal';
 import { PATHS } from '../../routes/paths';
+import { ReviewDialog } from '../../components/dialog/ReviewDialog';
+import { useState } from 'react';
 
 interface MenuItem {
   icon: IconType;
@@ -62,6 +65,11 @@ const secondaryItems: MenuItem[] = [
     path: PATHS.APP.CONTACT,
   },
   {
+    icon: FaStar,
+    label: 'profile.menu.review',
+    action: 'review',
+  },
+  {
     icon: FaFileAlt,
     label: 'profile.menu.terms',
     path: PATHS.LEGAL.TERMS.full,
@@ -88,12 +96,25 @@ const Profile = () => {
   const navigate = useNavigate();
   const { requestLogout } = useLogoutModal();
   const { t } = useTranslation();
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const handleItemClick = (item: MenuItem) => {
-    if (item.action === 'logout') {
-      requestLogout();
-    } else if (item.path) {
+    if (item.path) {
       navigate(item.path);
+      return;
+    }
+
+    switch (item.action) {
+      case 'logout':
+        requestLogout();
+        break;
+
+      case 'review':
+        setIsReviewModalOpen(true);
+        break;
+
+      default:
+        break;
     }
   };
 
@@ -166,6 +187,11 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <ReviewDialog
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+      />
     </div>
   );
 };
