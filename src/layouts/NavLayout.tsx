@@ -5,6 +5,7 @@ import Sidebar from '../components/layout/sidebar/Sidebar';
 import { useState } from 'react';
 import Header from '../components/layout/header/Header';
 import { useUser } from '../hooks/useUsers';
+import { ReviewButton } from '../components/ui/ReviewButtom';
 
 export default function NavLayout() {
   const { user } = useUser();
@@ -27,6 +28,7 @@ export default function NavLayout() {
       <main className={getMainClasses()}>
         <Header />
         <Outlet />
+        <ReviewButton />
       </main>
       {user && isMobile && <BottomNav />}
       {user && !isMobile && <Sidebar onToggle={handleSidebarToggle} />}

@@ -13,6 +13,7 @@ interface SidebarProps {
 const Sidebar = ({ onToggle }: SidebarProps) => {
   const location = useLocation();
   const { t } = useTranslation();
+
   const activeIndex = activeNavItems.findIndex((item) => {
     if (item.path === '/') {
       return location.pathname === '/';
@@ -36,7 +37,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
     <motion.aside
       animate={{ width: isOpen ? 240 : 60 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-0 left-0  border-r border-r-white/10 text-gray-400 p-4 flex flex-col "
+      className="fixed top-0 left-0 h-screen border-r border-r-white/10 text-gray-400 p-4 flex flex-col"
     >
       <div className="flex  h-25   justify-between mb-8 relative">
         <div className="flex justify-between gap-2 overflow-hidden">
@@ -64,7 +65,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
         </div>
       </div>
 
-      <nav className="flex flex-col gap-2 relative h-[calc(100vh-150px)] border-t border-t-white/15 pt-4 overflow-auto">
+      <nav className="flex flex-col gap-2 relative flex-1 border-t border-t-white/15 pt-4 overflow-auto">
         {activeNavItems.map((menu, index) => {
           const Icon = menu.icon;
           const isActive = index === activeIndex;
