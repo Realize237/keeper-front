@@ -16,7 +16,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { labelKey: 'nav.features', href: 'features', type: 'section' },
-  { labelKey: 'nav.pricing', href: '/pricing', type: 'route' },
+  { labelKey: 'nav.pricing', href: PATHS.PRICING, type: 'route' },
+  { labelKey: 'nav.countries', href: PATHS.SUPPORTED_COUNTRIES, type: 'route' },
   { labelKey: 'nav.contact', href: 'contact', type: 'section' },
 ];
 

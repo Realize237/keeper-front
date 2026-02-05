@@ -4,11 +4,13 @@ import { TOASTER_OPTIONS } from './constants';
 import { AppProviders } from './providers/AppProviders';
 import { StartupEffects } from './startup/StartupEffects';
 import { AppRoutes } from './routes/AppRoutes';
+import ScrollToTop from './components/ScrollToTop';
 
 export default function App() {
   return (
     <AppProviders>
       <BrowserRouter>
+        <ScrollToTop />
         <StartupEffects />
         <AppRoutes />
       </BrowserRouter>

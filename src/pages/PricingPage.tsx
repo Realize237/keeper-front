@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaStar } from 'react-icons/fa6';
 import { AiOutlineThunderbolt } from 'react-icons/ai';
-import HomeNavbar from '../components/homepage/HomeNavbar';
 
 const plans = [
   {
@@ -59,8 +58,6 @@ export const PricingPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <HomeNavbar />
-
       <section className="py-16 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-125 h-125 bg-linear-to-br from-[#FF6B5B]/10 to-[#990800]/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-125 h-125 bg-linear-to-br from-[#008B82]/10 to-[#006B66]/5 rounded-full blur-3xl"></div>

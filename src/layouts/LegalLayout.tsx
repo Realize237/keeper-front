@@ -1,5 +1,4 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { NavLink, Outlet } from 'react-router-dom';
 import { LuShield, LuCookie } from 'react-icons/lu';
 import { FiFileText } from 'react-icons/fi';
 import { FaGlobe } from 'react-icons/fa6';
@@ -39,15 +38,7 @@ export const LegalLayout = () => {
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-6 py-6">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-[#990800] transition-colors font-medium mb-4"
-          >
-            <FaArrowLeft className="w-5 h-5" />
-            {t('legal.back')}
-          </Link>
-
+        <div className="container text-center mx-auto px-6 py-6">
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
             {t('legal.title')}
           </h1>

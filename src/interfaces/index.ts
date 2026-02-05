@@ -3,4 +3,5 @@ export interface Country {
   name: string;
   dialCode: string;
   flag: string;
+  continent?: 'Europe' | 'America' | 'Africa' | 'Asia';
 }

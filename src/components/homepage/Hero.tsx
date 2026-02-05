@@ -2,7 +2,6 @@ import { FaArrowRight, FaBell, FaGlobe, FaStar } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { LuSparkles } from 'react-icons/lu';
 import { IMAGES } from '../../assets';
-import HomeNavbar from './HomeNavbar';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../routes/paths';
 
@@ -16,8 +15,6 @@ const Hero = () => {
       data-nav="hero"
       className="relative overflow-hidden bg-linear-to-br from-gray-50 via-white to-red-50/30"
     >
-      <HomeNavbar />
-
       <div className="container mx-auto px-6 py-12 md:py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8 lg:pr-8">
