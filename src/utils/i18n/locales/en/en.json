@@ -699,7 +699,8 @@
     "features": "Features",
     "pricing": "Pricing",
     "contact": "Contact",
-    "get_started": "Get Started"
+    "get_started": "Get Started",
+    "countries": "Countries"
   },
 
   "hero": {
@@ -973,5 +974,22 @@
     },
     "accepted": "Consent saved successfully",
     "error": "Failed to save consent. Please try again."
+  },
+  "supported_countries": {
+    "title": "Supported Countries",
+    "subtitle": "Connect your bank account securely from any of our supported regions worldwide.",
+    "search_placeholder": "Search for a country...",
+    "tabs": {
+      "europe": "Europe",
+      "america": "America",
+      "africa": "Africa",
+      "asia": "Asia"
+    },
+    "soon": "Soon",
+    "coming_soon_title": "Coming Soon to {{region}}",
+    "coming_soon_description": "We're working hard to bring Keepay to {{region}}. Join our waitlist to be notified when we launch in your region.",
+    "no_results": "No countries found matching \"{{query}}\"",
+    "region_count": "{{count}} active region in {{region}}",
+    "region_count_other": "{{count}} active regions in {{region}}"
   }
 }

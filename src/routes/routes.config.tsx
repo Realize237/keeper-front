@@ -4,6 +4,8 @@ import NavLayout from '../layouts/NavLayout';
 import { lazyImport } from './lazyImport';
 import { PublicRoute } from '../components/common/PublicRoute';
 import { PATHS } from './paths';
+import { SupportedCountries } from '../pages/SupportedCountries';
+import PublicLayout from '../layouts/PublicLayout';
 
 // Public pages
 const HomePage = lazyImport(() => import('../pages/HomePage'));
@@ -78,18 +80,24 @@ export const routes: AppRoute[] = [
   {
     layout: <MainLayout />,
     children: [
-      { path: PATHS.HOME, element: <HomePage /> },
       {
-        path: PATHS.LEGAL.ROOT,
-        element: <LegalLayout />,
+        element: <PublicLayout />,
         children: [
-          { path: PATHS.LEGAL.PRIVACY.route, element: <PrivacyPolicy /> },
-          { path: PATHS.LEGAL.TERMS.route, element: <TermsConditions /> },
-          { path: PATHS.LEGAL.COOKIES.route, element: <CookiePolicy /> },
-          { path: PATHS.LEGAL.GDPR.route, element: <GDPRCompliance /> },
+          { path: PATHS.HOME, element: <HomePage /> },
+          {
+            path: PATHS.LEGAL.ROOT,
+            element: <LegalLayout />,
+            children: [
+              { path: PATHS.LEGAL.PRIVACY.route, element: <PrivacyPolicy /> },
+              { path: PATHS.LEGAL.TERMS.route, element: <TermsConditions /> },
+              { path: PATHS.LEGAL.COOKIES.route, element: <CookiePolicy /> },
+              { path: PATHS.LEGAL.GDPR.route, element: <GDPRCompliance /> },
+            ],
+          },
+          { path: PATHS.PRICING, element: <PricingPage /> },
+          { path: PATHS.SUPPORTED_COUNTRIES, element: <SupportedCountries /> },
         ],
       },
-      { path: PATHS.PRICING, element: <PricingPage /> },
       {
         path: PATHS.AUTH.REGISTER,
         element: (
