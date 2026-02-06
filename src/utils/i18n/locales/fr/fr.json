@@ -538,7 +538,8 @@
     "subscriptions": "Abonnements",
     "sharedPlan": "Plan partagé",
     "cards": "Cartes",
-    "profile": "Profil"
+    "profile": "Profil",
+    "upgrade_plan": "Premium"
   },
   "plaid": {
     "title": "Connecter votre banque",

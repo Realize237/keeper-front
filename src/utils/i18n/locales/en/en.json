@@ -554,7 +554,8 @@
     "subscriptions": "Subscriptions",
     "sharedPlan": "Shared Plan",
     "cards": "Cards",
-    "profile": "Profile"
+    "profile": "Profile",
+    "upgrade_plan": "Upgrade Plan"
   },
   "plaid": {
     "title": "Connect your bank",
