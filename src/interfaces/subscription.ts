@@ -27,6 +27,9 @@ export interface SubscriptionDetails {
   startDate: Date;
   endDate: Date;
   iconUrl: string;
+  category: string;
+  subCategory: string;
+  merchant_name: string;
 }
 
 export interface Subscription {
