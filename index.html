@@ -40,6 +40,17 @@
       content="Track, share, and optimize your subscriptions with Keepay."
     />
     <meta name="twitter:image" content="/src/assets/keepay-banner.jpeg" />
+
+    <script>
+  (function () {
+    const theme = localStorage.theme;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (theme === 'dark' || (!theme && systemDark)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
   </head>
 
   <style>

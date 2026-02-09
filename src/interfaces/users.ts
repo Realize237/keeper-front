@@ -1,3 +1,5 @@
+import { Theme } from '../hooks/useTheme';
+
 export interface User {
   id: number;
   name: string;
@@ -10,6 +12,7 @@ export interface User {
   language: string;
   acceptedPrivacyPolicy?: boolean;
   userConsentAccepted?: boolean;
+  preferredTheme?: Theme;
 }
 
 export interface IEmailPasswordInput {
@@ -33,6 +36,7 @@ export type UserInput = Pick<
   | 'password'
   | 'acceptedPrivacyPolicy'
   | 'userConsentAccepted'
+  | 'preferredTheme'
 > & {
   language?: string;
 };

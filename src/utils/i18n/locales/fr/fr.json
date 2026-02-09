@@ -597,7 +597,16 @@
     "appearance": {
       "title": "Apparence",
       "theme": "Thème",
-      "system": "Par défaut du système"
+      "system": "Par défaut du système",
+      "themes": {
+        "system": "Système",
+        "light": "Clair",
+        "dark": "Sombre"
+      },
+      "success": "Thème mis à jour !",
+      "errors": {
+        "update_failed": "Échec de l'enregistrement du thème"
+      }
     },
 
     "notifications": {

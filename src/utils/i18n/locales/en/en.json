@@ -613,7 +613,16 @@
     "appearance": {
       "title": "Appearance",
       "theme": "Theme",
-      "system": "System default"
+      "system": "System default",
+      "themes": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "success": "Theme updated!",
+      "errors": {
+        "update_failed": "Failed to save theme"
+      }
     },
 
     "notifications": {
