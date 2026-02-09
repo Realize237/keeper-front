@@ -5,6 +5,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { activeNavItems } from '../../../utils';
 import { env } from '../../../utils/env';
 import { useTranslation } from 'react-i18next';
+import { FaCrown } from 'react-icons/fa6';
 
 interface SidebarProps {
   onToggle?: (isOpen: boolean) => void;
@@ -37,7 +38,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
     <motion.aside
       animate={{ width: isOpen ? 240 : 60 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-0 left-0 h-screen border-r border-r-white/10 text-gray-400 p-4 flex flex-col"
+      className="fixed top-0 left-0 h-[calc(100vh-0.1rem)] border-r border-r-white/10 text-gray-400 p-4 flex flex-col"
     >
       <div className="flex  h-25   justify-between mb-8 relative">
         <div className="flex justify-between gap-2 overflow-hidden">
@@ -116,6 +117,34 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
           );
         })}
       </nav>
+
+      <div className="border-t border-t-white/15 pt-4 space-y-2 mt-auto ">
+        <button
+          disabled
+          className="relative flex justify-center  w-full items-center gap-4 px-3 py-3 rounded-lg
+             bg-primary/50 text-white/60
+            disabled:opacity-60"
+          style={{ cursor: 'not-allowed' }}
+        >
+          <motion.div className="text-white text-sm ">
+            <FaCrown />
+          </motion.div>
+
+          <AnimatePresence>
+            {isOpen && (
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.2 }}
+                className="font-medium text-sm whitespace-nowrap text-white "
+              >
+                {t('sidebar.upgrade_plan')}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
+      </div>
     </motion.aside>
   );
 };
