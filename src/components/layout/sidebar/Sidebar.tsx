@@ -14,6 +14,7 @@ interface SidebarProps {
 const Sidebar = ({ onToggle }: SidebarProps) => {
   const location = useLocation();
   const { t } = useTranslation();
+
   const activeIndex = activeNavItems.findIndex((item) => {
     if (item.path === '/') {
       return location.pathname === '/';

@@ -67,4 +67,7 @@ export const API_PATHS = {
   PUSH_TOKEN: {
     REGISTER_TOKEN: '/api/push-tokens/save',
   },
+  REVIEWS: {
+    CREATE_REVIEW: '/api/reviews',
+  },
 };

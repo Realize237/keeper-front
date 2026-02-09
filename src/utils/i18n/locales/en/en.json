@@ -421,6 +421,7 @@
         "subtitle": "Update your password"
       },
       "contact": "Contact Us",
+      "review": "Review App",
       "terms": "Terms & Conditions",
       "privacy": "Privacy Policy",
       "help": "Get Help",
@@ -556,6 +557,7 @@
     "cards": "Cards",
     "profile": "Profile",
     "upgrade_plan": "Upgrade Plan"
+    "review_app": "Review App"
   },
   "plaid": {
     "title": "Connect your bank",
@@ -683,6 +685,32 @@
       "submit": "Send message"
     },
     "footer": "We usually respond within 24 hours"
+  },
+
+  "review": {
+    "title": "Rate Your Experience",
+    "subtitle": "How likely are you to recommend Keepay to someone you know?",
+    "rateLabel": "Rate your experience",
+    "messageLabel": "Tell us more (optional)",
+    "messagePlaceholder": "Share your thoughts about what you liked or what could be improved...",
+
+    "rating0_5": "Very Poor - Major issues",
+    "rating1": "Poor - Needs significant improvement",
+    "rating1_5": "Below Average - Many issues to address",
+    "rating2": "Fair - Some issues to address",
+    "rating2_5": "Slightly Below Average - Room for improvement",
+    "rating3": "Good - Meets expectations",
+    "rating3_5": "Above Average - Pretty good experience",
+    "rating4": "Very Good - Exceeds expectations",
+    "rating4_5": "Excellent - Nearly perfect",
+    "rating5": "Outstanding - Perfect experience",
+
+    "submit": "Submit Review",
+    "submitting": "Submitting...",
+
+    "successTitle": "Thank You!",
+    "successMessage": "Your review helps us improve Keepay for everyone.",
+    "errorMessage": "Failed to submit review. Please try again."
   },
   "not_found": {
     "title": "Page not found",

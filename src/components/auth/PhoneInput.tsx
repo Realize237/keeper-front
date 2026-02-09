@@ -83,7 +83,7 @@ export function PhoneInput({
             ref={buttonRef}
             type="button"
             onClick={handleToggleDropdown}
-            className={` py-3 px-5 flex items-center gap-2 bg-surface rounded-xl  transition-colors ${
+            className={`py-3 px-5  flex items-center justify-center gap-2 bg-surface rounded-xl transition-colors ${
               error
                 ? 'border-2 border-red-500 hover:bg-red-950/20'
                 : 'border-border hover:bg-surface/50'
@@ -168,7 +168,7 @@ export function PhoneInput({
           value={value}
           onChange={handleInputChange}
           placeholder={getPlaceholder()}
-          className={`flex-1 py-3 px-5 bg-surface rounded-xl text-white placeholder-gray-500  transition-colors focus:outline-none focus:ring-2 ${
+          className={`w-full py-3 px-5 bg-surface rounded-xl text-white placeholder-gray-500 transition-colors focus:outline-none focus:ring-2 ${
             error
               ? 'border-2 border-red-500 '
               : 'border-border focus:ring-primary'

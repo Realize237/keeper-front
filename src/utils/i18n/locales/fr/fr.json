@@ -404,6 +404,7 @@
         "subtitle": "Mettez à jour votre mot de passe"
       },
       "contact": "Contactez-nous",
+      "review": "Évaluer l'app",
       "terms": "Conditions générales",
       "privacy": "Politique de confidentialité",
       "help": "Obtenir de l'aide",
@@ -673,6 +674,32 @@
       "submit": "Envoyer le message"
     },
     "footer": "Nous répondons généralement dans les 24 heures."
+  },
+
+  "review": {
+    "title": "Évaluez votre expérience",
+    "subtitle": "Recommanderiez-vous Keepay à quelqu’un de votre entourage ?",
+    "rateLabel": "Évaluez votre expérience",
+    "messageLabel": "Dites-nous en plus (optionnel)",
+    "messagePlaceholder": "Partagez vos réflexions sur ce que vous avez aimé ou ce qui pourrait être amélioré...",
+
+    "rating0_5": "Très médiocre - Problèmes majeurs",
+    "rating1": "Médiocre - Nécessite des améliorations significatives",
+    "rating1_5": "En dessous de la moyenne - Beaucoup de problèmes à résoudre",
+    "rating2": "Passable - Quelques problèmes à résoudre",
+    "rating2_5": "Légèrement en dessous de la moyenne - Place à l'amélioration",
+    "rating3": "Bien - Répond aux attentes",
+    "rating3_5": "Au-dessus de la moyenne - Plutôt bonne expérience",
+    "rating4": "Très bien - Dépasse les attentes",
+    "rating4_5": "Excellent - Presque parfait",
+    "rating5": "Exceptionnel - Expérience parfaite",
+
+    "submit": "Soumettre l'évaluation",
+    "submitting": "Soumission en cours...",
+
+    "successTitle": "Merci !",
+    "successMessage": "Votre évaluation nous aide à améliorer Keepay pour tous.",
+    "errorMessage": "Échec de la soumission de l'évaluation. Veuillez réessayer."
   },
   "delete_account": {
     "title": "Supprimer le compte",
