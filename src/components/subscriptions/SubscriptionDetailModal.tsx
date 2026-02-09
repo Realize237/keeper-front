@@ -239,7 +239,7 @@ export default function SubscriptionDetailModal({
 
           <div className="flex flex-col items-center text-center mb-8">
             <p
-              className="text-white text-xl font-semibold truncate max-w-65"
+              className="text-white text-xl font-semibold max-w-full px-4"
               title={subscriptionDetails?.details?.name}
             >
               {subscriptionDetails?.details?.name}
@@ -305,9 +305,26 @@ export default function SubscriptionDetailModal({
               <span className="text-gray-400">
                 {t('subscription_details.remind_me')}
               </span>
-              <NotificationReminder
-                subscription={selectedSubscriptionDetails}
-              />
+              {nextBillingResult?.status === 'EXPIRED' ? (
+                <Tooltip
+                  content={t(
+                    'subscription_details.reminders.tooltips.expired',
+                    'Cannot set reminders for expired subscriptions'
+                  )}
+                >
+                  <div>
+                    <NotificationReminder
+                      subscription={selectedSubscriptionDetails}
+                      isExpired={true}
+                    />
+                  </div>
+                </Tooltip>
+              ) : (
+                <NotificationReminder
+                  subscription={selectedSubscriptionDetails}
+                  isExpired={false}
+                />
+              )}
             </div>
 
             <div className="flex justify-between items-center">
