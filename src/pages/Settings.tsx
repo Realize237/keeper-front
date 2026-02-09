@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import {
+  FaAdjust,
   FaBell,
   FaCalendarAlt,
   FaChevronLeft,
@@ -14,6 +15,9 @@ import { ReactNode } from 'react';
 import { useUser } from '../hooks/useUsers';
 import { useUpdateUser } from '../hooks/useUsers';
 import toast from 'react-hot-toast';
+import { FaSun } from 'react-icons/fa6';
+import { Theme, useTheme } from '../hooks/useTheme';
+import ReactCountryFlag from 'react-country-flag';
 
 const Section = ({
   title,
@@ -61,18 +65,59 @@ export default function Settings() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { user } = useUser();
-  const { mutate: updateLanguage, isPending: isChangingLanguage } =
+  const { mutate: updateUserLanguage, isPending: isChangingLanguage } =
     useUpdateUser();
+  const { mutate: updateUserTheme, isPending: isChangingTheme } =
+    useUpdateUser();
+  const { theme, setTheme } = useTheme();
+
+  const themeOptions = [
+    {
+      value: 'system',
+      label: t('settings.appearance.themes.system', 'System'),
+      icon: <FaAdjust className="w-4 h-4" />,
+    },
+    {
+      value: 'light',
+      label: t('settings.appearance.themes.light', 'Light'),
+      icon: <FaSun className="w-4 h-4" />,
+    },
+    {
+      value: 'dark',
+      label: t('settings.appearance.themes.dark', 'Dark'),
+      icon: <FaMoon className="w-4 h-4" />,
+    },
+  ];
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    updateLanguage(
+    updateUserLanguage(
       { user: { language: lng }, id: Number(user?.id) },
       {
         onSuccess: () => toast.success(t('settings.language.success')),
         onError: (error: Error) => {
           toast.error(
             error.message || t('settings.language.errors.update_failed')
+          );
+        },
+      }
+    );
+  };
+
+  const handleChangeTheme = (newTheme: Theme) => {
+    setTheme(newTheme);
+
+    if (!user?.id) return;
+
+    updateUserTheme(
+      { id: Number(user.id), user: { preferredTheme: newTheme } },
+      {
+        onSuccess: () => {
+          toast.success(t('settings.appearance.success'));
+        },
+        onError: (error: Error) => {
+          toast.error(
+            error.message || t('settings.appearance.errors.update_failed')
           );
         },
       }
@@ -104,11 +149,31 @@ export default function Settings() {
             description={t('settings.language.subtitle')}
             action={
               <SettingsSelect
-                isChangingLanguage={isChangingLanguage}
+                isLoading={isChangingLanguage}
                 value={user?.language ?? ''}
                 options={[
-                  { value: 'en', label: 'English' },
-                  { value: 'fr', label: 'Français' },
+                  {
+                    value: 'en',
+                    label: 'English',
+                    icon: (
+                      <ReactCountryFlag
+                        countryCode="US"
+                        svg
+                        style={{ width: '1.2em', height: '1.2em' }}
+                      />
+                    ),
+                  },
+                  {
+                    value: 'fr',
+                    label: 'Français',
+                    icon: (
+                      <ReactCountryFlag
+                        countryCode="FR"
+                        svg
+                        style={{ width: '1.2em', height: '1.2em' }}
+                      />
+                    ),
+                  },
                 ]}
                 onChange={(lang) => changeLanguage(lang)}
               />
@@ -121,7 +186,14 @@ export default function Settings() {
             icon={FaMoon}
             label={t('settings.appearance.theme', 'Theme')}
             description={t('settings.appearance.system')}
-            action={<span className="text-xs text-black/40">Auto</span>}
+            action={
+              <SettingsSelect
+                isLoading={isChangingTheme}
+                value={theme}
+                options={themeOptions}
+                onChange={(theme) => handleChangeTheme(theme as Theme)}
+              />
+            }
           />
         </Section>
 
