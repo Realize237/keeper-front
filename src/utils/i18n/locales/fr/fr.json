@@ -289,6 +289,11 @@
         "remove": "Supprimer cet abonnement de Google Calendar",
         "expired": "Impossible de synchroniser les abonnements expirés avec le calendrier"
       }
+    },
+    "reminders": {
+      "tooltips": {
+        "expired": "Impossible de définir des rappels pour les abonnements expirés"
+      }
     }
   },
   "billing": {
