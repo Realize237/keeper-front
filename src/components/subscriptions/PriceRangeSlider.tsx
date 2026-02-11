@@ -5,10 +5,12 @@ const PriceRangeSlider = ({
   minPrice = 0,
   maxPrice = 1000,
   onChange,
+  initialRange,
 }: {
   minPrice: number;
   maxPrice: number;
   onChange: (range: [number, number]) => void;
+  initialRange?: [number, number];
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(300);
@@ -30,20 +32,68 @@ const PriceRangeSlider = ({
     [minPrice, maxPrice]
   );
 
-  const [currentRange, setCurrentRange] = useState([minPrice, maxPrice]);
+  const [currentRange, setCurrentRange] = useState(
+    initialRange || [minPrice, maxPrice]
+  );
 
   useEffect(() => {
     if (containerRef.current) {
       const width = containerRef.current.offsetWidth;
       setContainerWidth(width);
-      rightX.set(width);
+
+      if (initialRange) {
+        const leftPos =
+          ((initialRange[0] - minPrice) / (maxPrice - minPrice)) * width;
+        const rightPos =
+          ((initialRange[1] - minPrice) / (maxPrice - minPrice)) * width;
+        leftX.set(leftPos);
+        rightX.set(rightPos);
+        setCurrentRange(initialRange);
+      } else {
+        rightX.set(width);
+      }
     }
-  }, [rightX]);
+  }, [rightX, leftX, initialRange, minPrice, maxPrice]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const newWidth = containerRef.current.offsetWidth;
+        const oldWidth = containerWidth;
+
+        if (newWidth !== oldWidth) {
+          const currentMin = Math.round(minDisplay.get());
+          const currentMax = Math.round(maxDisplay.get());
+
+          setContainerWidth(newWidth);
+
+          const leftPos =
+            ((currentMin - minPrice) / (maxPrice - minPrice)) * newWidth;
+          const rightPos =
+            ((currentMax - minPrice) / (maxPrice - minPrice)) * newWidth;
+
+          leftX.set(leftPos);
+          rightX.set(rightPos);
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [
+    containerWidth,
+    leftX,
+    rightX,
+    minPrice,
+    maxPrice,
+    minDisplay,
+    maxDisplay,
+  ]);
 
   const handleLeftDrag = () => {
     const currentLeft = leftX.get();
     const currentRight = rightX.get();
-    const minGap = 24;
+    const minGap = 1;
 
     if (currentLeft >= currentRight - minGap) {
       leftX.set(currentRight - minGap);
@@ -60,7 +110,7 @@ const PriceRangeSlider = ({
   const handleRightDrag = () => {
     const currentLeft = leftX.get();
     const currentRight = rightX.get();
-    const minGap = 24;
+    const minGap = 1;
 
     if (currentRight <= currentLeft + minGap) {
       rightX.set(currentLeft + minGap);
@@ -104,7 +154,9 @@ const PriceRangeSlider = ({
           onDrag={handleLeftDrag}
           onDragEnd={handleLeftDrag}
           style={{ x: leftX }}
-          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-primary rounded-full cursor-grab active:cursor-grabbing z-20 shadow-md"
+          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-primary rounded-full cursor-grab active:cursor-grabbing shadow-md hover:z-30 active:z-30"
+          whileHover={{ scale: 1.1 }}
+          whileDrag={{ scale: 1.2 }}
         />
 
         <motion.div
@@ -118,7 +170,9 @@ const PriceRangeSlider = ({
           onDrag={handleRightDrag}
           onDragEnd={handleRightDrag}
           style={{ x: rightX }}
-          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-primary rounded-full cursor-grab active:cursor-grabbing z-10 shadow-md"
+          className="absolute top-1/2 -mt-3 -ml-3 w-6 h-6 bg-primary rounded-full cursor-grab active:cursor-grabbing shadow-md hover:z-30 active:z-30"
+          whileHover={{ scale: 1.1 }}
+          whileDrag={{ scale: 1.2 }}
         />
       </div>
     </div>

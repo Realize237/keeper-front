@@ -14,6 +14,8 @@
     "back": "Retour",
     "select": "Sélectionner",
     "delete": "Supprimer",
+    "clear": "Effacer",
+    "off": "Désactivé",
     "continents": {
       "europe": "Europe",
       "americas": "Amériques"
@@ -235,14 +237,27 @@
       "title_plural": "Filtres",
       "category": "Catégorie",
       "price_range": "Plage de prix",
-      "show_results": "Afficher les résultats",
+      "show_results": "Afficher",
+      "clear_all": "Effacer tous les filtres",
       "categories": {
-        "streaming": "Streaming",
-        "music": "Musique",
-        "gaming": "Jeux",
-        "productivity": "Productivité",
-        "news": "Actualités",
-        "fitness": "Fitness"
+        "BANK_FEES": "Frais bancaires",
+        "ENTERTAINMENT": "Divertissement",
+        "FOOD_AND_DRINK": "Alimentation & Boissons",
+        "GENERAL_MERCHANDISE": "Marchandises générales",
+        "GENERAL_SERVICES": "Services généraux",
+        "GOVERNMENT_AND_NON_PROFIT": "Gouvernement & Associations",
+        "HOME_IMPROVEMENT": "Amélioration de l’habitat",
+        "PERSONAL_CARE": "Soins personnels",
+        "INCOME": "Revenus",
+        "LOAN_DISBURSEMENTS": "Décaissements de prêt",
+        "LOAN_PAYMENTS": "Remboursements de prêt",
+        "MEDICAL": "Médical",
+        "OTHER": "Autre",
+        "RENT_AND_UTILITIES": "Loyer & Services",
+        "TRANSFER_IN": "Virements entrants",
+        "TRANSFER_OUT": "Virements sortants",
+        "TRANSPORTATION": "Transport",
+        "TRAVEL": "Voyages"
       }
     },
     "selected_day": {

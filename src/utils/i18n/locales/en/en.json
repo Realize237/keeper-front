@@ -14,6 +14,8 @@
     "back": "Back",
     "select": "Select",
     "delete": "Delete",
+    "clear": "Clear",
+    "off": "Off",
     "continents": {
       "europe": "Europe",
       "americas": "Americas"
@@ -249,13 +251,26 @@
       "category": "Category",
       "price_range": "Price range",
       "show_results": "Show results",
+      "clear_all": "Clear all filters",
       "categories": {
-        "streaming": "Streaming",
-        "music": "Music",
-        "gaming": "Gaming",
-        "productivity": "Productivity",
-        "news": "News",
-        "fitness": "Fitness"
+        "BANK_FEES": "Bank Fees",
+        "ENTERTAINMENT": "Entertainment",
+        "FOOD_AND_DRINK": "Food & Drink",
+        "GENERAL_MERCHANDISE": "General Merchandise",
+        "GENERAL_SERVICES": "General Services",
+        "GOVERNMENT_AND_NON_PROFIT": "Government & Non-Profit",
+        "HOME_IMPROVEMENT": "Home Improvement",
+        "PERSONAL_CARE": "Personal Care",
+        "INCOME": "Income",
+        "LOAN_DISBURSEMENTS": "Loan Disbursements",
+        "LOAN_PAYMENTS": "Loan Payments",
+        "MEDICAL": "Medical",
+        "OTHER": "Other",
+        "RENT_AND_UTILITIES": "Rent & Utilities",
+        "TRANSFER_IN": "Transfer In",
+        "TRANSFER_OUT": "Transfer Out",
+        "TRANSPORTATION": "Transportation",
+        "TRAVEL": "Travel"
       }
     },
     "selected_day": {
