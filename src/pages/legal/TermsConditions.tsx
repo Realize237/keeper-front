@@ -54,7 +54,7 @@ export const TermsConditions = () => {
                 className="flex gap-2"
                 key={`item-${sectionIndex}-${itemIndex}`}
               >
-                <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                <FaCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <Trans i18nKey={item} />
               </li>
             ))}
@@ -79,7 +79,7 @@ export const TermsConditions = () => {
               {block.contact.email}:{' '}
               <a
                 href={`mailto:${env.APP_SUPPORT_EMAIL}`}
-                className="text-blue-600 underline"
+                className="text-foreground underline"
               >
                 {env.APP_SUPPORT_EMAIL}
               </a>
@@ -90,7 +90,7 @@ export const TermsConditions = () => {
                 href={env.APP_WEBSITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline"
+                className="text-foreground underline"
               >
                 {env.APP_WEBSITE_URL}
               </a>
@@ -103,8 +103,8 @@ export const TermsConditions = () => {
   return (
     <div className="prose prose-gray max-w-none">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center">
-          <FiFileText className="w-6 h-6 text-white" />
+        <div className="w-12 h-12 bg-primary-gradient rounded-2xl flex items-center justify-center">
+          <FiFileText className="w-6 h-6 text-primary-foreground" />
         </div>
         <h2 className="text-3xl font-extrabold m-0">{t('title')}</h2>
       </div>

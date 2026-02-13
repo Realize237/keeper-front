@@ -105,7 +105,9 @@ export default function OTPVerification({
       title={t('auth.otp.title')}
       width="max-w-sm"
     >
-      <p className="text-gray-400 text-sm mb-4">{t('auth.otp.description')}</p>
+      <p className="text-surface-foreground text-sm mb-4">
+        {t('auth.otp.description')}
+      </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex justify-between space-x-3">
@@ -122,7 +124,7 @@ export default function OTPVerification({
               }}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
-              className="text-white w-full text-center rounded-lg"
+              className="text-surface-foreground w-full text-center rounded-lg"
             />
           ))}
         </div>
@@ -137,7 +139,7 @@ export default function OTPVerification({
         </Button>
       </form>
 
-      <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
+      <div className="flex justify-between items-center mt-4 text-sm text-surface-foreground">
         <span>
           {isResendAvailable
             ? t('auth.otp.resend.available')
@@ -148,8 +150,8 @@ export default function OTPVerification({
           disabled={!isResendAvailable}
           className={`text-sm font-semibold ${
             isResendAvailable
-              ? 'text-blue-500 hover:underline'
-              : 'text-gray-500 cursor-not-allowed'
+              ? 'text-primary hover:underline'
+              : 'text-surface-foreground cursor-not-allowed'
           }`}
         >
           {t('auth.otp.resend.button')}

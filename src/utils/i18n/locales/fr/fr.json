@@ -575,6 +575,10 @@
     "visit_website": "Visiter keepayapp.com",
     "logout": "Déconnexion"
   },
+  "theme_switcher": {
+    "switch_to_light": "Passer en mode clair",
+    "switch_to_dark": "Passer en mode sombre"
+  },
   "logout": {
     "title": "Déconnexion",
     "confirmation": "Êtes-vous sûr de vouloir vous déconnecter ?",

@@ -3,11 +3,7 @@ import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import Spinner from './Spinner';
 
-type ButtonVariant =
-  | 'primary'
-  | 'secondary-dark'
-  | 'secondary-light'
-  | 'destructive';
+type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends HTMLMotionProps<'button'> {
@@ -44,17 +40,31 @@ export const Button = ({
   const variantClasses = (() => {
     switch (variant) {
       case 'primary':
-        return `text-white ${
-          isLoading || disabled
-            ? 'bg-primary/50 cursor-not-allowed'
-            : 'bg-primary cursor-pointer'
-        }`;
-      case 'secondary-dark':
-        return 'text-white border border-white disabled:opacity-50 disabled:cursor-not-allowed';
-      case 'secondary-light':
-        return 'text-white bg-app disabled:opacity-50 disabled:cursor-not-allowed';
+        return `
+        bg-primary
+        text-primary-foreground
+        hover:bg-primary/90
+        disabled:bg-primary/50
+      `;
+      case 'secondary':
+        return `
+        bg-surface
+        text-foreground
+        border border-border
+        hover:bg-muted
+      `;
       case 'destructive':
-        return 'text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed';
+        return `
+        bg-danger
+        text-danger-foreground
+        hover:bg-danger/90
+      `;
+      case 'ghost':
+        return `
+        bg-transparent
+        text-foreground
+        hover:bg-muted
+      `;
     }
   })();
 
@@ -62,10 +72,8 @@ export const Button = ({
     switch (variant) {
       case 'primary':
         return 'rgba(153, 8, 0, 0.35)';
-      case 'secondary-dark':
+      case 'secondary':
         return 'rgba(255, 255, 255, 0.2)';
-      case 'secondary-light':
-        return 'rgba(0, 0, 0, 0.2)';
       case 'destructive':
         return 'rgba(255, 0, 0, 0.4)';
     }

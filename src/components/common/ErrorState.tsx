@@ -20,24 +20,26 @@ const ErrorState = ({
         initial={{ scale: 0.5 }}
         animate={{ scale: 1 }}
         transition={{ type: 'spring', stiffness: 200 }}
-        className="w-14 h-14 rounded-full bg-[#3e3e3e]/50 text-white flex items-center justify-center mb-4 border border-[#525252]"
+        className="w-14 h-14 rounded-full bg-surface text-surface-foreground flex items-center justify-center mb-4 border border-border"
       >
         ⚠️
       </motion.div>
 
-      <p className="text-gray-300 text-lg font-medium mb-2">{message}</p>
+      <p className="text-foreground-surface text-lg font-medium mb-2">
+        {message}
+      </p>
 
       <motion.button
         onClick={onRetry}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="px-6 py-3 bg-[#464646] capitalize rounded-xl text-gray-200 font-medium tracking-wide 
-                   shadow-sm hover:bg-[#525252] transition-all cursor-pointer"
+        className="px-6 py-3 bg-border capitalize rounded-xl text-surface-foreground font-medium tracking-wide 
+                   shadow-sm hover:bg-muted transition-all cursor-pointer"
       >
         Retry
       </motion.button>
 
-      <div className="absolute bottom-0 w-36 h-36 opacity-5 rounded-full bg-white blur-3xl"></div>
+      <div className="absolute bottom-0 w-36 h-36 opacity-5 rounded-full bg-background blur-3xl"></div>
     </motion.div>
   );
 };

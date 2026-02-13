@@ -7,22 +7,181 @@
   font-variation-settings: 'wdth' 100;
 }
 
+@layer base {
+  :root {
+    /* Brand palette */
+    --brand-black: #000000;
+    --brand-red: #980800;
+    --brand-teal: #008a81;
+    --brand-gray: #d3d3d3;
+    --brand-white: #fcf7f5;
+  }
+
+  :root {
+    /* Core surfaces */
+    --background: var(--brand-white);
+    --foreground: var(--brand-black);
+
+    --surface: #ffffff;
+    --surface-foreground: var(--brand-black);
+
+    /* Borders & dividers */
+    --border: var(--brand-gray);
+
+    /* Muted / secondary UI */
+    --muted: #f4f4f4;
+    --muted-foreground: #5c5c5c;
+
+    /* Brand intent */
+    --primary: var(--brand-red);
+    --primary-foreground: #ffffff;
+
+    --accent: var(--brand-teal);
+    --accent-foreground: #ffffff;
+
+    /* States (optional but scalable) */
+    --success: var(--brand-teal);
+    --success-foreground: #ffffff;
+
+    --danger: var(--brand-red);
+    --danger-foreground: #ffffff;
+
+    --primary-gradient: linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      color-mix(in srgb, var(--primary) 75%, white) 100%
+    );
+    --text-gradient-primary: linear-gradient(
+      90deg,
+      var(--primary),
+      color-mix(in srgb, var(--primary) 75%, white),
+      color-mix(in srgb, var(--primary) 55%, white)
+    );
+    --hero-gradient: linear-gradient(
+      135deg,
+      var(--background) 0%,
+      var(--surface) 40%,
+      color-mix(in srgb, var(--primary) 8%, var(--background)) 100%
+    );
+    --testimonial-gradient: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 6%, var(--background)) 0%,
+      var(--surface) 40%,
+      color-mix(in srgb, var(--success) 8%, var(--background)) 100%
+    );
+    --footer-gradient: linear-gradient(
+      135deg,
+      var(--surface) 0%,
+      var(--background) 50%,
+      var(--surface) 100%
+    );
+  }
+
+  .dark {
+    --background: #0f0f0f;
+    --foreground: var(--brand-white);
+
+    --surface: #1a1a1a;
+    --surface-foreground: var(--brand-white);
+
+    --border: #2a2a2a;
+
+    --muted: #1f1f1f;
+    --muted-foreground: #a3a3a3;
+
+    /* Slightly tuned for contrast in dark mode */
+    --primary: var(--brand-red);
+    --primary-foreground: #ffffff;
+
+    --accent: #009b91;
+    --accent-foreground: #001f1e;
+
+    --success: #009b91; /* softened teal */
+    --success-foreground: #001f1e;
+
+    --danger: #b11208; /* lifted red for dark backgrounds */
+    --danger-foreground: #ffffff;
+
+    --primary-gradient: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 85%, black) 0%,
+      var(--primary) 100%
+    );
+    --text-gradient-primary: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--primary) 85%, black),
+      var(--primary),
+      color-mix(in srgb, var(--primary) 70%, white)
+    );
+    --hero-gradient: linear-gradient(
+      135deg,
+      var(--background) 0%,
+      var(--surface) 40%,
+      color-mix(in srgb, var(--primary) 12%, var(--background)) 100%
+    );
+    --testimonial-gradient: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 10%, var(--background)) 0%,
+      var(--surface) 40%,
+      color-mix(in srgb, var(--success) 12%, var(--background)) 100%
+    );
+    --footer-gradient: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--surface) 90%, black),
+      var(--background),
+      color-mix(in srgb, var(--surface) 90%, black)
+    );
+  }
+}
 html {
   scroll-behavior: smooth;
-  --color-oxblood: #990800;
-  --color-black: #0f0f0f;
-  --color-charcoal: #1f1f1f;
-  --color-teal: #008b82;
-  --color-white: #ffffff;
 }
 
 @theme {
-  --color-primary: var(--color-oxblood);
-  --color-app: var(--color-black);
-  --color-surface: var(--color-charcoal);
-  --color-deep-teal: var(--color-teal);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-border: var(--border);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+
+  --gradient-primary: var(--primary-gradient);
 }
 
+.bg-primary-gradient {
+  background: var(--primary-gradient);
+}
+.text-gradient-primary {
+  background: var(--text-gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-hero-gradient {
+  background: var(--hero-gradient);
+}
+.bg-testimonial-gradient {
+  background: var(--testimonial-gradient);
+}
+.bg-footer-gradient {
+  background: var(--footer-gradient);
+}
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);
@@ -144,4 +303,44 @@ button {
 .modal-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e5e7eb;
+  border-radius: 0.75rem;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  animation: skeleton-shimmer 1.4s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.dark .skeleton {
+  background: #2a2a2a;
+}
+
+.dark .skeleton::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
 }

@@ -147,25 +147,25 @@ export function Testimonials() {
   }, [emblaApi]);
 
   return (
-    <section className="py-24 bg-linear-to-br from-red-50/50 via-orange-50/30 to-teal-50/50 relative overflow-hidden">
-      <div className="absolute top-20 left-10 w-72 h-72 bg-linear-to-br from-[#990800]/10 to-[#FF6B5B]/10 rounded-full blur-3xl"></div>
+    <section className="py-24 bg-testimonial-gradient relative overflow-hidden">
+      <div className="absolute top-20 left-10 w-72 h-72 bg-linear-to-br from-primary/10 to-[#FF6B5B]/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-80 h-80 bg-linear-to-br from-[#008B82]/10 to-[#00A89A]/10 rounded-full blur-3xl"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-[#990800]/10 to-[#FF6B5B]/10 border border-[#990800]/20 text-[#990800] rounded-2xl text-sm mb-6 font-bold shadow-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-primary/10 to-[#FF6B5B]/10 border border-primary/20 text-primary rounded-2xl text-sm mb-6 font-bold shadow-sm">
             <FaStar className="w-4 h-4 fill-current" />
             {t('testimonials.badge')}
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
-            <span className="block text-gray-900">
+            <span className="block text-foreground">
               {t('testimonials.title_1')}
             </span>
-            <span className="block bg-linear-to-r from-[#990800] via-[#C41E14] to-[#FF6B5B] bg-clip-text text-transparent">
+            <span className="block text-gradient-primary">
               {t('testimonials.title_2')}
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium">
             {t('testimonials.description')}
           </p>
         </div>
@@ -174,16 +174,16 @@ export function Testimonials() {
           <button
             onClick={scrollPrev}
             disabled={prevBtnDisabled}
-            className="w-12 h-12 rounded-2xl bg-white border-2 border-gray-200 hover:border-[#990800] hover:bg-red-50 flex items-center justify-center transition-all group shadow-sm"
+            className="w-12 h-12 rounded-2xl bg-surface border-2 border-border hover:border-primary hover:bg-muted flex items-center justify-center transition-all group shadow-sm"
           >
-            <FaChevronLeft className="w-6 h-6 text-gray-600 group-hover:text-[#990800]" />
+            <FaChevronLeft className="w-6 h-6 text-surface-foreground group-hover:text-primary" />
           </button>
           <button
             onClick={scrollNext}
             disabled={nextBtnDisabled}
-            className="w-12 h-12 rounded-2xl bg-white border-2 border-gray-200 hover:border-[#990800] hover:bg-red-50 flex items-center justify-center transition-all group shadow-sm"
+            className="w-12 h-12 rounded-2xl bg-surface border-2 border-border hover:border-primary hover:bg-muted flex items-center justify-center transition-all group shadow-sm"
           >
-            <FaChevronRight className="w-6 h-6 text-gray-600 group-hover:text-[#990800]" />
+            <FaChevronRight className="w-6 h-6 text-surface-foreground group-hover:text-primary" />
           </button>
         </div>
 
@@ -195,9 +195,9 @@ export function Testimonials() {
                 className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
               >
                 <div key={index} className="px-3">
-                  <div className="bg-white p-7 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 relative border-2 border-gray-100 hover:border-[#990800]/20 group h-full">
+                  <div className="bg-surface p-7 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 relative border-2 border-border hover:border-primary/20 group h-full">
                     <div className="absolute top-6 right-6 w-14 h-14 bg-linear-to-br from-[#990800]/10 to-[#FF6B5B]/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <IoMdQuote className="w-7 h-7 text-[#990800]/40" />
+                      <IoMdQuote className="w-7 h-7 text-primary/40" />
                     </div>
 
                     <div className="flex items-center gap-4 mb-5">
@@ -205,17 +205,17 @@ export function Testimonials() {
                         <img
                           src={testimonial.image}
                           alt={testimonial.name}
-                          className="w-14 h-14 rounded-2xl object-cover border-2 border-gray-100"
+                          className="w-14 h-14 rounded-2xl object-cover border-2 border-border"
                         />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-linear-to-br from-[#008B82] to-[#006B66] rounded-full border-2 border-white flex items-center justify-center">
-                          <FaCheck className="w-3 h-3 text-white" />
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-accent rounded-full border-2 border-accent-foreground flex items-center justify-center">
+                          <FaCheck className="w-3 h-3 text-accent-foreground" />
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold text-gray-900">
+                        <div className="font-bold text-surface-foreground">
                           {testimonial.name}
                         </div>
-                        <div className="text-sm text-gray-500 font-medium">
+                        <div className="text-sm text-muted-foreground font-medium">
                           {
                             testimonial.role[
                               currentLanguage as keyof typeof testimonial.role
@@ -234,7 +234,7 @@ export function Testimonials() {
                       ))}
                     </div>
 
-                    <p className="text-gray-600 leading-relaxed font-medium">
+                    <p className="text-muted-foreground leading-relaxed font-medium">
                       &ldquo;
                       {
                         testimonial.text[
@@ -260,8 +260,8 @@ export function Testimonials() {
           h-2.5 rounded-full transition-all duration-400
           ${
             isActive
-              ? 'w-10 bg-linear-to-r from-[#990800] to-[#C41E14]'
-              : 'w-2.5 bg-gray-300 hover:bg-gray-400'
+              ? 'w-10 bg-primary-gradient'
+              : 'w-2.5 bg-muted-foreground hover:bg-primary'
           }
         `}
                   onClick={() => emblaApi?.scrollTo(index)}
@@ -271,7 +271,7 @@ export function Testimonials() {
           </div>
 
           <div className="text-center mt-16">
-            <div className="inline-flex flex-col items-center gap-4 px-8 py-6 bg-white border-2 border-gray-200 rounded-3xl shadow-lg">
+            <div className="inline-flex flex-col items-center gap-4 px-8 py-6 bg-surface border-2 border-border rounded-3xl shadow-lg">
               <div className="flex flex-col md:flex-row items-center gap-3">
                 <div className="flex -space-x-3">
                   {testimonials.slice(0, 4).map((testimonial, index) => (
@@ -287,7 +287,7 @@ export function Testimonials() {
                   </div>
                 </div>
                 <div className="text-left">
-                  <p className="text-gray-900 font-bold">
+                  <p className="text-surface-foreground font-bold">
                     {t('testimonials.join_happy_users')}
                   </p>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -299,7 +299,7 @@ export function Testimonials() {
                         />
                       ))}
                     </div>
-                    <span className="font-semibold">
+                    <span className="font-semibold text-muted-foreground">
                       {t('testimonials.average_rating')}
                     </span>
                   </div>

@@ -16,7 +16,7 @@ export default function SubscriptionTypeAndDot({ value }: { value: string }) {
       <div
         className={`w-2 h-2 rounded-full ${SUBSCRIPTION_TYPES_CONFIG[value.toUpperCase() as keyof typeof SUBSCRIPTION_TYPES].color} mr-1`}
       ></div>
-      <span className="text-white text-md">
+      <span className="text-foreground text-md">
         {t(`subscriptions.type.${value}`)}
       </span>
     </motion.div>

@@ -2,8 +2,8 @@ import { BillingStatus } from '../interfaces/billings';
 
 const ACCENTS = {
   default: {
-    iconBg: 'bg-white/10',
-    iconText: 'text-white',
+    iconBg: 'bg-muted',
+    iconText: 'text-muted-foreground',
     progress: 'bg-white',
   },
   orange: {
@@ -20,7 +20,7 @@ const ACCENTS = {
 export { ACCENTS };
 
 export const billingStatusTextClass: Record<BillingStatus, string> = {
-  ACTIVE: 'text-white',
+  ACTIVE: 'text-foreground',
   DUE_TODAY: 'text-yellow-400',
   EXPIRED: 'text-red-400',
 };

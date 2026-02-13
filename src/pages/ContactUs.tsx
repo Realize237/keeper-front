@@ -5,6 +5,7 @@ import FormButton from '../components/ui/Button';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { EMAIL_REGEX, NAME_RULES } from '../constants/validation/patterns';
 
 type ContactFormValues = {
   name: string;
@@ -29,9 +30,9 @@ const ContactUs = () => {
       <div className="flex items-center mb-8">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 rounded-full hover:bg-white/10 transition"
+          className="p-2 rounded-full hover:bg-muted transition"
         >
-          <FaChevronLeft className="w-5 h-5 text-white/80" />
+          <FaChevronLeft className="w-5 h-5 text-foreground" />
         </button>
         <h3 className="text-lg font-semibold ml-4 capitalize"></h3>
       </div>
@@ -42,10 +43,12 @@ const ContactUs = () => {
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
       >
         <div className="text-center space-y-2">
-          <h1 className="text-2xl md:text-3xl font-semibold text-white">
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground">
             {t('contact_us.title')}
           </h1>
-          <p className="text-sm text-white/50">{t('contact_us.description')}</p>
+          <p className="text-sm text-muted-foreground">
+            {t('contact_us.description')}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit(() => {})} className="space-y-5">
@@ -61,7 +64,7 @@ const ContactUs = () => {
                 message: t('contact_us.fields.name.min'),
               },
               pattern: {
-                value: /^[a-zA-Z\s]+$/,
+                value: NAME_RULES.REGEX,
                 message: t('contact_us.fields.name.pattern'),
               },
             }}
@@ -76,7 +79,7 @@ const ContactUs = () => {
             rules={{
               required: t('contact_us.fields.email.required'),
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                value: EMAIL_REGEX,
                 message: t('contact_us.fields.email.invalid'),
               },
             }}
@@ -96,13 +99,13 @@ const ContactUs = () => {
               })}
               rows={5}
               placeholder={t('contact_us.fields.message.placeholder')}
-              className={`w-full resize-none bg-[#2a2a2a] text-white placeholder-gray-500 rounded-2xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary ${
-                errors.message ? 'border border-red-500' : ''
+              className={`w-full resize-none bg-surface text-surface-foreground placeholder-muted-foreground rounded-2xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary ${
+                errors.message ? 'border border-danger' : ''
               }`}
             />
 
             {errors.message && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-danger text-xs mt-1">
                 {errors.message.message}
               </p>
             )}
@@ -113,7 +116,7 @@ const ContactUs = () => {
           </FormButton>
         </form>
 
-        <p className="text-center text-xs text-white/30">
+        <p className="text-center text-xs text-muted-foreground">
           {t('contact_us.footer')}
         </p>
       </motion.div>

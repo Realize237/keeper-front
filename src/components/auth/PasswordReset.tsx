@@ -53,7 +53,7 @@ export default function PasswordReset({
       title={t('auth.password_reset.title')}
       width="max-w-md"
     >
-      <p className="text-gray-400 text-sm mb-4">
+      <p className="text-surface-foreground text-sm mb-4">
         {t('auth.password_reset.description')}
       </p>
 

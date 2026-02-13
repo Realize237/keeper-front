@@ -40,7 +40,7 @@ export const CookiePolicy = () => {
           <ul key={key} className=" mb-2">
             {block.items.map((item, index) => (
               <li className="flex gap-2" key={index}>
-                <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                <FaCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 {item}
               </li>
             ))}
@@ -60,7 +60,7 @@ export const CookiePolicy = () => {
             <ul className="">
               {block.items.map((item, index) => (
                 <li className="flex gap-2" key={index}>
-                  <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                  <FaCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                   {item}
                 </li>
               ))}
@@ -76,7 +76,7 @@ export const CookiePolicy = () => {
               {block.contact.email}:{' '}
               <a
                 href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
-                className="text-blue-600 underline"
+                className="text-foreground underline"
               >
                 {env.APP_PRIVACY_POLICY_EMAIL}
               </a>
@@ -87,7 +87,7 @@ export const CookiePolicy = () => {
                 href={env.APP_WEBSITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline"
+                className="text-foreground underline"
               >
                 {env.APP_WEBSITE_URL}
               </a>
@@ -105,12 +105,14 @@ export const CookiePolicy = () => {
         <div className="w-12 h-12 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center">
           <LuCookie className="w-6 h-6 text-white" />
         </div>
-        <h2 className="text-3xl font-extrabold text-gray-900 m-0">
+        <h2 className="text-3xl font-extrabold text-foreground m-0">
           {t('title')}
         </h2>
       </div>
 
-      <p className="text-lg leading-relaxed text-gray-700 mb-6">{t('intro')}</p>
+      <p className="text-lg leading-relaxed text-foreground mb-6">
+        {t('intro')}
+      </p>
 
       {sections.map((section, idx) => (
         <div key={idx} className="mb-8">

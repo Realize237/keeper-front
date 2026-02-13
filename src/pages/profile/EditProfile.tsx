@@ -104,11 +104,11 @@ const EditProfile = () => {
     );
   };
   return (
-    <div className="text-white w-11/12 mx-auto py-8">
+    <div className="text-foreground w-11/12 mx-auto py-8">
       <div className="flex items-center mb-6">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-gray-700 transition"
+          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-muted transition"
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
@@ -190,7 +190,7 @@ const EditProfile = () => {
           <div className="flex gap-10">
             <FormButton
               type="button"
-              variant="secondary-dark"
+              variant="secondary"
               onClick={() => navigate(-1)}
             >
               {t('common.cancel')}

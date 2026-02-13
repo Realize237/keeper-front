@@ -23,12 +23,14 @@ const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
       className="flex justify-center px-4 sm:px-6 lg:px-8 mt-4"
     >
-      <div className="w-full max-w-4xl bg-[#1f1f1f] border border-[#C41E14] rounded-lg shadow-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-2">
+      <div className="w-full max-w-4xl bg-surface border border-border rounded-lg shadow-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-2">
         <div className="flex items-start sm:items-center gap-2 flex-1">
-          <div className="w-6 h-6 rounded-full bg-[#C41E14] flex items-center justify-center text-white font-bold shrink-0">
-            <FaExclamation />
+          <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-forez font-bold shrink-0">
+            <FaExclamation className="text-primary-foreground" />
           </div>
-          <p className="text-sm text-white">{t('consent.sync_message')}</p>
+          <p className="text-sm text-surface-foreground">
+            {t('consent.sync_message')}
+          </p>
         </div>
 
         <motion.button
@@ -42,7 +44,7 @@ const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
             ],
           }}
           transition={{ duration: 1.6, repeat: Infinity }}
-          className="w-full sm:w-auto bg-[#C41E14] hover:bg-[#A31A16] text-white text-sm font-medium py-1.5 px-4 rounded"
+          className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium py-1.5 px-4 rounded"
           onClick={onSync}
         >
           {t('consent.connect_now')}

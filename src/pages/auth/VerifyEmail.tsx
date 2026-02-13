@@ -129,7 +129,7 @@ const VerifyEmail = () => {
 
   if (!token) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-app px-4">
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -146,7 +146,7 @@ const VerifyEmail = () => {
     );
   }
   return (
-    <div className="flex min-h-screen items-center justify-center bg-app px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}

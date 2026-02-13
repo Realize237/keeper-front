@@ -33,8 +33,8 @@ export const SettingsSelect = ({
         onClick={() => setOpen((v) => !v)}
         className={cn(
           'flex items-center gap-2 px-3 py-2 rounded-md text-sm',
-          'border border-white/10',
-          'bg-[#171717]',
+          'border border-border',
+          'bg-surface',
           isLoading && 'opacity-60 cursor-not-allowed'
         )}
       >
@@ -65,7 +65,7 @@ export const SettingsSelect = ({
         absolute right-0 mt-2 z-50
         w-44
         rounded-xl
-        bg-[#171717]
+        bg-surface
         shadow-xl
         overflow-hidden
       "
@@ -82,8 +82,8 @@ export const SettingsSelect = ({
             gap-2
             px-4 py-2
             text-sm
-            bg-[#171717]
-            hover:bg-white/10 
+            bg-surface
+            hover:bg-muted
             transition
           "
               >
@@ -96,7 +96,7 @@ export const SettingsSelect = ({
                   <span>{option.label}</span>
                 </div>
                 {option.value === value && (
-                  <FaCheck className="text-green-500 w-3 h-3" />
+                  <FaCheck className="text-accent w-3 h-3" />
                 )}
               </button>
             ))}

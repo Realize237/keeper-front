@@ -55,54 +55,50 @@ const UserConsentDialog = ({
     >
       <div className="pb-8">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-[#990800] to-[#C41E14] flex items-center justify-center shadow-lg shadow-[#990800]/30">
-            <FaCreditCard className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center shadow-lg shadow-primary/30">
+            <FaCreditCard className="w-8 h-8 text-primary-foreground" />
           </div>
           <div className="flex flex-col gap-1">
             <div className="w-2 h-2 rounded-full bg-[#FF6B5B]"></div>
             <div className="w-2 h-2 rounded-full bg-[#FF6B5B]"></div>
             <div className="w-2 h-2 rounded-full bg-[#FF6B5B]"></div>
           </div>
-          <div className="w-16 h-16 rounded-2xl bg-[#008B82] flex items-center justify-center shadow-lg shadow-[#008B82]/30">
-            <FaShield className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center shadow-lg shadow-accent/30">
+            <FaShield className="w-8 h-8 text-accent-foreground" />
           </div>
         </div>
 
-        <h1 className="text-center text-2xl mb-2 text-white">
-          {t('consent.authorize')}{' '}
-          <span style={{ color: '#FF6B5B' }}>Keepay</span>
+        <h1 className="text-center text-2xl mb-2 text-foreground">
+          {t('consent.authorize')} <span className="text-primary">Keepay</span>
         </h1>
-        <p className="text-center text-sm text-gray-400 mb-6">
+        <p className="text-center text-sm text-muted-foreground mb-6">
           {t('consent.subtitle')}
         </p>
 
-        <div className="bg-gray-800/50 rounded-xl p-4 mb-6 flex items-center gap-3 border border-gray-700">
-          <div className="w-12 h-12 rounded-full bg-linear-to-br from-[#C41E14] to-[#FF6B5B] flex items-center justify-center text-white shadow-lg">
+        <div className="bg-surface rounded-xl p-4 mb-6 flex items-center gap-3 border border-border">
+          <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
             <span className="text-lg">{getAvatarInitials(user?.name)}</span>
           </div>
           <div>
-            <p className="text-sm text-white">{user?.name}</p>
-            <p className="text-xs text-gray-400">{user?.email}</p>
+            <p className="text-sm text-surface-foreground">{user?.name}</p>
+            <p className="text-xs text-muted-foreground">{user?.email}</p>
           </div>
         </div>
 
         <div className="mb-6">
-          <h2 className="text-sm mb-4 text-gray-300">
+          <h2 className="text-sm mb-4 text-foreground">
             {t('consent.request_access')}
           </h2>
 
-          <div className="border border-gray-700 rounded-xl overflow-hidden bg-gray-800/30">
-            <div className="p-4 border-b border-gray-700">
+          <div className="border border-border rounded-xl overflow-hidden bg-surface">
+            <div className="p-4 border-b border-border">
               <div className="flex items-start gap-3">
-                <FaCheckCircle
-                  className="w-5 h-5 mt-0.5 shrink-0"
-                  style={{ color: '#008B82' }}
-                />
+                <FaCheckCircle className="w-5 h-5 mt-0.5 shrink-0 text-accent" />
                 <div>
-                  <p className="text-sm mb-2 text-white">
+                  <p className="text-sm mb-2 text-surface-foreground">
                     {t('consent.access_items.bank_transactions')}
                   </p>
-                  <ul className="space-y-1 text-xs text-gray-400">
+                  <ul className="space-y-1 text-xs text-muted-foreground">
                     {bankTransactionsDetails.map((item: string) => (
                       <li key={item}>• {item}</li>
                     ))}
@@ -113,15 +109,12 @@ const UserConsentDialog = ({
 
             <div className="p-4 border-b border-gray-700">
               <div className="flex items-start gap-3">
-                <FaCheck
-                  className="w-5 h-5 mt-0.5 shrink-0"
-                  style={{ color: '#008B82' }}
-                />
+                <FaCheck className="w-5 h-5 mt-0.5 shrink-0 text-accent" />
                 <div>
-                  <p className="text-sm mb-2 text-white">
+                  <p className="text-sm mb-2 text-sureface-foreground">
                     {t('consent.access_items.notifications')}
                   </p>
-                  <ul className="space-y-1 text-xs text-gray-400">
+                  <ul className="space-y-1 text-xs text-muted-foreground">
                     {notificationDetails.map((item: string) => (
                       <li key={item}>• {item}</li>
                     ))}
@@ -132,15 +125,12 @@ const UserConsentDialog = ({
 
             <div className="p-4">
               <div className="flex items-start gap-3">
-                <FaCheckCircle
-                  className="w-5 h-5 mt-0.5 shrink-0"
-                  style={{ color: '#008B82' }}
-                />
+                <FaCheckCircle className="w-5 h-5 mt-0.5 shrink-0 text-accent" />
                 <div>
-                  <p className="text-sm mb-2 text-white">
+                  <p className="text-sm mb-2 text-surface-foreground">
                     {t('consent.access_items.personal_info')}
                   </p>
-                  <ul className="space-y-1 text-xs text-gray-400">
+                  <ul className="space-y-1 text-xs text-muted-foreground">
                     {personalInfoDetails.map((item: string) => (
                       <li key={item}>• {item}</li>
                     ))}
@@ -151,14 +141,11 @@ const UserConsentDialog = ({
           </div>
         </div>
 
-        <div className="bg-[#008B82]/10 border border-[#008B82]/30 rounded-lg p-3 mb-6">
+        <div className="bg-accent/10 border border-accent/30 rounded-lg p-3 mb-6">
           <div className="flex items-start gap-2">
-            <FaLock
-              className="w-4 h-4 mt-0.5 shrink-0"
-              style={{ color: '#008B82' }}
-            />
-            <p className="text-xs text-gray-300">
-              <strong className="text-white">
+            <FaLock className="w-4 h-4 mt-0.5 shrink-0 text-accent" />
+            <p className="text-xs text-muted-foreground">
+              <strong className="text-foreground">
                 {t('consent.read_only_title')}
               </strong>{' '}
               {t('consent.read_only_text')}
@@ -179,11 +166,7 @@ const UserConsentDialog = ({
               <div
                 className={`
         w-6 h-6 rounded-md border transition-all duration-200 flex items-center justify-center
-        ${
-          accepted
-            ? 'border-red-500 bg-red-950/30'
-            : 'border-gray-600 bg-[#2a2a2a]'
-        }
+        ${accepted ? 'border-danger bg-danger/30' : 'border-border bg-surface'}
         peer-checked:bg-primary peer-checked:border-white]
         peer-checked:[&>svg]:opacity-100 peer-checked:[&>svg]:scale-100
       `}
@@ -203,13 +186,13 @@ const UserConsentDialog = ({
                 </svg>
               </div>
             </div>
-            <span className="text-gray-400 text-sm">
+            <span className="text-muted-foreground text-sm">
               {t('consent.checkbox.text')}{' '}
               <Link
                 to={PATHS.LEGAL.PRIVACY.full}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#FF6B5B] hover:underline transition"
+                className="text-accent underline transition"
               >
                 {t('auth.register.legal.privacy')}
               </Link>{' '}
@@ -218,7 +201,7 @@ const UserConsentDialog = ({
                 to={PATHS.LEGAL.TERMS.full}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#FF6B5B] hover:underline transition"
+                className="text-accent underline transition"
               >
                 {t('auth.register.legal.terms')}
               </Link>
@@ -227,7 +210,7 @@ const UserConsentDialog = ({
         </motion.div>
       </div>
       <div className="mt-6 flex gap-3 justify-end">
-        <Button variant="secondary-dark" onClick={onDecline}>
+        <Button variant="secondary" onClick={onDecline}>
           {t('consent.actions.decline')}
         </Button>
         <Button onClick={onAccept} disabled={!accepted || isPending}>

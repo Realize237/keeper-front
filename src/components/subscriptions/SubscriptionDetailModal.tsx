@@ -217,9 +217,9 @@ export default function SubscriptionDetailModal({
               animate={{ opacity: 1, y: 0 }}
               className="w-full flex justify-center mb-4"
             >
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface">
                 <Spinner />
-                <span className="text-sm text-gray-300">
+                <span className="text-sm text-surface-foreground">
                   {t('subscription_details.updating')}
                 </span>
               </div>
@@ -239,38 +239,38 @@ export default function SubscriptionDetailModal({
 
           <div className="flex flex-col items-center text-center mb-8">
             <p
-              className="text-white text-xl font-semibold truncate max-w-65"
+              className="text-surface-foreground text-xl font-semibold truncate max-w-65"
               title={subscriptionDetails?.details?.name}
             >
               {subscriptionDetails?.details?.name}
             </p>
 
-            <span className="mt-1 text-3xl font-semibold text-green-400">
+            <span className="mt-1 text-3xl font-semibold text-accent">
               ${subscriptionDetails?.price}
             </span>
           </div>
 
-          <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+          <p className="text-xs uppercase tracking-wide text-surface-foreground mb-2">
             {t('subscription_details.billing')}
           </p>
 
-          <div className="divide-y divide-white/10 ">
+          <div className="divide-y divide-muted-foreground ">
             <Row
               label={t('subscription_details.next_bill')}
               value={getFormattedNextBillingDate()}
               valueClassName={`font-medium ${
                 nextBillingResult
                   ? billingStatusTextClass[nextBillingResult.status]
-                  : 'text-gray-400'
+                  : 'text-surface-foreground'
               }`}
             />
 
             {nextBillingResult?.daysRemaining && (
               <div className="flex justify-between items-center py-3">
-                <span className="text-gray-400">
+                <span className="text-surface-foreground">
                   {t('subscription_details.remaining')}
                 </span>
-                <span className="px-2 py-0.5 text-sm rounded-full bg-red-500/15 text-red-400">
+                <span className="px-2 py-0.5 text-sm rounded-full bg-danger/15 text-danger">
                   {daysRemainingText}
                 </span>
               </div>
@@ -287,7 +287,7 @@ export default function SubscriptionDetailModal({
           </div>
 
           <div className="flex justify-between items-center py-4 mb-6">
-            <span className="text-gray-400">
+            <span className="text-foreground">
               {t('subscription_details.payment_method')}
             </span>
 
@@ -296,13 +296,13 @@ export default function SubscriptionDetailModal({
             </div>
           </div>
 
-          <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+          <p className="text-xs uppercase tracking-wide text-foreground mb-2">
             {t('subscription_details.actions')}
           </p>
 
           <div className="space-y-4">
             <div className="relative flex justify-between items-center ">
-              <span className="text-gray-400">
+              <span className=" text-foreground ">
                 {t('subscription_details.remind_me')}
               </span>
               <NotificationReminder
@@ -311,7 +311,7 @@ export default function SubscriptionDetailModal({
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">
+              <span className=" text-foreground ">
                 {t('subscription_details.sync_calendar')}
               </span>
 
@@ -335,12 +335,12 @@ export default function SubscriptionDetailModal({
                         isConnecting ||
                         nextBillingResult?.status === 'EXPIRED'
                       }
-                      className={`px-3 py-1.5 text-sm rounded-lg bg-deep-teal text-white transition ${
+                      className={`px-3 py-1.5 text-sm rounded-lg bg-accent text-primary-foreground transition ${
                         isAddingPending ||
                         isConnecting ||
                         nextBillingResult?.status === 'EXPIRED'
                           ? 'opacity-50 cursor-not-allowed'
-                          : 'hover:bg-deep-teal/90'
+                          : 'hover:bg-accent/90'
                       }`}
                     >
                       {isAddingPending || isConnecting ? (
@@ -361,7 +361,7 @@ export default function SubscriptionDetailModal({
                       <a
                         href={subscriptionDetails.calendarLink}
                         target="_blank"
-                        className="px-3 py-1.5 text-sm rounded-lg bg-white/10 text-white hover:bg-white/15"
+                        className="px-3 py-1.5 text-sm rounded-lg bg-surface text-surface-foreground hover:bg-muted"
                       >
                         <FaEye />
                       </a>
@@ -376,10 +376,10 @@ export default function SubscriptionDetailModal({
                       <button
                         onClick={onRemoveFromGoogleCalendar}
                         disabled={isRemoving}
-                        className={`px-3 py-1.5 text-sm rounded-lg bg-red-500/15 text-red-400 transition ${
+                        className={`px-3 py-1.5 text-sm rounded-lg bg-danger/15 text-danger transition ${
                           isRemoving
                             ? 'opacity-50 cursor-not-allowed'
-                            : 'hover:bg-red-500/25'
+                            : 'hover:bg-danger'
                         }`}
                       >
                         {isRemoving ? <Spinner /> : <FaTrash />}
@@ -399,14 +399,14 @@ export default function SubscriptionDetailModal({
 const Row = ({
   label,
   value,
-  valueClassName = 'text-white font-medium',
+  valueClassName = 'text-foreground font-medium',
 }: {
   label: string;
   value: React.ReactNode;
   valueClassName?: string;
 }) => (
   <div className="flex justify-between items-center py-3">
-    <span className="text-gray-400">{label}</span>
+    <span className="text-foreground">{label}</span>
     <span className={valueClassName}>{value}</span>
   </div>
 );

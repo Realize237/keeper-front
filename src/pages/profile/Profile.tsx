@@ -126,31 +126,31 @@ const Profile = () => {
       w-full flex items-center justify-between
       px-4 py-3
       rounded-xl
-      hover:bg-white/5
+      hover:muted
       transition
     "
     >
       <div className="flex items-center gap-3">
-        <item.icon className="w-5 h-5 text-white/60" />
+        <item.icon className="w-5 h-5 text-surface-foreground" />
         <div className="text-left">
           <p className="text-sm font-medium"> {t(item.label)}</p>
           {item.subtitle && (
-            <p className="text-xs text-white/40"> {t(item.subtitle)}</p>
+            <p className="text-xs text-muted-foreground">{t(item.subtitle)}</p>
           )}
         </div>
       </div>
-      <FaChevronRight className="w-4 h-4 text-white/30" />
+      <FaChevronRight className="w-4 h-4 text-surface-foreground" />
     </motion.button>
   );
 
   return (
-    <div className="px-4 py-6 text-white">
+    <div className="px-4 py-6 text-foreground">
       <div className="flex items-center mb-8">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 rounded-full hover:bg-white/10 transition"
+          className="p-2 rounded-full hover:bg-muted transition"
         >
-          <FaChevronLeft className="w-5 h-5 text-white/80" />
+          <FaChevronLeft className="w-5 h-5 text-foreground" />
         </button>
       </div>
 
@@ -158,29 +158,28 @@ const Profile = () => {
         <h3 className="text-xl font-semibold mb-6 capitalize">
           {t('profile.title')}
         </h3>
-        <div className="flex items-center p-4 rounded-2xl bg-white/5 backdrop-blur-xl">
+        <div className="flex items-center p-4 rounded-2xl bg-surface backdrop-blur-xl">
           <Avatar size="xl" name={user?.name || ''} src={user?.photo || ''} />
 
           <div className="flex-1 ml-4">
             <p className="text-base font-medium">{user?.name}</p>
-            <p className="text-xs text-white/50">{user?.email}</p>
+            <p className="text-xs text-surface-foreground">{user?.email}</p>
           </div>
-
           <button
             onClick={() => navigate('/profile/edit')}
-            className="p-2 rounded-full hover:bg-white/10 transition"
+            className="p-2 rounded-full hover:bg-muted transition"
           >
-            <FaEdit className="w-4 h-4 text-white/70" />
+            <FaEdit className="w-4 h-4 text-surface-foreground" />
           </button>
         </div>
         <div className="mt-8 space-y-6">
-          <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
+          <div className="rounded-2xl bg-surface backdrop-blur-xl p-2">
             {menuItems.map((item, i) => (
               <Row key={i} item={item} />
             ))}
           </div>
 
-          <div className="rounded-2xl bg-white/5 backdrop-blur-xl p-2">
+          <div className="rounded-2xl bg-surface backdrop-blur-xl p-2">
             {secondaryItems.map((item, i) => (
               <Row key={i} item={item} />
             ))}

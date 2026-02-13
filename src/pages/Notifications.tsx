@@ -160,15 +160,15 @@ const NotificationsPage: React.FC<unknown> = () => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-screen text-white w-full bg-[#171717]"
+      className="min-h-screen text-white w-full "
     >
-      <div className="mx-auto w-full px-4 md:px-6 bg-[#171717] lg:px-8 py-6">
+      <div className="mx-auto w-full px-4 md:px-6  lg:px-8 py-6">
         <div className="flex items-center my-4 space-x-4">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center cursor-pointer gap-2 px-3 py-1.5 rounded-md 
-       text-neutral-300 
-      hover:bg-neutral-800/50 transition"
+       text-foreground 
+      hover:bg-muted transition"
           >
             <FiChevronLeft className="w-4 h-4" />
             <span className="text-sm capitalize">{t('common.back')}</span>

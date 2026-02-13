@@ -34,7 +34,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/30 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-surface/30 flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -43,7 +43,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-app border border-amber-50 rounded-xl p-6 w-80 shadow-lg"
+        className="bg-background border border-border rounded-xl p-6 w-80 shadow-lg"
       >
         <h3 className="text-lg font-semibold mb-4">
           {t('reminders.custom.title')}
@@ -92,7 +92,7 @@ const ReminderModal: React.FC<CustomModalProps> = ({
         </div>
 
         <div className="flex justify-between gap-4 mt-5">
-          <Button variant="secondary-dark" onClick={onClose}>
+          <Button variant="secondary" onClick={onClose}>
             {t('common.cancel')}
           </Button>
           <Button

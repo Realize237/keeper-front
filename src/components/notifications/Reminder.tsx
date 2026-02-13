@@ -255,8 +255,8 @@ text-right
       right-0 
       top-0
       rounded-full
-      bg-deep-teal hover:bg-deep-teal/90
-      text-sm text-white
+      bg-accent hover:bg-accent/90
+      text-sm text-primary-foreground
       transition
     "
       >
@@ -276,10 +276,10 @@ text-right
               disabled={isAnyMutationLoading}
               className={`
                 w-full py-2 px-2
-                bg-red-500/20 text-red-500
+                bg-danger/20 text-danger
                 rounded-lg
                 text-xs font-medium
-                hover:bg-red-500/30
+                hover:bg-danger/30
                 transition
                 flex items-center justify-center gap-2
                 ${isAnyMutationLoading ? 'opacity-50 cursor-not-allowed' : ''}
@@ -300,7 +300,7 @@ text-right
             {reminders.map((reminder, index) => (
               <div
                 key={reminder.id}
-                className="flex items-center justify-between w-full bg-gray-900/20 px-4 py-2 rounded-xl shadow-sm"
+                className="flex items-center justify-between w-full bg-surface px-4 py-2 rounded-xl shadow-sm"
               >
                 <Dropdown
                   label={`${t('reminders.text.reminder')} ${index + 1}`}
@@ -357,8 +357,8 @@ text-right
               onClick={handleAddReminder}
               className="
             flex items-center gap-2 px-3 py-1
-            text-deep-teal text-sm
-            rounded-lg hover:bg-gray-800/40
+            text-accent text-sm
+            rounded-lg hover:bg-accent/40
             transition
           "
             >
@@ -373,8 +373,8 @@ text-right
                 disabled={isAnyMutationLoading}
                 className={`
                   px-4 py-2 rounded-lg
-                  bg-deep-teal hover:bg-deep-teal/90
-                  text-white text-sm font-medium
+                  bg-accent hover:bg-accent/90
+                  text-primary-foreground text-sm font-medium
                   transition
                   flex items-center justify-center gap-2
                   ${isAnyMutationLoading ? 'opacity-50 cursor-not-allowed' : ''}

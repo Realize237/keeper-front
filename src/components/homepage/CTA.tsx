@@ -9,7 +9,7 @@ export const CTA = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-24 bg-linear-to-br from-[#990800] via-[#C41E14] to-[#FF6B5B] relative overflow-hidden">
+    <section className="py-24 bg-primary-gradient relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
         <div

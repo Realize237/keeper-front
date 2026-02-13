@@ -23,6 +23,7 @@ export default function SelectCalendarDate({
           onChange(value);
           closeBottomSheet();
         }}
+        className="bg-amber-400"
         value={currentDate}
       />
     </div>

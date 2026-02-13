@@ -51,8 +51,8 @@ export default function FormInput<FormValues extends FieldValues>({
           type={inputType}
           placeholder={placeholder}
           disabled={disabled}
-          className={`w-full bg-surface text-white placeholder-gray-500 rounded-xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary pr-12 ${
-            error ? 'border border-red-500' : ''
+          className={`w-full bg-surface text-surface-foreground placeholder-muted-foreground rounded-xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary pr-12 ${
+            error ? 'border border-danger' : ''
           } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         />
 
@@ -60,7 +60,7 @@ export default function FormInput<FormValues extends FieldValues>({
           <motion.button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400"
+            className="absolute right-5 top-1/2 -translate-y-1/2 text-surface-foreground"
           >
             {showPassword ? <GoEye size={20} /> : <GoEyeClosed size={20} />}
           </motion.button>
@@ -68,7 +68,7 @@ export default function FormInput<FormValues extends FieldValues>({
       </div>
 
       {error && (
-        <p className="text-red-500 text-xs mt-1">
+        <p className="text-danger text-xs mt-1">
           {typeof error === 'string' ? error : error.message}
         </p>
       )}

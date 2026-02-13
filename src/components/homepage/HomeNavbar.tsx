@@ -7,6 +7,7 @@ import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { homeAnchor } from '../../utils';
 import { PATHS } from '../../routes/paths';
+import ThemeSwitcher from '../common/ThemeSwitcher';
 
 type NavItem = {
   labelKey: string;
@@ -92,16 +93,14 @@ const HomeNavbar = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-6 py-6">
-      <nav className="bg-white/80 backdrop-blur-xl border border-gray-200/60 rounded-3xl shadow-lg shadow-gray-900/5 px-6 py-4 flex items-center justify-between">
+    <div className="container bg-background mx-auto px-6 py-6">
+      <nav className="bg-background/80 backdrop-blur-xl border border-border rounded-3xl shadow-lg  px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <div className="relative w-11 h-11 bg-linear-to-br from-[#990800] via-[#C41E14] to-[#FF6B5B] rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30 group cursor-pointer">
-            <FaBell className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#008B82] rounded-full border-2 border-white animate-pulse"></div>
+          <div className="relative w-11 h-11 bg-primary-gradient text-foreground rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30 group cursor-pointer">
+            <FaBell className="w-5 h-5 text-forefround group-hover:scale-110 transition-transform" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full border-2 border-accent-foreground animate-pulse"></div>
           </div>
-          <span className="text-2xl font-bold bg-linear-to-r from-[#990800] to-[#C41E14] bg-clip-text text-transparent">
-            Keepay
-          </span>
+          <span className="text-2xl font-bold  text-primary">Keepay</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-2">
@@ -115,8 +114,8 @@ const HomeNavbar = () => {
       px-5 py-2.5 rounded-xl font-medium transition-all
       ${
         isActive
-          ? 'text-[#990800] bg-red-50'
-          : 'text-gray-700 hover:text-[#990800] hover:bg-red-50'
+          ? 'text-primary bg-muted'
+          : 'text-foreground hover:text-primary hover:bg-muted'
       }
     `;
 
@@ -134,17 +133,18 @@ const HomeNavbar = () => {
               </Link>
             );
           })}
-          <div className="w-px h-6 bg-gray-200 mx-2"></div>
+          <div className="w-px h-6 bg-border mx-2"></div>
 
-          <div className="flex items-center gap-1 bg-gray-100 rounded-xl p-1">
+          <div className="flex items-center gap-1 bg-muted rounded-xl p-1">
             <motion.button
               onClick={() => changeLanguage('en')}
-              className="px-3 py-1.5 rounded-lg text-sm font-semibold"
+              className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
+                isEnglish
+                  ? 'bg-background text-primary shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
               animate={{
-                backgroundColor: isEnglish ? '#ffffff' : 'transparent',
-                color: isEnglish ? '#990800' : '#4b5563',
                 scale: isEnglish ? 1.05 : 1,
-                boxShadow: isEnglish ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
@@ -155,10 +155,12 @@ const HomeNavbar = () => {
 
             <motion.button
               onClick={() => changeLanguage('fr')}
-              className="px-3 py-1.5 rounded-lg text-sm font-semibold"
+              className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
+                isFrench
+                  ? 'bg-background text-primary shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
               animate={{
-                backgroundColor: isFrench ? '#ffffff' : 'transparent',
-                color: isFrench ? '#990800' : '#4b5563',
                 scale: isFrench ? 1.05 : 1,
                 boxShadow: isFrench ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
               }}
@@ -170,9 +172,11 @@ const HomeNavbar = () => {
             </motion.button>
           </div>
 
+          <ThemeSwitcher />
+
           <button
             onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
-            className="px-6 py-2.5 bg-linear-to-r from-[#990800] to-[#C41E14] text-white rounded-xl hover:shadow-xl hover:shadow-red-900/30 transition-all transform hover:-translate-y-0.5 font-semibold"
+            className="px-6 py-2.5 bg-primary-gradient text-primary-foreground rounded-xl hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5 font-semibold"
           >
             {t('nav.get_started')}
           </button>
@@ -180,15 +184,15 @@ const HomeNavbar = () => {
 
         <button
           onClick={() => setIsMenuOpen(true)}
-          className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="md:hidden p-2 hover:bg-muted rounded-lg transition-colors"
         >
-          <IoMenu className="w-6 h-6 text-gray-700" />
+          <IoMenu className="w-6 h-6 text-foreground" />
         </button>
       </nav>
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-surface/40 backdrop-blur-sm"
             variants={overlayVariants}
             initial="hidden"
             animate="visible"
@@ -196,18 +200,18 @@ const HomeNavbar = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             <motion.div
-              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl px-6 pt-6 pb-10 shadow-2xl"
+              className="absolute bottom-0 left-0 right-0 bg-background rounded-t-3xl px-6 pt-6 pb-10 shadow-2xl"
               variants={sheetVariants}
               initial="hidden"
               animate="visible"
               exit="hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex text-foreground items-center justify-between mb-6">
                 <span className="text-lg font-semibold">Menu</span>
                 <button
                   onClick={() => setIsMenuOpen(false)}
-                  className="p-2 rounded-full hover:bg-gray-100"
+                  className="p-2 rounded-full hover:bg-muted-foreground"
                 >
                   <IoClose className="w-6 h-6" />
                 </button>
@@ -225,13 +229,13 @@ const HomeNavbar = () => {
                       key={item.href}
                       variants={itemVariants}
                       className={`relative pl-4 text-lg font-medium ${
-                        isActive ? 'text-[#990800]' : 'text-gray-800'
+                        isActive ? 'text-primary' : 'text-foreground'
                       }`}
                     >
                       {isActive && (
                         <motion.span
                           layoutId="mobile-active"
-                          className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full bg-[#990800]"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-full bg-primary"
                         />
                       )}
 
@@ -257,14 +261,14 @@ const HomeNavbar = () => {
 
               <motion.div
                 variants={itemVariants}
-                className="mt-8 flex items-center justify-center gap-1 bg-gray-100 rounded-xl p-1"
+                className="mt-8 flex items-center justify-center gap-1 bg-muted rounded-xl p-1"
               >
                 <button
                   onClick={() => changeLanguage('en')}
                   className={`px-4 py-2 rounded-lg font-semibold ${
                     isEnglish
-                      ? 'bg-white text-[#990800] shadow-sm'
-                      : 'text-gray-500'
+                      ? 'bg-background text-primary shadow-sm'
+                      : 'text-muted-foreground'
                   }`}
                 >
                   EN
@@ -274,8 +278,8 @@ const HomeNavbar = () => {
                   onClick={() => changeLanguage('fr')}
                   className={`px-4 py-2 rounded-lg font-semibold ${
                     isFrench
-                      ? 'bg-white text-[#990800] shadow-sm'
-                      : 'text-gray-500'
+                      ? 'bg-background text-primary shadow-sm'
+                      : 'text-muted-foreground'
                   }`}
                 >
                   FR
@@ -285,7 +289,7 @@ const HomeNavbar = () => {
               <motion.button
                 variants={itemVariants}
                 onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
-                className="mt-8 w-full py-4 bg-linear-to-r from-[#990800] to-[#C41E14] text-white rounded-2xl font-semibold shadow-lg shadow-red-900/30"
+                className="mt-8 w-full py-4 bg-primary-gradient text-primary-foreground  rounded-2xl font-semibold shadow-lg shadow-red-900/30"
               >
                 {t('nav.get_started')}
               </motion.button>

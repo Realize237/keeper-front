@@ -36,14 +36,14 @@ export const LegalLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
-      <div className="bg-white border-b border-gray-200">
+    <div className="min-h-screen bg-background">
+      <div className=" border-b border-border">
         <div className="container text-center mx-auto px-6 py-6">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-foreground">
             {t('legal.title')}
           </h1>
 
-          <p className="text-gray-600 mt-2">
+          <p className="text-muted-foreground mt-2">
             {t('legal.last_updated', { date: 'January 9, 2026' })}
           </p>
         </div>
@@ -52,8 +52,8 @@ export const LegalLayout = () => {
       <div className="container mx-auto px-6 py-12">
         <div className="grid lg:grid-cols-4 gap-8">
           <aside className="lg:col-span-1">
-            <div className="bg-white rounded-3xl border-2 border-gray-200 p-6 sticky top-6">
-              <h2 className="text-lg font-bold text-gray-900 mb-4">
+            <div className="rounded-3xl border-2 border-border p-6 sticky top-6">
+              <h2 className="text-lg font-bold text-foreground mb-4">
                 {t('legal.sections_title')}
               </h2>
 
@@ -65,8 +65,8 @@ export const LegalLayout = () => {
                     className={({ isActive }) =>
                       `w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
                         isActive
-                          ? 'bg-linear-to-r from-[#990800] to-[#C41E14] text-white shadow-lg'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-primary-gradient text-primary-foreground shadow-lg'
+                          : 'text-foreground hover:bg-muted'
                       }`
                     }
                   >
@@ -81,7 +81,7 @@ export const LegalLayout = () => {
           </aside>
 
           <main className="lg:col-span-3">
-            <div className="bg-white rounded-3xl border-2 border-gray-200 p-8 md:p-12">
+            <div className="rounded-3xl border-2 border-border text-foreground p-8 md:p-12">
               <Outlet />
             </div>
           </main>

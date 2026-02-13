@@ -75,17 +75,17 @@ const SubscriptionFilterModal = ({
             />
           ))}
         </FilterSection>
-        <p className="text-sm font-medium text-white mt-6 mb-2">
+        <p className="text-sm font-medium text-foreground mt-6 mb-2">
           {t('subscriptions.filter.price_range')}
         </p>
-        <hr className="text-white/50" />
+        <hr className="text-border" />
         <PriceRangeSlider
           minPrice={0}
           maxPrice={2000}
           onChange={handlePriceChange}
         />
 
-        <hr className="text-white/50" />
+        <hr className="text-border" />
 
         <div className="flex justify-between gap-2 mt-4">
           <FormButton type="button" onClick={onClose} variant="secondary-dark">
@@ -111,10 +111,10 @@ const FilterSection = ({
   children: React.ReactNode;
 }) => (
   <div className="space-y-2">
-    <p className="text-xs font-semibold text-white/50 uppercase tracking-wide  ">
+    <p className="text-xs font-semibold text-foreground uppercase tracking-wide  ">
       {title}
     </p>
-    <hr className="text-white/50" />
+    <hr className="text-border" />
     <div className="flex flex-wrap gap-2 mt-4">{children}</div>
   </div>
 );

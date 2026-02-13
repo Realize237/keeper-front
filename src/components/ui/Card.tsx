@@ -9,10 +9,10 @@ export const Card = ({ children, className }: CardProps) => {
       className={`
         relative
         rounded-2xl
-        bg-[#1C1C1E]
+        bg-surface
         p-6
         shadow-sm
-        border border-white/5
+        border border-border
         ${className ?? ''}
       `}
     >

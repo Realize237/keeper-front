@@ -25,7 +25,7 @@ export const Avatar = ({
       aria-label={name ?? 'User avatar'}
       className={cn(
         'flex items-center justify-center rounded-full font-semibold select-none shrink-0',
-        'bg-deep-teal text-white',
+        'bg-accent text-white',
         AVATAR_SIZES[size],
         className
       )}

@@ -13,8 +13,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="space-y-1 w-full">
         <div
           className={groupClassNames(
-            'flex items-center  justify-between bg-surface text-white placeholder-gray-500 rounded-full border transition',
-            error ? 'border-red-500' : 'border-gray-700',
+            'flex items-center  justify-between bg-surface text-surface-foreground placeholder-muted-foreground rounded-full border transition',
+            error ? 'border-danger' : 'border-border',
             'focus-within:border-primary focus-within:ring-2 focus-within:ring-primary',
             className
           )}
@@ -37,17 +37,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               <FiEyeOff
                 onClick={() => setShowPassword(false)}
                 size={24}
-                className="text-gray-500 cursor-pointer mr-4"
+                className="text-surface-foreground cursor-pointer mr-4"
               />
             ) : (
               <FiEye
                 size={24}
                 onClick={() => setShowPassword(true)}
-                className="text-gray-500 cursor-pointer mr-4"
+                className="text-surface-foreground cursor-pointer mr-4"
               />
             ))}
         </div>
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+        {error && <p className="text-danger text-sm">{error}</p>}
       </div>
     );
   }

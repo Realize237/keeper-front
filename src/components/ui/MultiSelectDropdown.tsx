@@ -84,7 +84,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
     <div className="relative w-full" ref={ref}>
       <button
         onClick={() => setOpen((isOpen) => !isOpen)}
-        className="w-full border border-neutral-500 px-3 py-2 rounded-lg flex items-center justify-between transition"
+        className="w-full border border-border px-3 py-2 rounded-lg flex items-center justify-between transition"
       >
         <span className="text-sm">
           {selected.length
@@ -100,7 +100,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
         >
-          <FiChevronDown className="text-neutral-400" />
+          <FiChevronDown className="text-foreground" />
         </motion.div>
       </button>
 
@@ -111,7 +111,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute left-0 mt-2 w-full bg-surface text-white rounded-lg shadow-xl z-20 p-2 max-h-60 overflow-y-auto"
+            className="absolute left-0 mt-2 w-full bg-surface text-surface-foreground rounded-lg shadow-xl z-20 p-2 max-h-60 overflow-y-auto"
           >
             {options.map((option, index) => (
               <motion.label
@@ -120,7 +120,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex items-center gap-3 px-2 py-2 rounded-md border-b border-gray-100 cursor-pointer text-sm hover:bg-app transition"
+                className="flex items-center gap-3 px-2 py-2 rounded-md border-b border-border cursor-pointer text-sm hover:bg-muted transition"
               >
                 <input
                   type="checkbox"
