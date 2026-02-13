@@ -1,11 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useUser } from './useUsers';
 
 export type Theme = 'light' | 'dark' | 'system';
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const { user } = useUser();
+
+  const initialTheme = useMemo<Theme>(() => {
+    if (user?.preferredTheme) {
+      return user.preferredTheme as Theme;
+    }
     return (localStorage.getItem('theme') as Theme) || 'system';
-  });
+  }, [user?.preferredTheme]);
+
+  const [theme, setTheme] = useState<Theme>(initialTheme);
+
+  useEffect(() => {
+    setTheme(initialTheme);
+  }, [initialTheme]);
 
   useEffect(() => {
     const root = document.documentElement;

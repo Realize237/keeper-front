@@ -48,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-999 bg-surface/50 backdrop-blur-sm flex items-center justify-center h-dvh"
+          className="fixed inset-0 z-999 bg-surface/30 backdrop-blur-sm flex items-center justify-center h-dvh"
           variants={backdropVariants}
           initial="hidden"
           animate="visible"
@@ -61,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({
             animate="visible"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className={`relative bg-app text-gray-100 w-full mx-4 ${width}
+            className={`relative bg-background text-surface-foreground w-full mx-4 ${width}
               ${height} rounded-2xl shadow-xl
               flex flex-col overflow-hidden`}
           >
@@ -72,7 +72,7 @@ const Modal: React.FC<ModalProps> = ({
 
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-red-500 transition-colors shrink-0"
+                className="text-gray-400 hover:text-danger transition-colors shrink-0"
               >
                 <IoClose size={20} />
               </button>

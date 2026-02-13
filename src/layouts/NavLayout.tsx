@@ -5,7 +5,7 @@ import Sidebar from '../components/layout/sidebar/Sidebar';
 import { useState } from 'react';
 import Header from '../components/layout/header/Header';
 import { useUser } from '../hooks/useUsers';
-import { ReviewButton } from '../components/ui/ReviewButtom';
+import { ReviewButton } from '../components/ui/ReviewButton';
 
 export default function NavLayout() {
   const { user } = useUser();
@@ -24,7 +24,7 @@ export default function NavLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-app flex-col">
+    <div className="min-h-screen bg-background flex-col">
       <main className={getMainClasses()}>
         <Header />
         <Outlet />

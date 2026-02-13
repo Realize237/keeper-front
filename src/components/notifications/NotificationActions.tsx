@@ -33,13 +33,13 @@ const NotificationActions: React.FC<Props> = ({
         <>
           <button
             onClick={() => setSelectMode(false)}
-            className="px-3 py-2 rounded-full bg-neutral-800/50 text-sm border border-neutral-700"
+            className="px-3 py-2 rounded-full bg-surface text-surface-foreground text-sm border border-border"
           >
             {t('common.cancel')}
           </button>
           <button
             onClick={toggleSelectAll}
-            className="px-3 py-2 rounded-full bg-neutral-800/50 text-sm border border-neutral-700"
+            className="px-3 py-2 rounded-full bg-surface text-surface-foreground text-sm border border-border"
           >
             {t('notifications.actions.toggle_select_page')}
           </button>
@@ -48,13 +48,13 @@ const NotificationActions: React.FC<Props> = ({
             <>
               <button
                 onClick={toggleStatus}
-                className="px-3 py-2 rounded-full bg-green-600/20 text-sm border border-green-600"
+                className="px-3 py-2 rounded-full bg-accent/20 text-sm border border-accent"
               >
                 {t('notifications.actions.toggle_status')}
               </button>
               <button
                 onClick={onDeleteSelected}
-                className="px-3 py-2 rounded-full bg-red-600/20 text-sm border border-red-600"
+                className="px-3 py-2 rounded-full bg-danger/20 text-sm border border-danger"
               >
                 {t('notifications.actions.delete_selected', {
                   count: selectedCount,
@@ -67,19 +67,19 @@ const NotificationActions: React.FC<Props> = ({
         <>
           <button
             onClick={() => setSelectMode(true)}
-            className="px-3 py-2 rounded-full bg-neutral-800/50 text-sm border border-neutral-700"
+            className="px-3 py-2 rounded-full text-surface-foreground bg-surface text-sm border border-border"
           >
             {t('notifications.actions.select')}
           </button>
           <button
             onClick={onMarkAllRead}
-            className="px-3 py-2 rounded-full bg-green-600/20 text-sm border border-green-600"
+            className="px-3 py-2 rounded-full text-accent-foreground bg-accent text-sm border border-accent"
           >
             {t('notifications.actions.mark_all_read')}
           </button>
           <button
             onClick={onDeleteAll}
-            className="px-3 py-2 rounded-full bg-red-600/20 text-sm border border-red-600"
+            className="px-3 py-2 rounded-full bg-danger text-sm text-primary-foreground border border-border"
           >
             {t('notifications.actions.delete_all')}
           </button>

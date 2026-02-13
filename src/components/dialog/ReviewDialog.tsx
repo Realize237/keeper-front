@@ -136,15 +136,17 @@ export function ReviewDialog({
       {!isSuccess ? (
         <>
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-linear-to-br from-primary to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-900/30">
-              <FaStar className="w-8 h-8 text-white fill-white" />
+            <div className="w-16 h-16 bg-primary-gradient  rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-danger/30">
+              <FaStar className="w-8 h-8 text-white fill-primary-foreground" />
             </div>
-            <p className="text-gray-400 font-medium">{t('review.subtitle')}</p>
+            <p className="text-foreground font-medium">
+              {t('review.subtitle')}
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-gray-300 text-center">
+              <label className="block text-sm font-medium text-foreground text-center">
                 {t('review.rateLabel')}
               </label>
               <div className="flex justify-center gap-2">
@@ -190,7 +192,7 @@ export function ReviewDialog({
 
                         <div className="relative">
                           <FaStar
-                            className="w-10 h-10 md:w-12 md:h-12 text-gray-300 transition-all duration-300"
+                            className="w-10 h-10 md:w-12 md:h-12 text-foreground transition-all duration-300"
                             style={{
                               fill: 'none',
                               stroke: 'currentColor',
@@ -237,7 +239,7 @@ export function ReviewDialog({
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">
+              <label className="block text-sm font-medium text-foreground">
                 {t('review.messageLabel')}
               </label>
               <textarea
@@ -245,7 +247,7 @@ export function ReviewDialog({
                 onChange={(e) => updateRatingState({ message: e.target.value })}
                 placeholder={t('review.messagePlaceholder')}
                 rows={4}
-                className="w-full bg-surface text-white placeholder-gray-500 rounded-xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary border-border resize-none"
+                className="w-full bg-surface text-surface-foreground placeholder-muted-foreground rounded-xl py-3 px-5 focus:outline-none focus:ring-2 focus:ring-primary border-border resize-none"
               />
             </div>
 
@@ -265,9 +267,9 @@ export function ReviewDialog({
         </>
       ) : (
         <div className="text-center py-8">
-          <div className="w-20 h-20 bg-linear-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+          <div className="w-20 h-20 bg-linear-to-br from-accent/90 to-accent rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
             <svg
-              className="w-10 h-10 text-white"
+              className="w-10 h-10 text-accent-foreground"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -280,10 +282,10 @@ export function ReviewDialog({
               />
             </svg>
           </div>
-          <h3 className="text-2xl font-bold text-white mb-2">
+          <h3 className="text-2xl font-bold text-foreground mb-2">
             {t('review.successTitle')}
           </h3>
-          <p className="text-gray-400">{t('review.successMessage')}</p>
+          <p className="text-foreground">{t('review.successMessage')}</p>
         </div>
       )}
     </Modal>

@@ -34,7 +34,7 @@ export const GDPRCompliance = () => {
           <ul key={key} className=" mb-2">
             {block.items.map((item, index) => (
               <li className="flex gap-2" key={index}>
-                <FaCheck className="w-5 h-5 text-[#008B82] shrink-0 mt-0.5" />
+                <FaCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <Trans i18nKey={item} />
               </li>
             ))}
@@ -49,7 +49,7 @@ export const GDPRCompliance = () => {
                 {block.contact.email}:{' '}
                 <a
                   href={`mailto:${env.APP_PRIVACY_POLICY_EMAIL}`}
-                  className="text-blue-600 underline"
+                  className="text-foreground underline"
                 >
                   {env.APP_PRIVACY_POLICY_EMAIL}
                 </a>
@@ -62,7 +62,7 @@ export const GDPRCompliance = () => {
                   href={env.APP_WEBSITE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 underline"
+                  className="text-foreground underline"
                 >
                   {env.APP_WEBSITE_URL}
                 </a>
@@ -78,15 +78,15 @@ export const GDPRCompliance = () => {
   return (
     <div className="prose prose-gray max-w-none">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center">
-          <FaGlobe className="w-6 h-6 text-white" />
+        <div className="w-12 h-12 bg-primary-gradient rounded-2xl flex items-center justify-center">
+          <FaGlobe className="w-6 h-6 text-primary-foreground" />
         </div>
-        <h2 className="text-3xl font-extrabold text-gray-900 m-0">
+        <h2 className="text-3xl font-extrabold text-foreground m-0">
           {t('title')}
         </h2>
       </div>
 
-      <p className="text-lg leading-relaxed text-gray-700 mb-6">
+      <p className="text-lg leading-relaxed text-foreground mb-6">
         <Trans i18nKey={t('intro')} />
       </p>
 

@@ -65,23 +65,22 @@ export const Features = () => {
   const { t } = useTranslation();
 
   return (
-    <section
-      id="features"
-      className="py-24 bg-linear-to-b from-white to-gray-50"
-    >
+    <section id="features" className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-[#990800]/10 to-[#FF6B5B]/10 border border-[#990800]/20 text-[#990800] rounded-2xl text-sm mb-6 font-bold shadow-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-primary/10 to-[#FF6B5B]/10 border border-primary/20 text-primary rounded-2xl text-sm mb-6 font-bold shadow-sm">
             <AiOutlineThunderbolt className="w-4 h-4" />
             {t('features.badge')}
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
-            <span className="block text-gray-900">{t('features.title_1')}</span>
-            <span className="block bg-linear-to-r from-[#990800] via-[#C41E14] to-[#FF6B5B] bg-clip-text text-transparent">
+            <span className="block text-foreground">
+              {t('features.title_1')}
+            </span>
+            <span className="block text-gradient-primary">
               {t('features.title_2')}
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium">
             {t('features.description')}
           </p>
         </div>
@@ -90,7 +89,7 @@ export const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group bg-white rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-gray-900/10 transition-all duration-300 border-2 border-gray-100 hover:border-[#990800]/20 cursor-pointer"
+              className="group bg-surface rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-background transition-all duration-300 border-2 border-border hover:border-muted cursor-pointer"
             >
               <div className="relative h-48 overflow-hidden bg-gray-100">
                 <ImageWithFallback
@@ -107,16 +106,16 @@ export const Features = () => {
                   <div
                     className={`w-14 h-14 bg-linear-to-br ${feature.gradient} rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
                   >
-                    <feature.icon className="w-7 h-7 text-white" />
+                    <feature.icon className="w-7 h-7 text-primary-foreground" />
                   </div>
                 </div>
               </div>
 
               <div className="p-7">
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-[#990800] transition-colors">
+                <h3 className="text-2xl font-bold mb-3 text-surface-foreground group-hover:text-primary transition-colors">
                   {t(feature.titleKey)}
                 </h3>
-                <p className="text-gray-600 leading-relaxed font-medium">
+                <p className="text-muted-foreground leading-relaxed font-medium">
                   {t(feature.descKey)}
                 </p>
 
@@ -130,13 +129,13 @@ export const Features = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-linear-to-r from-gray-50 to-red-50 border-2 border-dashed border-[#990800]/30 rounded-2xl">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-surface border-2 border-dashed border-primary/30 rounded-2xl">
             <div className="flex -space-x-2">
               <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#FF6B5B] to-[#C41E14] border-2 border-white"></div>
               <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#990800] to-[#6B0500] border-2 border-white"></div>
               <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#008B82] to-[#006B66] border-2 border-white"></div>
             </div>
-            <p className="text-gray-700 font-semibold">
+            <p className="text-surface-foreground font-semibold">
               {t('features.join_users')}
             </p>
           </div>

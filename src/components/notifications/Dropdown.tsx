@@ -45,16 +45,16 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div ref={ref} className="group flex items-center space-x-2 relative">
       <div className="w-full">
-        <div className="text-xs text-gray-500 mb-1">{label}</div>
+        <div className="text-xs text-surface-foreground mb-1">{label}</div>
 
         <motion.button
           type="button"
           whileTap={{ scale: 0.98 }}
           onClick={() => setOpen((v) => !v)}
           className={groupClassNames(
-            'w-full bg-inherit border px-3 py-2 text-sm rounded-lg border-neutral-600',
-            'flex items-center justify-between text-neutral-400 shadow-sm',
-            'focus:outline-none focus:ring-2 focus:ring-deep-teal'
+            'w-full bg-surface border px-3 py-2 text-sm rounded-lg border-border',
+            'flex items-center justify-between text-surface-foreground shadow-sm',
+            'focus:outline-none focus:ring-2 focus:ring-accent'
           )}
         >
           <span>
@@ -80,7 +80,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               transition={{ duration: 0.18, ease: 'easeOut' }}
               className={groupClassNames(
                 'absolute z-50 bottom-full mb-1 w-full rounded-lg',
-                'border border-neutral-300 bg-app text-white',
+                'border border-border bg-surface text-surface-foreground',
                 'shadow-lg max-h-40 overflow-y-auto'
               )}
             >
@@ -123,10 +123,9 @@ const Dropdown: React.FC<DropdownProps> = ({
                       onChange?.(option.value);
                       setOpen(false);
                     }}
-                    whileHover={{ backgroundColor: 'rgba(255,255,255,0.06)' }}
                     whileTap={{ scale: 0.98 }}
                     className={groupClassNames(
-                      'px-3 py-2 text-sm cursor-pointer rounded-md',
+                      'px-3 py-2 text-sm cursor-pointer rounded-md hover:bg-muted',
                       value === option.value && 'bg-surface font-medium'
                     )}
                   >
@@ -149,7 +148,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             className="mt-4"
           >
             <MdClose
-              className="text-neutral-500 cursor-pointer hover:text-neutral-300"
+              className="text-surface-foreground cursor-pointer hover:text-muted-foreground"
               size={22}
               onClick={onDelete}
             />

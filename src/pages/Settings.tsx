@@ -9,7 +9,7 @@ import {
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { SettingsSelect } from '../components/Settings/SettingsSelect';
+
 import type { IconType } from 'react-icons';
 import { ReactNode } from 'react';
 import { useUser } from '../hooks/useUsers';
@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import { FaSun } from 'react-icons/fa6';
 import { Theme, useTheme } from '../hooks/useTheme';
 import ReactCountryFlag from 'react-country-flag';
+import { SettingsSelect } from '../components/settings/SettingsSelect';
 
 const Section = ({
   title,
@@ -26,9 +27,9 @@ const Section = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-2xl  bg-white/5  shadow-sm overflow-visible">
-    <div className="px-4 py-3 border-b  border-white/10">
-      <h4 className="text-xs font-semibold uppercase tracking-wide text-white/50">
+  <div className="rounded-2xl  bg-surface  shadow-sm overflow-visible">
+    <div className="px-4 py-3 border-b  border-border">
+      <h4 className="text-xs font-semibold uppercase tracking-wide text-foreground">
         {title}
       </h4>
     </div>
@@ -49,12 +50,14 @@ const Row = ({
 }) => (
   <div className="flex items-center justify-between px-4 py-3">
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-        <Icon className="w-4 h-4 text-white/70" />
+      <div className="w-9 h-9 rounded-full bg-muted-surface flex items-center justify-center">
+        <Icon className="w-4 h-4 text-surface-foreground" />
       </div>
       <div>
         <p className="text-sm font-medium">{label}</p>
-        {description && <p className="text-xs text-white/40">{description}</p>}
+        {description && (
+          <p className="text-xs text-muted-foreground">{description}</p>
+        )}
       </div>
     </div>
     {action}
@@ -126,10 +129,10 @@ export default function Settings() {
 
   return (
     <div className="px-4 py-6 ">
-      <div className="flex items-center mb-6 text-white">
+      <div className="flex items-center mb-6 text-foreground">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-white/10 transition"
+          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-muted transition"
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
@@ -137,7 +140,7 @@ export default function Settings() {
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl mx-auto  space-y-6 text-white"
+        className="max-w-2xl mx-auto  space-y-6 text-foreground"
       >
         <h3 className="text-xl font-bold mb-8 capitalize">
           {t('settings.title', 'Settings')}
@@ -210,7 +213,7 @@ export default function Settings() {
             icon={FaCalendarAlt}
             label="Google Calendar"
             description={t('settings.integrations.google.description')}
-            action={<button className="text-sm text-[#CDFF00]">Connect</button>}
+            action={<button className="text-sm text-primary">Connect</button>}
           />
         </Section>
       </motion.div>

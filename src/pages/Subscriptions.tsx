@@ -20,9 +20,7 @@ import {
 import BottomSheet from '../components/ui/BottomSheet';
 import type { Value } from '../interfaces/calendar';
 import { useMonthlySubscriptions } from '../hooks/useSubscriptions';
-import CalendarSkeleton, {
-  MonthlyHeaderSkeleton,
-} from '../components/calendar/CalendarSkeleton';
+
 import ErrorState from '../components/common/ErrorState';
 import NotificationPermissionModal from '../components/ui/NotificationPermissionModal';
 import { useNotificationPermission } from '../hooks/useNotificationPermission';
@@ -39,6 +37,7 @@ import { MONTH_KEYS } from '../constants/calendar';
 import UserConsentDialog from '../components/dialog/UserConsentDialog';
 import { useUserConsent } from '../hooks/useUserConsent';
 import AccountSyncBanner from '../components/subscriptions/AccountSyncBanner ';
+import { CalendarSkeleton } from '../components/calendar/CalendarSkeleton';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -289,7 +288,7 @@ const Subscriptions = () => {
       <div className="flex flex-col w-11/12 h-11/12 mx-auto">
         <AccountSyncBanner onSync={() => handleShowModal()} />
         <motion.div
-          className="  border-gray-700"
+          className="  border-border"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -336,7 +335,7 @@ const Subscriptions = () => {
                   variants={itemVariants}
                 >
                   <div>
-                    <span className="text-white text-xl md:text-2xl">
+                    <span className="text-foreground text-xl md:text-2xl">
                       {t(`calendar.months.${MONTH_KEYS[monthIndex]}`)},{' '}
                       {date.getFullYear()}
                     </span>
@@ -354,13 +353,13 @@ const Subscriptions = () => {
                     className="
     w-full flex items-center justify-between
     rounded-full px-5 py-3
-    bg-white/8 backdrop-blur-2xl
+    bg-surface backdrop-blur-2xl
     shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-    text-sm text-white gap-4
+    text-sm text-surface-foreground gap-4
   "
                   >
                     <div className="flex items-center gap-1">
-                      <CiFilter size={16} className="text-white/70" />
+                      <CiFilter size={16} className="text-surface-foreground" />
                       <span className="font-medium tracking-tight">
                         {t('subscriptions.filter.title')}
                       </span>
@@ -380,15 +379,15 @@ const Subscriptions = () => {
                         }}
                         className="
         flex items-center gap-1
-        text-xs text-white/70
+        text-xs text-surface-foreground/80
         px-2 py-1 rounded-full
       "
                       >
                         {t('common.clear')}
-                        <span className="text-white/50">×</span>
+                        <span className="text-surface-foreground/50">×</span>
                       </motion.button>
                     ) : (
-                      <span className="text-xs text-white/40">
+                      <span className="text-xs text-surface-foreground/40">
                         {t('common.off')}
                       </span>
                     )}
@@ -407,13 +406,12 @@ const Subscriptions = () => {
                     onClick={() => setSelectDay(index)}
                     className={`p-1 mr-1 px-4 md:py-2 rounded-full ${
                       selectDay === index
-                        ? 'border border-[#303031]'
-                        : 'bg-[#464646]'
+                        ? 'border border-border'
+                        : 'bg-surface'
                     } cursor-pointer h-auto flex justify-center items-center`}
-                    whileHover={{ scale: 1.05, backgroundColor: '#3f3f3f' }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span className="text-gray-400 text-sm">{day}</span>
+                    <span className="text-foreground text-sm">{day}</span>
                   </motion.button>
                 ))}
               </motion.div>
@@ -422,7 +420,6 @@ const Subscriptions = () => {
               <motion.div variants={itemVariants}>
                 {isLoading && (
                   <>
-                    <MonthlyHeaderSkeleton />
                     <CalendarSkeleton />
                   </>
                 )}
@@ -435,7 +432,7 @@ const Subscriptions = () => {
                 )}
               </motion.div>
               {isLoading ? (
-                <div className="w-full mt-4 bg-[#3a3a3a] animate-pulse h-14 rounded-xl" />
+                <div className="w-full mt-4 bg-surface-foreground animate-pulse h-14 rounded-xl" />
               ) : error ? (
                 <ErrorState
                   message={t('subscriptions.modals.failed_to_load')}
@@ -448,7 +445,7 @@ const Subscriptions = () => {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <button className="text-md bg-[#464646] rounded-xl w-full py-4 text-gray-300 cursor-pointer">
+                  <button className="text-md bg-surface rounded-xl w-full py-4 text-surface-foreground cursor-pointer">
                     {t('common.select_date')}
                   </button>
                 </motion.div>

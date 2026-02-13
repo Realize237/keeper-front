@@ -27,8 +27,8 @@ export const FilterOption = ({
         transition-colors
         ${
           selected
-            ? 'border-primary text-white'
-            : 'border-white/20 text-white/60 hover:border-white/40'
+            ? 'border-primary text-foreground'
+            : 'border-border text-muted-foreground hover:border-border'
         }
       `}
     >
@@ -37,7 +37,7 @@ export const FilterOption = ({
         className={`
           flex items-center justify-center
           w-4 h-4 rounded-full border
-          ${selected ? 'bg-primary border-primary' : 'border-white/30'}
+          ${selected ? 'bg-primary border-primary' : 'border-border'}
         `}
       >
         <AnimatePresence>
@@ -48,7 +48,7 @@ export const FilterOption = ({
               exit={{ scale: 0.4, opacity: 0 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
             >
-              <IoCheckmark className="text-black text-[10px]" />
+              <IoCheckmark className="text-primary-foreground text-[10px]" />
             </motion.span>
           )}
         </AnimatePresence>

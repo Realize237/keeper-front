@@ -29,15 +29,15 @@ export default function ConfirmationDialog({
 
   const content = (
     <motion.div>
-      <div className="flex font-medium text-white justify-center items-center border-b border-white pb-4 pt-8">
+      <div className="flex font-medium text-foreground justify-center items-center border-b border-border pb-4 pt-8">
         {title}
       </div>
 
       <div className="flex flex-col space-y-8">
-        <p className="text-center mt-8 text-white/70">{message}</p>
+        <p className="text-center mt-8 text-foreground">{message}</p>
 
         <div className="flex justify-center gap-10">
-          <Button variant="secondary-dark" onClick={onClose}>
+          <Button variant="secondary" onClick={onClose}>
             {cancelText}
           </Button>
 

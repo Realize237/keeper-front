@@ -85,12 +85,14 @@ export function PhoneInput({
             onClick={handleToggleDropdown}
             className={`py-3 px-5  flex items-center justify-center gap-2 bg-surface rounded-xl transition-colors ${
               error
-                ? 'border-2 border-red-500 hover:bg-red-950/20'
+                ? 'border border-danger hover:bg-danger/20'
                 : 'border-border hover:bg-surface/50'
             }`}
           >
             <ReactCountryFlag svg countryCode={selectedCountry.code} />
-            <span className="text-gray-500">{selectedCountry.dialCode}</span>
+            <span className="text-surface-foreground">
+              {selectedCountry.dialCode}
+            </span>
           </button>
 
           {isOpen && (
@@ -101,13 +103,13 @@ export function PhoneInput({
               />
               <div
                 ref={dropdownRef}
-                className={`absolute left-0 w-64 text-white modal-scrollbar bg-app rounded-lg border shadow-lg z-20 max-h-48 overflow-y-auto ${
+                className={`absolute left-0 w-64 text-foreground modal-scrollbar bg-surface rounded-lg border border-border shadow-lg z-20 max-h-48 overflow-y-auto ${
                   dropdownPosition === 'above'
                     ? 'bottom-full mb-2'
                     : 'top-full mt-2'
                 }`}
               >
-                <div className="sticky top-0 px-3 py-1.5 bg-gray-800 text-xs font-semibold text-gray-300 uppercase tracking-wide border-b border-gray-700">
+                <div className="sticky top-0 px-3 py-1.5 bg-surface text-xs font-semibold text-surface-foreground uppercase tracking-wide border-b border-border">
                   {t('common.continents.europe')}
                 </div>
                 {getCountriesByContinent('Europe').map((country) => (
@@ -119,21 +121,21 @@ export function PhoneInput({
                       onChange('', undefined);
                       setIsOpen(false);
                     }}
-                    className={`w-full px-4 py-2 flex items-center gap-3 hover:bg-surface transition-colors ${
-                      selectedCountry.code === country.code ? 'bg-surface' : ''
+                    className={`w-full px-4 py-2 flex items-center gap-3 hover:bg-muted transition-colors ${
+                      selectedCountry.code === country.code ? 'bg-muted' : ''
                     }`}
                   >
                     <ReactCountryFlag svg countryCode={country.code} />
                     <span className="flex-1 text-left text-sm">
                       {country.name}
                     </span>
-                    <span className="text-gray-400 text-xs">
+                    <span className="text-surface-foreground text-xs">
                       {country.dialCode}
                     </span>
                   </button>
                 ))}
 
-                <div className="sticky top-0 px-3 py-1.5 bg-gray-800 text-xs font-semibold text-gray-300 uppercase tracking-wide border-t border-b border-gray-700">
+                <div className="sticky top-0 px-3 py-1.5 bg-surface  text-xs font-semibold text-surface-foreground uppercase tracking-wide border-t border-b border-border">
                   {t('common.continents.americas')}
                 </div>
                 {getCountriesByContinent('Americas').map((country) => (
@@ -145,15 +147,15 @@ export function PhoneInput({
                       onChange('', undefined);
                       setIsOpen(false);
                     }}
-                    className={`w-full px-4 py-2 flex items-center gap-3 hover:bg-surface transition-colors ${
-                      selectedCountry.code === country.code ? 'bg-surface' : ''
+                    className={`w-full px-4 py-2 flex items-center gap-3 hover:bg-muted transition-colors ${
+                      selectedCountry.code === country.code ? 'bg-muted' : ''
                     }`}
                   >
                     <ReactCountryFlag svg countryCode={country.code} />
                     <span className="flex-1 text-left text-sm">
                       {country.name}
                     </span>
-                    <span className="text-gray-400 text-xs">
+                    <span className="text-surface-foreground text-xs">
                       {country.dialCode}
                     </span>
                   </button>
@@ -168,15 +170,15 @@ export function PhoneInput({
           value={value}
           onChange={handleInputChange}
           placeholder={getPlaceholder()}
-          className={`w-full py-3 px-5 bg-surface rounded-xl text-white placeholder-gray-500 transition-colors focus:outline-none focus:ring-2 ${
+          className={`w-full py-3 px-5 bg-surface rounded-xl text-surface-foreground placeholder-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary${
             error
-              ? 'border-2 border-red-500 '
+              ? 'border border-danger focus:ring-primary '
               : 'border-border focus:ring-primary'
           }`}
         />
       </div>
 
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && <p className="text-danger text-xs mt-1">{error}</p>}
     </div>
   );
 }

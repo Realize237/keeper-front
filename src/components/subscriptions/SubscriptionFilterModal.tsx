@@ -78,10 +78,10 @@ const FilterModalContent = ({
           />
         ))}
       </FilterSection>
-      <p className="text-sm font-medium text-white mt-6 mb-2">
+      <p className="text-sm font-medium text-foreground mt-6 mb-2">
         {t('subscriptions.filter.price_range')}
       </p>
-      <hr className="text-white/50" />
+      <hr className="text-border" />
       <div className="flex justify-center items-center w-full">
         <PriceRangeSlider
           minPrice={0}
@@ -91,7 +91,7 @@ const FilterModalContent = ({
         />
       </div>
 
-      <hr className="text-white/50" />
+      <hr className="text-border" />
 
       <div
         className="
@@ -113,7 +113,7 @@ const FilterModalContent = ({
               title={t('subscriptions.filter.clear_all')}
               className="
           p-2 rounded-full
-          text-white/50 hover:text-white/80
+          text-foreground/00 hover:text-foreground/80
           transition-colors
         "
             >
@@ -125,8 +125,8 @@ const FilterModalContent = ({
             type="button"
             onClick={onClose}
             className="
-        text-sm text-white/40
-        hover:text-white/60
+        text-sm text-foreground/90
+        hover:text-foreground/60
         transition-colors
       "
           >
@@ -189,10 +189,10 @@ const FilterSection = ({
   children: React.ReactNode;
 }) => (
   <div className="space-y-2">
-    <p className="text-xs font-semibold text-white/50 uppercase tracking-wide  ">
+    <p className="text-xs font-semibold text-foreground uppercase tracking-wide  ">
       {title}
     </p>
-    <hr className="text-white/50" />
+    <hr className="text-border" />
     <div className="flex flex-wrap gap-2 mt-4">{children}</div>
   </div>
 );

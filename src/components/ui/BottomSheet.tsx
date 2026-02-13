@@ -14,7 +14,7 @@ const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 z-100 flex justify-center items-end"
+      className="fixed inset-0 bg-surface/50 z-100 flex justify-center items-end"
       onClick={onClose}
     >
       <motion.div
@@ -22,10 +22,10 @@ const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', stiffness: 200, damping: 30 }}
-        className="w-full max-w-md bg-[#1f1f1f] rounded-t-3xl p-4 shadow-lg"
+        className="w-full max-w-md bg-background rounded-t-3xl p-4 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-12 h-1 bg-gray-600 rounded-full mx-auto my-2"></div>
+        <div className="w-12 h-1 bg-surface rounded-full mx-auto my-2"></div>
         {children}
       </motion.div>
     </motion.div>

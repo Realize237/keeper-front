@@ -196,7 +196,7 @@ export default function Register() {
   };
 
   return (
-    <div className=" bg-app min-h-screen ">
+    <div className=" bg-background min-h-screen ">
       <AuthHeader />
       <motion.div
         className="px-4 mt-16 max-w-md mx-auto flex flex-col items-center justify-center py-8"
@@ -206,13 +206,13 @@ export default function Register() {
       >
         <motion.h1
           variants={itemVariants}
-          className="text-xl md:text-2xl font-normal text-white mb-2"
+          className="text-xl md:text-2xl font-normal text-foreground mb-2"
         >
           {t('auth.register.title')}
         </motion.h1>
         <motion.p
           variants={itemVariants}
-          className="text-gray-400 text-center text-xs md:text-sm mb-8"
+          className="text-muted-foreground text-center text-xs md:text-sm mb-8"
         >
           {t('auth.register.subtitle')}
         </motion.p>
@@ -266,7 +266,7 @@ export default function Register() {
               <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
+                className="text-danger text-xs mt-1"
               >
                 {emailError}
               </motion.p>
@@ -375,8 +375,8 @@ export default function Register() {
         w-6 h-6 rounded-md border transition-all duration-200 flex items-center justify-center
         ${
           errors.acceptedPrivacyPolicy
-            ? 'border-red-500 bg-red-950/30'
-            : 'border-gray-600 bg-[#2a2a2a]'
+            ? 'border-danger bg-danger/30'
+            : 'border-border bg-surface'
         }
         peer-checked:bg-primary peer-checked:border-white]
         peer-checked:[&>svg]:opacity-100 peer-checked:[&>svg]:scale-100
@@ -397,13 +397,13 @@ export default function Register() {
                   </svg>
                 </div>
               </div>
-              <span className="text-gray-400 text-sm">
+              <span className="text-muted-foreground text-sm">
                 {t('auth.register.legal.iAccept')}{' '}
                 <Link
                   to={PATHS.LEGAL.PRIVACY.full}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-deep-teal underline transition"
+                  className="text-accent underline transition"
                 >
                   {t('auth.register.legal.privacy')}
                 </Link>{' '}
@@ -412,7 +412,7 @@ export default function Register() {
                   to={PATHS.LEGAL.TERMS.full}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-deep-teal underline transition"
+                  className="text-accent underline transition"
                 >
                   {t('auth.register.legal.terms')}
                 </Link>
@@ -423,7 +423,7 @@ export default function Register() {
               <motion.p
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-2 ml-8"
+                className="text-danger text-xs mt-2 ml-8"
               >
                 {errors.acceptedPrivacyPolicy.message}
               </motion.p>
@@ -447,11 +447,11 @@ export default function Register() {
           className="flex items-center w-full mb-6"
           variants={itemVariants}
         >
-          <div className="flex-1 h-px bg-gray-700"></div>
-          <span className="px-3 text-white text-sm">
+          <div className="flex-1 h-px bg-surface"></div>
+          <span className="px-3 text-foreground text-sm">
             {t('auth.register.divider')}
           </span>
-          <div className="flex-1 h-px bg-gray-700"></div>
+          <div className="flex-1 h-px bg-surface"></div>
         </motion.div>
 
         <motion.div
@@ -459,7 +459,7 @@ export default function Register() {
           variants={containerVariants}
         >
           <motion.button
-            className="flex-1 border border-gray-500 rounded-lg py-3 flex items-center justify-center hover:bg-gray-800/50"
+            className="flex-1 border border-border rounded-lg py-3 flex items-center justify-center "
             variants={socialButtonVariants}
             whileHover="hover"
             whileTap="tap"
@@ -488,12 +488,12 @@ export default function Register() {
 
         <motion.p
           variants={itemVariants}
-          className="text-gray-400 text-xs text-center"
+          className="text-muted-foreground text-xs text-center"
         >
           {t('auth.register.footer.text')}{' '}
           <Link
             to={PATHS.AUTH.LOGIN}
-            className="text-white transition duration-300 hover:opacity-80"
+            className="text-foreground transition duration-300 hover:opacity-80"
           >
             {t('auth.register.footer.login')}
           </Link>

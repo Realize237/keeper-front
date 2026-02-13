@@ -11,8 +11,8 @@ export default function AuthHeader() {
         to="/"
         aria-label={t('common.home')}
         className="
-    flex items-center gap-2 text-sm text-gray-300
-    hover:text-white transition-colors
+    flex items-center gap-2 text-sm text-foreground
+    hover:text-muted-foreground transition-colors
   "
       >
         <FaHome size={16} />

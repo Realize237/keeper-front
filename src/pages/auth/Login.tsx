@@ -238,7 +238,7 @@ export default function Login() {
   );
 
   return (
-    <div className="flex min-h-screen bg-app flex-col  py-8 overflow-x-hidden overflow-y-auto">
+    <div className="flex min-h-screen bg-background flex-col  py-8 overflow-x-hidden overflow-y-auto">
       <AuthHeader />
       <motion.div
         className="w-11/12 mt-16 max-w-md mx-auto flex flex-col items-center justify-center "
@@ -248,13 +248,13 @@ export default function Login() {
       >
         <motion.h1
           variants={itemVariants}
-          className="text-xl md:text-2xl font-normal text-white"
+          className="text-xl md:text-2xl font-normal text-foreground"
         >
           {t('auth.login.title')}
         </motion.h1>
         <motion.span
           variants={itemVariants}
-          className="text-xs md:text-sm font-normal text-center text-gray-400 mt-2 mb-8"
+          className="text-xs md:text-sm font-normal text-center text-muted-foreground mt-2 mb-8"
         >
           {t('auth.login.subtitle')}
         </motion.span>
@@ -264,9 +264,9 @@ export default function Login() {
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3"
+            className="mb-6 rounded-xl border border-danger/20 bg-danger/10 px-4 py-3"
           >
-            <p className="text-sm text-red-300 leading-relaxed text-center">
+            <p className="text-sm text-danger leading-relaxed text-center">
               {accountDisabledError}
             </p>
           </motion.div>
@@ -309,7 +309,7 @@ export default function Login() {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-red-500 text-xs mt-1"
+                className="text-danger text-xs mt-1"
               >
                 {loginError}
               </motion.p>
@@ -331,8 +331,8 @@ export default function Login() {
                 <div
                   className={`
           w-5 h-5 rounded border transition-all duration-200 flex items-center justify-center
-          border-gray-600 bg-surface
-          peer-checked:bg-primary peer-checked:border-white
+          border-border bg-surface
+          peer-checked:bg-primary peer-checked:border-border
           peer-focus:ring-2 peer-focus:ring-white/30
           peer-checked:[&>svg]:opacity-100 peer-checked:[&>svg]:scale-100
         `}
@@ -353,7 +353,7 @@ export default function Login() {
                 </div>
               </div>
 
-              <span className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">
+              <span className="text-foreground text-sm">
                 {t('auth.login.rememberMe')}
               </span>
             </label>
@@ -365,7 +365,7 @@ export default function Login() {
                   FORGOT_PASSWORD_STEPS.PASSWORD_REQUEST as ForgotPasswordStepsType
                 )
               }
-              className="text-white text-sm hover:opacity-80 transition duration-300"
+              className="text-foreground text-sm hover:opacity-80 transition duration-300"
             >
               {t('auth.login.forgot_password')}
             </button>
@@ -478,7 +478,7 @@ export default function Login() {
           >
             {/* Google */}
             <motion.button
-              className="flex-1 border border-gray-500 rounded-lg py-3 flex items-center justify-center hover:bg-gray-800/50"
+              className="flex-1 border border-border rounded-lg py-3 flex items-center justify-center "
               variants={socialButtonVariants}
               whileHover="hover"
               whileTap="tap"
@@ -509,12 +509,12 @@ export default function Login() {
 
         <motion.p
           variants={itemVariants}
-          className="text-gray-400 text-xs text-center"
+          className="text-muted-foreground text-xs text-center"
         >
           {t('auth.login.footer.text')}{' '}
           <Link
             to={PATHS.AUTH.REGISTER}
-            className="text-white transition duration-300 hover:opacity-80"
+            className="text-foreground transition duration-300 hover:opacity-80"
           >
             {t('auth.login.footer.signup')}
           </Link>

@@ -38,7 +38,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
     <motion.aside
       animate={{ width: isOpen ? 240 : 60 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-0 left-0 h-[calc(100vh-0.1rem)] border-r border-r-white/10 text-gray-400 p-4 flex flex-col"
+      className="fixed top-0 left-0 h-[calc(100vh-0.1rem)] border-r border-r-border text-foreground p-4 flex flex-col"
     >
       <div className="flex  h-25   justify-between mb-8 relative">
         <div className="flex justify-between gap-2 overflow-hidden">
@@ -51,7 +51,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
-                className="text-white text-2xl font-bold whitespace-nowrap"
+                className="text-foreground text-2xl font-bold whitespace-nowrap"
               >
                 <span className="text-primary">K</span>eepay
               </motion.h1>
@@ -59,14 +59,14 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
           </AnimatePresence>
           <button
             onClick={toggleSidebar}
-            className={`text-white p-2 rounded-md hover:bg-white/10 absolute  ${!isOpen ? 'left-7 bg-white/10' : 'right-2 '}`}
+            className={`text-foreground p-2 rounded-md hover:bg-muted absolute  ${!isOpen ? 'left-7 bg-muted' : 'right-2 '}`}
           >
             {isOpen ? <FaArrowLeft /> : <FaArrowRight />}
           </button>
         </div>
       </div>
 
-      <nav className="flex flex-col gap-2 relative flex-1 border-t border-t-white/15 pt-4 overflow-auto">
+      <nav className="flex flex-col gap-2 relative flex-1 border-t border-t-border pt-4 overflow-auto">
         {activeNavItems.map((menu, index) => {
           const Icon = menu.icon;
           const isActive = index === activeIndex;
@@ -76,7 +76,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
               key={t(menu.labelKey)}
               to={menu.path}
               end
-              className="relative flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/5"
+              className="relative flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-muted"
             >
               {isActive && (
                 <motion.div
@@ -87,7 +87,9 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
 
               <motion.div
                 animate={{
-                  color: isActive ? 'var(--color-primary)' : '#9CA3AF',
+                  color: isActive
+                    ? 'var(--color-primary)'
+                    : '(--color-muted-foreground)',
                   scale: isActive ? 1.2 : 1,
                 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
@@ -103,7 +105,9 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                     animate={{
                       opacity: 1,
                       x: 0,
-                      color: isActive ? 'var(--color-primary)' : '#9CA3AF',
+                      color: isActive
+                        ? 'var(--color-primary)'
+                        : 'var(--muted-foreground)',
                     }}
                     exit={{ opacity: 0, x: -10 }}
                     transition={{ duration: 0.2 }}
@@ -118,7 +122,7 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
         })}
       </nav>
 
-      <div className="border-t border-t-white/15 pt-4 space-y-2 mt-auto ">
+      <div className="border-t border-t-border pt-4 space-y-2 mt-auto ">
         <button
           disabled
           className="relative flex justify-center  w-full items-center gap-4 px-3 py-3 rounded-lg

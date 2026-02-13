@@ -16,7 +16,7 @@ const BottomNav = () => {
   });
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 w-full h-16 bg-[#2f2f2f]  shadow-md z-50 sm:max-w-md sm:mx-auto sm:rounded-t-xl sm:bottom-5 sm:shadow-lg sm:hidden">
+    <div className="fixed bottom-0 left-0 right-0 w-full h-16 bg-background  shadow-md z-50 sm:max-w-md sm:mx-auto sm:rounded-t-xl sm:bottom-5 sm:shadow-lg sm:hidden">
       <div
         className="relative grid h-full"
         style={{ gridTemplateColumns: `repeat(${length}, 1fr)` }}
@@ -35,7 +35,11 @@ const BottomNav = () => {
               <motion.div
                 className="flex flex-col items-center justify-center gap-1"
                 initial={false}
-                animate={{ color: isActive ? 'var(--color-white)' : '#9CA3AF' }}
+                animate={{
+                  color: isActive
+                    ? 'var(--color-primary)'
+                    : '(--color-muted-foreground)',
+                }}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               >
                 <motion.div

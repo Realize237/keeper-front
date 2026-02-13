@@ -42,7 +42,7 @@ const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-0">
         <div
           className={cn(
-            'w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-200',
+            'w-12 h-12 sm:w-14 sm:h-14 rounded-xl  flex items-center justify-center transition-all duration-200',
             colors.iconBg
           )}
         >
@@ -52,20 +52,22 @@ const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
         </div>
 
         {badge ? (
-          <span className="text-xs sm:text-sm font-medium bg-white/10 px-3 py-1 rounded-full text-white/70 self-start sm:self-auto">
+          <span className="text-xs sm:text-sm font-medium bg-muted px-3 py-1 rounded-full text-surface-foreground self-start sm:self-auto">
             {badge}
           </span>
         ) : props.variant === 'progress' ? (
           <div className="flex flex-col text-right">
             {props.value && (
-              <p className="text-lg sm:text-xl font-semibold text-white">
+              <p className="text-lg sm:text-xl font-semibold text-surface-foreground">
                 {props.value}
               </p>
             )}
-            <p className="text-sm sm:text-base text-white/50">{title}</p>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              {title}
+            </p>
           </div>
         ) : props.variant === 'status' ? (
-          <p className="text-sm sm:text-base text-white/50 text-right">
+          <p className="text-sm sm:text-base text-muted-foreground text-right">
             {title}
           </p>
         ) : null}
@@ -74,8 +76,10 @@ const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
       <div className="mt-4 sm:mt-6 relative">
         {props.variant === 'stat' && (
           <div>
-            <p className="text-sm sm:text-base text-white/50">{title}</p>
-            <p className="text-2xl sm:text-4xl font-semibold text-white mt-1">
+            <p className="text-sm sm:text-base text-muted-foreground">
+              {title}
+            </p>
+            <p className="text-2xl sm:text-4xl font-semibold text-surface-foreground mt-1">
               {props.value}
             </p>
           </div>
@@ -83,11 +87,11 @@ const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
 
         {props.variant === 'progress' && (
           <div className="mt-3 sm:mt-4">
-            <div className="flex justify-between text-xs sm:text-sm text-white/50 mb-1">
+            <div className="flex justify-between text-xs sm:text-sm text-muted-foreground mb-1">
               <span className="capitalize">{t('subscriptions.progress')}</span>
               <span>{props.progress}%</span>
             </div>
-            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 rounded-full bg-muted overflow-hidden">
               <div
                 className={cn(
                   'h-full rounded-full transition-all duration-300',
@@ -101,7 +105,7 @@ const SubscriptionStatCard = (props: SubscriptionStatCardProps) => {
 
         {props.variant === 'status' && (
           <div className="mt-3 sm:mt-4 text-center">
-            <p className="text-sm sm:text-base text-white/50">
+            <p className="text-sm sm:text-base text-muted-foreground">
               {props.secondaryText}
             </p>
             {props.customContent && (

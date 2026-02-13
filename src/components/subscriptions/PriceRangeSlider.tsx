@@ -131,7 +131,10 @@ const PriceRangeSlider = ({
         <span>${currentRange[1]}</span>
       </div>
 
-      <div ref={containerRef} className="relative h-2 bg-white/50 rounded-full">
+      <div
+        ref={containerRef}
+        className="relative h-2 bg-surface/50 rounded-full"
+      >
         <motion.div
           className="absolute h-full bg-primary rounded-full"
           style={{

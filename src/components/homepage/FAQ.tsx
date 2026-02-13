@@ -87,23 +87,23 @@ export const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-24 bg-white relative overflow-hidden">
+    <section id="faq" className="py-24 bg-background relative overflow-hidden">
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-linear-to-br from-[#990800]/5 to-[#FF6B5B]/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-linear-to-br from-[#008B82]/5 to-[#006B66]/5 rounded-full blur-3xl"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-[#008B82]/10 to-[#00A89A]/10 border border-[#008B82]/20 text-[#008B82] rounded-2xl text-sm mb-6 font-bold shadow-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-accent/10 to-[#00A89A]/10 border border-[#008B82]/20 text-[#008B82] rounded-2xl text-sm mb-6 font-bold shadow-sm">
             <LuCircleHelp className="w-4 h-4" />
             {t('faq.badge')}
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
-            <span className="block text-gray-900">{t('faq.title_1')}</span>
-            <span className="block bg-linear-to-r from-[#990800] via-[#C41E14] to-[#FF6B5B] bg-clip-text text-transparent">
+            <span className="block text-foreground">{t('faq.title_1')}</span>
+            <span className="block text-gradient-primary">
               {t('faq.title_2')}
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium">
             {t('faq.description')}
           </p>
         </div>
@@ -112,26 +112,26 @@ export const FAQ = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white border-2 border-gray-200 rounded-3xl overflow-hidden hover:border-[#990800]/30 transition-all"
+              className="bg-surface border-2 border-border rounded-3xl overflow-hidden hover:border-primary/30 transition-all"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-gray-50 transition-all group"
+                className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-muted transition-all group"
               >
-                <span className="text-lg font-bold text-gray-900 pr-8 group-hover:text-[#990800] transition-colors">
+                <span className="text-lg font-bold text-surface-foreground pr-8 group-hover:text-primary transition-colors">
                   {faq.question}
                 </span>
                 <div
                   className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 transition-all ${
                     openIndex === index
-                      ? 'bg-linear-to-br from-[#990800] to-[#C41E14] rotate-180'
-                      : 'bg-gray-100 group-hover:bg-gray-200'
+                      ? 'bg-primary-gradient rotate-180'
+                      : 'bg-surface border border-border group-hover:bg-muted'
                   }`}
                 >
                   {openIndex === index ? (
-                    <FaMinus className="w-5 h-5 text-white" />
+                    <FaMinus className="w-5 h-5 text-surface-foreground" />
                   ) : (
-                    <FaPlus className="w-5 h-5 text-gray-600" />
+                    <FaPlus className="w-5 h-5 text-muted-foreground" />
                   )}
                 </div>
               </button>
@@ -140,7 +140,7 @@ export const FAQ = () => {
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 }`}
               >
-                <div className="px-8 pb-6 text-gray-600 leading-relaxed font-medium border-t border-gray-100 pt-6">
+                <div className="px-8 pb-6 text-muted-foreground leading-relaxed font-medium border-t border-gray-100 pt-6">
                   {faq.answer}
                 </div>
               </div>
@@ -149,13 +149,13 @@ export const FAQ = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <div className="inline-flex flex-col items-center gap-4 px-8 py-6 bg-linear-to-r from-gray-50 to-red-50 border-2 border-dashed border-[#990800]/30 rounded-3xl">
-            <p className="text-gray-900 font-bold text-lg">
+          <div className="inline-flex flex-col items-center gap-4 px-8 py-6 bg-surface border-2 border-dashed border-primary/30 rounded-3xl">
+            <p className="text-surface-foreground font-bold text-lg">
               {t('faq.still_questions')}
             </p>
             <a
               href="#contact"
-              className="px-8 py-3 bg-linear-to-r from-[#990800] to-[#C41E14] text-white rounded-2xl hover:shadow-xl hover:shadow-red-900/30 transition-all transform hover:-translate-y-1 font-bold"
+              className="px-8 py-3 bg-primary-gradient text-primary-foreground rounded-2xl hover:shadow-xl hover:shadow-red-900/30 transition-all transform hover:-translate-y-1 font-bold"
             >
               {t('faq.contact_us')}
             </a>

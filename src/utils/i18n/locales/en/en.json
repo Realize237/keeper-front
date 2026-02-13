@@ -612,6 +612,10 @@
     "visit_website": "Visit keepayapp.com",
     "logout": "Logout"
   },
+  "theme_switcher": {
+    "switch_to_light": "Switch to light mode",
+    "switch_to_dark": "Switch to dark mode"
+  },
   "logout": {
     "title": "Logout",
     "confirmation": "Are you sure you want to log out?",

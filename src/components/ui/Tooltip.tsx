@@ -59,7 +59,7 @@ export function Tooltip({
               transition={{ duration: 0.15 }}
               className="
                 fixed z-9999
-                rounded-md bg-gray-900 text-white text-sm
+                rounded-md bg-accent text-primary-foreground text-sm
                 px-3 py-2 shadow-lg
                 pointer-events-none
               "

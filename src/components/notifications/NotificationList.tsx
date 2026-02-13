@@ -27,11 +27,11 @@ const NotificationList: React.FC<Props> = ({
   const { t } = useTranslation();
   if (!notifications || !notifications.length) {
     return (
-      <div className="bg-neutral-900/30 border border-neutral-800 rounded-xl p-8 text-center">
-        <h3 className="text-lg font-semibold text-neutral-200">
+      <div className="bg-surface border border-border rounded-xl p-8 text-center">
+        <h3 className="text-lg font-semibold text-surface-foreground">
           {t('notifications.empty.title')}
         </h3>
-        <p className="text-sm text-neutral-400 mt-2">
+        <p className="text-sm text-muted-foreground mt-2">
           {t('notifications.empty.subtitle')}
         </p>
       </div>

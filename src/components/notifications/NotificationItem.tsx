@@ -74,7 +74,7 @@ const NotificationItem: React.FC<Props> = ({
                 ? t('notifications.actions.mark_unread')
                 : t('notifications.actions.mark_read')
             }
-            className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
+            className="cursor-pointer p-2 rounded-lg border border-border text-foreground hover:opacity-70 pointer-events-auto"
           >
             {notification.status === NotificationStatus.READ ? (
               <MdUndo className="w-4 h-4" />
@@ -85,7 +85,7 @@ const NotificationItem: React.FC<Props> = ({
           <button
             onClick={onDelete}
             title="Delete"
-            className="cursor-pointer p-2 rounded-lg text-red-600/60 border border-red-600/60 hover:opacity-70 pointer-events-auto"
+            className="cursor-pointer p-2 rounded-lg text-danger/60 border border-danger/60 hover:opacity-70 pointer-events-auto"
           >
             <FiTrash2 className="w-4 h-4" />
           </button>
@@ -98,17 +98,17 @@ const NotificationItem: React.FC<Props> = ({
           isSwiped ? '-translate-x-24' : 'translate-x-0'
         } rounded-3xl p-4 ${
           notification.status === NotificationStatus.READ
-            ? 'border border-neutral-800'
-            : 'bg-neutral-800'
+            ? 'border border-border'
+            : 'bg-muted'
         } overflow-hidden`}
       >
         <div className="flex items-start gap-4">
           {selectMode ? (
             <button onClick={toggleSelect} className="mt-1 shrink-0">
               {selected ? (
-                <FiCheckCircle className="w-6 h-6 text-blue-400" />
+                <FiCheckCircle className="w-6 h-6 text-accent" />
               ) : (
-                <FiCircle className="w-6 h-6 text-neutral-500" />
+                <FiCircle className="w-6 h-6 text-foreground" />
               )}
             </button>
           ) : null}

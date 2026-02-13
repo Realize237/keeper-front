@@ -66,11 +66,11 @@ const ChangePassword = () => {
   if (!user) return null;
 
   return (
-    <div className="text-white w-11/12 mx-auto py-8">
+    <div className="text-foreground w-11/12 mx-auto py-8">
       <div className="flex items-center mb-6">
         <button
           onClick={() => navigate(-1)}
-          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-white/10 transition"
+          className="p-2 cursor-pointer flex items-center justify-center rounded-full hover:bg-muted transition"
         >
           <FaChevronLeft className="w-5 h-5" />
         </button>
@@ -81,7 +81,7 @@ const ChangePassword = () => {
       </h3>
 
       {user.authType === 'EmailAndPassword' && (
-        <p className="max-w-md mx-auto text-gray-300 text-sm mb-6 text-center">
+        <p className="max-w-md mx-auto text-muted-foreground text-sm mb-6 text-center">
           {t('change_password.description')}
         </p>
       )}
@@ -140,7 +140,7 @@ const ChangePassword = () => {
           <div className="flex gap-10">
             <FormButton
               type="button"
-              variant="secondary-dark"
+              variant="secondary"
               onClick={() => navigate(-1)}
             >
               {t('common.cancel')}
@@ -153,14 +153,14 @@ const ChangePassword = () => {
           </div>
         </form>
       ) : (
-        <div className="text-white w-full px-6 py-12">
+        <div className="text-foreground w-full px-6 py-12">
           <motion.div
             className="max-w-md mx-auto space-y-8"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
-            <p className="text-sm leading-relaxed text-white/70 text-center">
+            <p className="text-sm leading-relaxed text-muted-foreground text-center">
               {t('change_password.googleInfo')}
             </p>
 

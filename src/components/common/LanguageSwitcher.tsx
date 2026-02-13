@@ -29,8 +29,8 @@ export default function LanguageSwitcher() {
         onClick={() => setOpen(!open)}
         className="
           flex items-center gap-2 justify-center cursor-pointer
-          rounded-full p-2 border border-white/15 shadow-md
-          hover:bg-white/10 transition-all
+          rounded-full p-2 border border-border 
+          hover:bg-muted transition-all
         "
       >
         <ReactCountryFlag
@@ -42,7 +42,7 @@ export default function LanguageSwitcher() {
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.25, ease: 'easeInOut' }}
         >
-          <FaChevronDown className="text-xs text-white" />
+          <FaChevronDown className="text-xs text-foreground" />
         </motion.span>
       </button>
 
@@ -54,8 +54,8 @@ export default function LanguageSwitcher() {
             exit={{ opacity: 0, y: -6 }}
             className="
               absolute right-0 mt-3 w-48
-              bg-[#171717] text-white
-              rounded-2xl shadow-lg border border-white/10
+              bg-surface text-surface-foreground
+              rounded-2xl shadow-lg border border-border
               z-50 py-2
             "
           >
@@ -70,7 +70,7 @@ export default function LanguageSwitcher() {
                   className="
                     flex items-center justify-between gap-3 w-full px-4 py-2 text-sm
                     rounded-xl transition-colors
-                    hover:bg-white/10 hover:text-white
+                    hover:bg-muted hover:text-foreground
                   "
                 >
                   <div className="flex items-center gap-3">
@@ -87,7 +87,7 @@ export default function LanguageSwitcher() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <FaCheck className="text-green-400 w-3 h-3" />
+                      <FaCheck className="text-accent w-3 h-3" />
                     </motion.span>
                   )}
                 </button>

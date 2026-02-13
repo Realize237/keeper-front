@@ -53,7 +53,7 @@ export default function Calendar({
         week.map((day, dayIndex) => (
           <motion.div
             key={`${weekIndex}-${dayIndex}`}
-            className={`w-12 h-14 md:w-full mr-1 flex flex-col ${groupedMonthlySubscriptions[Number(day)] ? 'justify-between' : 'justify-end'} items-center bg-[#242425] rounded-lg cursor-pointer hover:bg-[#3f3f3f]`}
+            className={`w-12 h-14 md:w-full mr-1 flex flex-col ${groupedMonthlySubscriptions[Number(day)] ? 'justify-between' : 'justify-end'} items-center bg-surface rounded-lg cursor-pointer hover:bg-muted`}
             variants={itemVariants}
             whileHover={{
               scale: 0.95,
@@ -71,7 +71,7 @@ export default function Calendar({
                 subscriptions={groupedMonthlySubscriptions[Number(day)]}
               />
             )}
-            <span className="text-gray-400 text-sm mb-1">{day}</span>
+            <span className="text-surface-foreground text-sm mb-1">{day}</span>
           </motion.div>
         ))
       )}

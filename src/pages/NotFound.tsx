@@ -23,7 +23,7 @@ const NotFound = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-6xl font-semibold text-black/80 tracking-tight"
+          className="text-6xl font-semibold text-foreground/80 tracking-tight"
         >
           404
         </motion.p>
@@ -34,10 +34,12 @@ const NotFound = () => {
           transition={{ delay: 0.2 }}
           className="space-y-2"
         >
-          <h1 className="text-2xl md:text-3xl font-semibold text-black">
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground">
             {t('not_found.title')}
           </h1>
-          <p className="text-sm text-black/50">{t('not_found.description')}</p>
+          <p className="text-sm text-muted-foreground">
+            {t('not_found.description')}
+          </p>
         </motion.div>
 
         <motion.div
@@ -48,10 +50,7 @@ const NotFound = () => {
         >
           <Button onClick={() => navigate(-1)}>{t('not_found.go_back')}</Button>
 
-          <Button
-            variant="secondary-light"
-            onClick={() => navigate(PATHS.SUPPORT)}
-          >
+          <Button variant="secondary" onClick={() => navigate(PATHS.SUPPORT)}>
             {t('not_found.contact_support')}
           </Button>
         </motion.div>

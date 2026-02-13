@@ -78,7 +78,7 @@ export default function SelectedDaySubscriptionsListModal({
               <motion.div
                 variants={itemVariants}
                 custom={1}
-                className="text-gray-400 text-sm mb-6"
+                className="text-foreground text-sm mb-6"
               >
                 {formatToReadableDate(selectedDay, i18n.language)}
               </motion.div>
@@ -91,16 +91,16 @@ export default function SelectedDaySubscriptionsListModal({
               flex items-center gap-2
               px-5 py-2.5 mb-8
               rounded-full
-              bg-white/10
+              bg-surface
               backdrop-blur
-              border border-white/10
+              border border-border
               text-sm
             "
             >
-              <span className="text-gray-400 uppercase tracking-wide">
+              <span className="text-foreground uppercase tracking-wide">
                 {t('subscriptions.selected_day.total')}
               </span>
-              <span className="text-white font-semibold">
+              <span className="text-foreground font-semibold">
                 ${getTotal(selectedSubsciptionsByDay)}
               </span>
             </motion.div>
@@ -111,9 +111,9 @@ export default function SelectedDaySubscriptionsListModal({
               className="
       w-full
       max-w-md
-      bg-white/5
+      bg-surface
       backdrop-blur-xl
-      border border-white/10
+      border border-border
       rounded-3xl
       py-6
       flex flex-col items-center
@@ -137,8 +137,8 @@ export default function SelectedDaySubscriptionsListModal({
                   px-5
                   my-1.5
                   rounded-2xl
-                  bg-white/5
-                  border border-white/10
+                  bg-surface
+                  border border-border
                   flex items-center justify-between
                   cursor-pointer
                   transition-transform
@@ -151,12 +151,12 @@ export default function SelectedDaySubscriptionsListModal({
                         alt=""
                       />
 
-                      <p className="text-white text-base font-medium truncate">
+                      <p className="text-surface-foreground text-base font-medium truncate">
                         {subscription.details.name}
                       </p>
                     </div>
 
-                    <span className="text-gray-400 text-sm font-medium pl-4">
+                    <span className="text-surface-foreground text-sm font-medium pl-4">
                       ${subscription.price}
                     </span>
                   </motion.div>
