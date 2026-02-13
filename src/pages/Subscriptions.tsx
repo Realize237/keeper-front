@@ -69,6 +69,7 @@ const Subscriptions = () => {
     useState<Subscription | null>(null);
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+  const [activeFilters, setActiveFilters] = useState<FilterData | null>(null);
 
   const {
     showModal,
@@ -96,7 +97,7 @@ const Subscriptions = () => {
   }) as string[];
 
   const handleApplyFilters = (filters: FilterData) => {
-    console.log('filters: ', filters);
+    setActiveFilters(filters);
   };
 
   const normalized = normalizedDate(currentDate);
@@ -129,19 +130,46 @@ const Subscriptions = () => {
     refetch,
   } = useMonthlySubscriptions(normalized);
 
+  const filteredSubscriptions = useMemo(() => {
+    if (!activeFilters) return groupedMonthlySubscriptions;
+    const filteredResult: SubscriptionsGroupedByDay = {};
+
+    Object.keys(groupedMonthlySubscriptions).forEach((day) => {
+      const subscriptionsForDay = groupedMonthlySubscriptions[Number(day)];
+
+      const filtered = subscriptionsForDay.filter((subscription) => {
+        const categoryMatch =
+          activeFilters.categories.length === 0 ||
+          activeFilters.categories.includes(subscription.details.category);
+
+        const priceMatch =
+          subscription.price >= activeFilters.priceRange[0] &&
+          subscription.price <= activeFilters.priceRange[1];
+
+        return categoryMatch && priceMatch;
+      });
+
+      if (filtered.length > 0) {
+        filteredResult[Number(day)] = filtered;
+      }
+    });
+
+    return filteredResult;
+  }, [groupedMonthlySubscriptions, activeFilters]);
+
   const getDaySubscriptions = useCallback(
     (day: number) => {
-      const isFoundInGroupedData = Object.keys(
-        groupedMonthlySubscriptions
-      ).some((data) => Number(data) === day);
+      const isFoundInGroupedData = Object.keys(filteredSubscriptions).some(
+        (data) => Number(data) === day
+      );
       if (!isFoundInGroupedData) return;
-      const subscriptions = groupedMonthlySubscriptions[day];
+      const subscriptions = filteredSubscriptions[day];
       setSelectedSubscriptionsByDay({ [day]: subscriptions });
       setSelectedDay(
         updateCurrentDateToSelectedDate(normalizedDate(currentDate), day)
       );
     },
-    [groupedMonthlySubscriptions, currentDate]
+    [filteredSubscriptions, currentDate]
   );
 
   const closeSubscriptionModals = (type: SubscriptionModalType) => {
@@ -166,8 +194,8 @@ const Subscriptions = () => {
   };
 
   const getTotalMonthlySubscriptions = useMemo(() => {
-    if (!isEmpty(groupedMonthlySubscriptions)) {
-      const flattenedArray = Object.values(groupedMonthlySubscriptions).flat();
+    if (!isEmpty(filteredSubscriptions)) {
+      const flattenedArray = Object.values(filteredSubscriptions).flat();
       const total = flattenedArray.reduce((total, subscription) => {
         return total + subscription.price;
       }, 0);
@@ -176,13 +204,11 @@ const Subscriptions = () => {
     }
 
     return 0;
-  }, [groupedMonthlySubscriptions]);
+  }, [filteredSubscriptions]);
 
   const getRemainingAmount = useMemo(() => {
-    if (!isEmpty(groupedMonthlySubscriptions)) {
-      const allSubscriptions = Object.values(
-        groupedMonthlySubscriptions
-      ).flat();
+    if (!isEmpty(filteredSubscriptions)) {
+      const allSubscriptions = Object.values(filteredSubscriptions).flat();
       const now = new Date();
       const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
@@ -203,7 +229,7 @@ const Subscriptions = () => {
       return Number(totalCurrentMonth.toFixed(2));
     }
     return 0;
-  }, [groupedMonthlySubscriptions]);
+  }, [filteredSubscriptions]);
 
   const getProgressPercentage = useMemo(() => {
     const totalMonthly = getTotalMonthlySubscriptions;
@@ -219,10 +245,8 @@ const Subscriptions = () => {
 
   // Get subscriptions that will be billed soon (next 7 days)
   const getNextBillingSubscriptions = useMemo(() => {
-    if (!isEmpty(groupedMonthlySubscriptions)) {
-      const allSubscriptions = Object.values(
-        groupedMonthlySubscriptions
-      ).flat();
+    if (!isEmpty(filteredSubscriptions)) {
+      const allSubscriptions = Object.values(filteredSubscriptions).flat();
       const now = new Date();
       const next7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
@@ -236,7 +260,7 @@ const Subscriptions = () => {
       });
     }
     return [];
-  }, [groupedMonthlySubscriptions]);
+  }, [filteredSubscriptions]);
 
   const getNextBillingAmount = useMemo(() => {
     return getNextBillingSubscriptions.reduce(
@@ -305,17 +329,72 @@ const Subscriptions = () => {
 
           <div className="flex flex-col-reverse md:flex-row  mt-6 gap-6">
             <div className="grow">
-              <motion.div
-                className="w-full h-auto  flex justify-between items-center"
-                variants={itemVariants}
-              >
-                <div>
-                  <span className="text-foreground text-2xl">
-                    {t(`calendar.months.${MONTH_KEYS[monthIndex]}`)},{' '}
-                    {date.getFullYear()}
-                  </span>
+              <div className="flex justify-between items-center">
+                <motion.div
+                  className="w-full h-auto  flex justify-between items-center"
+                  variants={itemVariants}
+                >
+                  <div>
+                    <span className="text-foreground text-xl md:text-2xl">
+                      {t(`calendar.months.${MONTH_KEYS[monthIndex]}`)},{' '}
+                      {date.getFullYear()}
+                    </span>
+                  </div>
+                </motion.div>
+                <div className="flex items-center gap-1">
+                  <motion.button
+                    onClick={() => setOpenFilter(true)}
+                    whileHover={{
+                      y: -1,
+                      backgroundColor: 'rgba(255,255,255,0.12)',
+                    }}
+                    whileTap={{ scale: 0.985 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 35 }}
+                    className="
+    w-full flex items-center justify-between
+    rounded-full px-5 py-3
+    bg-surface backdrop-blur-2xl
+    shadow-[0_8px_30px_rgba(0,0,0,0.35)]
+    text-sm text-surface-foreground gap-4
+  "
+                  >
+                    <div className="flex items-center gap-1">
+                      <CiFilter size={16} className="text-surface-foreground" />
+                      <span className="font-medium tracking-tight">
+                        {t('subscriptions.filter.title')}
+                      </span>
+                    </div>
+
+                    {activeFilters ? (
+                      <motion.button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveFilters(null);
+                        }}
+                        initial={{ opacity: 0, x: 6 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0 }}
+                        whileHover={{
+                          backgroundColor: 'rgba(255,255,255,0.12)',
+                        }}
+                        className="
+        flex items-center gap-1
+        text-xs text-surface-foreground/80
+        px-2 py-1 rounded-full
+      "
+                      >
+                        {t('common.clear')}
+                        <span className="text-surface-foreground/50">×</span>
+                      </motion.button>
+                    ) : (
+                      <span className="text-xs text-surface-foreground/40">
+                        {t('common.off')}
+                      </span>
+                    )}
+                  </motion.button>
                 </div>
-              </motion.div>
+              </div>
+
               {/* days of the week */}
               <motion.div
                 className="w-full h-auto p-2 my-2 grid grid-cols-7"
@@ -348,7 +427,7 @@ const Subscriptions = () => {
                   <Calendar
                     date={currentDate}
                     getDaySubscriptions={getDaySubscriptions}
-                    groupedMonthlySubscriptions={groupedMonthlySubscriptions}
+                    groupedMonthlySubscriptions={filteredSubscriptions}
                   />
                 )}
               </motion.div>
@@ -371,47 +450,6 @@ const Subscriptions = () => {
                   </button>
                 </motion.div>
               )}
-            </div>
-            <div className="md:sticky md:mt-4">
-              <p className="text-xs uppercase tracking-wider text-foreground mb-2">
-                {t('subscriptions.filter.title')}
-              </p>
-
-              <motion.button
-                onClick={() => setOpenFilter(true)}
-                whileHover={{
-                  y: -1,
-                }}
-                whileTap={{
-                  scale: 0.98,
-                  y: 0,
-                }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 400,
-                  damping: 30,
-                }}
-                className="
-    w-full flex items-center justify-between
-    rounded-2xl px-4 py-3
-    bg-surface backdrop-blur-xl
-    border border-border
-    text-sm text-surface-foreground
-    gap-1
-  "
-              >
-                <span className="capitalize">
-                  {t('subscriptions.filter.title')}
-                </span>
-
-                <motion.span
-                  whileHover={{ x: 2 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  className="text-surface-foreground"
-                >
-                  <CiFilter />
-                </motion.span>
-              </motion.button>
             </div>
           </div>
         </motion.div>
@@ -439,6 +477,7 @@ const Subscriptions = () => {
         isOpen={openFilter}
         onClose={() => setOpenFilter(false)}
         onApplyFilters={handleApplyFilters}
+        initialFilters={activeFilters || undefined}
       />
       <UserConsentDialog
         isOpen={showUserConsent}

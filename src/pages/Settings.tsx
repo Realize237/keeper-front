@@ -9,7 +9,7 @@ import {
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { SettingsSelect } from '../components/Settings/SettingsSelect';
+
 import type { IconType } from 'react-icons';
 import { ReactNode } from 'react';
 import { useUser } from '../hooks/useUsers';
@@ -18,6 +18,7 @@ import toast from 'react-hot-toast';
 import { FaSun } from 'react-icons/fa6';
 import { Theme, useTheme } from '../hooks/useTheme';
 import ReactCountryFlag from 'react-country-flag';
+import { SettingsSelect } from '../components/settings/SettingsSelect';
 
 const Section = ({
   title,

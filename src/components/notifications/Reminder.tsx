@@ -31,8 +31,10 @@ import Spinner from '../ui/Spinner';
 
 const NotificationReminder = ({
   subscription,
+  isExpired = false,
 }: {
   subscription: Subscription;
+  isExpired?: boolean;
 }) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
@@ -247,18 +249,19 @@ const NotificationReminder = ({
   return (
     <div className=" flex flex-col ">
       <button
-        onClick={() => setExpanded((x) => !x)}
-        className="
+        onClick={() => !isExpired && setExpanded((x) => !x)}
+        disabled={isExpired}
+        className={`
 text-right
      p-1
       absolute
       right-0 
       top-0
       rounded-full
-      bg-accent hover:bg-accent/90
+      ${isExpired ? 'bg-muted cursor-not-allowed opacity-50' : 'bg-accent hover:bg-accent/90'}
       text-sm text-primary-foreground
       transition
-    "
+    `}
       >
         {expanded ? <FaChevronUp /> : <FaChevronDown />}
       </button>

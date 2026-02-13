@@ -5,12 +5,14 @@ interface FilterOptionProps {
   label: string;
   selected: boolean;
   onToggle: () => void;
+  icon?: string;
 }
 
 export const FilterOption = ({
   label,
   selected,
   onToggle,
+  icon,
 }: FilterOptionProps) => {
   return (
     <motion.button
@@ -31,7 +33,7 @@ export const FilterOption = ({
       `}
     >
       <motion.span
-        layoutF
+        layout
         className={`
           flex items-center justify-center
           w-4 h-4 rounded-full border
@@ -51,7 +53,11 @@ export const FilterOption = ({
           )}
         </AnimatePresence>
       </motion.span>
-
+      {icon && (
+        <span className="p-1 rounded-full bg-surface flex justify-center items-center">
+          <img className="w-5 h-5" src={icon} />
+        </span>
+      )}
       {label}
     </motion.button>
   );
