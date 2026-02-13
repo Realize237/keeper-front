@@ -329,9 +329,9 @@ const Subscriptions = () => {
 
           <div className="flex flex-col-reverse md:flex-row  mt-6 gap-6">
             <div className="grow">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col-reverse md:flex-row  justify-between items-center">
                 <motion.div
-                  className="w-full h-auto  flex justify-between items-center"
+                  className="w-full h-auto mt-6 md:mt-0 flex justify-between items-center"
                   variants={itemVariants}
                 >
                   <div>
@@ -341,7 +341,7 @@ const Subscriptions = () => {
                     </span>
                   </div>
                 </motion.div>
-                <div className="flex items-center gap-1">
+                <div className="flex w-full md:w-1/3 items-center gap-1">
                   <motion.button
                     onClick={() => setOpenFilter(true)}
                     whileHover={{
@@ -388,7 +388,7 @@ const Subscriptions = () => {
                       </motion.button>
                     ) : (
                       <span className="text-xs text-surface-foreground/40">
-                        {t('common.off')}
+                        {t('subscriptions.filter.no_filters')}
                       </span>
                     )}
                   </motion.button>

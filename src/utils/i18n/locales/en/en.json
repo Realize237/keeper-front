@@ -252,6 +252,7 @@
       "price_range": "Price range",
       "show_results": "Show results",
       "clear_all": "Clear all filters",
+      "no_filters": "No filters",
       "categories": {
         "BANK_FEES": "Bank Fees",
         "ENTERTAINMENT": "Entertainment",

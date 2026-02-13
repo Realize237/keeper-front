@@ -239,6 +239,7 @@
       "price_range": "Plage de prix",
       "show_results": "Afficher",
       "clear_all": "Effacer tous les filtres",
+      "no_filters": "Aucun filtre",
       "categories": {
         "BANK_FEES": "Frais bancaires",
         "ENTERTAINMENT": "Divertissement",

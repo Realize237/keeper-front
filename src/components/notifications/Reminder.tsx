@@ -258,7 +258,7 @@ text-right
       right-0 
       top-0
       rounded-full
-      ${isExpired ? 'bg-muted cursor-not-allowed opacity-50' : 'bg-accent hover:bg-accent/90'}
+      ${isExpired ? 'bg-accent cursor-not-allowed opacity-50' : 'bg-accent hover:bg-accent/90'}
       text-sm text-primary-foreground
       transition
     `}
