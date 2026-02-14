@@ -178,7 +178,7 @@ export default function Settings() {
                     ),
                   },
                 ]}
-                onChange={(lang) => changeLanguage(lang)}
+                onChange={(lang: string) => changeLanguage(lang)}
               />
             }
           />
@@ -194,7 +194,7 @@ export default function Settings() {
                 isLoading={isChangingTheme}
                 value={theme}
                 options={themeOptions}
-                onChange={(theme) => handleChangeTheme(theme as Theme)}
+                onChange={(theme: string) => handleChangeTheme(theme as Theme)}
               />
             }
           />
