@@ -285,24 +285,21 @@ button {
   width: 6px;
 }
 
-.modal-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 .modal-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: color-mix(in srgb, var(--foreground) 15%, transparent);
   border-radius: 999px;
   transition: background-color 0.2s ease;
 }
 
 .modal-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: color-mix(in srgb, var(--foreground) 30%, transparent);
 }
 
 /* Firefox */
 .modal-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+  scrollbar-color: color-mix(in srgb, var(--foreground) 25%, transparent)
+    transparent;
 }
 
 .skeleton {

@@ -5,11 +5,14 @@ import { useSocket } from '../hooks/useSocket';
 import { useCallback, useEffect } from 'react';
 import { showNotification } from '../components/ui/NotificationToast';
 import { PATHS } from '../routes/paths';
+import { usePlaidSyncEvents } from '../hooks/usePlaidSyncEvents';
 
 export default function MainLayout() {
   const isChromeExtension = useIsChromeExtension();
   const { socket } = useSocket();
   const navigate = useNavigate();
+
+  usePlaidSyncEvents();
 
   const listenToRealtimeNotifications = useCallback(() => {
     socket?.on('receiveNotification', (data) => {
@@ -31,6 +34,7 @@ export default function MainLayout() {
       socket?.off('receiveNotification');
     };
   }, [listenToRealtimeNotifications, socket]);
+
   return (
     <div
       className={`${

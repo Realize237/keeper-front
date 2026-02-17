@@ -1,6 +1,6 @@
 import Modal from '../ui/Modal';
 import Button from '../ui/Button';
-import { FaCheck, FaCreditCard, FaLock, FaShield } from 'react-icons/fa6';
+import { FaCheck, FaCreditCard, FaLock } from 'react-icons/fa6';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '../../hooks/useUsers';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { PATHS } from '../../routes/paths';
+import { IMAGES } from '../../assets';
+import { MdOutlineSyncAlt } from 'react-icons/md';
 
 type UserConsentDialogProps = {
   isOpen: boolean;
@@ -55,17 +57,15 @@ const UserConsentDialog = ({
     >
       <div className="pb-8">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center shadow-lg shadow-primary/30">
+          <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center ">
             <FaCreditCard className="w-8 h-8 text-primary-foreground" />
           </div>
-          <div className="flex flex-col gap-1">
-            <div className="w-2 h-2 rounded-full bg-[#FF6B5B]"></div>
-            <div className="w-2 h-2 rounded-full bg-[#FF6B5B]"></div>
-            <div className="w-2 h-2 rounded-full bg-[#FF6B5B]"></div>
-          </div>
-          <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center shadow-lg shadow-accent/30">
-            <FaShield className="w-8 h-8 text-accent-foreground" />
-          </div>
+          <MdOutlineSyncAlt className="w-6 h-6 text-muted-foreground " />
+          <img
+            src={IMAGES.PlaidLogo}
+            alt="Plaid Logo"
+            className="w-16 h-16 rounded-2xl bg-surface  shadow-lg shadow-surface/30"
+          />
         </div>
 
         <h1 className="text-center text-2xl mb-2 text-foreground">

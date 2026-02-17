@@ -14,7 +14,7 @@ const getBadgeValue = (value: number) => {
 const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
   return (
     <motion.div
-      className="relative flex justify-center items-center cursor-pointer p-3  rounded-full hover:bg-white/5"
+      className="relative flex justify-center items-center cursor-pointer p-3  rounded-full hover:bg-muted"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
@@ -28,7 +28,7 @@ const NotificationBell: React.FC<Props> = ({ count = 0, onClick }) => {
           transition={{ duration: 0.2 }}
           className="
             absolute top-1 right-1 
-            bg-primary text-foreground text-xs 
+            bg-primary text-primary-foreground text-xs 
             min-w-4.5 h-4.5 
             flex items-center justify-center 
             rounded-full font-semibold px-1

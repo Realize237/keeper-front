@@ -13,7 +13,14 @@ export interface User {
   acceptedPrivacyPolicy?: boolean;
   userConsentAccepted?: boolean;
   preferredTheme?: Theme;
+  synchronizationStatus?: PlaidSynchronizationStatus;
 }
+
+export type PlaidSynchronizationStatus =
+  | 'PENDING'
+  | 'FAILED'
+  | 'IDLE'
+  | 'SUCCESS';
 
 export interface IEmailPasswordInput {
   oldPassword: string;

@@ -76,7 +76,7 @@ const CheckYourEmail = () => {
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-white text-2xl font-semibold mb-4"
+          className="text-surface-foreground text-2xl font-semibold mb-4"
         >
           {title}
         </motion.h1>
@@ -85,11 +85,11 @@ const CheckYourEmail = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-gray-300 mb-6 text-left"
+          className="text-muted-foreground mb-6 text-left"
         >
           {description}
         </motion.p>
-        <motion.p className="text-gray-400 text-left mb-3 text-sm">
+        <motion.p className="text-muted-foreground text-left mb-3 text-sm">
           {t('auth.check_email.spam_hint')}
         </motion.p>
 
@@ -99,7 +99,7 @@ const CheckYourEmail = () => {
           transition={{ delay: 0.2 }}
           className="mb-6"
         >
-          <p className="text-gray-400 mb-2">
+          <p className="text-muted-foreground mb-2">
             {expired
               ? t('auth.check_email.link_expired')
               : t('auth.check_email.link_expires_in')}
@@ -109,7 +109,7 @@ const CheckYourEmail = () => {
             key={`${minutesLeft}:${remainingSeconds}`}
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ duration: 0.25 }}
-            className="text-white text-xl font-semibold"
+            className="text-surface-foreground text-xl font-semibold"
           >
             {expired
               ? '—'

@@ -61,6 +61,19 @@ export const createLinkToken = async () => {
   }
 };
 
+export const triggerWebhook = async () => {
+  try {
+    const response = await axiosClient.post<{
+      statusCode: number;
+      message: string;
+    }>(`${API_PATHS.PLAID.WEBHOOK}`, {});
+
+    return response.data;
+  } catch (err: unknown) {
+    return processError(err);
+  }
+};
+
 export const syncCardSubscriptions = async () => {
   try {
     const response = await axiosClient.post<{

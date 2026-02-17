@@ -1015,7 +1015,8 @@
 
     "sync_message": "Aucun compte bancaire ou carte n’est connecté à votre compte. Veuillez synchroniser ou connecter votre compte à Keepay",
     "connect_now": "Connecter mon compte maintenant",
-
+    "syncing_message": "Synchronisation de vos comptes et abonnements...",
+    "syncing": "Synchronisation...",
     "actions": {
       "accept": "J'accepte",
       "decline": "Refuser",
@@ -1041,5 +1042,15 @@
     "no_results": "Aucun pays trouvé correspondant à \"{{query}}\"",
     "region_count": "{{count}} région active en {{region}}",
     "region_count_other": "{{count}} régions actives en {{region}}"
+  },
+  "sync": {
+    "success": {
+      "title": "Synchronisation terminée",
+      "message": "Abonnements synchronisés avec succès"
+    },
+    "failed": {
+      "title": "Échec de la synchronisation",
+      "message": "Échec de la synchronisation des abonnements. Veuillez réessayer."
+    }
   }
 }

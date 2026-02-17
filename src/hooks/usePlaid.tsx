@@ -5,6 +5,7 @@ import {
   getRecuringTransactions,
   getTransactions,
   syncCardSubscriptions,
+  triggerWebhook,
 } from '../api/plaid';
 import { plaidKeys } from '../queryKeys/plaidKeys';
 
@@ -50,5 +51,11 @@ export const usePlaidTransactions = () => {
   return useQuery<[]>({
     queryKey: plaidKeys.transactions,
     queryFn: getTransactions,
+  });
+};
+
+export const usePlaidWebhook = () => {
+  return useMutation<{ statusCode: number; message: string }, Error>({
+    mutationFn: () => triggerWebhook(),
   });
 };

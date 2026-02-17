@@ -341,12 +341,11 @@ const Subscriptions = () => {
                     </span>
                   </div>
                 </motion.div>
-                <div className="flex w-full md:w-1/3 items-center gap-1">
+                <div className="flex w-full md:w-56 items-center gap-1">
                   <motion.button
                     onClick={() => setOpenFilter(true)}
                     whileHover={{
                       y: -1,
-                      backgroundColor: 'rgba(255,255,255,0.12)',
                     }}
                     whileTap={{ scale: 0.985 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 35 }}
@@ -354,8 +353,8 @@ const Subscriptions = () => {
     w-full flex items-center justify-between
     rounded-full px-5 py-3
     bg-surface backdrop-blur-2xl
-    shadow-[0_8px_30px_rgba(0,0,0,0.35)]
-    text-sm text-surface-foreground gap-4
+        text-sm text-surface-foreground gap-2
+      border border-border hover:bg-muted transition
   "
                   >
                     <div className="flex items-center gap-1">
@@ -374,13 +373,11 @@ const Subscriptions = () => {
                         initial={{ opacity: 0, x: 6 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0 }}
-                        whileHover={{
-                          backgroundColor: 'rgba(255,255,255,0.12)',
-                        }}
                         className="
         flex items-center gap-1
         text-xs text-surface-foreground/80
         px-2 py-1 rounded-full
+        hover:bg-surface-foreground/20 transition
       "
                       >
                         {t('common.clear')}
@@ -432,7 +429,7 @@ const Subscriptions = () => {
                 )}
               </motion.div>
               {isLoading ? (
-                <div className="w-full mt-4 bg-surface-foreground animate-pulse h-14 rounded-xl" />
+                <div className="w-full mt-4 skeleton animate-pulse h-14 rounded-xl" />
               ) : error ? (
                 <ErrorState
                   message={t('subscriptions.modals.failed_to_load')}

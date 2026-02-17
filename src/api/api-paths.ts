@@ -63,6 +63,7 @@ export const API_PATHS = {
     GET_TRANSACTIONS: '/api/plaid/transactions',
     GET_RECURRING_TRANSACTIONS: '/api/plaid/transactions/recurring',
     REFRESH_TRANSACTIONS: '/api/plaid/transactions/refresh',
+    WEBHOOK: '/api/plaid/webhook',
   },
   PUSH_TOKEN: {
     REGISTER_TOKEN: '/api/push-tokens/save',
