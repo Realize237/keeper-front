@@ -135,10 +135,10 @@ const VerifyEmail = () => {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full bg-surface rounded-2xl p-10 text-center shadow-xl"
         >
-          <h1 className="text-white text-3xl font-semibold mb-4">
+          <h1 className="text-surface-foreground text-3xl font-semibold mb-4">
             {t('auth.verify_email.verification_failed')}
           </h1>
-          <p className="text-red-500 mb-6">
+          <p className="text-danger mb-6">
             {t('auth.verify_email.invalid_link')}
           </p>
         </motion.div>
@@ -170,7 +170,7 @@ const VerifyEmail = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <h1 className="text-white text-3xl font-semibold mb-4">
+              <h1 className="text-surface-foreground text-3xl font-semibold mb-4">
                 {status === 'success' && t('auth.verify_email.email_verified')}
                 {status === 'error' &&
                   t('auth.verify_email.verification_failed')}
@@ -180,10 +180,10 @@ const VerifyEmail = () => {
               <p
                 className={`mb-6 ${
                   status === 'error'
-                    ? 'text-red-500'
+                    ? 'text-danger'
                     : status === 'success' && isEmailVerified
-                      ? 'text-green-400'
-                      : 'text-gray-300'
+                      ? 'text-accent'
+                      : 'text-muted-foreground'
                 }`}
               >
                 {message}
@@ -191,7 +191,7 @@ const VerifyEmail = () => {
 
               {status === 'loading' && !expired && !isEmailVerified && (
                 <div className="mb-6">
-                  <p className="text-gray-400 mb-2">
+                  <p className="text-muted-foreground mb-2">
                     {t('auth.verify_email.link_expires_in')}
                   </p>
 
@@ -199,7 +199,7 @@ const VerifyEmail = () => {
                     key={`${minutesLeft}:${remainingSeconds}`}
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.25 }}
-                    className="text-white text-xl font-semibold"
+                    className="text-surface-foreground text-xl font-semibold"
                   >
                     {minutesLeft}:{remainingSeconds.toString().padStart(2, '0')}
                   </motion.span>
@@ -235,10 +235,10 @@ const Loader = ({ text }: { text: string }) => (
     className="flex flex-col items-center gap-4"
   >
     <motion.div
-      className="h-10 w-10 rounded-full border-2 border-white/20 border-t-white"
+      className="h-10 w-10 rounded-full border-2 border-border border-t-primary"
       animate={{ rotate: 360 }}
       transition={{ repeat: Infinity, duration: 0.9, ease: 'linear' }}
     />
-    <p className="text-gray-300 text-sm">{text}</p>
+    <p className="text-surface-foreground text-sm">{text}</p>
   </motion.div>
 );

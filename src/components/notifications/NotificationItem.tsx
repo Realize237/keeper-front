@@ -99,7 +99,7 @@ const NotificationItem: React.FC<Props> = ({
         } rounded-3xl p-4 ${
           notification.status === NotificationStatus.READ
             ? 'border border-border'
-            : 'bg-muted'
+            : 'bg-surface'
         } overflow-hidden`}
       >
         <div className="flex items-start gap-4">
@@ -108,7 +108,7 @@ const NotificationItem: React.FC<Props> = ({
               {selected ? (
                 <FiCheckCircle className="w-6 h-6 text-accent" />
               ) : (
-                <FiCircle className="w-6 h-6 text-foreground" />
+                <FiCircle className="w-6 h-6 text-primary-foreground" />
               )}
             </button>
           ) : null}
@@ -117,9 +117,9 @@ const NotificationItem: React.FC<Props> = ({
             <div
               className={`w-14 h-14 rounded-full ${
                 notification.status === NotificationStatus.READ
-                  ? 'bg-neutral-800'
-                  : 'bg-[#171717]'
-              } flex items-center justify-center text-white`}
+                  ? 'bg-surface-foreground/50'
+                  : 'bg-primary'
+              } flex items-center justify-center text-primary-foreground`}
             >
               {iconMap[notification.notificationType]}
             </div>
@@ -130,21 +130,21 @@ const NotificationItem: React.FC<Props> = ({
               <h4
                 className={`font-semibold truncate ${
                   notification.status === NotificationStatus.READ
-                    ? 'text-neutral-300'
-                    : 'text-white'
+                    ? 'text-muted-foreground'
+                    : 'text-surface-foreground'
                 }`}
               >
                 {notification.title}
               </h4>
-              <div className="text-xs text-neutral-400 ml-2 whitespace-nowrap">
+              <div className="text-xs text-muted-foreground ml-2 whitespace-nowrap">
                 {formatTimeFromNow(notification.createdAt)}
               </div>
             </div>
             <p
               className={`text-sm mt-1 line-clamp-2 ${
                 notification.status === NotificationStatus.READ
-                  ? 'text-neutral-400'
-                  : 'text-neutral-200'
+                  ? 'text-muted-foreground'
+                  : 'text-surface-foreground/80'
               }`}
             >
               {notification.message}
@@ -175,10 +175,10 @@ const NotificationItem: React.FC<Props> = ({
                     setSwipedId(isSwiped ? null : notification.id); // default behavior
                   }
                 }}
-                className="p-2 rounded-lg hover:bg-neutral-800/50"
+                className="p-2 rounded-lg hover:bg-muted"
               >
                 <FiMoreHorizontal
-                  className={`w-5 h-5 text-neutral-400 cursor-pointer transition-transform ${
+                  className={`w-5 h-5 text-muted-foreground cursor-pointer transition-transform ${
                     isSwiped ? 'rotate-180' : ''
                   }`}
                 />
@@ -195,7 +195,7 @@ const NotificationItem: React.FC<Props> = ({
                   ? t('notifications.actions.mark_unread')
                   : t('notifications.actions.mark_read')
               }
-              className="cursor-pointer p-2 rounded-lg border border-neutral-700 text-neutral-700 hover:opacity-70 pointer-events-auto"
+              className="cursor-pointer p-2 rounded-lg border border-border text-muted-foreground hover:opacity-70 pointer-events-auto"
             >
               {notification.status === NotificationStatus.READ ? (
                 <MdUndo className="w-4 h-4" />
@@ -206,7 +206,7 @@ const NotificationItem: React.FC<Props> = ({
             <button
               onClick={onDelete}
               title={t('common.delete')}
-              className="cursor-pointer p-2 rounded-lg text-red-600/60 border border-red-600/60 hover:opacity-70 pointer-events-auto"
+              className="cursor-pointer p-2 rounded-lg text-danger border border-danger/60 hover:opacity-70 pointer-events-auto"
             >
               <FiTrash2 className="w-4 h-4" />
             </button>

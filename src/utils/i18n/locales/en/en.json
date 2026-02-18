@@ -97,7 +97,7 @@
       "actions": {
         "submit": "Continue",
         "loading": "Creating account ...",
-        "google": "Sign up with Google"
+        "google": "Sign up with"
       },
 
       "divider": "or sign up with",
@@ -146,7 +146,7 @@
       "actions": {
         "submit": "Login now",
         "loading": "Logging in ...",
-        "google": "Continue with Google"
+        "google": "Sign in with"
       },
 
       "errors": {
@@ -840,7 +840,9 @@
     "start_free_trial": "Start Free Trial",
     "buy_lifetime": "Buy Lifetime Access",
     "buy_premium_plus": "Buy Premium Plus",
-    "back_to_home": "Back to Home"
+    "back_to_home": "Back to Home",
+    "coming_soon_title": "Premium Plans Coming Soon",
+    "coming_soon_description": "We're working hard to bring you amazing premium features. Stay tuned for exclusive pricing and benefits!"
   },
   "pricing_free_features": {
     "feature1": "5-10 subscriptions",
@@ -1030,6 +1032,8 @@
     },
     "sync_message": "You haven’t connected any bank account or card yet. Connect one to Keepay to get started",
     "connect_now": "Connect Now",
+    "syncing_message": "Syncing your accounts and subscriptions...",
+    "syncing": "Syncing...",
     "actions": {
       "accept": "I Agree",
       "decline": "Decline",
@@ -1054,5 +1058,15 @@
     "no_results": "No countries found matching \"{{query}}\"",
     "region_count": "{{count}} active region in {{region}}",
     "region_count_other": "{{count}} active regions in {{region}}"
+  },
+  "sync": {
+    "success": {
+      "title": "Sync Complete",
+      "message": "Successfully synced subscriptions"
+    },
+    "failed": {
+      "title": "Sync Failed",
+      "message": "Failed to sync subscriptions. Please try again."
+    }
   }
 }

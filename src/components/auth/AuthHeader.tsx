@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import LanguageSwitcher from '../common/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import ThemeSwitcher from '../common/ThemeSwitcher';
 
 export default function AuthHeader() {
   const { t } = useTranslation();
@@ -18,7 +19,10 @@ export default function AuthHeader() {
         <FaHome size={16} />
         <span className="hidden sm:inline capitalize">{t('common.home')}</span>
       </Link>
-      <LanguageSwitcher />
+      <div className="flex items-center gap-6">
+        <ThemeSwitcher />
+        <LanguageSwitcher />
+      </div>
     </div>
   );
 }

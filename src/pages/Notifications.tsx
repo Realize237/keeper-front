@@ -160,7 +160,7 @@ const NotificationsPage: React.FC<unknown> = () => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-screen text-white w-full "
+      className="min-h-screen text-foreground w-full "
     >
       <div className="mx-auto w-full px-4 md:px-6  lg:px-8 py-6">
         <div className="flex items-center my-4 space-x-4">

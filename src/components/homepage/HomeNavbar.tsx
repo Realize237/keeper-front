@@ -97,7 +97,7 @@ const HomeNavbar = () => {
       <nav className="bg-background/80 backdrop-blur-xl border border-border rounded-3xl shadow-lg  px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <div className="relative w-11 h-11 bg-primary-gradient text-foreground rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30 group cursor-pointer">
-            <FaBell className="w-5 h-5 text-forefround group-hover:scale-110 transition-transform" />
+            <FaBell className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
             <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full border-2 border-accent-foreground animate-pulse"></div>
           </div>
           <span className="text-2xl font-bold  text-primary">Keepay</span>
@@ -110,19 +110,32 @@ const HomeNavbar = () => {
                 ? location.pathname === item.href
                 : activeSection === `#${item.href}`;
 
+            const isPricing = item.href === PATHS.PRICING;
+
             const className = `
-      px-5 py-2.5 rounded-xl font-medium transition-all
+      px-5 py-2.5 rounded-xl font-medium transition-all relative
       ${
         isActive
           ? 'text-primary bg-muted'
           : 'text-foreground hover:text-primary hover:bg-muted'
       }
+      ${isPricing ? 'cursor-not-allowed opacity-60' : ''}
     `;
 
             return item.type === 'route' ? (
-              <NavLink key={item.href} to={item.href} className={className}>
-                {t(item.labelKey)}
-              </NavLink>
+              isPricing ? (
+                // Non-clickable pricing link
+                <div key={item.href} className={className}>
+                  {t(item.labelKey)}
+                  <span className="absolute -top-1 -right-1 px-1.5 py-0.5 rounded-full bg-primary-gradient text-primary-foreground text-[9px] font-bold tracking-wider uppercase shadow-md shadow-primary/20">
+                    {t('supported_countries.soon')}
+                  </span>
+                </div>
+              ) : (
+                <NavLink key={item.href} to={item.href} className={className}>
+                  {t(item.labelKey)}
+                </NavLink>
+              )
             ) : (
               <Link
                 key={item.href}
@@ -224,13 +237,15 @@ const HomeNavbar = () => {
                       ? location.pathname === item.href
                       : activeSection === item.href;
 
+                  const isPricing = item.href === PATHS.PRICING;
+
                   return (
                     <motion.div
                       key={item.href}
                       variants={itemVariants}
                       className={`relative pl-4 text-lg font-medium ${
                         isActive ? 'text-primary' : 'text-foreground'
-                      }`}
+                      } ${isPricing ? 'opacity-60 cursor-not-allowed' : ''}`}
                     >
                       {isActive && (
                         <motion.span
@@ -240,12 +255,23 @@ const HomeNavbar = () => {
                       )}
 
                       {item.type === 'route' ? (
-                        <Link
-                          to={item.href}
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {t(item.labelKey)}
-                        </Link>
+                        isPricing ? (
+                          // Non-clickable pricing link
+                          <div className="flex items-center gap-2">
+                            {t(item.labelKey)}
+                            <span className="px-2 py-0.5 rounded-full bg-primary-gradient text-primary-foreground text-[10px] font-bold tracking-wider uppercase shadow-md shadow-primary/20">
+                              {t('supported_countries.soon')}
+                            </span>
+                          </div>
+                        ) : (
+                          <Link
+                            to={item.href}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-2"
+                          >
+                            {t(item.labelKey)}
+                          </Link>
+                        )
                       ) : (
                         <Link
                           to={homeAnchor(item.href)}

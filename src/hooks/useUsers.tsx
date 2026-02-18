@@ -170,3 +170,12 @@ export const useResendEmailVerification = () => {
       resendEmailVerification(payload),
   });
 };
+
+export const useSaveUserConsent = () => {
+  return useMutation<unknown, Error>({
+    mutationFn: () => updateUser({ userConsentAccepted: true }, 0), // id will be handled by backend from token
+    meta: {
+      invalidate: [userKeys.info],
+    },
+  });
+};
