@@ -92,7 +92,7 @@
       "actions": {
         "submit": "Continuer",
         "loading": "Création du compte...",
-        "google": "S’inscrire avec Google"
+        "google": "S’inscrire avec"
       },
 
       "divider": "ou s’inscrire avec",
@@ -140,7 +140,7 @@
       "actions": {
         "submit": "Se connecter",
         "loading": "Connexion en cours...",
-        "google": "Continuer avec Google"
+        "google": "Continuer avec"
       },
 
       "errors": {
@@ -824,7 +824,9 @@
     "buy_premium_plus": "Acheter Premium Plus",
     "back_to_home": "Retour à la Page d'Accueil",
     "guarantee": "Garantie de Remboursement 14 Jours",
-    "guarantee_desc": "Aucune question posée. Essayez sans risque aujourd'hui."
+    "guarantee_desc": "Aucune question posée. Essayez sans risque aujourd'hui.",
+    "coming_soon_title": "Forfaits Premium Bientôt Disponibles",
+    "coming_soon_description": "Nous travaillons dur pour vous offrir des fonctionnalités premium incroyables. Restez à l'écoute pour des tarifs et avantages exclusifs !"
   },
   "pricing_free_features": {
     "feature1": "5-10 abonnements",

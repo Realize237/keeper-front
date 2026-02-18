@@ -22,16 +22,12 @@ export const usePlaidSyncEvents = () => {
     socket?.on(
       SOCKET_EVENTS.RECEIVE_SYNCHRONIZATION_NOTIFICATION,
       (data: SyncNotificationData) => {
-        console.log('Sync notification received:', data);
-
         switch (data.status) {
           case 'PENDING':
-            console.log('Sync started:', data.message);
             queryClient.invalidateQueries({ queryKey: userKeys.info });
             break;
 
           case 'SUCCESS':
-            console.log('Sync completed:', data.message);
             queryClient.invalidateQueries({ queryKey: userKeys.info });
             queryClient.invalidateQueries({
               queryKey: subscriptionKeys.lists(),
@@ -45,7 +41,6 @@ export const usePlaidSyncEvents = () => {
             break;
 
           case 'FAILED':
-            console.error('Sync failed:', data.message);
             queryClient.invalidateQueries({ queryKey: userKeys.info });
 
             showNotification({
@@ -56,8 +51,6 @@ export const usePlaidSyncEvents = () => {
             break;
 
           case 'IDLE':
-            console.log('Sync idle');
-            queryClient.invalidateQueries({ queryKey: userKeys.info });
             break;
         }
       }
