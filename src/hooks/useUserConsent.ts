@@ -63,5 +63,6 @@ export const useUserConsent = () => {
     isPending,
     handleShowModal,
     showPlaidSyncDialog,
+    setShowPlaidSyncDialog,
   };
 };

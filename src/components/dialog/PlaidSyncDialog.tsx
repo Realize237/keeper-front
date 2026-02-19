@@ -11,12 +11,7 @@ export default function PlaidSyncDialog({
   onClose,
 }: PlaidSyncDialogProps) {
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={'Sync Your Bank Account'}
-      width="max-w-lg"
-    >
+    <Modal isOpen={isOpen} onClose={onClose} width="max-w-lg">
       <div className="pb-8">
         <PlaidSyncAccount onClose={onClose} />
       </div>

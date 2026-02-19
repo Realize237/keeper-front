@@ -111,7 +111,7 @@ const UserConsentDialog = ({
               <div className="flex items-start gap-3">
                 <FaCheck className="w-5 h-5 mt-0.5 shrink-0 text-accent" />
                 <div>
-                  <p className="text-sm mb-2 text-sureface-foreground">
+                  <p className="text-sm mb-2 text-surface-foreground">
                     {t('consent.access_items.notifications')}
                   </p>
                   <ul className="space-y-1 text-xs text-muted-foreground">

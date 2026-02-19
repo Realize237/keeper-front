@@ -51,7 +51,7 @@ export default function PlaidSyncAccount({ onClose }: { onClose: () => void }) {
   }, [dispatch, generateLinkToken]);
 
   return (
-    <div className="w-full h-full flex justify-center items-center text-white">
+    <div className="w-full h-full text-surface-foreground">
       <PlaidInit onClose={onClose} />
     </div>
   );

@@ -1,8 +1,15 @@
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import PlaidContext from '../../context/PlaidContext';
 import { usePlaidSyncCardSubscriptions } from '../../hooks/usePlaid';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import usePlaidLinkHook from '../../hooks/usePlaidLinkHook';
+import { FaCreditCard } from 'react-icons/fa6';
+import { MdOutlineSyncAlt } from 'react-icons/md';
+import { IMAGES } from '../../assets';
+import { PATHS } from '../../routes/paths';
+import Button from '../ui/Button';
+import { FiAlertCircle, FiLock } from 'react-icons/fi';
+import { FaCheck } from 'react-icons/fa';
 
 const PlaidInit = ({ onClose }: { onClose: () => void }) => {
   const {
@@ -19,92 +26,144 @@ const PlaidInit = ({ onClose }: { onClose: () => void }) => {
   const { mutate: syncCardSubscriptions, isPending: isSyncing } =
     usePlaidSyncCardSubscriptions();
 
-  const lauchSyncCardSubscriptions = () => {
+  const launchSyncCardSubscriptions = useCallback(() => {
     syncCardSubscriptions(undefined, {
       onSuccess: () => {
         dispatch({ type: 'SET_STATE', state: { isSubscriptionSynced: true } });
         onClose();
       },
     });
-  };
+  }, [syncCardSubscriptions, dispatch, onClose]);
 
-  // this is for to replace the functionality of lauch my subscription button
-  // useEffect(() => {
-  //   if(!isSyncing && isSubscriptionSynced) {
-  //     lauchSyncCardSubscriptions()
-  //   }
-  // }, [isSyncing, isSubscriptionSynced]);
+  useEffect(() => {
+    if (linkSuccess && accessToken && !isSyncing && !isSubscriptionSynced) {
+      launchSyncCardSubscriptions();
+    }
+  }, [
+    linkSuccess,
+    accessToken,
+    isSyncing,
+    isSubscriptionSynced,
+    launchSyncCardSubscriptions,
+  ]);
 
   return (
-    <div className="w-3/4 h-3/4 mx-auto my-8 p-6 border border-gray-300 rounded-lg shadow-md overflow-y-auto">
-      {/* <h3 className="text-xl font-bold mb-4">{t('plaid.title')}</h3> */}
-
-      {!linkSuccess && (
-        <>
-          <h4 className="text-lg font-semibold mb-2">
-            {t('plaid.start_title')}
-          </h4>
-          <p className="mb-4">{t('plaid.start_description')}</p>
-
-          {Object.values(linkTokenError).every((value) => value.length > 0) ? (
-            <div className="p-4 bg-red-100 border border-red-300 rounded text-sm text-red-800 mb-4">
-              <p>
-                <strong>{t('plaid.error.code')}:</strong>{' '}
-                <code>{linkTokenError.error_code}</code>
-              </p>
-              <p>
-                <strong>{t('plaid.error.type')}:</strong>{' '}
-                <code>{linkTokenError.error_type}</code>
-              </p>
-              <p>
-                <strong>{t('plaid.error.message')}:</strong>{' '}
-                {linkTokenError.error_message}
-              </p>
+    <>
+      <>
+        <h2 className="text-2xl font-bold text-center mb-4">
+          {t('plaid.title')}
+        </h2>
+        <div className="bg-surface flex justify-center w-full p-4 rounded-xl mb-4">
+          <div className="flex items-center justify-center gap-4 ">
+            <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center ">
+              <FaCreditCard className="w-8 h-8 text-primary-foreground" />
             </div>
-          ) : linkToken === '' ? (
-            <button
-              disabled
-              className="p-2 bg-blue-500 rounded-md text-white opacity-70 cursor-not-allowed"
-            >
-              {t('plaid.loading')}
-            </button>
-          ) : (
-            <>
-              <button
-                disabled={!ready}
-                onClick={() => open()}
-                className="p-2 bg-blue-700 hover:bg-blue-500 cursor-pointer rounded-md text-white my-4"
-              >
-                {'Sync my account now'}
-              </button>
-            </>
-          )}
-        </>
-      )}
-
-      {linkSuccess && accessToken && (
-        <div className="my-6">
-          <h4 className="text-lg font-semibold mb-2">
-            {t('plaid.recurring_title')}
-          </h4>
-          <button
-            onClick={() => lauchSyncCardSubscriptions()}
-            disabled={isSyncing}
-            className={`p-2 px-4 rounded-md text-white transition ${
-              isSyncing
-                ? 'bg-blue-500 cursor-not-allowed'
-                : 'bg-blue-700 hover:bg-blue-800'
-            }`}
-          >
-            {isSyncing
-              ? t('plaid.syncing')
-              : isSubscriptionSynced
-                ? t('plaid.synced')
-                : t('plaid.load_subscriptions')}
-          </button>
+            <MdOutlineSyncAlt className="w-6 h-6 text-muted-foreground " />
+            <img
+              src={IMAGES.PlaidLogo}
+              alt="Plaid Logo"
+              className="w-16 h-16 rounded-2xl bg-surface  shadow-lg shadow-surface/30"
+            />
+          </div>
         </div>
-      )}
-    </div>
+
+        <p className="mb-4">
+          <Trans
+            i18nKey="plaid.description"
+            components={{
+              span: <span className="font-semibold" />,
+            }}
+          />
+        </p>
+
+        <p className="font-semibold mb-3">{t('plaid.benefits_title')}</p>
+
+        <ul className="mb-6 space-y-3">
+          <li className="flex items-center gap-2">
+            <FaCheck className="text-primary w-4 h-4" />
+            {t('plaid.benefit_1')}
+          </li>
+
+          <li className="flex items-center gap-2">
+            <FaCheck className="text-primary w-4 h-4" />
+            {t('plaid.benefit_2')}
+          </li>
+
+          <li className="flex items-center gap-2">
+            <FaCheck className="text-primary w-4 h-4" />
+            {t('plaid.benefit_3')}
+          </li>
+        </ul>
+        <div className="flex items-center gap-2 ">
+          <FiLock className="mt-1 w-4 h-4 text-primary" />
+          <p className="text-sm text-foreground ">
+            <Trans
+              i18nKey="plaid.security"
+              components={{
+                span: <span className="font-semibold" />,
+                strong: <span className="font-semibold" />,
+              }}
+            />
+          </p>
+        </div>
+
+        <p className="text-sm text-muted-foreground my-6">
+          <Trans
+            i18nKey="plaid.support"
+            components={{
+              support: (
+                <a href={PATHS.SUPPORT} className="text-primary underline" />
+              ),
+            }}
+          />
+        </p>
+        {Object.values(linkTokenError).every((value) => value.length > 0) ? (
+          <div className="mb-6 rounded-xl border border-danger/20 bg-danger/5 p-5">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center">
+                <FiAlertCircle className="w-4 h-4 text-danger" />
+              </div>
+
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-danger mb-2">
+                  {t('plaid.error.title')}
+                </h4>
+
+                <p className="text-sm text-danger mb-3">
+                  {linkTokenError.error_message}
+                </p>
+
+                <div className="text-xs text-danger space-y-1 border-t border-danger/20 pt-3">
+                  <p>
+                    <span className="font-medium">
+                      {t('plaid.error.code')}:
+                    </span>{' '}
+                    {linkTokenError.error_code}
+                  </p>
+
+                  <p>
+                    <span className="font-medium">
+                      {t('plaid.error.type')}:
+                    </span>{' '}
+                    {linkTokenError.error_type}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : linkToken === '' ? (
+          <Button isLoading={true} disabled={true}>
+            {t('plaid.loading')}
+          </Button>
+        ) : (
+          <>
+            <Button disabled={!ready} onClick={() => open()} size="lg">
+              {t('plaid.actions.sync')}
+            </Button>
+          </>
+        )}
+      </>
+    </>
   );
 };
 
