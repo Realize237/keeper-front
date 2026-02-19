@@ -38,6 +38,8 @@ import UserConsentDialog from '../components/dialog/UserConsentDialog';
 import { useUserConsent } from '../hooks/useUserConsent';
 import AccountSyncBanner from '../components/subscriptions/AccountSyncBanner ';
 import { CalendarSkeleton } from '../components/calendar/CalendarSkeleton';
+import Plaid from './Plaid';
+import PlaidSyncDialog from '../components/dialog/PlaidSyncDialog';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -86,6 +88,7 @@ const Subscriptions = () => {
     handleConsentDeclined,
     isPending: isAcceptUserConsentPending,
     handleShowModal,
+    showPlaidSyncDialog,
   } = useUserConsent();
 
   const openBottomSheet = () => setBottomSheetOpen(true);
@@ -481,6 +484,10 @@ const Subscriptions = () => {
         isPending={isAcceptUserConsentPending}
         onAccept={handleConsentAccepted}
         onDecline={handleConsentDeclined}
+      />
+      <PlaidSyncDialog
+        isOpen={showPlaidSyncDialog}
+        onClose={() => setOpenFilter(false)}
       />
     </div>
   );

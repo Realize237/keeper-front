@@ -922,7 +922,8 @@
     "contact": "Contact",
     "cookies": "Politique en matière de cookies",
     "gdpr": "RGPD",
-    "copyright": "© {{year}} Keepay. Tous droits réservés"
+    "copyright": "© {{year}} Keepay. Tous droits réservés",
+    "contactus": "Contactez-nous: {{email}}"
   },
 
   "contact": {
