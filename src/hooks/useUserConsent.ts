@@ -5,19 +5,16 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useUpdateUser, useUser } from './useUsers';
 import { CONSENT_KEY } from '../constants/storageKeys';
-import { usePlaidSyncCardSubscriptions } from './usePlaid';
 
 export const useUserConsent = () => {
   const { t } = useTranslation();
   const { user } = useUser();
   const [showModal, setShowModal] = useState(false);
+  const [showPlaidSyncDialog, setShowPlaidSyncDialog] =
+    useState<boolean>(false);
   const { mutate: saveConsent, isPending: isSavingConsent } = useUpdateUser();
-  const {
-    mutate: syncCardSubscriptions,
-    isPending: isSyncingCardSubscriptions,
-  } = usePlaidSyncCardSubscriptions();
 
-  const isPending = isSavingConsent || isSyncingCardSubscriptions;
+  const isPending = isSavingConsent;
 
   const checkAndShowModal = () => {
     if (!hasAskedBefore()) {
@@ -36,15 +33,8 @@ export const useUserConsent = () => {
         onSuccess: () => {
           storage.set(CONSENT_KEY, 'true');
           toast.success(t('consent.accepted'));
-          syncCardSubscriptions(undefined, {
-            onSuccess: () => {
-              setShowModal(false);
-            },
-            onError: () => {
-              toast.error(t('consent.error'));
-            },
-          });
           setShowModal(false);
+          setShowPlaidSyncDialog(true);
         },
         onError: () => {
           toast.error(t('consent.error'));
@@ -72,5 +62,6 @@ export const useUserConsent = () => {
     hasAskedBefore,
     isPending,
     handleShowModal,
+    showPlaidSyncDialog,
   };
 };

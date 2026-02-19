@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import PlaidContext from '../../context/PlaidContext';
-import PlaidLink from './PlaidLink';
 import { usePlaidSyncCardSubscriptions } from '../../hooks/usePlaid';
 import { useTranslation } from 'react-i18next';
+import usePlaidLinkHook from '../../hooks/usePlaidLinkHook';
 
-const PlaidInit = () => {
+const PlaidInit = ({ onClose }: { onClose: () => void }) => {
   const {
     dispatch,
     accessToken,
@@ -15,6 +15,7 @@ const PlaidInit = () => {
   } = useContext(PlaidContext);
   const { t } = useTranslation();
 
+  const { open, ready } = usePlaidLinkHook();
   const { mutate: syncCardSubscriptions, isPending: isSyncing } =
     usePlaidSyncCardSubscriptions();
 
@@ -22,13 +23,21 @@ const PlaidInit = () => {
     syncCardSubscriptions(undefined, {
       onSuccess: () => {
         dispatch({ type: 'SET_STATE', state: { isSubscriptionSynced: true } });
+        onClose();
       },
     });
   };
 
+  // this is for to replace the functionality of lauch my subscription button
+  // useEffect(() => {
+  //   if(!isSyncing && isSubscriptionSynced) {
+  //     lauchSyncCardSubscriptions()
+  //   }
+  // }, [isSyncing, isSubscriptionSynced]);
+
   return (
     <div className="w-3/4 h-3/4 mx-auto my-8 p-6 border border-gray-300 rounded-lg shadow-md overflow-y-auto">
-      <h3 className="text-xl font-bold mb-4">{t('plaid.title')}</h3>
+      {/* <h3 className="text-xl font-bold mb-4">{t('plaid.title')}</h3> */}
 
       {!linkSuccess && (
         <>
@@ -60,9 +69,15 @@ const PlaidInit = () => {
               {t('plaid.loading')}
             </button>
           ) : (
-            <div className="flex justify-start items-center">
-              <PlaidLink />
-            </div>
+            <>
+              <button
+                disabled={!ready}
+                onClick={() => open()}
+                className="p-2 bg-blue-700 hover:bg-blue-500 cursor-pointer rounded-md text-white my-4"
+              >
+                {'Sync my account now'}
+              </button>
+            </>
           )}
         </>
       )}

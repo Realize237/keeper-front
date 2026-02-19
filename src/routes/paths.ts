@@ -36,7 +36,7 @@ export const PATHS = {
     SUBSCRIPTIONS: '/subscriptions',
     CARDS: '/cards',
     SHARED_PLAN: '/shared-plan',
-    PLAID: '/plaid',
+    // PLAID: '/plaid',
 
     PROFILE: {
       ROOT: '/profile',
