@@ -98,6 +98,15 @@ const Subscriptions = () => {
     setShowPlaidSyncDialog,
   } = useUserConsent();
 
+  useEffect(() => {
+    if (
+      user?.synchronizationStatus === 'SUCCESS' ||
+      userAccountSyncStatus === 'SUCCESS'
+    ) {
+      setShowPlaidSyncDialog(false);
+    }
+  }, [user, userAccountSyncStatus, showPlaidSyncDialog]);
+
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
   const [openFilter, setOpenFilter] = useState(false);
@@ -497,10 +506,12 @@ const Subscriptions = () => {
         onDecline={handleConsentDeclined}
       />
 
-      <PlaidSyncDialog
-        isOpen={showPlaidSyncDialog && !isSyncing}
-        onClose={() => setShowPlaidSyncDialog(false)}
-      />
+      {user?.synchronizationStatus !== 'SUCCESS' && (
+        <PlaidSyncDialog
+          isOpen={showPlaidSyncDialog}
+          onClose={() => setShowPlaidSyncDialog(false)}
+        />
+      )}
     </div>
   );
 };

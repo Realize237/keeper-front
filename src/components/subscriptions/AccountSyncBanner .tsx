@@ -58,7 +58,7 @@ const AccountSyncBanner = ({
               : {}
           }
           transition={{ duration: 1.6, repeat: Infinity }}
-          className={`w-full sm:w-auto bg-accent text-primary-foreground text-sm font-medium py-1.5 px-4 rounded transition-opacity ${
+          className={`w-full sm:w-auto ${isSyncing ? 'bg-primary' : 'bg-accent'} text-primary-foreground text-sm font-medium py-1.5 px-4 rounded transition-opacity ${
             isSyncing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary/90'
           }`}
           onClick={onSync}

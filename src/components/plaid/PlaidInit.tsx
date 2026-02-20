@@ -54,120 +54,116 @@ const PlaidInit = ({ onClose = () => {} }: { onClose?: () => void }) => {
 
   return (
     <>
-      <>
-        <h2 className="text-2xl font-bold text-center mb-4">
-          {t('plaid.title')}
-        </h2>
-        <div className="bg-surface flex justify-center w-full p-4 rounded-xl mb-4">
-          <div className="flex items-center justify-center gap-4 ">
-            <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center ">
-              <FaCreditCard className="w-8 h-8 text-primary-foreground" />
-            </div>
-            <MdOutlineSyncAlt className="w-6 h-6 text-muted-foreground " />
-            <img
-              src={IMAGES.PlaidLogo}
-              alt="Plaid Logo"
-              className="w-16 h-16 rounded-2xl bg-surface  shadow-lg shadow-surface/30"
-            />
+      {' '}
+      <h2 className="text-2xl font-bold text-center mb-4">
+        {t('plaid.title')}
+      </h2>
+      <div className="bg-surface flex justify-center w-full p-4 rounded-xl mb-4">
+        <div className="flex items-center justify-center gap-4 ">
+          <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center ">
+            <FaCreditCard className="w-8 h-8 text-primary-foreground" />
           </div>
+          <MdOutlineSyncAlt className="w-6 h-6 text-muted-foreground " />
+          <img
+            src={IMAGES.PlaidLogo}
+            alt="Plaid Logo"
+            className="w-16 h-16 rounded-2xl bg-surface  shadow-lg shadow-surface/30"
+          />
         </div>
+      </div>
+      <p className="mb-4">
+        <Trans
+          i18nKey="plaid.description"
+          components={{
+            span: <span className="font-semibold" />,
+          }}
+        />
+      </p>
+      <p className="font-semibold mb-3">{t('plaid.benefits_title')}</p>
+      <ul className="mb-6 space-y-3">
+        <li className="flex items-center gap-2">
+          <FaCheck className="text-primary w-4 h-4" />
+          {t('plaid.benefit_1')}
+        </li>
 
-        <p className="mb-4">
+        <li className="flex items-center gap-2">
+          <FaCheck className="text-primary w-4 h-4" />
+          {t('plaid.benefit_2')}
+        </li>
+
+        <li className="flex items-center gap-2">
+          <FaCheck className="text-primary w-4 h-4" />
+          {t('plaid.benefit_3')}
+        </li>
+      </ul>
+      <div className="flex items-center gap-2 ">
+        <FiLock className="mt-1 w-4 h-4 text-primary" />
+        <p className="text-sm text-foreground ">
           <Trans
-            i18nKey="plaid.description"
+            i18nKey="plaid.security"
             components={{
               span: <span className="font-semibold" />,
+              strong: <span className="font-semibold" />,
             }}
           />
         </p>
+      </div>
+      <p className="text-sm text-muted-foreground my-6">
+        <Trans
+          i18nKey="plaid.support"
+          components={{
+            support: (
+              <a href={PATHS.SUPPORT} className="text-primary underline" />
+            ),
+          }}
+        />
+      </p>
+      {Object.values(linkTokenError).every((value) => value.length > 0) ? (
+        <div className="mb-6 rounded-xl border border-danger/20 bg-danger/5 p-5">
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center">
+              <FiAlertCircle className="w-4 h-4 text-danger" />
+            </div>
 
-        <p className="font-semibold mb-3">{t('plaid.benefits_title')}</p>
+            <div className="flex-1">
+              <h4 className="text-sm font-semibold text-danger mb-2">
+                {t('plaid.error.title')}
+              </h4>
 
-        <ul className="mb-6 space-y-3">
-          <li className="flex items-center gap-2">
-            <FaCheck className="text-primary w-4 h-4" />
-            {t('plaid.benefit_1')}
-          </li>
+              <p className="text-sm text-danger mb-3">
+                {linkTokenError.error_message}
+              </p>
 
-          <li className="flex items-center gap-2">
-            <FaCheck className="text-primary w-4 h-4" />
-            {t('plaid.benefit_2')}
-          </li>
-
-          <li className="flex items-center gap-2">
-            <FaCheck className="text-primary w-4 h-4" />
-            {t('plaid.benefit_3')}
-          </li>
-        </ul>
-        <div className="flex items-center gap-2 ">
-          <FiLock className="mt-1 w-4 h-4 text-primary" />
-          <p className="text-sm text-foreground ">
-            <Trans
-              i18nKey="plaid.security"
-              components={{
-                span: <span className="font-semibold" />,
-                strong: <span className="font-semibold" />,
-              }}
-            />
-          </p>
-        </div>
-
-        <p className="text-sm text-muted-foreground my-6">
-          <Trans
-            i18nKey="plaid.support"
-            components={{
-              support: (
-                <a href={PATHS.SUPPORT} className="text-primary underline" />
-              ),
-            }}
-          />
-        </p>
-        {Object.values(linkTokenError).every((value) => value.length > 0) ? (
-          <div className="mb-6 rounded-xl border border-danger/20 bg-danger/5 p-5">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center">
-                <FiAlertCircle className="w-4 h-4 text-danger" />
-              </div>
-
-              <div className="flex-1">
-                <h4 className="text-sm font-semibold text-danger mb-2">
-                  {t('plaid.error.title')}
-                </h4>
-
-                <p className="text-sm text-danger mb-3">
-                  {linkTokenError.error_message}
+              <div className="text-xs text-danger space-y-1 border-t border-danger/20 pt-3">
+                <p>
+                  <span className="font-medium">{t('plaid.error.code')}:</span>{' '}
+                  {linkTokenError.error_code}
                 </p>
 
-                <div className="text-xs text-danger space-y-1 border-t border-danger/20 pt-3">
-                  <p>
-                    <span className="font-medium">
-                      {t('plaid.error.code')}:
-                    </span>{' '}
-                    {linkTokenError.error_code}
-                  </p>
-
-                  <p>
-                    <span className="font-medium">
-                      {t('plaid.error.type')}:
-                    </span>{' '}
-                    {linkTokenError.error_type}
-                  </p>
-                </div>
+                <p>
+                  <span className="font-medium">{t('plaid.error.type')}:</span>{' '}
+                  {linkTokenError.error_type}
+                </p>
               </div>
             </div>
           </div>
-        ) : linkToken === '' ? (
-          <Button isLoading={true} disabled={true}>
-            {t('plaid.loading')}
+        </div>
+      ) : linkToken === '' ? (
+        <Button isLoading={true} disabled={true}>
+          {t('plaid.loading')}
+        </Button>
+      ) : (
+        <>
+          <Button
+            disabled={!ready || isSyncing || isSubscriptionSynced}
+            onClick={() => open()}
+            isLoading={isSyncing || isSubscriptionSynced}
+            size="lg"
+          >
+            {t('plaid.actions.sync')}
           </Button>
-        ) : (
-          <>
-            <Button disabled={!ready} onClick={() => open()} size="lg">
-              {t('plaid.actions.sync')}
-            </Button>
-          </>
-        )}
-      </>
+        </>
+      )}
     </>
   );
 };

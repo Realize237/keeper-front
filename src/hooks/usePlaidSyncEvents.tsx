@@ -19,7 +19,7 @@ export const usePlaidSyncEvents = () => {
 
   useEffect(() => {
     if (!socket) return;
-
+    socket.off(SOCKET_EVENTS.RECEIVE_SYNCHRONIZATION_NOTIFICATION);
     const handler = (data: SyncNotificationData) => {
       switch (data.status) {
         case 'PENDING':
