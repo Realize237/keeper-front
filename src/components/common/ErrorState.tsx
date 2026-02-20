@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { MdErrorOutline } from 'react-icons/md';
 
 type ErrorStateProps = {
   message?: string;
@@ -9,6 +11,7 @@ const ErrorState = ({
   message = 'Something went wrong.',
   onRetry,
 }: ErrorStateProps) => {
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -22,12 +25,10 @@ const ErrorState = ({
         transition={{ type: 'spring', stiffness: 200 }}
         className="w-14 h-14 rounded-full bg-surface text-surface-foreground flex items-center justify-center mb-4 border border-border"
       >
-        ⚠️
+        <MdErrorOutline className="w-8 h-8" />
       </motion.div>
 
-      <p className="text-foreground-surface text-lg font-medium mb-2">
-        {message}
-      </p>
+      <p className="text-foreground text-lg font-medium mb-2">{message}</p>
 
       <motion.button
         onClick={onRetry}
@@ -36,10 +37,10 @@ const ErrorState = ({
         className="px-6 py-3 bg-border capitalize rounded-xl text-surface-foreground font-medium tracking-wide 
                    shadow-sm hover:bg-muted transition-all cursor-pointer"
       >
-        Retry
+        {t('common.retry')}
       </motion.button>
 
-      <div className="absolute bottom-0 w-36 h-36 opacity-5 rounded-full bg-background blur-3xl"></div>
+      <div className="absolute bottom-0 w-36 h-36 opacity-5 rounded-full bg-background text-foreground blur-3xl"></div>
     </motion.div>
   );
 };

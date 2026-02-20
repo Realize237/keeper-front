@@ -950,7 +950,8 @@
     "contact": "Contact",
     "cookies": "Cookie Policy",
     "gdpr": "GDPR",
-    "copyright": "© {{year}} Keepay. All rights reserved."
+    "copyright": "© {{year}} Keepay. All rights reserved.",
+    "contactus": "Contact Us: {{email}}"
   },
 
   "contact": {

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import PlaidContext from '../../context/PlaidContext';
 import { usePlaidSyncCardSubscriptions } from '../../hooks/usePlaid';
 import { Trans, useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import Button from '../ui/Button';
 import { FiAlertCircle, FiLock } from 'react-icons/fi';
 import { FaCheck } from 'react-icons/fa';
 
-const PlaidInit = ({ onClose }: { onClose: () => void }) => {
+const PlaidInit = ({ onClose = () => {} }: { onClose?: () => void }) => {
   const {
     dispatch,
     accessToken,
@@ -26,14 +26,19 @@ const PlaidInit = ({ onClose }: { onClose: () => void }) => {
   const { mutate: syncCardSubscriptions, isPending: isSyncing } =
     usePlaidSyncCardSubscriptions();
 
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   const launchSyncCardSubscriptions = useCallback(() => {
     syncCardSubscriptions(undefined, {
       onSuccess: () => {
         dispatch({ type: 'SET_STATE', state: { isSubscriptionSynced: true } });
-        onClose();
+        onCloseRef.current();
       },
     });
-  }, [syncCardSubscriptions, dispatch, onClose]);
+  }, [syncCardSubscriptions, dispatch]);
 
   useEffect(() => {
     if (linkSuccess && accessToken && !isSyncing && !isSubscriptionSynced) {
