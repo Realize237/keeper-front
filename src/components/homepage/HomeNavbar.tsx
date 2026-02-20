@@ -287,29 +287,33 @@ const HomeNavbar = () => {
 
               <motion.div
                 variants={itemVariants}
-                className="mt-8 flex items-center justify-center gap-1 bg-muted rounded-xl p-1"
+                className="mt-8 flex items-center justify-center gap-3"
               >
-                <button
-                  onClick={() => changeLanguage('en')}
-                  className={`px-4 py-2 rounded-lg font-semibold ${
-                    isEnglish
-                      ? 'bg-background text-primary shadow-sm'
-                      : 'text-muted-foreground'
-                  }`}
-                >
-                  EN
-                </button>
+                <div className="flex items-center gap-1 bg-muted rounded-xl p-1 flex-1">
+                  <button
+                    onClick={() => changeLanguage('en')}
+                    className={`px-4 py-2 rounded-lg font-semibold flex-1 ${
+                      isEnglish
+                        ? 'bg-background text-primary shadow-sm'
+                        : 'text-muted-foreground'
+                    }`}
+                  >
+                    EN
+                  </button>
 
-                <button
-                  onClick={() => changeLanguage('fr')}
-                  className={`px-4 py-2 rounded-lg font-semibold ${
-                    isFrench
-                      ? 'bg-background text-primary shadow-sm'
-                      : 'text-muted-foreground'
-                  }`}
-                >
-                  FR
-                </button>
+                  <button
+                    onClick={() => changeLanguage('fr')}
+                    className={`px-4 py-2 rounded-lg font-semibold flex-1 ${
+                      isFrench
+                        ? 'bg-background text-primary shadow-sm'
+                        : 'text-muted-foreground'
+                    }`}
+                  >
+                    FR
+                  </button>
+                </div>
+
+                <ThemeSwitcher />
               </motion.div>
 
               <motion.button

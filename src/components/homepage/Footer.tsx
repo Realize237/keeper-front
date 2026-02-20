@@ -3,6 +3,7 @@ import { FaBell } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { currentYear } from '../../utils';
 import { PATHS } from '../../routes/paths';
+import { env } from '../../utils/env';
 
 type FooterLink = {
   labelKey: string;
@@ -120,9 +121,12 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-gray-700">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col items-center md:items-start justify-between gap-4">
             <p className="text-sm text-gray-400 font-medium">
               {t('footer.copyright', { year: currentYear })}
+            </p>
+            <p className="text-sm text-gray-400 font-medium">
+              {t('footer.contactus', { email: env.APP_SUPPORT_EMAIL })}
             </p>
           </div>
         </div>

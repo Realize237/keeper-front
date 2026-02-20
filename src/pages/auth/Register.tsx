@@ -459,9 +459,8 @@ export default function Register() {
           variants={containerVariants}
         >
           <motion.button
-            className="flex-1 border border-border rounded-lg py-3 flex items-center justify-center cursor-not-allowed!  disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 border border-border rounded-lg py-3 flex items-center justify-center"
             variants={socialButtonVariants}
-            disabled
             whileHover="hover"
             whileTap="tap"
             onClick={() => handleGoogleSignup()}

@@ -581,14 +581,23 @@
     "review_app": "Review App"
   },
   "plaid": {
-    "title": "Connect your bank",
+    "title": "Track Your Subscriptions Automatically",
     "start_title": "Start by linking your bank account",
-    "start_description": "Click the button below to launch the Plaid connection flow.",
+    "description": "Connect your bank securely with <span>Plaid</span> to automatically detect and manage your recurring payments.",
+    "benefits_title": "What you’ll get:",
+    "benefit_1": "All subscriptions in one place",
+    "benefit_2": "Smart renewal reminders",
+    "benefit_3": "Better control over your spending",
+    "security": "Secure connection powered by <span>Plaid</span>. <strong>Keepay</strong> never stores your banking credentials.",
+    "support": "If you have any issues connecting your bank, please contact <support>support</support>.",
     "loading": "Loading...",
     "recurring_title": "Recurring Subscriptions",
     "syncing": "Syncing...",
     "synced": "Subscriptions Synced",
     "load_subscriptions": "Load all your subscriptions",
+    "actions": {
+      "sync": "Continue Securely"
+    },
 
     "error": {
       "code": "Link Error Code",
@@ -941,7 +950,8 @@
     "contact": "Contact",
     "cookies": "Cookie Policy",
     "gdpr": "GDPR",
-    "copyright": "© {{year}} Keepay. All rights reserved."
+    "copyright": "© {{year}} Keepay. All rights reserved.",
+    "contactus": "Contact Us: {{email}}"
   },
 
   "contact": {

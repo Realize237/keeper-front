@@ -564,14 +564,23 @@
     "upgrade_plan": "Premium"
   },
   "plaid": {
-    "title": "Connecter votre banque",
+    "title": "Suivez automatiquement vos abonnements",
     "start_title": "Commencez par associer votre compte bancaire",
-    "start_description": "Cliquez sur le bouton ci-dessous pour lancer le flux de connexion Plaid.",
+    "description": "Connectez votre banque en toute sécurité à <span>Plaid</span> pour détecter et gérer automatiquement vos paiements récurrents",
+    "benefits_title": "Ce que vous obtiendrez :",
+    "benefit_1": "Tous vos abonnements au même endroit",
+    "benefit_2": "Des rappels de renouvellement intelligents",
+    "benefit_3": "Un meilleur contrôle de vos dépenses",
+    "security": "Connexion sécurisée grâce à <span>Plaid</span>. <span>Keepay</span> ne stocke jamais vos identifiants bancaires.",
+    "support": "Si vous rencontrez des difficultés pour connecter votre banque, veuillez contacter le <support>support</support>.",
     "loading": "Chargement...",
     "recurring_title": "Abonnements récurrents",
     "syncing": "Synchronisation...",
     "synced": "Abonnements synchronisés",
     "load_subscriptions": "Charger tous vos abonnements",
+    "actions": {
+      "sync": "Continuer en toute sécurité"
+    },
 
     "error": {
       "code": "Code d’erreur Plaid",
@@ -922,7 +931,8 @@
     "contact": "Contact",
     "cookies": "Politique en matière de cookies",
     "gdpr": "RGPD",
-    "copyright": "© {{year}} Keepay. Tous droits réservés"
+    "copyright": "© {{year}} Keepay. Tous droits réservés",
+    "contactus": "Contactez-nous: {{email}}"
   },
 
   "contact": {
