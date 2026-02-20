@@ -5,13 +5,16 @@ import { useTranslation } from 'react-i18next';
 
 type AccountSyncBannerProps = {
   onSync: () => void;
+  user: ReturnType<typeof useUser>['user'];
+  isSyncing: boolean;
 };
 
-const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
-  const { user } = useUser();
+const AccountSyncBanner = ({
+  onSync,
+  user,
+  isSyncing,
+}: AccountSyncBannerProps) => {
   const { t } = useTranslation();
-
-  const isSyncing = user?.synchronizationStatus === 'PENDING';
   const shouldShow = !user?.userConsentAccepted || isSyncing;
 
   if (!shouldShow) return null;
@@ -55,7 +58,7 @@ const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
               : {}
           }
           transition={{ duration: 1.6, repeat: Infinity }}
-          className={`w-full sm:w-auto bg-primary text-primary-foreground text-sm font-medium py-1.5 px-4 rounded transition-opacity ${
+          className={`w-full sm:w-auto bg-accent text-primary-foreground text-sm font-medium py-1.5 px-4 rounded transition-opacity ${
             isSyncing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary/90'
           }`}
           onClick={onSync}
