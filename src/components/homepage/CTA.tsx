@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { FaArrowRight } from 'react-icons/fa';
-import { FaCheck, FaGlobe } from 'react-icons/fa6';
+import { FaGlobe } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../routes/paths';
 
@@ -55,64 +55,6 @@ export const CTA = () => {
               {t('cta.sync_account')}
               <FaArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
-            <button
-              onClick={() => navigate(PATHS.APP.SUBSCRIPTIONS)}
-              className="px-10 py-5 border-3 border-white text-white rounded-2xl hover:bg-white hover:text-[#990800] transition-all transform hover:-translate-y-1 font-bold text-lg"
-            >
-              {t('cta.open_web_app')}
-            </button>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <button className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-xl hover:bg-white/20 transition-all font-semibold">
-              {t('cta.watch_demo')}
-            </button>
-            <button className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-xl hover:bg-white/20 transition-all font-semibold">
-              {t('cta.view_pricing')}
-            </button>
-            <button className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-xl hover:bg-white/20 transition-all font-semibold">
-              {t('cta.read_stories')}
-            </button>
-          </div>
-
-          <div className="pt-10 flex flex-wrap items-center justify-center gap-8 text-base opacity-90">
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <FaCheck className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-semibold">{t('cta.no_card')}</span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <FaCheck className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-semibold">{t('cta.free_plan')}</span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <FaCheck className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-semibold">{t('cta.cancel_anytime')}</span>
-            </div>
-          </div>
-
-          <div className="pt-6">
-            <div className="inline-flex items-center gap-4 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl">
-              <div className="flex -space-x-3">
-                <div className="w-11 h-11 rounded-full bg-linear-to-br from-[#FF6B5B] to-[#C41E14] border-3 border-white shadow-md"></div>
-                <div className="w-11 h-11 rounded-full bg-linear-to-br from-[#990800] to-[#6B0500] border-3 border-white shadow-md"></div>
-                <div className="w-11 h-11 rounded-full bg-linear-to-br from-[#008B82] to-[#006B66] border-3 border-white shadow-md"></div>
-                <div className="w-11 h-11 rounded-full bg-linear-to-br from-gray-700 to-gray-900 border-3 border-white shadow-md flex items-center justify-center text-white text-xs font-bold">
-                  +10K
-                </div>
-              </div>
-              <div className="text-left">
-                <p className="font-bold text-white">{t('cta.trusted_by')}</p>
-                <p className="text-sm text-white/80 font-medium">
-                  {t('cta.rating')}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

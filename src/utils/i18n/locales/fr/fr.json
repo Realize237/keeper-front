@@ -35,7 +35,10 @@
     "errors": {
       "request_failed": "Échec de la requête"
     },
-    "home": "accueil"
+    "home": "accueil",
+    "pagination": {
+      "showing": "Affichage de {{from}} à {{to}} sur {{total}}"
+    }
   },
   "errors": {
     "UNEXPECTED_ERROR": "Une erreur est survenue"

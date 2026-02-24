@@ -39,8 +39,8 @@ export default function SubscriptionCard({
           className={`${hasMoreThanOneSubscription ? 'w-5 h-5 ' : 'w-6 h-6 '} rounded-full object-cover`}
         />
         {hasMoreThanOneSubscription && (
-          <div className="w-6 h-6 rounded-full relative right-1 top-0.5 z-10 flex justify-center items-center bg-[#121212]">
-            <span className="text-white text-[9px]">
+          <div className="w-6 h-6 rounded-full relative right-1 top-0.5 z-10 flex justify-center items-center bg-background">
+            <span className="text-foreground text-[9px]">
               +{subscriptions.length - 1}
             </span>
           </div>

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { FaBell } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { currentYear } from '../../utils';
 import { PATHS } from '../../routes/paths';
 import { env } from '../../utils/env';
+import { LOGOS } from '../../assets';
 
 type FooterLink = {
   labelKey: string;
@@ -79,7 +79,11 @@ export const Footer = () => {
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30">
-                <FaBell className="w-6 h-6 text-white" />
+                <img
+                  src={LOGOS.KEEPAYWHITE}
+                  alt="Keepay Logo"
+                  className="w-5 h-5"
+                />
               </div>
               <span className="text-2xl font-bold bg-linear-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Keepay

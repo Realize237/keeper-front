@@ -1,4 +1,4 @@
-import { IMAGES } from '../assets';
+import { IMAGES, THEME_ICONS } from '../assets';
 import { NavItems } from '../constants/NavItems';
 import type { BillingResult } from '../interfaces/billings';
 import type { Value } from '../interfaces/calendar';
@@ -284,3 +284,30 @@ export function groupClassNames(
 export const currentYear = new Date().getFullYear();
 
 export const homeAnchor = (id: string) => `/#${id}`;
+
+export const getThemeIcon = (
+  iconName: keyof typeof THEME_ICONS,
+  state: 'active' | 'default' = 'default',
+  theme: 'light' | 'dark' | 'system' = 'light'
+) => {
+  const icon = THEME_ICONS[iconName];
+
+  if (state === 'active') {
+    return icon.active;
+  }
+
+  let actualTheme: 'light' | 'dark';
+  if (theme === 'system') {
+    actualTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  } else {
+    actualTheme = theme;
+  }
+
+  if ('default' in icon && typeof icon.default === 'object') {
+    return icon.default[actualTheme];
+  }
+
+  return icon.active;
+};
