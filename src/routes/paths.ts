@@ -50,7 +50,7 @@ export const PATHS = {
       },
       ACCOUNT_DETAILS: {
         route: 'account-details',
-        full: '/profile/change-password',
+        full: '/profile/account-details',
       },
     },
     SETTINGS: '/settings',

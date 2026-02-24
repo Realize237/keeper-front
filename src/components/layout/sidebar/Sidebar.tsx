@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { activeNavItems } from '../../../utils';
-import { env } from '../../../utils/env';
 import { useTranslation } from 'react-i18next';
 import { FaCrown } from 'react-icons/fa6';
+import { LOGOS } from '../../../assets';
+import { PATHS } from '../../../routes/paths';
+import { useThemeIcon } from '../../../hooks/useThemeIcon';
 
 interface SidebarProps {
   onToggle?: (isOpen: boolean) => void;
@@ -41,8 +43,11 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
       className="fixed top-0 left-0 h-[calc(100vh-0.1rem)] border-r border-r-border text-foreground p-4 flex flex-col"
     >
       <div className="flex  h-25   justify-between mb-8 relative">
-        <div className="flex justify-between gap-2 overflow-hidden">
-          <img src={env.APP_LOGO_URL} alt="Logo" className="h-8 w-8 shrink-0" />
+        <Link
+          to={PATHS.HOME}
+          className="flex justify-between gap-2 overflow-hidden"
+        >
+          <img src={LOGOS.KEEPAYRED} alt="Logo" className="h-8 w-8 shrink-0" />
 
           <AnimatePresence>
             {isOpen && (
@@ -51,9 +56,9 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
-                className="text-foreground text-2xl font-bold whitespace-nowrap"
+                className="text-foreground text-2xl  whitespace-nowrap"
               >
-                <span className="text-primary">K</span>eepay
+                Keepay
               </motion.h1>
             )}
           </AnimatePresence>
@@ -63,61 +68,21 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
           >
             {isOpen ? <FaArrowLeft /> : <FaArrowRight />}
           </button>
-        </div>
+        </Link>
       </div>
 
       <nav className="flex flex-col gap-2 relative flex-1 border-t border-t-border pt-4 overflow-auto">
         {activeNavItems.map((menu, index) => {
-          const Icon = menu.icon;
           const isActive = index === activeIndex;
 
           return (
-            <NavLink
+            <SidebarNavItem
               key={t(menu.labelKey)}
-              to={menu.path}
-              end
-              className="relative flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-muted"
-            >
-              {isActive && (
-                <motion.div
-                  layoutId="active-bar"
-                  className="absolute left-0 top-0 h-full w-0.5 bg-primary rounded-r-full"
-                />
-              )}
-
-              <motion.div
-                animate={{
-                  color: isActive
-                    ? 'var(--color-primary)'
-                    : '(--color-muted-foreground)',
-                  scale: isActive ? 1.2 : 1,
-                }}
-                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                className="text-sm"
-              >
-                <Icon />
-              </motion.div>
-
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      color: isActive
-                        ? 'var(--color-primary)'
-                        : 'var(--muted-foreground)',
-                    }}
-                    exit={{ opacity: 0, x: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="font-medium text-sm whitespace-nowrap"
-                  >
-                    {t(menu.labelKey)}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </NavLink>
+              menu={menu}
+              isActive={isActive}
+              isOpen={isOpen}
+              t={t}
+            />
           );
         })}
       </nav>
@@ -150,6 +115,69 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
         </button>
       </div>
     </motion.aside>
+  );
+};
+
+interface SidebarNavItemProps {
+  menu: {
+    themeIcon: 'profile' | 'subscriptions';
+    path: string;
+    labelKey: string;
+  };
+  isActive: boolean;
+  isOpen: boolean;
+  t: (key: string) => string;
+}
+
+const SidebarNavItem = ({ menu, isActive, isOpen, t }: SidebarNavItemProps) => {
+  const themeIcon = useThemeIcon(
+    menu.themeIcon,
+    isActive ? 'active' : 'default'
+  );
+
+  return (
+    <NavLink
+      to={menu.path}
+      end
+      className="relative flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-muted"
+    >
+      {isActive && (
+        <motion.div
+          layoutId="active-bar"
+          className="absolute left-0 top-0 h-full w-0.5 bg-primary rounded-r-full"
+        />
+      )}
+
+      <motion.div
+        animate={{
+          scale: isActive ? 1.2 : 1,
+        }}
+        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        className="text-sm"
+      >
+        <img src={themeIcon} alt={t(menu.labelKey)} className="w-5 h-5" />
+      </motion.div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              color: isActive
+                ? 'var(--color-primary)'
+                : 'var(--muted-foreground)',
+            }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ duration: 0.2 }}
+            className="font-medium text-sm whitespace-nowrap"
+          >
+            {t(menu.labelKey)}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </NavLink>
   );
 };
 

@@ -35,7 +35,10 @@
     "errors": {
       "request_failed": "Request failed"
     },
-    "home": "home"
+    "home": "home",
+    "pagination": {
+      "showing": "Showing {{from}} - {{to}} of {{total}}"
+    }
   },
   "errors": {
     "UNEXPECTED_ERROR": "Something went wrong"
