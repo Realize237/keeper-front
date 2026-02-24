@@ -92,7 +92,6 @@ const Subscriptions = () => {
     checkAndShowModal: checkAndShowUserConsent,
     handleConsentAccepted,
     handleConsentDeclined,
-    isPending: isAcceptUserConsentPending,
     handleShowModal,
     showPlaidSyncDialog,
     setShowPlaidSyncDialog,
@@ -501,7 +500,6 @@ const Subscriptions = () => {
       />
       <UserConsentDialog
         isOpen={showUserConsent}
-        isPending={isAcceptUserConsentPending}
         onAccept={handleConsentAccepted}
         onDecline={handleConsentDeclined}
       />

@@ -1081,5 +1081,9 @@
       "title": "Sync Failed",
       "message": "Failed to sync subscriptions. Please try again."
     }
+  },
+  "trial": {
+    "ends_in": "Trial ends in {{days}} days",
+    "upgrade_message": "Upgrade to keep premium access."
   }
 }

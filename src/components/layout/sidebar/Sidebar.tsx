@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { activeNavItems } from '../../../utils';
@@ -16,6 +16,7 @@ interface SidebarProps {
 const Sidebar = ({ onToggle }: SidebarProps) => {
   const location = useLocation();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const activeIndex = activeNavItems.findIndex((item) => {
     if (item.path === '/') {
@@ -40,23 +41,26 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
     <motion.aside
       animate={{ width: isOpen ? 240 : 60 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-0 left-0 h-[calc(100vh-0.1rem)] border-r border-r-border text-foreground p-4 flex flex-col"
+      className="fixed top-0 left-0 h-[calc(100vh-0.1rem)] border-r border-r-border text-foreground p-2 flex flex-col"
     >
       <div className="flex  h-25   justify-between mb-8 relative">
-        <Link
-          to={PATHS.HOME}
-          className="flex justify-between gap-2 overflow-hidden"
-        >
-          <img src={LOGOS.KEEPAYRED} alt="Logo" className="h-8 w-8 shrink-0" />
+        <div className="flex justify-between gap-2 overflow-hidden">
+          <img
+            onClick={() => navigate(PATHS.HOME)}
+            src={LOGOS.KEEPAYRED}
+            alt="Logo"
+            className="h-8 w-8 shrink-0 cursor-pointer"
+          />
 
           <AnimatePresence>
             {isOpen && (
               <motion.h1
+                onClick={() => navigate(PATHS.HOME)}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2 }}
-                className="text-foreground text-2xl  whitespace-nowrap"
+                className="text-foreground text-2xl cursor-pointer whitespace-nowrap"
               >
                 Keepay
               </motion.h1>
@@ -64,11 +68,11 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
           </AnimatePresence>
           <button
             onClick={toggleSidebar}
-            className={`text-foreground p-2 rounded-md hover:bg-muted absolute  ${!isOpen ? 'left-7 bg-muted' : 'right-2 '}`}
+            className={`text-foreground p-2 rounded-md hover:bg-muted absolute  ${!isOpen ? 'left-10 bg-muted' : 'right-2 '}`}
           >
             {isOpen ? <FaArrowLeft /> : <FaArrowRight />}
           </button>
-        </Link>
+        </div>
       </div>
 
       <nav className="flex flex-col gap-2 relative flex-1 border-t border-t-border pt-4 overflow-auto">
@@ -87,33 +91,42 @@ const Sidebar = ({ onToggle }: SidebarProps) => {
         })}
       </nav>
 
-      <div className="border-t border-t-border pt-4 space-y-2 mt-auto ">
-        <button
-          disabled
-          className="relative flex justify-center  w-full items-center gap-4 px-3 py-3 rounded-lg
-             bg-primary/50 text-white/60
-            disabled:opacity-60"
-          style={{ cursor: 'not-allowed' }}
-        >
-          <motion.div className="text-white text-sm ">
-            <FaCrown />
-          </motion.div>
+      {isOpen ? (
+        <div className="mt-auto rounded-2xl border border-border bg-surface p-5 shadow-sm space-y-4">
+          <div className="space-y-1">
+            <p className="text-sm text-foreground font-medium">
+              {t('trial.ends_in', { days: 14 })}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {t('trial.upgrade_message')}
+            </p>
+          </div>
 
-          <AnimatePresence>
-            {isOpen && (
-              <motion.span
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.2 }}
-                className="font-medium text-sm whitespace-nowrap text-white "
-              >
-                {t('sidebar.upgrade_plan')}
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </button>
-      </div>
+          <button
+            disabled
+            className="w-full flex text-sm items-center justify-center gap-2 px-3 py-2 rounded-xl
+               bg-primary-gradient text-primary-foreground font-medium
+               disabled:opacity-60 disabled:cursor-not-allowed!
+               shadow-md shadow-primary/20"
+          >
+            <FaCrown className="text-sm" />
+            {t('sidebar.upgrade_plan')}
+          </button>
+        </div>
+      ) : (
+        <div className="mt-auto flex justify-center">
+          <button
+            disabled
+            className="w-10 h-10 flex items-center justify-center rounded-xl
+               bg-primary-gradient text-primary-foreground font-medium
+               disabled:opacity-60 disabled:cursor-not-allowed!
+               
+               shadow-md shadow-primary/20"
+          >
+            <FaCrown className="text-sm" />
+          </button>
+        </div>
+      )}
     </motion.aside>
   );
 };
@@ -154,6 +167,7 @@ const SidebarNavItem = ({ menu, isActive, isOpen, t }: SidebarNavItemProps) => {
         }}
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         className="text-sm"
+        title={t(menu.labelKey)}
       >
         <img src={themeIcon} alt={t(menu.labelKey)} className="w-5 h-5" />
       </motion.div>
