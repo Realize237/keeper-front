@@ -1,6 +1,6 @@
 import Modal from '../ui/Modal';
 import Button from '../ui/Button';
-import { FaCheck, FaCreditCard, FaLock } from 'react-icons/fa6';
+import { FaCheck, FaLock } from 'react-icons/fa6';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '../../hooks/useUsers';
 import { Link } from 'react-router-dom';
@@ -8,12 +8,11 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { PATHS } from '../../routes/paths';
-import { IMAGES } from '../../assets';
+import { IMAGES, LOGOS } from '../../assets';
 import { MdOutlineSyncAlt } from 'react-icons/md';
 
 type UserConsentDialogProps = {
   isOpen: boolean;
-  isPending: boolean;
   onDecline: () => void;
   onAccept: () => void;
 };
@@ -22,7 +21,6 @@ const UserConsentDialog = ({
   isOpen,
   onAccept,
   onDecline,
-  isPending,
 }: UserConsentDialogProps) => {
   const { user } = useUser();
   const { t } = useTranslation();
@@ -58,7 +56,11 @@ const UserConsentDialog = ({
       <div className="pb-8">
         <div className="flex items-center justify-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center ">
-            <FaCreditCard className="w-8 h-8 text-primary-foreground" />
+            <img
+              src={LOGOS.KEEPAYWHITE}
+              alt="Keepay Logo"
+              className="w-8 h-8"
+            />
           </div>
           <MdOutlineSyncAlt className="w-6 h-6 text-muted-foreground " />
           <img
@@ -213,10 +215,8 @@ const UserConsentDialog = ({
         <Button variant="secondary" onClick={onDecline}>
           {t('consent.actions.decline')}
         </Button>
-        <Button onClick={onAccept} disabled={!accepted || isPending}>
-          {isPending
-            ? t('consent.actions.saving')
-            : t('consent.actions.accept')}
+        <Button onClick={onAccept} disabled={!accepted}>
+          {t('consent.actions.accept')}
         </Button>
       </div>
     </Modal>

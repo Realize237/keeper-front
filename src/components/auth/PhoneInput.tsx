@@ -103,7 +103,7 @@ export function PhoneInput({
               />
               <div
                 ref={dropdownRef}
-                className={`absolute left-0 w-64 text-foreground modal-scrollbar bg-surface rounded-lg border border-border shadow-lg z-20 max-h-48 overflow-y-auto ${
+                className={`absolute left-0 w-64 text-foreground  bg-surface rounded-lg border border-border shadow-lg z-20 max-h-48 overflow-y-auto ${
                   dropdownPosition === 'above'
                     ? 'bottom-full mb-2'
                     : 'top-full mt-2'

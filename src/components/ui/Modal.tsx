@@ -78,9 +78,7 @@ const Modal: React.FC<ModalProps> = ({
               </button>
             </div>
 
-            <div className="px-6 pb-6 overflow-y-auto modal-scrollbar">
-              {children}
-            </div>
+            <div className="px-6 pb-6 overflow-y-auto ">{children}</div>
           </motion.div>
         </motion.div>
       )}

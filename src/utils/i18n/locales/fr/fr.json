@@ -1067,5 +1067,9 @@
       "title": "Échec de la synchronisation",
       "message": "Échec de la synchronisation des abonnements. Veuillez réessayer."
     }
+  },
+  "trial": {
+    "ends_in": "Essai: {{days}} jours restants",
+    "upgrade_message": "Passez au premium pour continuer."
   }
 }

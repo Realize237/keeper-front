@@ -3,9 +3,8 @@ import PlaidContext from '../../context/PlaidContext';
 import { usePlaidSyncCardSubscriptions } from '../../hooks/usePlaid';
 import { Trans, useTranslation } from 'react-i18next';
 import usePlaidLinkHook from '../../hooks/usePlaidLinkHook';
-import { FaCreditCard } from 'react-icons/fa6';
 import { MdOutlineSyncAlt } from 'react-icons/md';
-import { IMAGES } from '../../assets';
+import { IMAGES, LOGOS } from '../../assets';
 import { PATHS } from '../../routes/paths';
 import Button from '../ui/Button';
 import { FiAlertCircle, FiLock } from 'react-icons/fi';
@@ -61,7 +60,11 @@ const PlaidInit = ({ onClose = () => {} }: { onClose?: () => void }) => {
       <div className="bg-surface flex justify-center w-full p-4 rounded-xl mb-4">
         <div className="flex items-center justify-center gap-4 ">
           <div className="w-16 h-16 rounded-2xl bg-primary-gradient flex items-center justify-center ">
-            <FaCreditCard className="w-8 h-8 text-primary-foreground" />
+            <img
+              src={LOGOS.KEEPAYWHITE}
+              alt="Keepay Logo"
+              className="w-8 h-8"
+            />
           </div>
           <MdOutlineSyncAlt className="w-6 h-6 text-muted-foreground " />
           <img
