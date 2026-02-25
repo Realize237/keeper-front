@@ -3,4 +3,6 @@ export const userKeys = {
   lists: () => [...userKeys.all, 'list'] as const,
   list: (filters?: string) => [...userKeys.all, 'list', filters] as const,
   info: ['userInfo'] as const,
+  verificationStatus: (email: string) =>
+    [...userKeys.info, 'verificationStatus', email] as const,
 };

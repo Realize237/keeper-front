@@ -29,6 +29,7 @@ export const usePlaidSyncEvents = () => {
 
         case 'SUCCESS':
           queryClient.invalidateQueries({ queryKey: userKeys.info });
+          queryClient.refetchQueries({ queryKey: userKeys.info });
           queryClient.invalidateQueries({
             queryKey: subscriptionKeys.lists(),
           });

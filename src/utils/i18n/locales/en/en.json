@@ -203,7 +203,10 @@
       "seconds": "{{count}}s",
       "resend": "Resend email",
       "sending": "Sending…",
-      "resend_success": "A new verification email has been sent."
+      "resend_success": "A new verification email has been sent.",
+      "account_verified": "Account Verified!",
+      "redirecting_to_login": "Redirecting to login in {{seconds}} seconds...",
+      "go_to_login": "Go to Login"
     },
     "verify_email": {
       "checking_email": "Check your email",
