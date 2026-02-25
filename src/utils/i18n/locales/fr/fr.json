@@ -196,7 +196,10 @@
       "seconds": "{{count}}s",
       "resend": "Renvoyer l'e-mail",
       "sending": "Envoi...",
-      "resend_success": "Un nouvel e-mail de vérification vous a été envoyé."
+      "resend_success": "Un nouvel e-mail de vérification vous a été envoyé.",
+      "account_verified": "Compte Vérifié !",
+      "redirecting_to_login": "Redirection vers la connexion dans {{seconds}} secondes...",
+      "go_to_login": "Aller à la Connexion"
     },
     "verify_email": {
       "checking_email": "Vérifiez votre boîte mail.",
