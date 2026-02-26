@@ -23,22 +23,31 @@ export const usePlaidSyncEvents = () => {
     const handler = (data: SyncNotificationData) => {
       switch (data.status) {
         case 'PENDING':
-          queryClient.invalidateQueries({ queryKey: userKeys.info });
           setUserAccountSyncStatus('PENDING');
+          queryClient.refetchQueries({
+            queryKey: userKeys.info,
+            type: 'active',
+          });
           break;
 
         case 'SUCCESS':
-          queryClient.invalidateQueries({ queryKey: userKeys.info });
-          queryClient.refetchQueries({ queryKey: userKeys.info });
+          setUserAccountSyncStatus('SUCCESS');
+          queryClient.refetchQueries({
+            queryKey: userKeys.info,
+            type: 'active',
+          });
           queryClient.invalidateQueries({
             queryKey: subscriptionKeys.lists(),
           });
-          setUserAccountSyncStatus('SUCCESS');
+          setTimeout(() => setUserAccountSyncStatus('SUCCESS'), 1000);
           break;
 
         case 'FAILED':
-          queryClient.invalidateQueries({ queryKey: userKeys.info });
           setUserAccountSyncStatus('FAILED');
+          queryClient.refetchQueries({
+            queryKey: userKeys.info,
+            type: 'active',
+          });
           break;
       }
     };
