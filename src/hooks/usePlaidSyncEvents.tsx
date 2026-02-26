@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { userKeys } from '../queryKeys/userKeys';
 import { subscriptionKeys } from '../queryKeys/subscriptionKeys';
 import { SOCKET_EVENTS } from '../constants/sockets.events';
-import { PlaidSynchronizationStatus } from '../interfaces/users';
+import { PlaidSynchronizationStatus, User } from '../interfaces/users';
 
 type SyncNotificationData = {
   status: PlaidSynchronizationStatus;
@@ -27,25 +27,24 @@ export const usePlaidSyncEvents = () => {
           setUserAccountSyncStatus('PENDING');
           break;
 
-        case 'SUCCESS':
-          await queryClient.cancelQueries({ queryKey: userKeys.info });
-
-          await Promise.all([
-            queryClient.refetchQueries({
-              queryKey: userKeys.lists(),
-              type: 'all',
-            }),
-            queryClient.refetchQueries({
-              queryKey: subscriptionKeys.lists(),
-              type: 'all',
-            }),
-          ]);
-
-          const fresh = queryClient.getQueryData(userKeys.info);
-          console.log('[After refetch] userKeys.info cache:', fresh);
+        case 'SUCCESS': {
+          await queryClient.setQueryData(userKeys.info, (old: User) =>
+            old
+              ? {
+                  ...old,
+                  synchronizationStatus: 'SUCCESS',
+                  userConsentAccepted: true,
+                }
+              : old
+          );
+          await queryClient.refetchQueries({
+            queryKey: subscriptionKeys.lists(),
+            type: 'all',
+          });
 
           setUserAccountSyncStatus('SUCCESS');
           break;
+        }
 
         case 'FAILED':
           queryClient.refetchQueries({ queryKey: userKeys.info, type: 'all' });
