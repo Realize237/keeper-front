@@ -20,7 +20,7 @@ export const usePlaidSyncEvents = () => {
   useEffect(() => {
     if (!socket) return;
     socket.off(SOCKET_EVENTS.RECEIVE_SYNCHRONIZATION_NOTIFICATION);
-    const handler = (data: SyncNotificationData) => {
+    const handler = async (data: SyncNotificationData) => {
       switch (data.status) {
         case 'PENDING':
           queryClient.invalidateQueries({ queryKey: userKeys.info });
@@ -28,16 +28,27 @@ export const usePlaidSyncEvents = () => {
           break;
 
         case 'SUCCESS':
-          queryClient.invalidateQueries({ queryKey: userKeys.info });
-          queryClient.refetchQueries({ queryKey: userKeys.info });
-          queryClient.invalidateQueries({
-            queryKey: subscriptionKeys.lists(),
-          });
+          await queryClient.cancelQueries({ queryKey: userKeys.info });
+
+          await Promise.all([
+            queryClient.refetchQueries({
+              queryKey: userKeys.lists(),
+              type: 'all',
+            }),
+            queryClient.refetchQueries({
+              queryKey: subscriptionKeys.lists(),
+              type: 'all',
+            }),
+          ]);
+
+          const fresh = queryClient.getQueryData(userKeys.info);
+          console.log('[After refetch] userKeys.info cache:', fresh);
+
           setUserAccountSyncStatus('SUCCESS');
           break;
 
         case 'FAILED':
-          queryClient.invalidateQueries({ queryKey: userKeys.info });
+          queryClient.refetchQueries({ queryKey: userKeys.info, type: 'all' });
           setUserAccountSyncStatus('FAILED');
           break;
       }
