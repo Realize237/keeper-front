@@ -98,7 +98,7 @@ export const Button = ({
     >
       {isLoading ? (
         <div className="flex items-center justify-center gap-2">
-          <Spinner />
+          <Spinner className="text-primary-foreground" />
           <span>{t('common.loading')}</span>
         </div>
       ) : (

@@ -83,10 +83,10 @@ export function PhoneInput({
             ref={buttonRef}
             type="button"
             onClick={handleToggleDropdown}
-            className={`py-3 px-5  flex items-center justify-center gap-2 bg-surface rounded-xl transition-colors ${
+            className={`py-3 px-5 flex items-center justify-center gap-2 bg-surface rounded-xl transition-colors ${
               error
-                ? 'border border-danger hover:bg-danger/20'
-                : 'border-border hover:bg-surface/50'
+                ? 'border border-danger hover:bg-danger/10'
+                : 'border border-border hover:bg-surface/50'
             }`}
           >
             <ReactCountryFlag svg countryCode={selectedCountry.code} />
@@ -170,10 +170,10 @@ export function PhoneInput({
           value={value}
           onChange={handleInputChange}
           placeholder={getPlaceholder()}
-          className={`w-full py-3 px-5 bg-surface rounded-xl text-surface-foreground placeholder-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary${
+          className={`w-full py-3 px-5 bg-surface rounded-xl text-surface-foreground placeholder-muted-foreground transition-colors focus:outline-none focus:ring-2 ${
             error
-              ? 'border border-danger focus:ring-primary '
-              : 'border-border focus:ring-primary'
+              ? 'border border-danger focus:ring-danger'
+              : 'border border-border focus:ring-primary'
           }`}
         />
       </div>

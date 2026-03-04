@@ -22,9 +22,13 @@ import { PhoneInput } from '../../components/auth/PhoneInput';
 import { countries } from '../../constants/countries';
 import { Country } from '../../interfaces';
 
+type AuthErrorCode = 'EMAIL_ALREADY_EXISTS' | 'PHONE_ALREADY_EXISTS';
+
+type AuthServerErrors = Partial<Record<'email' | 'phone', string>>;
+
 export default function Register() {
   const navigate = useNavigate();
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [authErrors, setAuthErrors] = useState<AuthServerErrors>({});
   const [selectedCountry, setSelectedCountry] = useState<Country>(
     countries.find((c) => c.code === 'FR') || countries[0]
   );
@@ -51,6 +55,11 @@ export default function Register() {
     },
   });
 
+  const errorFieldMap: Record<AuthErrorCode, keyof AuthServerErrors> = {
+    EMAIL_ALREADY_EXISTS: 'email',
+    PHONE_ALREADY_EXISTS: 'phone',
+  };
+
   const countdownMinutes = Number(env.VERIFY_EMAIL_TIMER);
 
   const { reset: resetCountDown } = usePersistentCountdown(
@@ -62,12 +71,21 @@ export default function Register() {
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
-      if (emailError && name === 'email') {
-        setEmailError(null);
-      }
-      return () => subscription.unsubscribe();
+      setAuthErrors((prev) => {
+        if (name === 'phone' && prev.phone) {
+          return { ...prev, phone: undefined };
+        }
+
+        if (name === 'email' && prev.email) {
+          return { ...prev, email: undefined };
+        }
+
+        return prev;
+      });
     });
-  }, [watch, emailError]);
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const handleCountryChange = (country: Country) => {
     setSelectedCountry(country);
@@ -99,8 +117,12 @@ export default function Register() {
       {
         onError: (error: Error & { code?: string }) => {
           const code = error.code;
-          if (code === 'EMAIL_ALREADY_EXISTS') {
-            setEmailError(t(`auth.register.errors.${code}`));
+          const field = errorFieldMap[code as AuthErrorCode];
+          if (field) {
+            setAuthErrors((prev) => ({
+              ...prev,
+              [field]: t(`auth.register.errors.${code}`),
+            }));
             return;
           }
           if (code === 'EXISTING_UNVERIFIED_USER') {
@@ -251,7 +273,7 @@ export default function Register() {
               name="email"
               placeholder={t('auth.register.fields.email.label')}
               register={register}
-              error={errors.email || emailError}
+              error={errors.email || authErrors.email}
               rules={{
                 required: t('auth.validation.required', {
                   field: t('auth.fields.email'),
@@ -262,15 +284,6 @@ export default function Register() {
                 },
               }}
             />
-            {emailError && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-danger text-xs mt-1"
-              >
-                {emailError}
-              </motion.p>
-            )}
           </motion.div>
 
           <motion.div className="mb-4" variants={itemVariants}>
@@ -301,7 +314,7 @@ export default function Register() {
                   }}
                   selectedCountry={selectedCountry}
                   onCountryChange={handleCountryChange}
-                  error={fieldState.error?.message}
+                  error={fieldState.error?.message || authErrors.phone}
                   required={true}
                 />
               )}
