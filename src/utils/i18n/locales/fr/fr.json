@@ -23,10 +23,10 @@
     "units": {
       "minute": "{{count}} minute",
       "minute_other": "{{count}} minutes",
-      "hour": "{{count}} heur",
+      "hour": "{{count}} heure",
       "hour_other": "{{count}} heurs",
       "day": "{{count}} jour",
-      "day_other": "{count}} jours",
+      "day_other": "{{count}} jours",
       "week": "{{count}} semaine",
       "week_other": "{{count}} semaines",
       "month": "{{count}} mois",
@@ -282,7 +282,7 @@
     "billing": "Facturation",
     "actions": "Actions",
 
-    "next_bill": "Prochaine facture",
+    "next_bill": "Se termine le",
     "payment_method": "Moyen de paiement",
     "remaining": "Restant",
     "period": "Période",
@@ -313,6 +313,8 @@
       }
     },
     "reminders": {
+      "title": "Gérer les rappels",
+      "view": "Voir les rappels",
       "tooltips": {
         "expired": "Impossible de définir des rappels pour les abonnements expirés"
       }
@@ -330,7 +332,18 @@
       "PREMIUM": "Premium"
     },
     "dueInDays": "Dû dans {{count}} jour",
-    "dueInDays_other": "Dû dans {{count}} jours"
+    "dueInDays_other": "Dû dans {{count}} jours",
+    "due_today": "Dû aujourd'hui",
+    "due_in_one_day": "Dû dans 1 jour",
+    "due_in_days": "Dû dans {{count}} jour",
+    "due_in_days_other": "Dû dans {{count}} jours",
+    "due_in_months": "Dû dans {{count}} mois",
+    "due_in_months_other": "Dû dans {{count}} mois",
+    "months": "{{count}} mois",
+    "months_other": "{{count}} mois",
+    "days": "{{count}} jour",
+    "days_other": "{{count}} jours",
+    "due_in_time": "Dû dans {{months}} {{days}}"
   },
 
   "calendar": {
@@ -370,21 +383,32 @@
       "CUSTOM": "Personnalisé"
     },
     "text": {
-      "reminder": "Rappel"
+      "reminder": "Rappel",
+      "new_reminder": "Nouveau rappel",
+      "edit_reminder": "Modifier le rappel",
+      "custom": "Personnalisé",
+      "custom_reminder": "Rappel personnalisé",
+      "notification_medium": "Moyen de notification",
+      "max_value": "Maximum : {{maxCustomValue}} {{customUnit}}",
+      "insufficient_time": "Pas assez de temps pour {{customUnit}}. Veuillez sélectionner une autre unité."
     },
     "actions": {
       "save": "Enregistrer",
       "update": "Mise à jour",
-      "edit": "Définir des rappels",
+      "edit": "Modifier le rappel",
       "hide": "Masquer les rappels",
-      "delete": "Supprimer les rappels"
+      "delete": "Supprimer le rappel"
     },
     "messages": {
       "added": "Rappel défini avec succès !",
       "updated": "Rappels mis à jour avec succès !",
       "deleted": "Rappels supprimés avec succès !",
-      "error": "Une erreur s'est produite"
+      "error": "Une erreur s'est produite",
+      "no_reminders": "Aucun rappel défini pour le moment.",
+      "too_soon": "Pas assez de temps pour définir des rappels.",
+      "subscription_expired": "Abonnement expiré - impossible d'ajouter des rappels"
     },
+    "upgrade_required": "Passez à Premium pour débloquer cette fonctionnalité",
     "custom": {
       "title": "Rappel personnalisé",
       "notification_type": "Type de notification",
@@ -399,7 +423,8 @@
       "minutes": "Minutes",
       "hours": "Heures",
       "days": "Jours",
-      "weeks": "Semaines"
+      "weeks": "Semaines",
+      "months": "Mois"
     },
     "types": {
       "EMAIL": "Courriel",

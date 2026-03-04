@@ -84,7 +84,7 @@ export const formatReminderDisplay = (
     return t(`reminders.options.${reminder.value}`);
   }
 
-  const { value, unit, type } = reminder.custom;
+  const { value, unit } = reminder.custom;
 
   const units: Record<string, string> = {
     minutes: t('common.units.minute', { count: value }),
@@ -94,11 +94,5 @@ export const formatReminderDisplay = (
     months: t('common.units.month', { count: value }),
   };
 
-  const timePart = `${units[unit] || unit} ${t('reminders.before')}`;
-
-  const types = type?.map((nt) => t(`reminders.types.${nt}`)).join(', ') || '';
-
-  const viaPart = types ? `${t('reminders.via')} ${types}` : '';
-
-  return [timePart, viaPart].filter(Boolean).join(', ');
+  return `${units[unit] || unit} ${t('reminders.before')}`;
 };

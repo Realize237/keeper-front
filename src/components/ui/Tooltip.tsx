@@ -69,6 +69,10 @@ export function Tooltip({
               }}
             >
               {content}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-accent transform rotate-45"
+                style={{ bottom: '-4px' }}
+              />
             </motion.div>
           )}
         </AnimatePresence>,
