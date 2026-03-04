@@ -9,7 +9,6 @@ import {
   type SubscriptionModalType,
 } from '../../interfaces/subscription';
 import type { BillingResult } from '../../interfaces/billings';
-import NotificationReminder from '../notifications/Reminder';
 import { FaCalendarPlus, FaEye, FaTrash } from 'react-icons/fa';
 import {
   useAddSubscriptionToGoogleCalendar,
@@ -32,11 +31,15 @@ import { IMAGES } from '../../assets';
 interface SubscriptionDetailModalProps {
   selectedSubscriptionDetails: Subscription;
   closeSubscriptionModals: (type: SubscriptionModalType) => void;
+  currentDate?: Date;
+  onViewReminder?: () => void;
 }
 
 export default function SubscriptionDetailModal({
   selectedSubscriptionDetails,
   closeSubscriptionModals,
+  currentDate,
+  onViewReminder,
 }: SubscriptionDetailModalProps) {
   const [isOpen, setIsOpen] = useState(true);
   const { t, i18n } = useTranslation();
@@ -54,11 +57,11 @@ export default function SubscriptionDetailModal({
   const { mutate: connectGoogleCalendar, isPending: isConnecting } =
     useConnectGoogleCalendar();
 
-  const nextBillingResult: BillingResult | null = subscriptionDetails?.type
+  const nextBillingResult: BillingResult | null = subscriptionDetails
     ? getNextBillingDate(
         new Date(subscriptionDetails.details.startDate || new Date()),
         new Date(subscriptionDetails.details.endDate || new Date()),
-        subscriptionDetails.type
+        currentDate || new Date()
       )
     : null;
 
@@ -180,26 +183,25 @@ export default function SubscriptionDetailModal({
     );
   };
 
-  const daysRemainingText = nextBillingResult?.daysRemaining
-    ? t('billing.dueInDays', {
-        count: nextBillingResult.daysRemaining,
-      })
-    : '';
+  const daysRemainingText = nextBillingResult?.formattedTimeRemaining || '';
+
+  const handleClose = () => {
+    setIsOpen(false);
+    closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
+  };
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={() => {
-        setIsOpen(false);
-        closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
+        handleClose();
       }}
       width="max-w-md"
     >
       {isLoading ? (
         <SubscriptionDetailSkeleton
           onClose={() => {
-            setIsOpen(false);
-            closeSubscriptionModals(SubscriptionModalTypes.DETAILS);
+            handleClose();
           }}
         />
       ) : error ? (
@@ -305,26 +307,15 @@ export default function SubscriptionDetailModal({
               <span className=" text-foreground ">
                 {t('subscription_details.remind_me')}
               </span>
-              {nextBillingResult?.status === 'EXPIRED' ? (
-                <Tooltip
-                  content={t(
-                    'subscription_details.reminders.tooltips.expired',
-                    'Cannot set reminders for expired subscriptions'
-                  )}
-                >
-                  <div>
-                    <NotificationReminder
-                      subscription={selectedSubscriptionDetails}
-                      isExpired={true}
-                    />
-                  </div>
-                </Tooltip>
-              ) : (
-                <NotificationReminder
-                  subscription={selectedSubscriptionDetails}
-                  isExpired={false}
-                />
-              )}
+
+              <button
+                onClick={() => {
+                  onViewReminder?.();
+                }}
+                className="px-3 py-1.5 text-sm rounded-lg bg-accent text-primary-foreground hover:bg-accent/90 transition"
+              >
+                {t('subscription_details.reminders.view')}
+              </button>
             </div>
 
             <div className="flex justify-between items-center">

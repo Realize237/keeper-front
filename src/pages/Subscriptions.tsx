@@ -12,10 +12,13 @@ import {
 } from '../interfaces/subscription';
 import SubscriptionDetailModal from '../components/subscriptions/SubscriptionDetailModal';
 import SelectedDaySubscriptionsListModal from '../components/subscriptions/SelectedDaySubscriptionsListModal';
+import ManageReminders from '../components/subscriptions/ManageReminders';
+import Modal from '../components/ui/Modal';
 import {
   isEmpty,
   normalizedDate,
   updateCurrentDateToSelectedDate,
+  shouldIncludeInMonthlyTotal,
 } from '../utils';
 import BottomSheet from '../components/ui/BottomSheet';
 import type { Value } from '../interfaces/calendar';
@@ -67,6 +70,7 @@ const Subscriptions = () => {
     useState<SubscriptionsGroupedByDay>({});
   const [selectedSubscriptionDetails, setSelectedSubscriptionDetails] =
     useState<Subscription | null>(null);
+  const [showReminderModal, setShowReminderModal] = useState(false);
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [activeFilters, setActiveFilters] = useState<FilterData | null>(null);
@@ -176,12 +180,21 @@ const Subscriptions = () => {
     switch (type) {
       case SubscriptionModalTypes.DETAILS:
         setSelectedSubscriptionDetails(null);
+        setShowReminderModal(false);
         break;
       case SubscriptionModalTypes.LIST:
         setSelectedSubscriptionsByDay({});
         setSelectDay(null);
         break;
+      case SubscriptionModalTypes.REMINDER:
+        setShowReminderModal(false);
+
+        break;
     }
+  };
+
+  const handleViewReminder = () => {
+    setShowReminderModal(true);
   };
 
   const setSelectSubscriptionDetails = (subscription: Subscription) => {
@@ -197,14 +210,18 @@ const Subscriptions = () => {
     if (!isEmpty(filteredSubscriptions)) {
       const flattenedArray = Object.values(filteredSubscriptions).flat();
       const total = flattenedArray.reduce((total, subscription) => {
-        return total + subscription.price;
+        // Only include subscription if it should be counted in monthly total
+        if (shouldIncludeInMonthlyTotal(subscription, currentDate as Date)) {
+          return total + subscription.price;
+        }
+        return total;
       }, 0);
 
       return Number(total.toFixed(2));
     }
 
     return 0;
-  }, [filteredSubscriptions]);
+  }, [filteredSubscriptions, currentDate]);
 
   const getRemainingAmount = useMemo(() => {
     if (!isEmpty(filteredSubscriptions)) {
@@ -279,11 +296,29 @@ const Subscriptions = () => {
           selectedDay={selectedDay}
         />
       )}
-      {selectedSubscriptionDetails && (
+      {selectedSubscriptionDetails && !showReminderModal && (
         <SubscriptionDetailModal
           selectedSubscriptionDetails={selectedSubscriptionDetails}
           closeSubscriptionModals={closeSubscriptionModals}
+          onViewReminder={handleViewReminder}
         />
+      )}
+
+      {showReminderModal && selectedSubscriptionDetails && (
+        <Modal
+          isOpen={showReminderModal}
+          onClose={() =>
+            closeSubscriptionModals(SubscriptionModalTypes.REMINDER)
+          }
+          width="max-w-xl"
+        >
+          <ManageReminders
+            subscriptionId={selectedSubscriptionDetails.id}
+            isExpired={
+              new Date(selectedSubscriptionDetails.details.endDate) < new Date()
+            }
+          />
+        </Modal>
       )}
       <div className="flex flex-col w-11/12 h-11/12 mx-auto">
         <AccountSyncBanner onSync={() => handleShowModal()} />

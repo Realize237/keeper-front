@@ -32,12 +32,14 @@ import Spinner from '../ui/Spinner';
 const NotificationReminder = ({
   subscription,
   isExpired = false,
+  defaultExpanded = false,
 }: {
   subscription: Subscription;
   isExpired?: boolean;
+  defaultExpanded?: boolean;
 }) => {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const [reminders, setReminders] = useState<INotificationReminder[]>([]);
 
   const [newReminder, setNewReminder] = useState<INotificationReminder | null>(

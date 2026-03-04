@@ -52,6 +52,7 @@ export type SubscriptionsGroupedByDay = Record<number, Subscription[]>;
 export const SubscriptionModalTypes = {
   DETAILS: 'SubscriptionDetailModal',
   LIST: 'SelectedDaySubscriptionListModal',
+  REMINDER: 'ReminderModal',
 } as const;
 
 export type SubscriptionModalType =

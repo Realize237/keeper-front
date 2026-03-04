@@ -290,7 +290,7 @@
     "billing": "Billing",
     "actions": "Actions",
 
-    "next_bill": "Next bill",
+    "next_bill": "Ends on",
     "payment_method": "Payment method",
     "remaining": "Remaining",
     "period": "Period",
@@ -321,6 +321,8 @@
       }
     },
     "reminders": {
+      "title": "Manage Reminders",
+      "view": "View Reminders",
       "tooltips": {
         "expired": "Cannot set reminders for expired subscriptions"
       }
@@ -337,8 +339,17 @@
       "BASIC": "Basic",
       "PREMIUM": "Premium"
     },
-    "dueInDays": "Due in {{count}} day",
-    "dueInDays_other": "Due in {{count}} days"
+    "due_today": "Due today",
+    "due_in_one_day": "Due in 1 day",
+    "due_in_days": "Due in {{count}} day",
+    "due_in_days_other": "Due in {{count}} days",
+    "due_in_months": "Due in {{count}} month",
+    "due_in_months_other": "Due in {{count}} months",
+    "months": "{{count}} month",
+    "months_other": "{{count}} months",
+    "days": "{{count}} day",
+    "days_other": "{{count}} days",
+    "due_in_time": "Due in {{months}} {{days}}"
   },
   "calendar": {
     "days_of_week": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -377,21 +388,39 @@
       "CUSTOM": "Custom"
     },
     "text": {
-      "reminder": "Reminder"
+      "reminder": "Reminder",
+      "new_reminder": "New Reminder",
+      "edit_reminder": "Edit Reminder",
+      "custom": "Custom",
+      "custom_reminder": "Custom Reminder",
+      "notification_medium": "Notification medium",
+      "max_value": "Maximum: {{maxCustomValue}} {{customUnit}}",
+      "insufficient_time": "Not enough time for {{customUnit}}. Please select a different unit."
+    },
+    "units": {
+      "minutes": "Minutes",
+      "hours": "Hours",
+      "days": "Days",
+      "weeks": "Weeks",
+      "months": "Months"
     },
     "actions": {
       "save": "Save",
       "update": "Update",
-      "edit": "Set reminders",
+      "edit": "Edit reminder",
       "hide": "Hide reminders",
-      "delete": "Delete reminders"
+      "delete": "Delete reminder"
     },
     "messages": {
       "added": "Reminder set successfully!",
       "updated": "Reminders updated successfully!",
       "deleted": "Reminders deleted successfully!",
-      "error": "An error occurred"
+      "error": "An error occurred",
+      "no_reminders": "No reminders set yet.",
+      "too_soon": "Not enough time left to set reminders.",
+      "subscription_expired": "Subscription expired - cannot add reminders"
     },
+    "upgrade_required": "Upgrade to Premium to unlock this feature",
     "custom": {
       "title": "Custom reminder",
       "notification_type": "Notification type",
@@ -406,12 +435,6 @@
     },
     "before": "before",
     "via": "via",
-    "units": {
-      "minutes": "Minutes",
-      "hours": "Hours",
-      "days": "Days",
-      "weeks": "Weeks"
-    },
     "types": {
       "EMAIL": "Email",
       "PUSH": "Push notification",

@@ -7,6 +7,54 @@ import { dateLocales } from './dateLocales';
 import i18n from './i18n';
 import { formatDistanceToNow } from 'date-fns';
 
+// Helper function to format days into a human-readable string
+export const formatDaysRemaining = (days: number): string => {
+  if (days === 0) return i18n.t('billing.due_tootday');
+  if (days === 1) return i18n.t('billing.due_in_one_day');
+
+  // For less than 30 days, just show days
+  if (days < 30) {
+    return i18n.t('billing.due_in_days', { count: days });
+  }
+
+  // For 30+ days, show months and days
+  const months = Math.floor(days / 30);
+  const remainingDays = days % 30;
+
+  if (remainingDays === 0) {
+    return i18n.t('billing.due_in_months', { count: months });
+  }
+
+  // For combined months and days, we need separate translations for singular/plural
+  const monthsText = i18n.t('billing.months', { count: months });
+  const daysText = i18n.t('billing.days', { count: remainingDays });
+
+  return i18n.t('billing.due_in_time', {
+    months: monthsText,
+    days: daysText,
+  });
+};
+
+// Helper to check if a subscription should be included in monthly totals
+export const shouldIncludeInMonthlyTotal = (
+  subscription: Subscription,
+  viewingDate: Date = new Date()
+): boolean => {
+  const endDate = subscription.details.endDate
+    ? new Date(subscription.details.endDate)
+    : null;
+
+  if (!endDate) return false;
+
+  // Only include if viewing month/year matches end date month/year
+  const endMonth = endDate.getMonth();
+  const endYear = endDate.getFullYear();
+  const viewingMonth = viewingDate.getMonth();
+  const viewingYear = viewingDate.getFullYear();
+
+  return endMonth === viewingMonth && endYear === viewingYear;
+};
+
 export const getMonthMatrixMondayFirst = (date: Date): string[][] => {
   const year = date.getFullYear();
   const month = date.getMonth(); // 0-11
@@ -68,30 +116,9 @@ export const isSubscriptionActiveThisMonth = (
   return isAfterStart && isBeforeEnd;
 };
 
-const addMonthsSafe = (d: Date, months: number): Date => {
-  const copy = new Date(d);
-  const targetMonth = copy.getMonth() + months;
-  copy.setMonth(targetMonth);
-  while (copy.getMonth() !== ((targetMonth % 12) + 12) % 12) {
-    copy.setDate(copy.getDate() - 1);
-  }
-  return copy;
-};
-
-const addYearsSafe = (d: Date, years: number): Date => {
-  const copy = new Date(d);
-  const targetYear = copy.getFullYear() + years;
-  copy.setFullYear(targetYear);
-  if (copy.getMonth() !== d.getMonth()) {
-    copy.setMonth(d.getMonth() + 1, 0);
-  }
-  return copy;
-};
-
 export const getNextBillingDate = (
   startDate: Date,
   endDate: Date | null,
-  type: 'MONTHLY' | 'YEARLY',
   fromDate: Date = new Date()
 ): BillingResult => {
   // Normalize dates to midnight
@@ -99,51 +126,43 @@ export const getNextBillingDate = (
     new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
   const start = normalize(startDate);
-  const end = endDate ? normalize(endDate) : new Date(2099, 11, 31); // Default to year 2099
+  const end = endDate ? normalize(endDate) : new Date(2099, 11, 31);
   const today = normalize(fromDate);
 
-  // Check if subscription has expired (today is past endDate)
-  if (today > end) {
-    return { date: null, status: 'EXPIRED', daysRemaining: null };
-  }
-
-  // Check if startDate is after endDate (invalid)
-  if (start > end) {
-    return { date: null, status: 'EXPIRED', daysRemaining: null };
-  }
-
-  // Helper to compute days remaining
+  // Helper to compute days remaining from today to end date
   const computeDaysLeft = (target: Date): number =>
     Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
-  // Find the next billing date starting from startDate
-  let nextBilling = new Date(start);
-  let i = 0;
-
-  while (nextBilling <= end) {
-    // If this billing date is today or in the future
-    if (nextBilling >= today) {
-      const isDueToday = nextBilling.getTime() === today.getTime();
-      const daysLeft = isDueToday ? 0 : computeDaysLeft(nextBilling);
-
-      return {
-        date: nextBilling,
-        status: isDueToday ? 'DUE_TODAY' : 'ACTIVE',
-        daysRemaining: daysLeft,
-      };
-    }
-
-    // Move to next billing cycle
-    i++;
-    nextBilling =
-      type === 'MONTHLY' ? addMonthsSafe(start, i) : addYearsSafe(start, i);
+  // Check if today is before subscription starts
+  if (today < start) {
+    const daysLeft = computeDaysLeft(start);
+    return {
+      date: start,
+      status: 'ACTIVE',
+      daysRemaining: daysLeft,
+      formattedTimeRemaining: formatDaysRemaining(daysLeft),
+    };
   }
 
-  // No future billing date found within subscription period
+  // Check if today is after subscription ends
+  if (today > end) {
+    return {
+      date: null,
+      status: 'EXPIRED',
+      daysRemaining: null,
+      formattedTimeRemaining: undefined,
+    };
+  }
+
+  // Subscription is active - show days until end date
+  const isDueToday = today.getTime() === end.getTime();
+  const daysLeft = isDueToday ? 0 : computeDaysLeft(end);
+
   return {
-    date: null,
-    status: 'EXPIRED',
-    daysRemaining: null,
+    date: end,
+    status: isDueToday ? 'DUE_TODAY' : 'ACTIVE',
+    daysRemaining: daysLeft,
+    formattedTimeRemaining: formatDaysRemaining(daysLeft),
   };
 };
 

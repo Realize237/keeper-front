@@ -3,6 +3,9 @@ import { FaBell } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { currentYear } from '../../utils';
 import { PATHS } from '../../routes/paths';
+import { AiOutlineLinkedin } from 'react-icons/ai';
+import { MdOutlineEmail } from 'react-icons/md';
+import { env } from '../../utils/env';
 
 type FooterLink = {
   labelKey: string;
@@ -56,6 +59,23 @@ const footerSections = [
   },
 ];
 
+const SocialLinks = [
+  {
+    icon: (
+      <AiOutlineLinkedin className="w-5 h-5 text-gray-400 group-hover:text-white" />
+    ),
+    href: env.LINKEDIN_URL,
+    isExternal: true,
+  },
+  {
+    icon: (
+      <MdOutlineEmail className="w-5 h-5 text-gray-400 group-hover:text-white" />
+    ),
+    href: `mailto:${env.APP_SUPPORT_EMAIL}`,
+    isExternal: true,
+  },
+];
+
 export const Footer = () => {
   const { t } = useTranslation();
 
@@ -74,7 +94,7 @@ export const Footer = () => {
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-linear-to-br from-[#008B82]/20 to-[#006B66]/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
+        <div className="grid md:grid-cols-2 gap-12 mb-12">
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30">
@@ -87,36 +107,52 @@ export const Footer = () => {
             <p className="text-gray-400 text-sm leading-relaxed font-medium">
               {t('footer.description')}
             </p>
+
+            <div className="flex gap-3 pt-2">
+              {SocialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  target={link.isExternal ? '_blank' : undefined}
+                  rel={link.isExternal ? 'noopener noreferrer' : undefined}
+                  className="w-10 h-10 bg-gray-800 hover:bg-linear-to-br hover:bg-primary  border border-border hover:border-transparent rounded-xl flex items-center justify-center transition-all group"
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {footerSections.map((section) => (
-            <div key={section.titleKey}>
-              <h4 className="font-bold text-white mb-5 text-lg">
-                {t(section.titleKey)}
-              </h4>
-              <ul className="space-y-3 text-gray-400 text-sm font-medium">
-                {section.links.map((link) => {
-                  const Component = link.Component || 'a';
+          <div className="grid grid-cols-3 gap-8">
+            {footerSections.map((section) => (
+              <div key={section.titleKey}>
+                <h4 className="font-bold text-white mb-5 text-lg">
+                  {t(section.titleKey)}
+                </h4>
+                <ul className="space-y-3 text-gray-400 text-sm font-medium">
+                  {section.links.map((link) => {
+                    const Component = link.Component || 'a';
 
-                  return (
-                    <li key={link.labelKey}>
-                      <Component
-                        href={link.href}
-                        to={link.href}
-                        className="hover:text-white hover:translate-x-1 inline-block transition-all"
-                        target={link.isExternal ? '_blank' : undefined}
-                        rel={
-                          link.isExternal ? 'noopener noreferrer' : undefined
-                        }
-                      >
-                        {t(link.labelKey)}
-                      </Component>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+                    return (
+                      <li key={link.labelKey}>
+                        <Component
+                          href={link.href}
+                          to={link.href}
+                          className="hover:text-white hover:translate-x-1 inline-block transition-all"
+                          target={link.isExternal ? '_blank' : undefined}
+                          rel={
+                            link.isExternal ? 'noopener noreferrer' : undefined
+                          }
+                        >
+                          {t(link.labelKey)}
+                        </Component>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="pt-8 border-t border-gray-700">
