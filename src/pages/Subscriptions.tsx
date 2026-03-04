@@ -41,6 +41,9 @@ import UserConsentDialog from '../components/dialog/UserConsentDialog';
 import { useUserConsent } from '../hooks/useUserConsent';
 import AccountSyncBanner from '../components/subscriptions/AccountSyncBanner ';
 import { CalendarSkeleton } from '../components/calendar/CalendarSkeleton';
+import PlaidSyncDialog from '../components/dialog/PlaidSyncDialog';
+import { useUser } from '../hooks/useUsers';
+import { usePlaidSyncEvents } from '../hooks/usePlaidSyncEvents';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -64,6 +67,8 @@ const itemVariants = {
 
 const Subscriptions = () => {
   const { t } = useTranslation();
+  const { user } = useUser();
+  const { userAccountSyncStatus } = usePlaidSyncEvents();
   const [selectDay, setSelectDay] = useState<number | null>(null);
   const [currentDate, onChangeCalendarValue] = useState<Value>(new Date());
   const [selectedSubsciptionsByDay, setSelectedSubscriptionsByDay] =
@@ -74,6 +79,9 @@ const Subscriptions = () => {
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [activeFilters, setActiveFilters] = useState<FilterData | null>(null);
+  const isSyncing =
+    user?.synchronizationStatus === 'PENDING' ||
+    userAccountSyncStatus === 'PENDING';
 
   const {
     showModal,
@@ -88,9 +96,19 @@ const Subscriptions = () => {
     checkAndShowModal: checkAndShowUserConsent,
     handleConsentAccepted,
     handleConsentDeclined,
-    isPending: isAcceptUserConsentPending,
     handleShowModal,
+    showPlaidSyncDialog,
+    setShowPlaidSyncDialog,
   } = useUserConsent();
+
+  useEffect(() => {
+    if (
+      user?.synchronizationStatus === 'SUCCESS' ||
+      userAccountSyncStatus === 'SUCCESS'
+    ) {
+      setShowPlaidSyncDialog(false);
+    }
+  }, [user, userAccountSyncStatus, showPlaidSyncDialog]);
 
   const openBottomSheet = () => setBottomSheetOpen(true);
   const closeBottomSheet = () => setBottomSheetOpen(false);
@@ -321,7 +339,11 @@ const Subscriptions = () => {
         </Modal>
       )}
       <div className="flex flex-col w-11/12 h-11/12 mx-auto">
-        <AccountSyncBanner onSync={() => handleShowModal()} />
+        <AccountSyncBanner
+          onSync={() => handleShowModal()}
+          user={user}
+          isSyncing={isSyncing}
+        />
         <motion.div
           className="  border-border"
           variants={containerVariants}
@@ -513,10 +535,16 @@ const Subscriptions = () => {
       />
       <UserConsentDialog
         isOpen={showUserConsent}
-        isPending={isAcceptUserConsentPending}
         onAccept={handleConsentAccepted}
         onDecline={handleConsentDeclined}
       />
+
+      {user?.synchronizationStatus !== 'SUCCESS' && (
+        <PlaidSyncDialog
+          isOpen={showPlaidSyncDialog}
+          onClose={() => setShowPlaidSyncDialog(false)}
+        />
+      )}
     </div>
   );
 };

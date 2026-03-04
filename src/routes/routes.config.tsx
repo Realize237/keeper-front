@@ -47,7 +47,7 @@ const CheckYourEmail = lazyImport(() => import('../pages/auth/CheckYourEmail'));
 const VerifyEmail = lazyImport(() => import('../pages/auth/VerifyEmail'));
 
 // Protected pages
-const Plaid = lazyImport(() => import('../pages/Plaid'));
+// const Plaid = lazyImport(() => import('../pages/Plaid'));
 const Subscriptions = lazyImport(() => import('../pages/Subscriptions'));
 const Cards = lazyImport(() => import('../pages/Cards'));
 const SharedPlan = lazyImport(() => import('../pages/SharedPlan'));
@@ -122,7 +122,7 @@ export const routes: AppRoute[] = [
         protected: true,
         layout: <NavLayout />,
         children: [
-          { path: PATHS.APP.PLAID, element: <Plaid /> },
+          // { path: PATHS.APP.PLAID, element: <Plaid /> },
           { path: PATHS.APP.SUBSCRIPTIONS, element: <Subscriptions /> },
           { path: PATHS.APP.CARDS, element: <Cards /> },
           { path: PATHS.APP.SHARED_PLAN, element: <SharedPlan /> },

@@ -16,6 +16,9 @@ import KeepayNoBg from './keepay-banner-no-bg.png';
 import CreditCard from './credit-card.png';
 import PlaidLogo from './plaid-logo.png';
 
+export * from './icons';
+export * from './logos';
+
 export const IMAGES = {
   Netflix,
   Spotify,

@@ -3,7 +3,6 @@ import {
   FaChevronRight,
   FaCog,
   FaComments,
-  FaCreditCard,
   FaEdit,
   FaFileAlt,
   FaLock,
@@ -39,12 +38,12 @@ const menuItems: MenuItem[] = [
     subtitle: 'profile.menu.account.subtitle',
     path: PATHS.APP.PROFILE.ACCOUNT_DETAILS.full,
   },
-  {
-    icon: FaCreditCard,
-    label: 'profile.menu.payment.title',
-    subtitle: 'profile.menu.payment.subtitle',
-    path: PATHS.APP.CARDS,
-  },
+  // {
+  //   icon: FaCreditCard,
+  //   label: 'profile.menu.payment.title',
+  //   subtitle: 'profile.menu.payment.subtitle',
+  //   path: PATHS.APP.CARDS,
+  // },
   {
     icon: FaCog,
     label: 'profile.menu.settings.title',

@@ -16,6 +16,7 @@ export const API_PATHS = {
     DELETE_ACCOUNT: 'api/users/disable/user-account',
     VERIFY_EMAIL: 'api/users/verify-email',
     RESEND_EMAIL: 'api/users/resend-email-verification',
+    VERIFICATION_STATUS: 'api/users/verification-status',
   },
   SUBSCRIPTIONS: {
     GET_ALL_SUBSCRIPTIONS: '/api/subscriptions',

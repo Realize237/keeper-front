@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { FaBell } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { currentYear } from '../../utils';
 import { PATHS } from '../../routes/paths';
@@ -98,7 +97,11 @@ export const Footer = () => {
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 bg-linear-to-br from-[#990800] to-[#C41E14] rounded-2xl flex items-center justify-center shadow-lg shadow-red-900/30">
-                <FaBell className="w-6 h-6 text-white" />
+                <img
+                  src={LOGOS.KEEPAYWHITE}
+                  alt="Keepay Logo"
+                  className="w-5 h-5"
+                />
               </div>
               <span className="text-2xl font-bold bg-linear-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Keepay
@@ -156,9 +159,12 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-gray-700">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col items-center md:items-start justify-between gap-4">
             <p className="text-sm text-gray-400 font-medium">
               {t('footer.copyright', { year: currentYear })}
+            </p>
+            <p className="text-sm text-gray-400 font-medium">
+              {t('footer.contactus', { email: env.APP_SUPPORT_EMAIL })}
             </p>
           </div>
         </div>

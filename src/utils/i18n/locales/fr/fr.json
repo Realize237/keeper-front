@@ -35,7 +35,10 @@
     "errors": {
       "request_failed": "Échec de la requête"
     },
-    "home": "accueil"
+    "home": "accueil",
+    "pagination": {
+      "showing": "Affichage de {{from}} à {{to}} sur {{total}}"
+    }
   },
   "errors": {
     "UNEXPECTED_ERROR": "Une erreur est survenue"
@@ -193,7 +196,10 @@
       "seconds": "{{count}}s",
       "resend": "Renvoyer l'e-mail",
       "sending": "Envoi...",
-      "resend_success": "Un nouvel e-mail de vérification vous a été envoyé."
+      "resend_success": "Un nouvel e-mail de vérification vous a été envoyé.",
+      "account_verified": "Compte Vérifié !",
+      "redirecting_to_login": "Redirection vers la connexion dans {{seconds}} secondes...",
+      "go_to_login": "Aller à la Connexion"
     },
     "verify_email": {
       "checking_email": "Vérifiez votre boîte mail.",
@@ -589,14 +595,23 @@
     "upgrade_plan": "Premium"
   },
   "plaid": {
-    "title": "Connecter votre banque",
+    "title": "Suivez automatiquement vos abonnements",
     "start_title": "Commencez par associer votre compte bancaire",
-    "start_description": "Cliquez sur le bouton ci-dessous pour lancer le flux de connexion Plaid.",
+    "description": "Connectez votre banque en toute sécurité à <span>Plaid</span> pour détecter et gérer automatiquement vos paiements récurrents",
+    "benefits_title": "Ce que vous obtiendrez :",
+    "benefit_1": "Tous vos abonnements au même endroit",
+    "benefit_2": "Des rappels de renouvellement intelligents",
+    "benefit_3": "Un meilleur contrôle de vos dépenses",
+    "security": "Connexion sécurisée grâce à <span>Plaid</span>. <span>Keepay</span> ne stocke jamais vos identifiants bancaires.",
+    "support": "Si vous rencontrez des difficultés pour connecter votre banque, veuillez contacter le <support>support</support>.",
     "loading": "Chargement...",
     "recurring_title": "Abonnements récurrents",
     "syncing": "Synchronisation...",
     "synced": "Abonnements synchronisés",
     "load_subscriptions": "Charger tous vos abonnements",
+    "actions": {
+      "sync": "Continuer en toute sécurité"
+    },
 
     "error": {
       "code": "Code d’erreur Plaid",
@@ -947,7 +962,8 @@
     "contact": "Contact",
     "cookies": "Politique en matière de cookies",
     "gdpr": "RGPD",
-    "copyright": "© {{year}} Keepay. Tous droits réservés"
+    "copyright": "© {{year}} Keepay. Tous droits réservés",
+    "contactus": "Contactez-nous: {{email}}"
   },
 
   "contact": {
@@ -1042,7 +1058,7 @@
 
     "sync_message": "Aucun compte bancaire ou carte n’est connecté à votre compte. Veuillez synchroniser ou connecter votre compte à Keepay",
     "connect_now": "Connecter mon compte maintenant",
-    "syncing_message": "Synchronisation de vos comptes et abonnements...",
+    "syncing_message": "Synchronisation de vos comptes et abonnements en cours ...",
     "syncing": "Synchronisation...",
     "actions": {
       "accept": "J'accepte",
@@ -1079,5 +1095,9 @@
       "title": "Échec de la synchronisation",
       "message": "Échec de la synchronisation des abonnements. Veuillez réessayer."
     }
+  },
+  "trial": {
+    "ends_in": "Essai: {{days}} jours restants",
+    "upgrade_message": "Passez au premium pour continuer."
   }
 }

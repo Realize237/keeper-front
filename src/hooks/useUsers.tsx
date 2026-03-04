@@ -16,6 +16,7 @@ import {
   createUser,
   deleteAccount,
   getAllUsers,
+  getEmailVerificationStatus,
   getUserInfo,
   loginUser,
   logoutUser,
@@ -173,9 +174,25 @@ export const useResendEmailVerification = () => {
 
 export const useSaveUserConsent = () => {
   return useMutation<unknown, Error>({
-    mutationFn: () => updateUser({ userConsentAccepted: true }, 0), // id will be handled by backend from token
+    mutationFn: () => updateUser({ userConsentAccepted: true }, 0),
     meta: {
       invalidate: [userKeys.info],
     },
+  });
+};
+
+export const useCheckEmailVerificationStatus = (
+  enabled: boolean,
+  email: string
+) => {
+  return useQuery<{ isAccountVerified: boolean }>({
+    queryKey: userKeys.verificationStatus(email),
+    queryFn: () => getEmailVerificationStatus(email),
+    enabled,
+    refetchInterval: (query) =>
+      query.state.data?.isAccountVerified ? false : 3000,
+    refetchOnWindowFocus: false,
+    staleTime: 0,
+    gcTime: 0,
   });
 };

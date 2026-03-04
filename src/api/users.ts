@@ -212,3 +212,18 @@ export const resendEmailVerification = async (
     return processError(error);
   }
 };
+
+export const getEmailVerificationStatus = async (
+  email: string
+): Promise<{ isAccountVerified: boolean }> => {
+  try {
+    const response = await axiosClient.get<
+      ApiSuccessResponse<{ isAccountVerified: boolean }>
+    >(
+      `${API_PATHS.USERS.VERIFICATION_STATUS}?email=${encodeURIComponent(email)}`
+    );
+    return response.data.data;
+  } catch (error) {
+    throw processError(error);
+  }
+};

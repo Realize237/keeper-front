@@ -31,7 +31,7 @@ export default function SubscriptionIconGroup({
       {visibleSubscriptions.map((subscription, index) => (
         <div
           key={subscription.id}
-          className={`${sizeClasses[size]} rounded-full border-2 border-border overflow-hidden ${
+          className={`${sizeClasses[size]} rounded-full border border-border overflow-hidden ${
             index > 0 ? offsetClasses[size] : ''
           }`}
           style={{ zIndex: maxVisible - index }}
@@ -46,12 +46,10 @@ export default function SubscriptionIconGroup({
 
       {remainingCount > 0 && (
         <div
-          className={`${sizeClasses[size]} ${offsetClasses[size]} rounded-full bg-muted-foreground border-2 border-border flex items-center justify-center`}
+          className={`${sizeClasses[size]} ${offsetClasses[size]} text-xs rounded-full bg-background border border-border flex items-center justify-center`}
           style={{ zIndex: 0 }}
         >
-          <span className="text-surface-foreground font-medium">
-            +{remainingCount}
-          </span>
+          <span className="text-foreground font-medium">+{remainingCount}</span>
         </div>
       )}
     </div>

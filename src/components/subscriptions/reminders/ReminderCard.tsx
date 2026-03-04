@@ -1,5 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { MdEmail, MdNotifications } from 'react-icons/md';
+import { FaWhatsapp } from 'react-icons/fa';
+import { BiMessageDetail } from 'react-icons/bi';
 import {
   INotificationReminder,
   NotificationType,
@@ -29,6 +32,36 @@ export const ReminderCard = ({
   onDelete,
 }: ReminderCardProps) => {
   const { t } = useTranslation();
+
+  const getNotificationIcon = (type: NotificationType) => {
+    switch (type) {
+      case 'EMAIL':
+        return <MdEmail className="text-sm" />;
+      case 'SMS':
+        return <BiMessageDetail className="text-sm" />;
+      case 'WHATSAPP':
+        return <FaWhatsapp className="text-sm" />;
+      case 'SYSTEM':
+        return <MdNotifications className="text-sm" />;
+      default:
+        return null;
+    }
+  };
+
+  const getNotificationStyle = (type: NotificationType) => {
+    switch (type) {
+      case 'EMAIL':
+        return 'bg-yellow-500 text-black';
+      case 'SMS':
+        return 'bg-blue-600 text-white';
+      case 'WHATSAPP':
+        return 'bg-green-600 text-white';
+      case 'SYSTEM':
+        return 'bg-orange-700 text-white';
+      default:
+        return 'bg-gray-600 text-white';
+    }
+  };
 
   return (
     <div className="flex items-start">
@@ -84,17 +117,12 @@ export const ReminderCard = ({
               {notificationTypes.map((type) => (
                 <span
                   key={type}
-                  className={`px-3 py-1 rounded-full text-xs ${
-                    type === 'EMAIL'
-                      ? 'bg-yellow-500 text-black'
-                      : type === 'SMS'
-                        ? 'bg-purple-600 text-white'
-                        : type === 'WHATSAPP'
-                          ? 'bg-green-600 text-white'
-                          : 'bg-blue-600 text-white'
-                  }`}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${getNotificationStyle(
+                    type
+                  )}`}
                 >
-                  {type}
+                  {getNotificationIcon(type)}
+                  <span>{type}</span>
                 </span>
               ))}
             </div>

@@ -23,16 +23,18 @@ const VerifyEmail = () => {
     status: 'loading' | 'success' | 'error' | 'idle';
     message: string;
     isEmailVerified: boolean;
+    verificationCode?: string;
   }>({
     status: 'loading',
     message: '',
     isEmailVerified: false,
+    verificationCode: undefined,
   });
 
   const updateUi = useCallback((newValues: Partial<typeof uiState>) => {
     setUiState((prev) => ({ ...prev, ...newValues }));
   }, []);
-  const { status, message, isEmailVerified } = uiState;
+  const { status, message, isEmailVerified, verificationCode } = uiState;
 
   const countdownMinutes = Number(env.VERIFY_EMAIL_TIMER);
 
@@ -57,6 +59,7 @@ const VerifyEmail = () => {
             status: 'success',
             message: response.message,
             isEmailVerified: true,
+            verificationCode: response.code,
           });
         }
         if (response.code === 'EMAIL_ALREADY_VERIFIED') {
@@ -64,6 +67,7 @@ const VerifyEmail = () => {
             status: 'success',
             message: response.message,
             isEmailVerified: true,
+            verificationCode: response.code,
           });
         }
       },
@@ -177,17 +181,21 @@ const VerifyEmail = () => {
                 {status === 'loading' && t('auth.verify_email.checking_email')}
               </h1>
 
-              <p
-                className={`mb-6 ${
-                  status === 'error'
-                    ? 'text-danger'
-                    : status === 'success' && isEmailVerified
-                      ? 'text-accent'
-                      : 'text-muted-foreground'
-                }`}
-              >
-                {message}
-              </p>
+              {status === 'success' && isEmailVerified ? (
+                <p className="text-muted-foreground text-sm mb-6">
+                  {verificationCode === 'EMAIL_ALREADY_VERIFIED'
+                    ? t('auth.verify_email.already_verified')
+                    : t('auth.verify_email.redirecting_login')}
+                </p>
+              ) : (
+                <p
+                  className={`mb-6 ${
+                    status === 'error' ? 'text-danger' : 'text-muted-foreground'
+                  }`}
+                >
+                  {message}
+                </p>
+              )}
 
               {status === 'loading' && !expired && !isEmailVerified && (
                 <div className="mb-6">
@@ -206,7 +214,7 @@ const VerifyEmail = () => {
                 </div>
               )}
 
-              {status === 'error' && !isEmailVerified && expired && (
+              {status === 'error' && !isEmailVerified && (
                 <FormButton
                   size="md"
                   onClick={handleResend}

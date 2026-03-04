@@ -1,11 +1,10 @@
-import type { IconType } from 'react-icons';
-import { FaCalendarAlt, FaCreditCard, FaUsers } from 'react-icons/fa';
 import { env } from '../utils/env';
-import { HiOutlineUser } from 'react-icons/hi2';
+import { THEME_ICONS } from '../assets';
+import { PATHS } from '../routes/paths';
 
 export type NavItem = {
   labelKey: string;
-  icon: IconType;
+  themeIcon: keyof typeof THEME_ICONS;
   path: string;
   visible: boolean;
 };
@@ -17,30 +16,29 @@ const activeNavItems = env.ACTIVE_MENU_ITEMS.split(',').map((i) =>
 export const NavItems: NavItem[] = [
   {
     labelKey: 'sidebar.subscriptions',
-    icon: FaCalendarAlt,
+    themeIcon: 'subscriptions' as const,
     path: '/subscriptions',
     visible: false,
   },
   {
     labelKey: 'sidebar.sharedPlan',
-    icon: FaUsers,
+    themeIcon: 'subscriptions' as const,
     path: '/shared-plan',
     visible: false,
   },
   {
     labelKey: 'sidebar.cards',
-    icon: FaCreditCard,
+    themeIcon: 'subscriptions' as const,
     path: '/cards',
     visible: false,
   },
-
   {
     labelKey: 'sidebar.profile',
-    icon: HiOutlineUser,
+    themeIcon: 'profile' as const,
     path: '/profile',
     visible: false,
   },
 ].map((item) => ({
   ...item,
-  visible: activeNavItems.includes(item.path.replace('/', '')),
+  visible: activeNavItems.includes(item.path.replace(PATHS.HOME, '')),
 }));

@@ -108,7 +108,7 @@ const NotificationItem: React.FC<Props> = ({
               {selected ? (
                 <FiCheckCircle className="w-6 h-6 text-accent" />
               ) : (
-                <FiCircle className="w-6 h-6 text-primary-foreground" />
+                <FiCircle className="w-6 h-6 text-surface-foreground" />
               )}
             </button>
           ) : null}

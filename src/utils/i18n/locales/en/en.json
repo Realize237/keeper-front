@@ -35,7 +35,10 @@
     "errors": {
       "request_failed": "Request failed"
     },
-    "home": "home"
+    "home": "home",
+    "pagination": {
+      "showing": "Showing {{from}} - {{to}} of {{total}}"
+    }
   },
   "errors": {
     "UNEXPECTED_ERROR": "Something went wrong"
@@ -200,7 +203,10 @@
       "seconds": "{{count}}s",
       "resend": "Resend email",
       "sending": "Sending…",
-      "resend_success": "A new verification email has been sent."
+      "resend_success": "A new verification email has been sent.",
+      "account_verified": "Account Verified!",
+      "redirecting_to_login": "Redirecting to login in {{seconds}} seconds...",
+      "go_to_login": "Go to Login"
     },
     "verify_email": {
       "checking_email": "Check your email",
@@ -604,14 +610,23 @@
     "review_app": "Review App"
   },
   "plaid": {
-    "title": "Connect your bank",
+    "title": "Track Your Subscriptions Automatically",
     "start_title": "Start by linking your bank account",
-    "start_description": "Click the button below to launch the Plaid connection flow.",
+    "description": "Connect your bank securely with <span>Plaid</span> to automatically detect and manage your recurring payments.",
+    "benefits_title": "What you’ll get:",
+    "benefit_1": "All subscriptions in one place",
+    "benefit_2": "Smart renewal reminders",
+    "benefit_3": "Better control over your spending",
+    "security": "Secure connection powered by <span>Plaid</span>. <strong>Keepay</strong> never stores your banking credentials.",
+    "support": "If you have any issues connecting your bank, please contact <support>support</support>.",
     "loading": "Loading...",
     "recurring_title": "Recurring Subscriptions",
     "syncing": "Syncing...",
     "synced": "Subscriptions Synced",
     "load_subscriptions": "Load all your subscriptions",
+    "actions": {
+      "sync": "Continue Securely"
+    },
 
     "error": {
       "code": "Link Error Code",
@@ -964,7 +979,8 @@
     "contact": "Contact",
     "cookies": "Cookie Policy",
     "gdpr": "GDPR",
-    "copyright": "© {{year}} Keepay. All rights reserved."
+    "copyright": "© {{year}} Keepay. All rights reserved.",
+    "contactus": "Contact Us: {{email}}"
   },
 
   "contact": {
@@ -1055,7 +1071,7 @@
     },
     "sync_message": "You haven’t connected any bank account or card yet. Connect one to Keepay to get started",
     "connect_now": "Connect Now",
-    "syncing_message": "Syncing your accounts and subscriptions...",
+    "syncing_message": "Syncing your accounts and subscriptions please wait ...",
     "syncing": "Syncing...",
     "actions": {
       "accept": "I Agree",
@@ -1091,5 +1107,9 @@
       "title": "Sync Failed",
       "message": "Failed to sync subscriptions. Please try again."
     }
+  },
+  "trial": {
+    "ends_in": "Trial ends in {{days}} days",
+    "upgrade_message": "Upgrade to keep premium access."
   }
 }

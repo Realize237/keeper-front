@@ -5,13 +5,16 @@ import { useTranslation } from 'react-i18next';
 
 type AccountSyncBannerProps = {
   onSync: () => void;
+  user: ReturnType<typeof useUser>['user'];
+  isSyncing: boolean;
 };
 
-const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
-  const { user } = useUser();
+const AccountSyncBanner = ({
+  onSync,
+  user,
+  isSyncing,
+}: AccountSyncBannerProps) => {
   const { t } = useTranslation();
-
-  const isSyncing = user?.synchronizationStatus === 'PENDING';
   const shouldShow = !user?.userConsentAccepted || isSyncing;
 
   if (!shouldShow) return null;
@@ -27,7 +30,7 @@ const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
       <div className="w-full max-w-4xl bg-surface border border-border rounded-lg shadow-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-2">
         <div className="flex items-start sm:items-center gap-3 flex-1">
           {isSyncing ? (
-            <div className="w-6 h-6 rounded-full border-2 border-primary border-t-transparent animate-spin shrink-0" />
+            <div className="w-6 h-6 rounded-full border-2 border-accent border-t-transparent animate-spin shrink-0" />
           ) : (
             <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold shrink-0">
               <FaExclamation className="text-primary-foreground" />
@@ -55,8 +58,8 @@ const AccountSyncBanner = ({ onSync }: AccountSyncBannerProps) => {
               : {}
           }
           transition={{ duration: 1.6, repeat: Infinity }}
-          className={`w-full sm:w-auto bg-primary text-primary-foreground text-sm font-medium py-1.5 px-4 rounded transition-opacity ${
-            isSyncing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary/90'
+          className={`w-full sm:w-auto ${isSyncing ? 'bg-accent' : 'bg-primary'} text-primary-foreground text-sm font-medium py-1.5 px-4 rounded transition-opacity ${
+            isSyncing ? 'opacity-50 cursor-not-allowed!' : 'hover:bg-primary/90'
           }`}
           onClick={onSync}
           disabled={isSyncing}

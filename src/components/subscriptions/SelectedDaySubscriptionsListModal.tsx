@@ -64,7 +64,7 @@ export default function SelectedDaySubscriptionsListModal({
       isOpen={Boolean(selectedDay)}
       onClose={() => closeSubscriptionModals(SubscriptionModalTypes.LIST)}
       width="max-w-2xl"
-      height="min-h-[90dvh]"
+      height="max-h-[90dvh]"
     >
       <AnimatePresence>
         <motion.div
