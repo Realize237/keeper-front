@@ -109,6 +109,7 @@
       },
       "errors": {
         "EMAIL_ALREADY_EXISTS": "Un compte avec cet email existe déjà",
+        "PHONE_ALREADY_EXISTS": "Ce numéro de téléphone est déjà associé à un compte existant.",
         "accept_privacy_required": "Vous devez accepter la Politique de confidentialité et les Conditions d’utilisation pour continuer"
       },
       "footer": {

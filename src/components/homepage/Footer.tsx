@@ -5,6 +5,7 @@ import { PATHS } from '../../routes/paths';
 import { AiOutlineLinkedin } from 'react-icons/ai';
 import { MdOutlineEmail } from 'react-icons/md';
 import { env } from '../../utils/env';
+import { LOGOS } from '../../assets';
 
 type FooterLink = {
   labelKey: string;
